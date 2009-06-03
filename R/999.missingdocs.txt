@@ -1,0 +1,71 @@
+ append append.default append.GenericDataFileSet appendFiles
+  appendFiles.GenericDataFileSet as.character.GenericTabularFile
+  as.character.TabularTextFile byName byName.GenericDataFileSet
+  clearCache.GenericDataFileSet clone.GenericDataFile
+  clone.GenericDataFileSet compareChecksum
+  compareChecksum.GenericDataFile copyTo copyTo.GenericDataFile
+  copyTo.GenericDataFileSet dim.GenericTabularFile
+  dimension.TabularTextFile equals.GenericDataFile
+  equals.GenericDataFileSet extractMatrix
+  extractMatrix.GenericTabularFile extractMatrix.GenericTabularFileSet
+  findByName findByName.GenericDataFileSet fromFile
+  fromFile.GenericDataFile fromFiles GenericDataFileList
+  GenericDataFileSetList GenericTabularFile getAlias
+  getAlias.GenericDataFile getAttribute getAttribute.GenericDataFile
+  getAttributes getAttributes.GenericDataFile getChecksum
+  getChecksum.GenericDataFile getColumnNames
+  getColumnNames.GenericTabularFile getColumnNames.TabularTextFile
+  getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
+  getCreatedOn getCreatedOn.GenericDataFile getFile
+  getFile.GenericDataFileSet getFileClass
+  getFileClass.GenericDataFileSet getFileClass.GenericDataFileSetList
+  getFileList getFileList.GenericDataFileSetList getFilename getFiles
+  getFiles.GenericDataFileSet getFileSize getFileSize.GenericDataFile
+  getFileSize.GenericDataFileSet getFileType getFullName getFullNames
+  getFullNames.GenericDataFileSet getFullNameTranslator
+  getFullNameTranslator.GenericDataFile
+  getFullNameTranslator.GenericDataFileSet getHeader
+  getHeader.TabularTextFile getLabel.GenericDataFile getLastAccessedOn
+  getLastAccessedOn.GenericDataFile getLastModifiedOn
+  getLastModifiedOn.GenericDataFile getNames getPathname getPathnames
+  getReadArguments getReadArguments.TabularTextFile getTags
+  gunzip.GenericDataFile gzip.GenericDataFile hasBeenModified
+  hasBeenModified.GenericDataFile hasColumnHeader
+  hasColumnHeader.TabularTextFile hasFile hasFile.GenericDataFileSet
+  hasTag hasTag.GenericDataFile hasTag.GenericDataFileSet hasTags
+  hasTags.GenericDataFile hasTags.GenericDataFileSet indexOf
+  indexOf.GenericDataFileSet isFile.GenericDataFile nbrOfColumns
+  nbrOfColumns.GenericTabularFile nbrOfFiles nbrOfLines
+  nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
+  nbrOfRows.TabularTextFile readChecksum
+  readChecksum.GenericDataFile readColumnNames
+  readColumnNames.TabularTextFile readColumns
+  readColumns.GenericTabularFile readColumns.TabularTextFile
+  readDataFrame readDataFrame.GenericTabularFile
+  readDataFrame.TabularTextFile readLines readLines.default
+  readLines.TabularTextFile readRawHeader readRawHeader.TabularTextFile
+  readTableHeader readTableHeader.default renameTo
+  renameTo.GenericDataFile renameToUpperCaseExt
+  renameToUpperCaseExt.GenericDataFile reorder.GenericDataFileSet
+  sapply sapply.default sapply.GenericDataFileSet setAlias
+  setAlias.GenericDataFile setAttribute setAttribute.GenericDataFile
+  setAttributes setAttributes.GenericDataFile setAttributesBy
+  setAttributesBy.GenericDataFile setAttributesByTags
+  setAttributesByTags.GenericDataFile setColumnNameTranslator
+  setColumnNameTranslator.GenericTabularFile setFullName
+  setFullName.GenericDataFile setFullName.GenericDataFileSet
+  setFullNamesTranslator setFullNamesTranslator.GenericDataFileSet
+  setFullNameTranslator setFullNameTranslator.GenericDataFile
+  setFullNameTranslator.GenericDataFileSet setLabel.GenericDataFile
+  setName setName.GenericDataFile setName.GenericDataFileSet setTags
+  TabularTextFile testAttributes testAttributes.GenericDataFile
+  translateColumnNames translateColumnNames.GenericTabularFile
+  translateFullName translateFullName.GenericDataFile
+  translateFullName.GenericDataFileSet update2
+  update2.GenericDataFileSet validate.GenericDataFileSet
+  validateChecksum validateChecksum.GenericDataFile verify
+  verify.GenericTabularFile verify.TabularTextFile writeChecksum
+  writeChecksum.GenericDataFile writeColumnsToFiles
+ digest2
+ getFilename.Arguments
+

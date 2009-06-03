@@ -1,0 +1,17 @@
+Package: R.filesets
+===================
+
+Version: 0.5.1 [2009-05-19]
+o A fullname translator function for a GenericDataFile should accept
+  any number of arguments.  The first argument will always be 
+  (an unnamed) argument containing the name (or names) to be 
+  translated.  If the translator is for a GenericDataFile, an
+  additional argument 'file' will also be passed.  This allows
+  the translator function to for instance read the file header
+  and infer the name that way.
+
+
+Version: 0.5.0 [2009-05-17]
+o Added NAMESPACE.
+o Extracted several classes and methods from the aroma.core package.
+o Created package.

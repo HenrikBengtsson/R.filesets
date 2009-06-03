@@ -1,0 +1,167 @@
+###########################################################################/**
+# @set "class=TabularTextFile"
+# @RdocMethod writeColumnsToFiles
+#
+# @title "Read each column from a data file and exports it to a separate file"
+#
+# \description{
+#  @get "title".
+#  Since each column is process independently of the others, this method
+#  is memory efficient and can handle very large data files.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{destPath}{The output directory where to write the files.}
+#   \item{filenameFmt}{An @see "base::sprintf" format string used to generate
+#    filenames given the fullnames (column names plus tags).}
+#   \item{tags}{An optional @character @vector of tags added to the fullnames.}
+#   \item{columnName}{...}
+#   \item{header}{An optional file header.}
+#   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#  Returns (invisibly) a @character @vector of all output files.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, filenameFmt="%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local function
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  writeHeaderComments0 <- function(con, hdr, commentPrefix="# ", ...) {
+    hdr <- c(list(nbrOfHeaderRows=length(hdr)+1, hdr));    
+    hdrStr <- unlist(hdr);
+    hdrStr <- paste(names(hdrStr), hdrStr, sep="\t");
+    hdrStr <- paste(commentPrefix, hdrStr, sep="");
+    writeLines(con=con, hdrStr);
+  }
+
+  escapeFilename <- function(filename, ...) {
+    filename <- gsub(":", "%3A", filename);
+    filename <- gsub(";", "%3B", filename);
+    filename;
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'destPath':
+  destPath <- Arguments$getWritablePath(destPath);
+
+  # Argument 'tags':
+  if (!is.null(tags)) {
+    tags <- Arguments$getCharacters(tags);
+    tags <- unlist(strsplit(tags, split=","));
+    tags <- trim(tags);
+    tags <- tags[nchar(tags) > 0];
+  }
+
+  # Argument 'filenameFmt':
+  filenameFmt <- Arguments$getCharacter(filenameFmt);
+
+  # Argument 'columnName':
+  if (!is.null(columnName))
+    columnName <- Arguments$getCharacter(columnName);
+
+  # Argument 'header':
+  if (is.null(header)) {
+    header <- list(
+      sourceFile=getFilename(this)
+    );
+  } else {
+    header <- as.list(header);
+  }
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  } 
+
+
+  hdrColumnName <- columnName;
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Identify column names
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  columnNames <- getColumnNames(this);
+  verbose && printf(verbose, "Column names [%d]:\n", length(columnNames));
+  verbose && print(verbose, columnNames);
+  
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Extract and export each column
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pathnames <- c();
+
+  colClassPatterns <- "character";
+  for (cc in seq(along=columnNames)) {
+    columnName <- columnNames[cc];
+    verbose && enter(verbose, sprintf("Column #%d ('%s') of %d", 
+                                       cc, columnName, length(columnNames)));
+  
+    fullname <- paste(c(columnName, tags), collapse=",");
+    filename <- sprintf(filenameFmt, fullname);
+    filename <- escapeFilename(filename);
+    pathname <- file.path(destPath, filename);
+
+    # Check if file already exists
+    if (!isFile(pathname)) {
+      names(colClassPatterns) <- sprintf("^%s$", columnName);
+      values <- readDataFrame(this, colClassPatterns=colClassPatterns);
+      values <- trim(values[[1]]);
+      df <- data.frame(dummy=values, stringsAsFactors=FALSE);
+      if (is.null(hdrColumnName)) {
+        colnames(df) <- columnName;
+      } else {
+        colnames(df) <- hdrColumnName;
+      }
+      verbose && str(verbose, df);
+
+      con <- file(pathname, open="w");
+      header$createdOn <- format(Sys.time(), "%Y-%m-%d %H:%M:%S");
+      header$column <- cc;
+      header$columnName <- columnName;
+      header$nbrOfDataRows <- nrow(df);
+      writeHeaderComments0(con=con, header);
+      write.table(file=con, df, quote=FALSE, sep="\t", row.names=FALSE);
+      close(con);
+    } else {
+      verbose && cat(verbose, "Column already extracted");
+    }
+  
+    pathnames <- c(pathnames, pathname);
+
+    verbose && exit(verbose);
+  } # for (cc ...)
+
+  invisible(pathnames);  
+})
+
+
+############################################################################
+# HISTORY:
+# 2009-04-17
+# o Added Rdoc comments.
+# 2008-05-21
+# o BUG FIX: Argument 'verbose' was never passed to Arguments$getVerbose(). 
+# 2008-05-05
+# o Now some non-valid filename characters are escaped.
+# o Added internal escapeFilename().
+# 2008-05-01
+# o Created.
+############################################################################
