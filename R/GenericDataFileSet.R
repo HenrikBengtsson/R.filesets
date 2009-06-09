@@ -1380,7 +1380,7 @@ setMethodS3("setFullNameTranslator", "GenericDataFileSet", function(this, fcn, .
   # Sanity check
   if (!is.null(fcn)) {
     names <- c("foo bar");
-    names <- fcn(names);
+    names <- fcn(names, set=this);
   }
 
   this$.fullNameTranslator <- fcn;
@@ -1400,7 +1400,7 @@ setMethodS3("getFullNameTranslator", "GenericDataFileSet", function(this, ...) {
 setMethodS3("translateFullName", "GenericDataFileSet", function(this, name, ...) {
   nameTranslator <- getFullNameTranslator(this);	
   if (!is.null(nameTranslator)) {
-    name <- nameTranslator(name);
+    name <- nameTranslator(name, set=this);
     if (identical(attr(name, "isFinal"), TRUE))
       return(name);
   }
@@ -1429,6 +1429,9 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-05-19
+# o Now setFullNameTranslator() for GenericDataFileSet asserts that the 
+#   fullname translator function accepts also argument 'set'.
 # 2009-05-04
 # o Now static fromFiles() of GenericDataFileSet supports empty data sets.
 # o BUG FIX: as.character() of GenericDataFileSet would throw an error if

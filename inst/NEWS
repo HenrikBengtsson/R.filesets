@@ -1,6 +1,14 @@
 Package: R.filesets
 ===================
 
+Version: 0.5.2 [2009-06-08]
+o Analogously to the method for a GenericDataFile, the 
+  setFullNameTranslator() method for GenericDataFileSet now
+  assumes that the fullname translator function accepts also
+  argument 'set'.
+o Added argument '.fileSetClass' to GenericDataFileSet().
+
+
 Version: 0.5.1 [2009-05-19]
 o A fullname translator function for a GenericDataFile should accept
   any number of arguments.  The first argument will always be 

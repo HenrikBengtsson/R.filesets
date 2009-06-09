@@ -1,7 +1,10 @@
-setConstructorS3("GenericDataFileSetList", function(dsList=list(), ...) {
+setConstructorS3("GenericDataFileSetList", function(dsList=list(), ..., .fileSetClass="GenericDataFileSet") {
+  # Argument '.fileSetClass':
+  .fileSetClass <- Arguments$getCharacter(.fileSetClass, length=c(1,1));
+
   # Argument 'dsList':
   if (is.list(dsList)) {
-    className <- "GenericDataFileSet";
+    className <- .fileSetClass;
     for (kk in seq(along=dsList)) {
       ds <- dsList[[kk]];
       if (!inherits(ds, className)) {
@@ -76,6 +79,8 @@ setMethodS3("getFileList", "GenericDataFileSetList", function(this, name, dropMi
 
 ###########################################################################
 # HISTORY:
+# 2009-06-03
+# o Added argument '.fileSetClass' to the constructor.
 # 2009-05-12
 # o Created.
 ###########################################################################
