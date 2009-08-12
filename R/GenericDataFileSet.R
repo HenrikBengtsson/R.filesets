@@ -1160,8 +1160,8 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify existing root directories
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paths <- sapply(paths, FUN=filePath, expandLinks="any");
   paths0 <- paths;
+  paths <- sapply(paths, FUN=filePath, expandLinks="any");
   paths <- paths[sapply(paths, FUN=isDirectory)];
   if (length(paths) == 0) {
     throw("None of the data directories exist: ", 
@@ -1179,6 +1179,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   paths <- file.path(paths, fullname);
 
   # Look for existing directories
+  paths <- sapply(paths, FUN=filePath, expandLinks="any");
   paths <- paths[sapply(paths, FUN=isDirectory)];
   if (length(paths) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1203,6 +1204,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
             if (length(dirsT) == 0)
               return(NULL);
             # Keep only directories
+            dirsT <- sapply(dirsT, FUN=filePath, expandLinks="any");
             dirsT <- dirsT[sapply(dirsT, FUN=isDirectory)];
             if (length(dirsT) == 0)
               return(NULL);
@@ -1222,6 +1224,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
         # In case there are NULLs
         paths <- unlist(paths, use.names=FALSE);
         # Keep only directories
+        paths <- sapply(paths, FUN=filePath, expandLinks="any");
         paths <- paths[sapply(paths, FUN=isDirectory)];
       } # for (kk ...)
     } # if (length(subdirs) >= 1)
@@ -1429,6 +1432,9 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-08-12
+# o Now findByName() of GenericDataFileSet follows Windows Shortcut links
+#   also for subdirectories.
 # 2009-05-19
 # o Now setFullNameTranslator() for GenericDataFileSet asserts that the 
 #   fullname translator function accepts also argument 'set'.

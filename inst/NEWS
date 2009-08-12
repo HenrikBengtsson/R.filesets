@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 0.5.3 [2009-08-12]
+o Now findByName() of GenericDataFileSet follows Windows Shortcut 
+  links also for subdirectories.
+
+
 Version: 0.5.2 [2009-06-08]
 o Analogously to the method for a GenericDataFile, the 
   setFullNameTranslator() method for GenericDataFileSet now
