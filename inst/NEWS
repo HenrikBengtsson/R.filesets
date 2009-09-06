@@ -25,6 +25,5 @@ o A fullname translator function for a GenericDataFile should accept
 
 
 Version: 0.5.0 [2009-05-17]
-o Added NAMESPACE.
 o Extracted several classes and methods from the aroma.core package.
 o Created package.
