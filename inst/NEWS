@@ -1,6 +1,18 @@
 Package: R.filesets
 ===================
 
+Version: 0.6.0 [2009-10-02]
+o Added the FullNameInterface, which is the interface class that
+  defines what fullnames, names, tags etc are.
+o Now setFullName*s*Translator() for GenericDataFileSet dispatches 
+  on the 'by' argument.  If that is not possible, it call 
+  setFullNameTranslator() for each file in the set (as before).
+o CLEAN UP: Renamed fromFiles() to byPath().  For backward 
+  compatibility the former calls the latter. 
+o CLEAN UP: GenericDataFile and GenericDataFileSet implements
+  the FullNameInterface, which mean less redundant code.
+
+
 Version: 0.5.3 [2009-08-12]
 o Now findByName() of GenericDataFileSet follows Windows Shortcut 
   links also for subdirectories.

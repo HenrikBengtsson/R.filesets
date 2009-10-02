@@ -19,9 +19,11 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.filesets]{GenericDataFileSet}}\cr
+\code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{GenericTabularFileSet}\cr
+\code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFileSet}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{GenericTabularFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[R.filesets]{TabularTextFileSet}\cr
@@ -49,10 +51,13 @@ extends \link[R.filesets]{GenericDataFileSet}\cr
 
 
  \bold{Methods inherited from GenericDataFileSet}:\cr
-append, appendFiles, as.list, byName, clearCache, copyTo, equals, extract, findByName, fromFiles, getAlias, getFile, getFileClass, getFileSize, getFullName, getFullNames, getFullNameTranslator, getName, getNames, getPath, getPathnames, getTags, hasFile, hasTag, hasTags, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullName, setFullNamesTranslator, setFullNameTranslator, setName, setTags, update2, validate
+append, appendFiles, as.list, byName, byPath, clearCache, copyTo, equals, extract, findByName, fromFiles, getAlias, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, getRawFullName, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, setFullNamesTranslatorByfunction, setFullNamesTranslatorByNULL, update2, updateFullName, updateFullNames, validate
+
+ \bold{Methods inherited from FullNameInterface}:\cr
+getFullName, getFullNameTranslator, getName, getRawFullName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

@@ -19,13 +19,15 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{GenericDataFileSet}\cr
+\code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
+\code{~~~~~~~|}\cr
+\code{~~~~~~~+--}\code{GenericDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public static class \bold{GenericDataFileSet}\cr
-extends \link[R.oo]{Object}\cr
+extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
@@ -51,39 +53,36 @@ extends \link[R.oo]{Object}\cr
  \tab \code{appendFiles} \tab  -\cr
  \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
  \tab \code{byName} \tab  -\cr
+ \tab \code{\link[R.filesets:byPath.GenericDataFileSet]{byPath}} \tab Defines a GenericDataFileSet by searching for files in a directory.\cr
  \tab \code{clearCache} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{findByName} \tab  -\cr
- \tab \code{\link[R.filesets:fromFiles.GenericDataFileSet]{fromFiles}} \tab Defines an GenericDataFileSet object by searching for files.\cr
  \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
  \tab \code{getFile} \tab  -\cr
  \tab \code{getFileClass} \tab  -\cr
  \tab \code{getFileSize} \tab  -\cr
- \tab \code{\link[R.filesets:getFullName.GenericDataFileSet]{getFullName}} \tab Gets the full name of the file set.\cr
  \tab \code{getFullNames} \tab  -\cr
- \tab \code{\link[R.filesets:getName.GenericDataFileSet]{getName}} \tab Gets the name of the file set.\cr
  \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names of the files in the file set.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
- \tab \code{\link[R.filesets:getTags.GenericDataFileSet]{getTags}} \tab Gets the tags of the file set.\cr
+ \tab \code{\link[R.filesets:getRawFullName.GenericDataFileSet]{getRawFullName}} \tab Gets the full name of the file set.\cr
  \tab \code{hasFile} \tab  -\cr
- \tab \code{hasTag} \tab  -\cr
- \tab \code{hasTags} \tab  -\cr
  \tab \code{indexOf} \tab  -\cr
  \tab \code{\link[R.filesets:lapply.GenericDataFileSet]{lapply}} \tab Applies a function to each of the data files.\cr
  \tab \code{nbrOfFiles} \tab  -\cr
  \tab \code{sapply} \tab  -\cr
  \tab \code{\link[R.filesets:seq.GenericDataFileSet]{seq}} \tab Gets an vector of file indices.\cr
  \tab \code{\link[R.filesets:setAlias.GenericDataFileSet]{setAlias}} \tab Sets the alias of the file set.\cr
- \tab \code{setFullNamesTranslator} \tab  -\cr
- \tab \code{\link[R.filesets:setTags.GenericDataFileSet]{setTags}} \tab Sets the tags of the file set.\cr
  \tab \code{validate} \tab  -\cr
 }
 
 
+ \bold{Methods inherited from FullNameInterface}:\cr
+getFullName, getFullNameTranslator, getName, getRawFullName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
+
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

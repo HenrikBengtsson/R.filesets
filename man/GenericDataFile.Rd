@@ -19,13 +19,15 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{GenericDataFile}\cr
+\code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
+\code{~~~~~~~|}\cr
+\code{~~~~~~~+--}\code{GenericDataFile}\cr
 
 \bold{Directly known subclasses:}\cr
 \emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{TabularTextFile}\cr
 
 public static class \bold{GenericDataFile}\cr
-extends \link[R.oo]{Object}\cr
+extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
@@ -56,13 +58,8 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
  \tab \code{getFileSize} \tab  -\cr
  \tab \code{\link[R.filesets:getFileType.GenericDataFile]{getFileType}} \tab Gets the file type of a file.\cr
- \tab \code{\link[R.filesets:getFullName.GenericDataFile]{getFullName}} \tab Gets the full name of the file.\cr
- \tab \code{\link[R.filesets:getName.GenericDataFile]{getName}} \tab Gets the name of the file.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFile]{getPath}} \tab Gets the path (directory) of the file.\cr
  \tab \code{\link[R.filesets:getPathname.GenericDataFile]{getPathname}} \tab Gets the pathname of the file.\cr
- \tab \code{\link[R.filesets:getTags.GenericDataFile]{getTags}} \tab Gets the tags of the file.\cr
- \tab \code{hasTag} \tab  -\cr
- \tab \code{hasTags} \tab  -\cr
  \tab \code{isFile} \tab  -\cr
  \tab \code{readChecksum} \tab  -\cr
  \tab \code{setAlias} \tab  -\cr
@@ -71,8 +68,11 @@ extends \link[R.oo]{Object}\cr
 }
 
 
+ \bold{Methods inherited from FullNameInterface}:\cr
+getFullName, getFullNameTranslator, getName, getRawFullName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
+
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

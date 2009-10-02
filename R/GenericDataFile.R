@@ -66,7 +66,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
     throw("Unknown arguments: ", argsStr);
   }
 
-  extend(Object(), "GenericDataFile",
+  extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
     .alias = NULL,
     .pathname = pathname,
     .attributes = list()
@@ -307,7 +307,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getFullName
+# @RdocMethod getRawFullName
 #
 # @title "Gets the full name of the file"
 #
@@ -339,12 +339,10 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "getName".
-#   @seemethod "getTags".
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getFullName", "GenericDataFile", function(this, aliased=FALSE, translate=TRUE, ...) {
+setMethodS3("getRawFullName", "GenericDataFile", function(this, aliased=FALSE, ...) {
   if (aliased) {
     alias <- getAlias(this);
     if (!is.null(alias))
@@ -359,129 +357,10 @@ setMethodS3("getFullName", "GenericDataFile", function(this, aliased=FALSE, tran
   # Exclude filename extension
   fullname <- gsub("[.][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+$", "", fullname);
 
-  if (translate) {
-    fullname <- translateFullName(this, fullname);
-  }
-
   fullname;
-})
-
-
-setMethodS3("getFullNameTranslator", "GenericDataFile", function(this, ...) {
-  this$.fullNameTranslator;
 }, protected=TRUE)
 
 
-setMethodS3("setFullNameTranslator", "GenericDataFile", function(this, fcn, ...) {
-  # Arguments 'fcn':
-  if (is.null(fcn)) {
-  } else if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
-  }
-
-  # Sanity check
-  if (!is.null(fcn)) {
-    names <- c("foo bar");
-    names <- fcn(names, file=this);
-  }
-
-  this$.fullNameTranslator <- fcn;
-
-  invisible(this);
-}, protected=TRUE)
-
-
-setMethodS3("setFullName", "GenericDataFile", function(this, fullname=NULL, ...) {
-  # Argument 'fullname':
-  if (!is.null(fullname)) {
-    fullname <- Arguments$getCharacter(fullname);
-  }
-
-  if (is.null(fullname)) {
-    # Clear the fullname translator.
-    setFullNameTranslator(this, NULL);
-  } else {
-    # Set a translator function that always returns the same name
-    setFullNameTranslator(this, function(...) { fullname });
-  }
-}, protected=TRUE)
-
-
-# Sets the name part of the fullname, leaving the tags untouched.
-setMethodS3("setName", "GenericDataFile", function(this, name=NULL, ...) {
-  # Argument 'name':
-  if (!is.null(name)) {
-    name <- Arguments$getCharacter(name);
-  }
-
-  if (is.null(name)) {
-    # Clear the name translator.
-    setFullNameTranslator(this, NULL);
-  } else {
-    # Set a translator function that always returns the same name
-    setFullNameTranslator(this, function(fullname, ...) {
-      parts <- strsplit(fullname, split=",", fixed=TRUE)[[1]];
-      parts[1] <- name;
-      fullname <- paste(parts, collapse=",");
-      fullname;
-    });
-  }
-}, protected=TRUE)
-
-
-setMethodS3("translateFullName", "GenericDataFile", function(this, name, ...) {
-  nameTranslator <- getFullNameTranslator(this);
-  if (!is.null(nameTranslator)) {
-    name <- nameTranslator(name, file=this);
-    if (identical(attr(name, "isFinal"), TRUE))
-      return(name);
-  }
-
-  # Do nothing
-  name;
-}, private=TRUE)
- 
-
-###########################################################################/**
-# @RdocMethod getName
-#
-# @title "Gets the name of the file"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character.
-# }
-#
-# \details{
-#  The name of a file is the part of the filename without the extension and
-#  that preceeds any comma.
-#  For instance, the name of \code{path/to/foo,a.2,b.ext} is \code{foo}.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "getTags".
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getName", "GenericDataFile", function(this, ...) {
-  name <- getFullName(this, ...);
-
-  # Keep anything before the first comma
-  name <- gsub("[,].*$", "", name);
-  
-  name;
-})
 
 
 setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
@@ -497,81 +376,6 @@ setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
   invisible(this);
 })
 
-
-###########################################################################/**
-# @RdocMethod getTags
-#
-# @title "Gets the tags of the file"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{pattern}{An optional regular expression used to filter out tags.
-#     If @NULL, all tags are returned.}
-#  \item{collapse}{A @character string used to concatenate the tags. 
-#     If @NULL, the tags are not concatenated.}
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character @vector or @NULL.
-# }
-#
-# \details{
-#  The \emph{tags} of a filename are the comma separated parts of the
-#  filename that follows the the first comma, if any, and that preceeds the
-#  last period (the filename extension).
-#  For instance, the tags of \code{path/to/foo,a.2,b.ext} are 
-#  \code{a.2} and \code{b}.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "getName".
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getTags", "GenericDataFile", function(this, pattern=NULL, collapse=NULL, ...) {
-  fullname <- getFullName(this, ...);
-
-  # Data-set name is anything before the first comma
-  name <- gsub("[,].*$", "", fullname);
-
-  # Keep anything after the data-set name (and the separator).
-  tags <- substring(fullname, nchar(name)+2);
-  tags <- unlist(strsplit(tags, split=","));
-
-  # Keep only those matching a regular expression?
-  if (!is.null(pattern))
-    tags <- grep(pattern, tags, value=TRUE);
-
-  # Collapsed or split?
-  if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
-  } else {
-    tags <- unlist(strsplit(tags, split=","));
-  }
- 
-  if (length(tags) == 0)
-    tags <- NULL;
-
-  tags;
-})
-
-setMethodS3("hasTags", "GenericDataFile", function(this, tags, ...) {
-  tags <- strsplit(tags, split=",", fixed=TRUE);
-  tags <- unlist(tags, use.names=FALSE);
-  all(tags %in% getTags(this));
-})
-
-setMethodS3("hasTag", "GenericDataFile", function(this, tag, ...) {
-  hasTags(this, tags=tag, ...);
-})
 
 
 
@@ -1054,8 +858,16 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 }, protected=TRUE)
 
 
+
 ############################################################################
 # HISTORY:
+# 2009-10-02
+# o CLEAN UP: Removed setFullName() for GenericDataFile, because there
+#   is not a "default" on.
+# o Now setFullNameTranslator(...) for GenericDataFile dispatches on the
+#   'translator' argument (2nd) to call setFullNameTranslatorBy<class>().
+#   setFullNameTranslatorByFunction() and setFullNameTranslatorByNULL()
+#   are defined by default.
 # 2009-05-19
 # o Now setFullNameTranslator() for GenericDataFile asserts that the 
 #   fullname translator function accepts also argument 'file'.

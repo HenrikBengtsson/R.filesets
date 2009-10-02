@@ -188,6 +188,28 @@
 \alias{writeColumnsToFiles}
 \alias{digest2}
 \alias{getFilename.Arguments}
+\alias{byPath}
+\alias{getFullNameTranslator.FullNameInterface}
+\alias{getRawFullName}
+\alias{hasTag.FullNameInterface}
+\alias{hasTags.FullNameInterface}
+\alias{setFullName.FullNameInterface}
+\alias{setFullNamesTranslatorByfunction}
+\alias{setFullNamesTranslatorByfunction.GenericDataFileSet}
+\alias{setFullNamesTranslatorByNULL}
+\alias{setFullNamesTranslatorByNULL.GenericDataFileSet}
+\alias{setFullNameTranslator.FullNameInterface}
+\alias{setFullNameTranslatorByfunction}
+\alias{setFullNameTranslatorByfunction.FullNameInterface}
+\alias{setFullNameTranslatorByNULL}
+\alias{setFullNameTranslatorByNULL.FullNameInterface}
+\alias{setName.FullNameInterface}
+\alias{translateFullName.FullNameInterface}
+\alias{updateFullName}
+\alias{updateFullName.FullNameInterface}
+\alias{updateFullName.GenericDataFileSet}
+\alias{updateFullNames}
+\alias{updateFullNames.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

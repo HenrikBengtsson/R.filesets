@@ -1,25 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  GenericDataFileSet.R
+%  FullNameInterface.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{setTags.GenericDataFileSet}
-\alias{setTags.GenericDataFileSet}
-\alias{GenericDataFileSet.setTags}
-\alias{setTags.GenericDataFileSet}
-\alias{setTags,GenericDataFileSet-method}
+\name{setTags.FullNameInterface}
+\alias{setTags.FullNameInterface}
+\alias{FullNameInterface.setTags}
+\alias{setTags.FullNameInterface}
+\alias{setTags,FullNameInterface-method}
 
 
-\title{Sets the tags of the file set}
+\title{Sets the tags}
 
 \description{
-  Sets the tags of the file set.
+  Sets the tags.
 }
 
-\usage{\method{setTags}{GenericDataFileSet}(this, tags="*", ...)}
+\usage{\method{setTags}{FullNameInterface}(this, tags="*", ...)}
 
 \arguments{
  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
@@ -31,14 +31,14 @@
 }
 
 \details{
-  See \code{\link[R.filesets:getTags.GenericDataFileSet]{*getTags}()} for so called \emph{special tags}.
+  See \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()} for so called \emph{special tags}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.filesets:getTags.GenericDataFileSet]{*getTags}()}.
-  For more information see \code{\link{GenericDataFileSet}}.
+  \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()}.
+  For more information see \code{\link{FullNameInterface}}.
 }
 \keyword{internal}
 \keyword{methods}
