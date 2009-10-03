@@ -32,12 +32,12 @@ setConstructorS3("FullNameInterface", function(...) {
 
 
 ###########################################################################/**
-# @RdocMethod getRawFullName
+# @RdocMethod getDefaultFullName
 #
-# @title "Gets the full name of the file"
+# @title "Gets the default full name"
 #
 # \description{
-#   @get "title", that is the filename without the extension.
+#   @get "title", that is, the fullname without translations.
 # }
 #
 # @synopsis
@@ -69,7 +69,7 @@ setConstructorS3("FullNameInterface", function(...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getRawFullName", "FullNameInterface", abstract=TRUE, protected=TRUE);
+setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=TRUE);
 
 
 
@@ -104,7 +104,7 @@ setMethodS3("getRawFullName", "FullNameInterface", abstract=TRUE, protected=TRUE
 # }
 #*/###########################################################################
 setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TRUE) {
-  fullname <- getRawFullName(this, ...);
+  fullname <- getDefaultFullName(this, ...);
 
   # Translate?
   if (translate) {

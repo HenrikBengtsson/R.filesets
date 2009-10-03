@@ -59,6 +59,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{findByName} \tab  -\cr
  \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
+ \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{getFile} \tab  -\cr
  \tab \code{getFileClass} \tab  -\cr
  \tab \code{getFileSize} \tab  -\cr
@@ -66,7 +67,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names of the files in the file set.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
- \tab \code{\link[R.filesets:getRawFullName.GenericDataFileSet]{getRawFullName}} \tab Gets the full name of the file set.\cr
  \tab \code{hasFile} \tab  -\cr
  \tab \code{indexOf} \tab  -\cr
  \tab \code{\link[R.filesets:lapply.GenericDataFileSet]{lapply}} \tab Applies a function to each of the data files.\cr
@@ -79,7 +79,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
  \bold{Methods inherited from FullNameInterface}:\cr
-getFullName, getFullNameTranslator, getName, getRawFullName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
+getDefaultFullName, getFullName, getFullNameTranslator, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

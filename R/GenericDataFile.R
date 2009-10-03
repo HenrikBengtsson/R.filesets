@@ -307,7 +307,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getRawFullName
+# @RdocMethod getDefaultFullName
 #
 # @title "Gets the full name of the file"
 #
@@ -342,7 +342,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getRawFullName", "GenericDataFile", function(this, aliased=FALSE, ...) {
+setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALSE, ...) {
   if (aliased) {
     alias <- getAlias(this);
     if (!is.null(alias))

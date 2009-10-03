@@ -53,10 +53,10 @@ extends \link[R.filesets]{GenericTabularFileSet}\cr
 extractMatrix
 
  \bold{Methods inherited from GenericDataFileSet}:\cr
-append, appendFiles, as.list, byName, byPath, clearCache, copyTo, equals, extract, findByName, fromFiles, getAlias, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, getRawFullName, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, setFullNamesTranslatorByfunction, setFullNamesTranslatorByNULL, update2, updateFullName, updateFullNames, validate
+append, appendFiles, as.list, byName, byPath, clearCache, copyTo, equals, extract, findByName, fromFiles, getAlias, getDefaultFullName, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, setFullNamesTranslatorByfunction, setFullNamesTranslatorByNULL, update2, updateFullName, updateFullNames, validate
 
  \bold{Methods inherited from FullNameInterface}:\cr
-getFullName, getFullNameTranslator, getName, getRawFullName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
+getDefaultFullName, getFullName, getFullNameTranslator, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

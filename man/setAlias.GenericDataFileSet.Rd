@@ -38,8 +38,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.filesets:getAlias.GenericDataFileSet]{*getAlias}()}.
-  \code{\link[R.filesets:getName.GenericDataFileSet]{*getName}()}.
   For more information see \code{\link{GenericDataFileSet}}.
 }
 \keyword{internal}

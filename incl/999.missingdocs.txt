@@ -68,7 +68,8 @@
   writeChecksum.GenericDataFile writeColumnsToFiles
  digest2
  getFilename.Arguments
-  byPath getFullNameTranslator.FullNameInterface getRawFullName
+  byPath getFullNameTranslator.FullNameInterface 
+  getDefaultFullName
   hasTag.FullNameInterface hasTags.FullNameInterface
   setFullName.FullNameInterface setFullNamesTranslatorByfunction
   setFullNamesTranslatorByfunction.GenericDataFileSet

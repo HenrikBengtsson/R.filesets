@@ -1,25 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  GenericDataFile.R
+%  FullNameInterface.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRawFullName.GenericDataFile}
-\alias{getRawFullName.GenericDataFile}
-\alias{GenericDataFile.getRawFullName}
-\alias{getRawFullName.GenericDataFile}
-\alias{getRawFullName,GenericDataFile-method}
+\name{getDefaultFullName.FullNameInterface}
+\alias{getDefaultFullName.FullNameInterface}
+\alias{FullNameInterface.getDefaultFullName}
+\alias{getDefaultFullName.FullNameInterface}
+\alias{getDefaultFullName,FullNameInterface-method}
 
 
-\title{Gets the full name of the file}
+\title{Gets the default full name}
 
 \description{
-  Gets the full name of the file, that is the filename without the extension.
+  Gets the default full name, that is, the fullname without translations.
 }
 
-\usage{\method{getRawFullName}{GenericDataFile}(this, aliased=FALSE, ...)}
+\usage{\method{getDefaultFullName}{FullNameInterface}(...)}
 
 \arguments{
  \item{aliased}{If \code{\link[base:logical]{TRUE}}, and an alias has been set, the alias is
@@ -43,7 +43,9 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{GenericDataFile}}.
+  \code{\link[R.filesets:getName.FullNameInterface]{*getName}()}.
+  \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()}.
+  For more information see \code{\link{FullNameInterface}}.
 }
 \keyword{internal}
 \keyword{methods}

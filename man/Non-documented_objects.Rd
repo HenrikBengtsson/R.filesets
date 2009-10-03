@@ -190,7 +190,7 @@
 \alias{getFilename.Arguments}
 \alias{byPath}
 \alias{getFullNameTranslator.FullNameInterface}
-\alias{getRawFullName}
+\alias{getDefaultFullName}
 \alias{hasTag.FullNameInterface}
 \alias{hasTags.FullNameInterface}
 \alias{setFullName.FullNameInterface}

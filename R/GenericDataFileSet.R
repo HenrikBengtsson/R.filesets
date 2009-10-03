@@ -206,8 +206,6 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "setAlias".
-#   @seemethod "getName".
 #   @seeclass
 # }
 #*/###########################################################################
@@ -245,8 +243,6 @@ setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "getAlias".
-#   @seemethod "getName".
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1100,9 +1096,9 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ###########################################################################/**
-# @RdocMethod getRawFullName
+# @RdocMethod getDefaultFullName
 #
-# @title "Gets the full name of the file set"
+# @title "Gets the default full name of the file set"
 #
 # \description{
 #   @get "title", that is the name of the directory without parent directories.
@@ -1135,7 +1131,7 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getRawFullName", "GenericDataFileSet", function(this, parent=1, ...) {
+setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=1, ...) {
   # Argument 'parent':
   parent <- Arguments$getInteger(parent, range=c(0,32));
 

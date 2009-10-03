@@ -6,20 +6,20 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRawFullName.GenericDataFileSet}
-\alias{getRawFullName.GenericDataFileSet}
-\alias{GenericDataFileSet.getRawFullName}
-\alias{getRawFullName.GenericDataFileSet}
-\alias{getRawFullName,GenericDataFileSet-method}
+\name{getDefaultFullName.GenericDataFileSet}
+\alias{getDefaultFullName.GenericDataFileSet}
+\alias{GenericDataFileSet.getDefaultFullName}
+\alias{getDefaultFullName.GenericDataFileSet}
+\alias{getDefaultFullName,GenericDataFileSet-method}
 
 
-\title{Gets the full name of the file set}
+\title{Gets the default full name of the file set}
 
 \description{
-  Gets the full name of the file set, that is the name of the directory without parent directories.
+  Gets the default full name of the file set, that is the name of the directory without parent directories.
 }
 
-\usage{\method{getRawFullName}{GenericDataFileSet}(this, parent=1, ...)}
+\usage{\method{getDefaultFullName}{GenericDataFileSet}(this, parent=1, ...)}
 
 \arguments{
  \item{parent}{The number of generations up in the directory tree the
