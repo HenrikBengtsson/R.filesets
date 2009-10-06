@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 0.6.1 [2009-10-06]
+o Added subsetting via [() to TabularTextFile.
+
+
 Version: 0.6.0 [2009-10-02]
 o Added the FullNameInterface, which is the interface class that
   defines what fullnames, names, tags etc are.

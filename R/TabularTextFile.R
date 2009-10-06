@@ -451,6 +451,23 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 })
 
 
+setMethodS3("[", "TabularTextFile", function(this, i=NULL, j=NULL, drop=FALSE) {
+  # Read data
+  data <- readDataFrame(this, rows=i, columns=j);
+
+  # Drop dimensions?
+  if (drop) {
+    if (ncol(data) == 1) {
+      data <- data[,1];
+    } else if (nrow(data) == 1) {
+      data <- data[1,];
+    }
+  }
+  
+  data;
+})
+
+
 setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses=rep("character", length(columns)), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -528,6 +545,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-10-06
+# o Added subsetting via [() to TabularTextFile.
 # 2009-05-09
 # o Added argument 'translate' to getColumnNames() of TabularTextFile.
 # 2008-07-23
