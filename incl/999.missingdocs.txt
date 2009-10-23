@@ -85,3 +85,28 @@
   updateFullName.GenericDataFileSet updateFullNames
   updateFullNames.GenericDataFileSet
   [.TabularTextFile
+  appendFullNamesTranslator
+  appendFullNamesTranslator.GenericDataFileSet
+  appendFullNamesTranslatorByfunction
+  appendFullNamesTranslatorByfunction.GenericDataFileSet
+  appendFullNamesTranslatorByNULL
+  appendFullNamesTranslatorByNULL.GenericDataFileSet
+  appendFullNameTranslator appendFullNameTranslator.FullNameInterface
+  appendFullNameTranslatorBycharacter
+  appendFullNameTranslatorBycharacter.FullNameInterface
+  appendFullNameTranslatorByfunction
+  appendFullNameTranslatorByfunction.FullNameInterface
+  appendFullNameTranslatorByNULL
+  appendFullNameTranslatorByNULL.FullNameInterface
+  clearFullNamesTranslator clearFullNamesTranslator.GenericDataFileSet
+  clearFullNameTranslator clearFullNameTranslator.FullNameInterface
+  clearListOfFullNameTranslators
+  clearListOfFullNameTranslators.FullNameInterface
+  getListOfFullNameTranslators
+  getListOfFullNameTranslators.FullNameInterface
+  setListOfFullNameTranslators
+  setListOfFullNameTranslators.FullNameInterface
+  appendFullNameTranslatorBylist
+  appendFullNameTranslatorBylist.FullNameInterface
+  appendFullNamesTranslatorBylist
+  appendFullNamesTranslatorBylist.GenericDataFileSet

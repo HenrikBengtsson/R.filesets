@@ -1170,23 +1170,33 @@ setMethodS3("updateFullNames", "GenericDataFileSet", function(this, ...) {
 }, protected=TRUE)
 
 
+setMethodS3("clearFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
+  sapply(this, clearFullNameTranslator, ...);
+  invisible(this);
+}, protected=TRUE)
 
-setMethodS3("setFullNamesTranslatorByNULL", "GenericDataFileSet", function(this, ...) {
-  sapply(this, setFullNameTranslatorByNULL, NULL, ...);
+setMethodS3("appendFullNamesTranslatorByNULL", "GenericDataFileSet", function(this, ...) {
+  sapply(this, appendFullNameTranslatorByNULL, NULL, ...);
   invisible(this);
 }, protected=TRUE)
 
 
-setMethodS3("setFullNamesTranslatorByfunction", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, setFullNameTranslatorByfunction, fcn, ...);
+setMethodS3("appendFullNamesTranslatorByfunction", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorByfunction, fcn, ...);
   invisible(this);
 }, protected=TRUE)
 
 
-setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, by, ...) {
+setMethodS3("appendFullNamesTranslatorBylist", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorBylist, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslator", "GenericDataFileSet", function(this, by, ...) {
   # Arguments 'by':
   classNames <- class(by);
-  methodNames <- sprintf("setFullNamesTranslatorBy%s", classNames);
+  methodNames <- sprintf("appendFullNamesTranslatorBy%s", classNames);
 
   # Dispatch on the 'by' argument...
   keep <- sapply(methodNames, FUN=exists, mode="function");
@@ -1198,7 +1208,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, by, .
     res <- fcn(this, by, ...);
   } else {
     # ...otherwise, apply the fullname translator to each file
-    dummy <- sapply(this, setFullNameTranslator, ...);
+    res <- sapply(this, appendFullNameTranslator, by, ...);
   }
 
   # Allow the object to update itself according to these new rules.
@@ -1208,12 +1218,18 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, by, .
 }, protected=TRUE)
 
 
+setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
+  clearFullNamesTranslator(this);
+  appendFullNamesTranslator(this, ...);
+}, protected=TRUE)
 
 
 
 
 ############################################################################
 # HISTORY:
+# 2009-10-22
+# o Rename previous setFullNamesNnn() to appendFullNamesNnn().
 # 2009-10-02
 # o CLEAN UP: Renamed fromFiles() to byPath().  For backward compatibility
 #   the former calls the latter.

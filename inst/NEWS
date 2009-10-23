@@ -1,6 +1,18 @@
 Package: R.filesets
 ===================
 
+Version: 0.6.3 [2009-10-23]
+o Added appendFullNameTranslatorBylist() which makes it possible to do
+  setup a sequence of fullnames translators fnt1, fnt2, fnt3 by calling
+  setFullNameTranslator(..., list(fnt1, fnt2, fnt3)).
+
+
+Version: 0.6.2 [2009-10-22]
+o Added support for having a sequence of fullname translator 
+  functions.  These can be added using appendFullNameTranslator().
+o Added an example() to FullNameInterface.
+
+
 Version: 0.6.1 [2009-10-06]
 o Added subsetting via [() to TabularTextFile.
 

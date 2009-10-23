@@ -23,6 +23,8 @@
 #  tags \code{a.2} and \code{b}.
 # }
 #
+# @examples "../incl/FullNameInterface.Rex"
+#
 # @author
 #*/########################################################################### 
 setConstructorS3("FullNameInterface", function(...) {
@@ -305,8 +307,56 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("clearListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
+  this$.listOfFullNameTranslators <- list();
+}, protected=TRUE)
+
+setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) {
+  clearListOfFullNameTranslators(this);
+})
+
+
+setMethodS3("getListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
+  res <- this$.listOfFullNameTranslators;
+  if (is.null(res)) {
+    res <- list();
+  }
+  res;
+}, protected=TRUE)
+
+setMethodS3("setListOfFullNameTranslators", "FullNameInterface", function(this, fnList, ...) {
+  # Argument 'fnList':
+  for (kk in seq(along=fnList)) {
+    fcn <- fnList[[kk]];
+    if (!is.function(fcn)) {
+      throw("Element #", kk, " of argument 'fnList' is not a function: ", 
+                                                           class(fcn)[1]);
+    }
+  }
+
+  this$.listOfFullNameTranslators <- fnList;
+
+  invisible(this);
+}, protected=TRUE)
+
+
 setMethodS3("getFullNameTranslator", "FullNameInterface", function(this, ...) {
-  this$.fullNameTranslator;
+  fnList <- getListOfFullNameTranslators(this, ...);
+
+  # No fullnames translator?
+  if (length(fnList) == 0) {
+    return(NULL);
+  }
+
+  # Create fullnames translator function
+  res <- function(names, ...) {
+    for (kk in seq(along=fnList)) {
+      fcn <- fnList[[kk]];
+      names <- fcn(names, ...);
+    }
+    names;
+  }
+  res;
 }, protected=TRUE)
 
 
@@ -324,14 +374,18 @@ setMethodS3("translateFullName", "FullNameInterface", function(this, name, ...) 
 }, private=TRUE)
 
 
-setMethodS3("setFullNameTranslatorByNULL", "FullNameInterface", function(this, ...) {
-  this$.fullNameTranslator <- NULL;
-
+setMethodS3("appendFullNameTranslatorByNULL", "FullNameInterface", function(this, ...) {
+  # Nothing to append
   invisible(this);
 }, protected=TRUE)
 
+setMethodS3("appendFullNameTranslatorBycharacter", "FullNameInterface", function(this, fullname, ...) {
+  # Append a translator function that always returns a constant string
+  appendFullNameTranslator(this, function(...) { fullname });
+}, protected=TRUE)
 
-setMethodS3("setFullNameTranslatorByfunction", "FullNameInterface", function(this, fcn, ...) {
+
+setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(this, fcn, ...) {
   # Arguments 'fcn':
   if (!is.function(fcn)) {
     throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
@@ -341,22 +395,37 @@ setMethodS3("setFullNameTranslatorByfunction", "FullNameInterface", function(thi
   names <- c("foo bar");
   names <- fcn(names, file=this);
 
-  this$.fullNameTranslator <- fcn;
-
-  invisible(this);
+  fnList <- getListOfFullNameTranslators(this);
+  fnList <- c(fnList, fcn);
+  setListOfFullNameTranslators(this, fnList);
 }, protected=TRUE)
 
 
-setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, by, ...) {
+
+setMethodS3("appendFullNameTranslatorBylist", "FullNameInterface", function(this, list, ...) {
+  # Arguments 'list':
+  if (!inherits(list, "list")) {
+    throw("Argument 'list' is not a list: ", class(list)[1]);
+  }
+
+  for (kk in seq(along=list)) {
+    by <- list[[kk]];
+    appendFullNameTranslator(this, by, ...);
+  }
+}, protected=TRUE)
+
+
+
+setMethodS3("appendFullNameTranslator", "FullNameInterface", function(this, by, ...) {
   # Arguments 'by':
   classNames <- class(by);
-  methodNames <- sprintf("setFullNameTranslatorBy%s", classNames);
+  methodNames <- sprintf("appendFullNameTranslatorBy%s", classNames);
 
   keep <- sapply(methodNames, FUN=exists, mode="function");
   methodNames <- methodNames[keep];
 
   if (length(methodNames) == 0) {
-    throw("Failed to set the fullname translator. Could not find a setFullNameTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "));
+    throw("Failed to set the fullname translator. Could not find an appendFullNameTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "));
   }
 
   methodName <- methodNames[1];
@@ -370,22 +439,18 @@ setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, by, ...
 }, protected=TRUE)
 
 
+setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
+  clearListOfFullNameTranslators(this);
+  appendFullNameTranslator(this, ...);
+})
 
 
-setMethodS3("setFullName", "FullNameInterface", function(this, fullname=NULL, ...) {
-  # Argument 'fullname':
-  if (!is.null(fullname)) {
-    fullname <- Arguments$getCharacter(fullname);
-  }
 
-  if (is.null(fullname)) {
-    # Clear the fullname translator.
-    setFullNameTranslator(this, NULL);
-  } else {
-    # Set a translator function that always returns the same name
-    setFullNameTranslator(this, function(...) { fullname });
-  }
+setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
+ # Set a translator function that always returns a constant
+ setFullNameTranslator(this, ...);
 }, protected=TRUE)
+
 
 
 # Sets the name part of the fullname, leaving the tags untouched.
@@ -396,8 +461,7 @@ setMethodS3("setName", "FullNameInterface", function(this, name=NULL, ...) {
   }
 
   if (is.null(name)) {
-    # Clear the name translator.
-    setFullNameTranslator(this, NULL);
+    clearFullNameTranslator(this);
   } else {
     # Set a translator function that always returns the same name
     setFullNameTranslator(this, function(fullname, ...) {
@@ -419,6 +483,14 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-10-23
+# o Added appendFullNameTranslatorBylist() which makes it possible to do
+#   setup a sequence of fullnames translators fnt1, fnt2, fnt3 by calling
+#   setFullNameTranslator(..., list(fnt1, fnt2, fnt3)).
+# 2009-10-22
+# o Added support for having a sequence of fullname translator functions.
+#   These can be added using appendFullNameTranslator().
+# o Added an example() to FullNameInterface.
 # 2009-10-02
 # o Now setFullName(...) applies to any FullNameInterface.
 # o Now setFullNameTranslator(...) applies to any FullNameInterface and 

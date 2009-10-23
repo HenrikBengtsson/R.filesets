@@ -211,6 +211,34 @@
 \alias{updateFullNames}
 \alias{updateFullNames.GenericDataFileSet}
 \alias{[.TabularTextFile}
+\alias{appendFullNamesTranslator}
+\alias{appendFullNamesTranslator.GenericDataFileSet}
+\alias{appendFullNamesTranslatorByfunction}
+\alias{appendFullNamesTranslatorByfunction.GenericDataFileSet}
+\alias{appendFullNamesTranslatorByNULL}
+\alias{appendFullNamesTranslatorByNULL.GenericDataFileSet}
+\alias{appendFullNameTranslator}
+\alias{appendFullNameTranslator.FullNameInterface}
+\alias{appendFullNameTranslatorBycharacter}
+\alias{appendFullNameTranslatorBycharacter.FullNameInterface}
+\alias{appendFullNameTranslatorByfunction}
+\alias{appendFullNameTranslatorByfunction.FullNameInterface}
+\alias{appendFullNameTranslatorByNULL}
+\alias{appendFullNameTranslatorByNULL.FullNameInterface}
+\alias{clearFullNamesTranslator}
+\alias{clearFullNamesTranslator.GenericDataFileSet}
+\alias{clearFullNameTranslator}
+\alias{clearFullNameTranslator.FullNameInterface}
+\alias{clearListOfFullNameTranslators}
+\alias{clearListOfFullNameTranslators.FullNameInterface}
+\alias{getListOfFullNameTranslators}
+\alias{getListOfFullNameTranslators.FullNameInterface}
+\alias{setListOfFullNameTranslators}
+\alias{setListOfFullNameTranslators.FullNameInterface}
+\alias{appendFullNameTranslatorBylist}
+\alias{appendFullNameTranslatorBylist.FullNameInterface}
+\alias{appendFullNamesTranslatorBylist}
+\alias{appendFullNamesTranslatorBylist.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that
