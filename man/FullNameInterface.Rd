@@ -22,7 +22,7 @@
 \code{~~+--}\emph{\code{FullNameInterface}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.filesets]{GenericDataFile}, \link[R.filesets]{GenericDataFileSet}, \emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFile}, \link[R.filesets]{TabularTextFileSet}\cr
+\emph{\link[R.filesets]{GenericDataFile}}, \link[R.filesets]{GenericDataFileSet}, \emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{GenericTabularFileSet}, \emph{\link[R.filesets]{TabularTextFile}}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public abstract class \bold{FullNameInterface}\cr
 extends \link[R.oo]{Interface}\cr
@@ -65,13 +65,38 @@ extend, print, uses
 
  \examples{
 # Setup a file set
-path <- system.file(package="R.filesets")
+path <- system.file("R", package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
 
-# List the fullnames of all files
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Data set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Path of data set:\n")
+print(getPath(ds))
+
+cat("Fullname of data set:\n")
+print(getFullName(ds))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Data files
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Pathnames:\n")
+print(getPathnames(ds))
+
+cat("Filenames:\n")
+print(sapply(ds, getFilename))
+
 cat("Default fullnames:\n")
 print(getFullNames(ds))
 
+cat("Extensions:\n")
+print(sapply(ds, getExtension))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Translation of data file names
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Translate fullnames to lower case
 setFullNamesTranslator(ds, function(names, ...) tolower(names))
 cat("Lower-case fullnames:\n")

@@ -312,7 +312,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # @title "Gets the full name of the file"
 #
 # \description{
-#   @get "title", that is the filename without the extension.
+#   @get "title", that is the filename without the filename extension.
 # }
 #
 # @synopsis
@@ -348,18 +348,50 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALS
     if (!is.null(alias))
       fullname <- alias;
   } else {
-    pathname <- this$.pathname;
-    if (is.null(pathname))
-      pathname <- "";
-    fullname <- basename(pathname);
+    filename <- getFilename(this);
+    if (is.null(filename))
+      return("");
+    pattern <- getExtensionPattern(this);
+    fullname <- gsub(pattern, "", filename);
   }
-
-  # Exclude filename extension
-  fullname <- gsub("[.][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+$", "", fullname);
 
   fullname;
 }, protected=TRUE)
 
+
+setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
+  getFilenameExtension(...);  
+}, protected=TRUE);
+
+setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
+
+
+setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., force=FALSE) {
+  pattern <- this$.extensionPattern;
+  if (force || is.null(pattern)) {
+    # Default pattern is anything following the last period
+    pattern <- "\\.([^.]+)$";
+##   pattern <- toAsciiRegExprPattern(pattern); # Don't handle [.] and ~
+    this$.extensionPattern <- pattern;
+  }
+  pattern;
+}, static=TRUE)
+
+
+setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern, ...) {
+  pattern <- Arguments$getRegularExpression(pattern);
+  this$.extensionPattern <- pattern;
+  invisible(this);
+})
+
+
+
+setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
+  filename <- getFilename(this, ...);
+  fullname <- getDefaultFullName(this, ...);
+  # Drop <fullname> and a possible '.'.
+  substring(filename, first=nchar(fullname)+2);
+})
 
 
 

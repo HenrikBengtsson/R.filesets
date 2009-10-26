@@ -33,6 +33,8 @@ setConstructorS3("FullNameInterface", function(...) {
 
 
 
+
+
 ###########################################################################/**
 # @RdocMethod getDefaultFullName
 #
@@ -72,7 +74,6 @@ setConstructorS3("FullNameInterface", function(...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=TRUE);
-
 
 
 

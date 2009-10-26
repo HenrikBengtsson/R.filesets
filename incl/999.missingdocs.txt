@@ -110,3 +110,13 @@
   appendFullNameTranslatorBylist.FullNameInterface
   appendFullNamesTranslatorBylist
   appendFullNamesTranslatorBylist.GenericDataFileSet
+  getDefaultFullNameAndExtension
+  getDefaultFullNameAndExtension.FullNameInterface getExtension
+  getExtension.FullNameInterface getExtensionPattern
+  getExtensionPattern.FullNameInterface hasExtension
+  hasExtension.FullNameInterface hasExtension.GenericDataFileSet
+  setExtensionPattern setExtensionPattern.FullNameInterface
+  getExtension.GenericDataFile getExtensionPattern.GenericDataFile
+  getFilenameExtension getFilenameExtension.GenericDataFile
+  getOutputExtension getOutputExtension.GenericDataFile
+  setExtensionPattern.GenericDataFile

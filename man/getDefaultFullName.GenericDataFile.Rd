@@ -16,7 +16,7 @@
 \title{Gets the full name of the file}
 
 \description{
-  Gets the full name of the file, that is the filename without the extension.
+  Gets the full name of the file, that is the filename without the filename extension.
 }
 
 \usage{\method{getDefaultFullName}{GenericDataFile}(this, aliased=FALSE, ...)}

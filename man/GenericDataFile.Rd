@@ -21,12 +21,12 @@
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{GenericDataFile}\cr
+\code{~~~~~~~+--}\emph{\code{GenericDataFile}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{TabularTextFile}\cr
+\emph{\link[R.filesets]{GenericTabularFile}}, \emph{\link[R.filesets]{TabularTextFile}}\cr
 
-public static class \bold{GenericDataFile}\cr
+public abstract static class \bold{GenericDataFile}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
@@ -55,6 +55,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{fromFile} \tab  -\cr
  \tab \code{getAlias} \tab  -\cr
  \tab \code{getChecksum} \tab  -\cr
+ \tab \code{getExtension} \tab  -\cr
+ \tab \code{getExtensionPattern} \tab  -\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
  \tab \code{getFileSize} \tab  -\cr
  \tab \code{\link[R.filesets:getFileType.GenericDataFile]{getFileType}} \tab Gets the file type of a file.\cr
@@ -63,6 +65,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{isFile} \tab  -\cr
  \tab \code{readChecksum} \tab  -\cr
  \tab \code{setAlias} \tab  -\cr
+ \tab \code{setExtensionPattern} \tab  -\cr
  \tab \code{validateChecksum} \tab  -\cr
  \tab \code{writeChecksum} \tab  -\cr
 }

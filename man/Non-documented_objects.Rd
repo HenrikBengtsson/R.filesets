@@ -239,6 +239,24 @@
 \alias{appendFullNameTranslatorBylist.FullNameInterface}
 \alias{appendFullNamesTranslatorBylist}
 \alias{appendFullNamesTranslatorBylist.GenericDataFileSet}
+\alias{getDefaultFullNameAndExtension}
+\alias{getDefaultFullNameAndExtension.FullNameInterface}
+\alias{getExtension}
+\alias{getExtension.FullNameInterface}
+\alias{getExtensionPattern}
+\alias{getExtensionPattern.FullNameInterface}
+\alias{hasExtension}
+\alias{hasExtension.FullNameInterface}
+\alias{hasExtension.GenericDataFileSet}
+\alias{setExtensionPattern}
+\alias{setExtensionPattern.FullNameInterface}
+\alias{getExtension.GenericDataFile}
+\alias{getExtensionPattern.GenericDataFile}
+\alias{getFilenameExtension}
+\alias{getFilenameExtension.GenericDataFile}
+\alias{getOutputExtension}
+\alias{getOutputExtension.GenericDataFile}
+\alias{setExtensionPattern.GenericDataFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

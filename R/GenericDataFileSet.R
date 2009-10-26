@@ -760,8 +760,9 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   path <- Arguments$getReadablePath(path, mustExist=TRUE);
 
   # Argument 'pattern':
-  if (!is.null(pattern))
+  if (!is.null(pattern)) {
     pattern <- Arguments$getRegularExpression(pattern);
+  }
 
   # Argument 'fileClass':
   clazz <- Class$forName(fileClass);
@@ -1228,6 +1229,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2009-10-23
+# o Added hasExtension() and getDefaultFullNameAndExtension().
 # 2009-10-22
 # o Rename previous setFullNamesNnn() to appendFullNamesNnn().
 # 2009-10-02
