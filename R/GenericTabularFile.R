@@ -79,6 +79,9 @@ setMethodS3("translateColumnNames", "GenericTabularFile", function(this, names, 
       throw("Failed to translate names. Some names were translated to NA:s ", 
             paste(head(names[is.na(names2)]), collapse=", "));
     }
+    if (length(names2) != length(names)) {
+      throw(sprintf("Failed to translate column names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)));
+    }
     names <- names2;
 
     if (identical(attr(names, "isFinal"), TRUE))

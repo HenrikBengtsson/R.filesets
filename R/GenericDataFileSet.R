@@ -613,28 +613,34 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
 
   verbose && enter(verbose, "Appending ", length(files), " files");
-  # Validate classes
-  verbose && enter(verbose, "Validating file classes");
-  className <- class(this$files[[1]])[1];
-  isValid <- unlist(lapply(files, FUN=inherits, className));
-  if (!all(isValid)) {
-    throw("Some of the elements in argument 'files' are not '", 
-      className, "'");
+  if (length(files) == 0) {
+    verbose && cat(verbose, "No files to append. Skipping.");
+  } else {
+    # Validate classes?
+    if (nbrOfFiles(this) > 0) {
+      verbose && enter(verbose, "Validating file classes");
+      className <- class(this$files[[1]])[1];
+      isValid <- unlist(lapply(files, FUN=inherits, className));
+      if (!all(isValid)) {
+        throw("Some of the elements in argument 'files' are not '", 
+          className, "'");
+      }
+      verbose && exit(verbose);
+    }
+
+    # Clone file objects?
+    if (clone) {
+      verbose && enter(verbose, "Cloning files");
+      files <- base::lapply(files, FUN=function(file) clone(file));    
+      verbose && exit(verbose);
+    }
+
+    # Append
+    this$files <- append(this$files, files);
+
+    # Some cached values are incorrect now.
+    clearCache(this);
   }
-  verbose && exit(verbose);
-
-  # Clone file objects?
-  if (clone) {
-    verbose && enter(verbose, "Cloning files");
-    files <- base::lapply(files, FUN=function(file) clone(file));    
-    verbose && exit(verbose);
-  }
-
-  # Append
-  this$files <- append(this$files, files);
-
-  # Some cached values are incorrect now.
-  clearCache(this);
 
   verbose && exit(verbose);
 
@@ -1241,6 +1247,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 ############################################################################
 # HISTORY:
 # 2009-10-30
+# o BUG FIX: Appending empty data sets using append() of GenericDataFileSet
+#   would give error Error in this$files[[1]] : subscript out of bounds.
 # o Now append() clears the cache.
 # o Now clearCache() of GenericDataFileSet clears the total file size.
 # o Added argument 'force=FALSE' to getFileSize() of GenericDataFileSet.
