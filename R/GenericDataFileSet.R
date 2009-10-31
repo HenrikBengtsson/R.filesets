@@ -265,7 +265,7 @@ setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
 
 
 
-setMethodS3("getFileSize", "GenericDataFileSet", function(this, force=FALSE, ...) {
+setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE) {
   fileSize <- this$.fileSize;
   if (force || is.null(fileSize)) {
     fileSize <- sum(unlist(lapply(this, FUN=getFileSize), use.names=FALSE));
