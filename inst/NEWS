@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.6.5 [2009-10-30]
+o ROBUSTIFICATION: Now translateFullName() of FullNameInterface 
+  throws an exception if some fullnames were translated into NA.
+o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile 
+  throws an exception if some fullnames were translated into NA.
+
+
 Version: 0.6.4 [2009-10-25]
 o Added get- and setExtensionPattern() to FullNameInterface.
 o Added getExtension() to GenericDataFile.

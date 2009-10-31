@@ -362,16 +362,25 @@ setMethodS3("getFullNameTranslator", "FullNameInterface", function(this, ...) {
 
 
 
-setMethodS3("translateFullName", "FullNameInterface", function(this, name, ...) {
+setMethodS3("translateFullName", "FullNameInterface", function(this, names, ...) {
   nameTranslator <- getFullNameTranslator(this);
+
   if (!is.null(nameTranslator)) {
-    name <- nameTranslator(name, file=this);
-    if (identical(attr(name, "isFinal"), TRUE))
-      return(name);
+    names2 <- nameTranslator(names, file=this);
+
+    # Sanity check
+    if (any(is.na(names2))) {
+      throw("Failed to translate names. Some names were translated to NA:s ", 
+            paste(head(names[is.na(names2)]), collapse=", "));
+    }
+    names <- names2;
+
+    if (identical(attr(names, "isFinal"), TRUE))
+      return(names);
   }
 
   # Do nothing
-  name;
+  names;
 }, private=TRUE)
 
 
@@ -484,6 +493,9 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-10-30
+# o ROBUSTIFICATION: Now translateFullName() of FullNameInterface throws
+#   an exception if some fullnames were translated into NA.
 # 2009-10-23
 # o Added appendFullNameTranslatorBylist() which makes it possible to do
 #   setup a sequence of fullnames translators fnt1, fnt2, fnt3 by calling
