@@ -6,6 +6,8 @@ o ROBUSTIFICATION: Now translateFullName() of FullNameInterface
   throws an exception if some fullnames were translated into NA.
 o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile 
   throws an exception if some fullnames were translated into NA.
+o BUG FIX: After doing append() to a GenericDataFileSet, the
+  total file size reported would remain the same.
 
 
 Version: 0.6.4 [2009-10-25]

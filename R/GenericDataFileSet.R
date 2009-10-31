@@ -265,9 +265,9 @@ setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
 
 
 
-setMethodS3("getFileSize", "GenericDataFileSet", function(this, ...) {
+setMethodS3("getFileSize", "GenericDataFileSet", function(this, force=FALSE, ...) {
   fileSize <- this$.fileSize;
-  if (is.null(fileSize)) {
+  if (force || is.null(fileSize)) {
     fileSize <- sum(unlist(lapply(this, FUN=getFileSize), use.names=FALSE));
     this$.fileSize <-  fileSize;
   }
@@ -633,6 +633,9 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
   # Append
   this$files <- append(this$files, files);
 
+  # Some cached values are incorrect now.
+  clearCache(this);
+
   verbose && exit(verbose);
 
   invisible(this);
@@ -695,7 +698,9 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ...) {
 
   res <- clone(this);
   res$files <- this$files[files];
-  clearCache(res);  # Some cached values are incorrect now.
+
+  # Some cached values are incorrect now.
+  clearCache(res);
 
   res;
 })
@@ -705,6 +710,12 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ...) {
 setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   # Clear the cache of all files
   lapply(this, clearCache);
+
+  # Clear cached values
+  fields <- c(".fileSize");
+  for (field in fields) {
+    this[[field]] <- NULL;
+  }
 
   # Then for this object
   NextMethod("clearCache", this);
@@ -1229,6 +1240,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2009-10-30
+# o Now append() clears the cache.
+# o Now clearCache() of GenericDataFileSet clears the total file size.
+# o Added argument 'force=FALSE' to getFileSize() of GenericDataFileSet.
 # 2009-10-23
 # o Added hasExtension() and getDefaultFullNameAndExtension().
 # 2009-10-22
