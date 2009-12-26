@@ -107,7 +107,6 @@
 \alias{hasTags.GenericDataFile}
 \alias{hasTags.GenericDataFileSet}
 \alias{indexOf}
-\alias{indexOf.GenericDataFileSet}
 \alias{isFile.GenericDataFile}
 \alias{nbrOfColumns}
 \alias{nbrOfColumns.GenericTabularFile}

@@ -450,6 +450,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 # @author
 #
 # \seealso{
+#   @seemethod "indexOf"
 #   @seeclass
 # }
 #*/###########################################################################
@@ -464,6 +465,42 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 })
 
 
+
+###########################################################################/**
+# @RdocMethod indexOf
+#
+# @title "Finds indices of a subset of files"
+#
+# \description{
+#   @get "title" whose names match a given set of names or name patterns.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{patterns}{A @character @vector of length K of names and/or 
+#   regular expressions to be matched.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer @vector of length K with elements in
+#   [1,@seemethod "nbrOfFiles"] or @NA (for non-matched names).
+# }
+#
+# \details{
+#   If an element of \code{patterns} contains a comma, then that element
+#   is matched against the @seemethod "getFullNames", otherwise it is
+#   matched against @seemethod "getNames".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "getNames"
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns, ...) {
   names <- getNames(this);
   fullnames <- getFullNames(this);
@@ -1246,6 +1283,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2009-12-25
+# o Added Rd help for indexOf() of GenericDataFileSet.
 # 2009-10-30
 # o BUG FIX: Appending empty data sets using append() of GenericDataFileSet
 #   would give error Error in this$files[[1]] : subscript out of bounds.

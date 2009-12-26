@@ -32,6 +32,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
+  \code{\link[R.filesets:indexOf.GenericDataFileSet]{*indexOf}()}
   For more information see \code{\link{GenericDataFileSet}}.
 }
 \keyword{internal}

@@ -34,7 +34,7 @@
   hasColumnHeader.TabularTextFile hasFile hasFile.GenericDataFileSet
   hasTag hasTag.GenericDataFile hasTag.GenericDataFileSet hasTags
   hasTags.GenericDataFile hasTags.GenericDataFileSet indexOf
-  indexOf.GenericDataFileSet isFile.GenericDataFile nbrOfColumns
+  isFile.GenericDataFile nbrOfColumns
   nbrOfColumns.GenericTabularFile nbrOfFiles nbrOfLines
   nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
   nbrOfRows.TabularTextFile readChecksum
