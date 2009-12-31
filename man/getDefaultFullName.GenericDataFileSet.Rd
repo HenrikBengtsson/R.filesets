@@ -19,7 +19,7 @@
   Gets the default full name of the file set, that is the name of the directory without parent directories.
 }
 
-\usage{\method{getDefaultFullName}{GenericDataFileSet}(this, parent=1, ...)}
+\usage{\method{getDefaultFullName}{GenericDataFileSet}(this, parent=0, ...)}
 
 \arguments{
  \item{parent}{The number of generations up in the directory tree the
@@ -34,10 +34,10 @@
 
 \details{
  By default, the full name of a file set is the name of the directory
- containing all the files, e.g. the name of file set \code{path/to,a,b/*}
- is \code{to,a,b}.
+ containing all the files, e.g. the name of file set
+ \code{path/foo,c/to,a,b/*} is \code{to,a,b}.
  Argument \code{parent=1} specifies that the parent directory should be
- used, and so on.
+ used, e.g. \code{foo,c}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

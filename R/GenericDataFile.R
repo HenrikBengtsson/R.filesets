@@ -50,6 +50,12 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(filename)) {
     pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=mustExist);
+    if (!is.na(pathname) && !isFile(pathname)) {
+      if (isDirectory(pathname)) {
+        throw("The specified pathname is a directory: ", pathname);
+      }
+      throw("The specified pathname is not a file: ", pathname);
+    }
   } else {
     pathname <- NULL;
   }
@@ -115,7 +121,7 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
 
   value <- getFileSize(this);
   valueOther <- getFileSize(other);
-  if (value != valueOther) {
+  if (!identical(value, valueOther)) {
     msg <- sprintf("The file sizes differ: %.0f != %.0f",
                                           value, valueOther);
     attr(notEqual, "reason") <- msg;
@@ -124,7 +130,7 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
 
   value <- getChecksum(this);
   valueOther <- getChecksum(other);
-  if (value != valueOther) {
+  if (identical(value, valueOther)) {
     msg <- sprintf("The checksums differ: %d != %d",
                                           value, valueOther);
     attr(notEqual, "reason") <- msg;
@@ -190,9 +196,11 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   # File size
   fileSize <- getFileSize(this, "units");
-  fileSizeB <- sprintf("%.0f bytes", getFileSize(this, "numeric"));
-  if (fileSizeB != fileSize) {
-    fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+  if (!is.na(fileSize)) {
+    fileSizeB <- sprintf("%.0f bytes", getFileSize(this, "numeric"));
+    if (fileSizeB != fileSize) {
+      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+    }
   }
   s <- c(s, sprintf("File size: %s", fileSize));
 
@@ -586,8 +594,6 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
     on.exit(popState(verbose));
   }
  
-
-
   # Assert that we're not trying to copy to itself
   if (identical(pathname, getPathname(this)))
     throw("Cannot copy file. Source and destination are identical: ", pathname);
@@ -628,6 +634,10 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
     on.exit(popState(verbose));
   }
  
+  # Assert that the file exists
+  if (!isFile(this)) {
+    throw("Cannot rename file. Source file does not exist: NA");
+  }   
 
   # Nothing to do?
   if (identical(pathname, getPathname(this)))
@@ -670,10 +680,15 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
 
   checksum <- this$.checksum;
   if (force || is.null(checksum) || hasBeenModified(this)) {
-    verbose && enter(verbose, "Calculating checksum");
-    pathname <- getPathname(this);
-    checksum <- digest2(pathname, file=TRUE);
-    verbose && exit(verbose);
+    if (isFile(this)) {
+      verbose && enter(verbose, "Calculating checksum");
+      pathname <- getPathname(this);
+      checksum <- digest2(pathname, file=TRUE);
+      verbose && exit(verbose);
+    } else {
+      naValue <- as.character(NA);
+      checksum <- naValue;
+    }
     this$.checksum <- checksum;
   }
 
@@ -688,6 +703,10 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
     pushState(verbose);
     on.exit(popState(verbose));
   }
+
+  if (!isFile(this)) {
+    throw("Cannot write checksum to file. File does not exist: NA");
+  }   
 
 
   verbose && enter(verbose, "Writing checksum");
@@ -726,6 +745,10 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
     pushState(verbose);
     on.exit(popState(verbose));
   }
+
+  if (!isFile(this)) {
+    throw("Cannot read stored checksum. File does not exist: NA");
+  }   
 
   verbose && enter(verbose, "Reading checksum");
   pathname <- getPathname(this);
@@ -770,6 +793,10 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
     on.exit(popState(verbose));
   }
 
+  if (!isFile(this)) {
+    throw("Cannot compare checksum. File does not exist: NA");
+  }   
+
   pathname <- getPathname(this);
   outPathname <- sprintf("%s.md5", pathname);
 
@@ -780,7 +807,8 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
   if (isFile(outPathname)) {
     checksum2 <- readLines(outPathname, warn=FALSE);
   } else {
-    checksum2 <- NA;
+    naValue <- as.character(NA);
+    checksum2 <- naValue;
   }
   res <- identical(checksum, checksum2);
 
@@ -798,6 +826,10 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
     pushState(verbose);
     on.exit(popState(verbose));
   }
+
+  if (!isFile(this)) {
+    throw("Cannot validate checksum. File does not exist: NA");
+  }   
 
   verbose && enter(verbose, "Validating checksum");
   pathname <- getPathname(this);
@@ -869,6 +901,10 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 
 setMethodS3("gzip", "GenericDataFile", function(this, ...) {
+  if (!isFile(this)) {
+    throw("Cannot gzip file. File does not exist: NA");
+  }   
+
   pathname <- getPathname(this);
   if (regexpr("[.]gz$", pathname) != -1)
     throw("File is already gzip'ed: ", pathname);
@@ -880,6 +916,10 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
+  if (!isFile(this)) {
+    throw("Cannot gunzip file. File does not exist: NA");
+  }
+
   pathname <- getPathname(this);
   if (regexpr("[.]gz$", pathname) == -1)
     throw("File is not gzip'ed: ", pathname);
@@ -893,6 +933,11 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-12-30
+# o BUG FIX: Now GenericDataFile(pathname) throws an error if 'pathname'
+#   is refering to a directory.
+# o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  Made all
+#   methods aware of such missing files.
 # 2009-10-02
 # o CLEAN UP: Removed setFullName() for GenericDataFile, because there
 #   is not a "default" on.

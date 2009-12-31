@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  An GenericDataFileSet object represents a set of @see "GenericDataFile"s.
+#  A GenericDataFileSet object represents a set of @see "GenericDataFile"s.
 # }
 # 
 # @synopsis
@@ -24,6 +24,8 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
+#
+# @examples "../incl/GenericDataFileSet.Rex"
 # 
 # @author
 #*/###########################################################################
@@ -36,12 +38,10 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL
   } else if (is.list(files)) {
     reqFileClass <- GenericDataFileSet$getFileClass();
     base::lapply(files, FUN=function(df) {
-      if (!inherits(df, reqFileClass))
-        throw("Argument 'files' contains a non-", reqFileClass, 
-                                                  " object: ", class(df)[1]);
-    })
+      Arguments$getInstanceOf(df, reqFileClass)
+    });
   } else {
-    throw("Argument 'files' is of unknown type: ", mode(files));
+    throw("Argument 'files' is of unknown type: ", mode(files)[1]);
   }
 
   # Arguments '...':
@@ -118,7 +118,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   if (n >= 5)
     names <- c(names[1:2], "...", names[n]);
   names <- paste(names, collapse=", ");
-  s <- c(s, sprintf("Names: %s", names));
+  s <- c(s, sprintf("Names: %s [%d]", names, n));
 
   # Pathname
   path <- getPath(this);
@@ -303,8 +303,10 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
   files <- getFiles(this);
-  if (length(files) == 0)
-    return(NA);
+  if (length(files) == 0) {
+    naValue <- as.character(NA);
+    return(naValue);
+  }
   getPath(files[[1]]);
 })
 
@@ -485,7 +487,7 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #
 # \value{
 #   Returns an @integer @vector of length K with elements in
-#   [1,@seemethod "nbrOfFiles"] or @NA (for non-matched names).
+#   [1,@seemethod "nbrOfFiles"] or (integer) @NA (for non-matched names).
 # }
 #
 # \details{
@@ -501,12 +503,25 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns, ...) {
+setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., onMissing=c("NA", "error")) {
+  # Argument 'onMissing':
+  onMissing <- match.arg(onMissing);
+
   names <- getNames(this);
+
+  # Return all indices
+  if (is.null(patterns)) {
+    res <- seq(along=names);
+    names(res) <- names;
+    return(res);
+  }
+
   fullnames <- getFullNames(this);
 
+  naValue <- as.integer(NA);
+
   patterns0 <- patterns;
-  res <- sapply(patterns, FUN=function(pattern) {
+  res <- lapply(patterns, FUN=function(pattern) {
     pattern <- sprintf("^%s$", pattern);
     pattern <- gsub("\\^\\^", "^", pattern);
     pattern <- gsub("\\$\\$", "$", pattern);
@@ -518,10 +533,26 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns, ...) {
       idxs <- grep(pattern, names);
     }
     if (length(idxs) == 0)
-      idxs <- NA;
+      idxs <- naValue;
+
+    # Note that 'idxs' may return more than one match
     idxs;
   });
-  names(res) <- patterns0;
+
+  ns <- sapply(res, FUN=length);
+  names <- NULL;
+  for (kk in seq(along=ns)) {
+    names <- c(names, rep(patterns0[kk], times=ns[kk]));
+  }
+  res <- unlist(res, use.names=FALSE);
+  names(res) <- names;
+
+  # Not allowing missing values?
+  if (onMissing == "error" && any(is.na(res))) {
+    names <- names(res)[is.na(res)];
+    throw("Some names where not match: ", paste(names, collapse=", "));
+  }
+
   res;
 })
 
@@ -626,17 +657,21 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, ...) {
 setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
   if (length(idx) != 1)
     throw("Argument 'idx' must be a single index.");
-  idx <- Arguments$getIndex(idx, range=c(1, nbrOfFiles(this)));
-  this$files[[idx]];
+  res <- this$files;
+  n <- length(res);
+  idx <- Arguments$getIndex(idx, range=c(min(0L,n), n));
+  res[[idx]];
 })
 
 setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
+  res <- this$files;
   if (is.null(idxs)) {
-    this$files;
   } else {
-    idxs <- Arguments$getIndices(idxs, range=c(1, nbrOfFiles(this)));
-    this$files[idxs];
+    n <- length(res);
+    idxs <- Arguments$getIndices(idxs, range=c(min(0L, n), n));
+    res <- res[idxs];
   }
+  res;
 }, private=TRUE)
 
 
@@ -690,10 +725,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
   this <- x;
   other <- values;
 
-  if (!inherits(other, class(this)[1])) {
-    throw("Argument 'other' is not an ", class(this)[1], " object: ", 
-                                                      class(other)[1]);
-  }
+  other <- Arguments$getInstanceOf(other, class(this)[1]);
 
   appendFiles(this, getFiles(other), ...);
 })
@@ -713,8 +745,9 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #
 # \arguments{
 #  \item{files}{An @integer or a @logical @vector indicating which data files
-#    to be extracted.}
+#    to be extracted.  Negative indices are excluded.}
 #  \item{...}{Not used.}
+#  \item{onMissing}{A @character specifying the action if a requested file does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"}, a @see "GenericDataFile" refering to an @NA pathname is used in place.  If \code{"drop"}, the missing file is dropped.}
 # }
 #
 # \value{
@@ -727,20 +760,85 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("extract", "GenericDataFileSet", function(this, files, ...) {
+setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'files':
   if (is.logical(files)) {
     files <- whichVector(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
+  } else if (is.numeric(files)) {
+    files <- Arguments$getIntegers(files, disallow="NaN");
+
+    # Exclude indices?
+    if (any(files < 0, na.rm=TRUE)) {
+      incl <- files[files > 0];
+      if (length(incl) == 0) {
+        incl <- seq(this);
+      }
+      excl <- na.omit(files[files < 0]);
+      files <- setdiff(incl, -excl);
+      rm(incl, excl);
+    }
   }
 
-  files <- Arguments$getIndices(files, range=range(seq(this)));
+  # Argument 'onMissing':
+  onMissing <- match.arg(onMissing);
+
+  # Argument 'onDuplicates':
+  onDuplicates <- match.arg(onDuplicates);
+
+
+  if (onMissing == "error") {
+    disallow <- c("NA", "NaN");
+  } else if (is.element(onMissing, c("NA", "drop"))) {
+    disallow <- c("NaN");
+  }
+  files <- Arguments$getIndices(files, range=range(seq(this)), 
+                                                      disallow=disallow);
+  missing <- which(is.na(files));
+
+  # Drop non-existing files?
+  if (length(missing) > 0 && onMissing == "drop") {
+    files <- files[is.finite(files)];
+    missing <- integer(0);
+  }
+
+  # Check for duplicates?
+  if (onDuplicates != "ignore") {
+    dups <- which(is.finite(files) & duplicated(names(files)));
+    if (length(dups) > 0) {
+      dupNames <- names(files)[head(dups)];
+      dupNames <- paste(dupNames, collapse=", ");
+      if (onDuplicates == "error") {
+        throw("Cannot extract file subset. Files with identical names detected: ", dupNames);
+      } else if (onDuplicates == "drop") {
+        warning("Dropping files with duplicated names: ", dupNames);
+        files <- files[-dups];
+        missing <- which(is.na(files));
+      }
+    }
+  }
 
   res <- clone(this);
-  res$files <- this$files[files];
+  files <- this$files[files];
+
+  # Any missing files?
+  if (length(missing) > 0) {
+    className <- class(this$files[[1]])[1];
+    if (is.null(className)) {
+      className <- getFileClass(this);
+    }
+    clazz <- Class$forName(className);
+    naValue <- newInstance(clazz, NA, mustExist=FALSE);
+    for (idx in missing) {
+      files[[idx]] <- naValue;
+    }
+  }
+  res$files <- files;
+  rm(files);
 
   # Some cached values are incorrect now.
   clearCache(res);
@@ -821,10 +919,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   # Argument 'fileClass':
   clazz <- Class$forName(fileClass);
   dfStatic <- getStaticInstance(clazz);
-  if (!inherits(dfStatic, getFileClass(static))) {
-    throw("Argument 'fileClass' is not refering to an ", getFileClass(static),
-                           " class: ", paste(class(dfStatic), collapse=", "));
-  }
+  dfStatic <- Arguments$getInstanceOf(dfStatic, getFileClass(static));
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -846,6 +941,10 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   verbose && enter(verbose, "Scanning directory for files");
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE, 
                                    all.files=FALSE, recursive=recursive);
+  verbose && printf(verbose, "Found %d files/directories.\n", length(pathnames));
+  # Keep only files
+  keep <- sapply(pathnames, FUN=isFile);
+  pathnames <- pathnames[keep];
   verbose && printf(verbose, "Found %d files.\n", length(pathnames));
   verbose && exit(verbose);
 
@@ -933,7 +1032,9 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
   for (kk in seq_len(nbrOfFiles)) {
     verbose && enter(verbose, sprintf("File %d of %d", kk, nbrOfFiles));
     cf <- getFile(this, kk);
-    cfCopy <- copyTo(cf, path=path, ..., verbose=less(verbose));
+    if (isFile(cf)) {
+      cfCopy <- copyTo(cf, path=path, ..., verbose=less(verbose));
+    }
     verbose && exit(verbose);
   }
 
@@ -1069,9 +1170,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
 
 setMethodS3("hasFile", "GenericDataFileSet", function(this, file, ...) {
   # Argument 'file':
-  if (!inherits(file, "GenericDataFile")) {
-    throw("Argument 'file' is not a GenericDataFile: ", class(file)[1]);
-  }
+  file <- Arguments$getInstanceOf(file, "GenericDataFile");
 
   files <- getFiles(this);
   for (kk in seq(along=files)) {
@@ -1097,7 +1196,6 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
   msg <- NULL;
   attr(notEqual, "thisSet") <- getPath(this);
   attr(notEqual, "otherSet") <- getPath(other);
-
 
   if (!inherits(other, "GenericDataFileSet")) {
     msg <- sprintf("The 'other' is not a GenericDataFileSet: %s",
@@ -1174,10 +1272,10 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 #
 # \details{
 #  By default, the full name of a file set is the name of the directory 
-#  containing all the files, e.g. the name of file set \code{path/to,a,b/*} 
-#  is \code{to,a,b}.
+#  containing all the files, e.g. the name of file set 
+#  \code{path/foo,c/to,a,b/*} is \code{to,a,b}.
 #  Argument \code{parent=1} specifies that the parent directory should be
-#  used, and so on.
+#  used, e.g. \code{foo,c}.
 # }
 #
 # @author
@@ -1186,7 +1284,7 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=1, ...) {
+setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=0, ...) {
   # Argument 'parent':
   parent <- Arguments$getInteger(parent, range=c(0,32));
 
@@ -1195,8 +1293,10 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=1,
 
   # Get the path of this file set
   path <- getPath(this);
-  if (is.na(path))
-    return(NA);
+  if (is.na(path)) {
+    naValue <- as.character(NA);
+    return(naValue);
+  }
 
   while (parent > 0) {
     # path/to/<fullname>/<something>
@@ -1283,6 +1383,22 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2009-12-30
+# o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() of
+#   GenericDataFileSet to be consistent with the documentation.
+# o BUG FIX: Now byPath() of GenericDataFileSet returns only files. Before
+#   it would also return directories.
+# o Now extract(ds, c(1,2,NA,4), onMissing="NA") returns a valid
+#   GenericDataFileSet where missing files are returned as missing
+#   GenericDataFile:s.
+# o copyTo() of GenericDataFileSet quietly ignores missing files.
+# o Now a GenericDataFileSet may contain GenericDataFile:s refering to 
+#   missing files.
+# o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet would
+#   return a *logical* instead of *character* value.
+# o BUG FIX: indexOf(ds, names) of GenericDataFileSet would return a
+#   *logical* instead of an *integer* vector of NA:s if none of the names 
+#   existed.
 # 2009-12-25
 # o Added Rd help for indexOf() of GenericDataFileSet.
 # 2009-10-30

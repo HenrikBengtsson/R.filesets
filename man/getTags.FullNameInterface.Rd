@@ -19,7 +19,7 @@
   Gets the tags.
 }
 
-\usage{\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ...)}
+\usage{\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., useCustomTags=TRUE)}
 
 \arguments{
  \item{pattern}{An optional regular expression used to filter out tags.

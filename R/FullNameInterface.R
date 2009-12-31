@@ -202,7 +202,7 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ...) {
+setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ..., useCustomTags=TRUE) {
   fullname <- getFullName(this, ...);
 
   # The name is anything before the first comma
@@ -212,25 +212,28 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   tags <- substring(fullname, nchar(name)+2);  
   tags <- unlist(strsplit(tags, split=","));
 
-  # Are there custom tags?
-  customTags <- this$.tags;
-  if (length(customTags) > 0) {
-    # Replace asterisk custom tags?
-    if (is.element("*", customTags)) {
-      pos <- whichVector("*" == customTags);
-      customTags <- customTags[-pos];
-      
-      asteriskTags <- tags;
-      if (length(asteriskTags) > 0) {
-        if (length(customTags) == 0) {
-          customTags <- asteriskTags;
-        } else {
-          customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags); 
+  if (useCustomTags) {
+    # Are there custom tags?
+    customTags <- this$.tags;
+    if (length(customTags) > 0) {
+      # Replace asterisk custom tags?
+      hasAsteriskTags <- is.element("*", customTags);
+      if (hasAsteriskTags) {
+        pos <- whichVector("*" == customTags);
+        customTags <- customTags[-pos];
+        
+        asteriskTags <- tags;
+        if (length(asteriskTags) > 0) {
+          if (length(customTags) == 0) {
+            customTags <- asteriskTags;
+          } else {
+            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags); 
+          }
         }
-      }
-    }
-    tags <- customTags;
-  }
+      } # if (hasAsteriskTags)
+      tags <- customTags;
+    } # if (length(customTags) > 0)
+  } # if (useCustomTags)
 
   # Keep only those matching a regular expression?
   if (!is.null(pattern)) {

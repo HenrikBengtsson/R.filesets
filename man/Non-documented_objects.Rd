@@ -42,7 +42,6 @@
 \alias{fromFile.GenericDataFile}
 \alias{fromFiles}
 \alias{GenericDataFileList}
-\alias{GenericDataFileSetList}
 \alias{GenericTabularFile}
 \alias{getAlias}
 \alias{getAlias.GenericDataFile}
@@ -63,7 +62,6 @@
 \alias{getFile.GenericDataFileSet}
 \alias{getFileClass}
 \alias{getFileClass.GenericDataFileSet}
-\alias{getFileClass.GenericDataFileSetList}
 \alias{getFileList}
 \alias{getFileList.GenericDataFileSetList}
 \alias{getFilename}
@@ -256,6 +254,39 @@
 \alias{getOutputExtension}
 \alias{getOutputExtension.GenericDataFile}
 \alias{setExtensionPattern.GenericDataFile}
+\alias{as.data.frame.GenericDataFileSetList}
+\alias{clone.GenericDataFileSetList}
+\alias{extractByNames}
+\alias{extractByNames.GenericDataFileSetList}
+\alias{nbrOfDataSets}
+\alias{extract.GenericDataFileSetList}
+\alias{as.character.GenericDataFileSetList}
+\alias{getDefaultFullName.GenericDataFileSetList}
+\alias{getFileSet}
+\alias{getFileSet.GenericDataFileSetList}
+\alias{getFullNames.GenericDataFileSetList}
+\alias{getNames.GenericDataFileSetList}
+\alias{print.GenericDataFileSetList}
+\alias{as.GenericDataFileSetList}
+\alias{as.GenericDataFileSetList.GenericDataFileSetList}
+\alias{getAsteriskTags}
+\alias{getAsteriskTags.GenericDataFileSetList}
+\alias{getSets}
+\alias{getSets.GenericDataFileSetList}
+\alias{getSet}
+\alias{getSet.GenericDataFileSetList}
+\alias{nbrOfSets}
+\alias{nbrOfSets.GenericDataFileSetList}
+\alias{setTags.GenericDataFileSetList}
+\alias{as.list.GenericDataFileSetList}
+\alias{getTags.GenericDataFileSetList}
+\alias{getFileListV0}
+\alias{getFileListV0.GenericDataFileSetList}
+\alias{indexOf.GenericDataFileSetList}
+\alias{length.GenericDataFileSetList}
+\alias{nbrOfFiles.GenericDataFileSetList}
+\alias{getFileListClass}
+\alias{getFileListClass.GenericDataFileSetList}
 
 \description{
   This page contains aliases for all "non-documented" objects that

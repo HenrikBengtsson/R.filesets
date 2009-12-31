@@ -1,8 +1,24 @@
 Package: R.filesets
 ===================
 
-Version: 0.6.6 [2009-12-25]
+Version: 0.7.0 [2009-12-30]
+o Added protected as.data.frame() to GenericDataFileSetList.
+o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  
+  Made all methods aware of such missing files.
+o Now extract(ds, c(1,2,NA,4), onMissing="NA") returns a valid
+  GenericDataFileSet where missing files are returned as missing
+  GenericDataFile:s.
+o copyTo() of GenericDataFileSet quietly ignores missing files.
 o Added Rd help for indexOf() of GenericDataFileSet.
+o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() 
+  of GenericDataFileSet to be consistent with the documentation.
+o BUG FIX: Now GenericDataFile(pathname) throws an error if 'pathname'
+  is refering to a directory.
+o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet 
+  would return a *logical* instead of *character* value.
+o BUG FIX: indexOf(ds, names) of GenericDataFileSet would return a
+  *logical* instead of an *integer* vector of NA:s if none of the 
+  names existed.
 
 
 Version: 0.6.5 [2009-10-30]

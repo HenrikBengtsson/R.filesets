@@ -10,7 +10,7 @@
   extractMatrix.GenericTabularFile extractMatrix.GenericTabularFileSet
   findByName findByName.GenericDataFileSet fromFile
   fromFile.GenericDataFile fromFiles GenericDataFileList
-  GenericDataFileSetList GenericTabularFile getAlias
+  GenericTabularFile getAlias
   getAlias.GenericDataFile getAttribute getAttribute.GenericDataFile
   getAttributes getAttributes.GenericDataFile getChecksum
   getChecksum.GenericDataFile getColumnNames
@@ -18,7 +18,7 @@
   getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
   getCreatedOn getCreatedOn.GenericDataFile getFile
   getFile.GenericDataFileSet getFileClass
-  getFileClass.GenericDataFileSet getFileClass.GenericDataFileSetList
+  getFileClass.GenericDataFileSet 
   getFileList getFileList.GenericDataFileSetList getFilename getFiles
   getFiles.GenericDataFileSet getFileSize getFileSize.GenericDataFile
   getFileSize.GenericDataFileSet getFileType getFullName getFullNames
@@ -120,3 +120,22 @@
   getFilenameExtension getFilenameExtension.GenericDataFile
   getOutputExtension getOutputExtension.GenericDataFile
   setExtensionPattern.GenericDataFile
+  as.data.frame.GenericDataFileSetList clone.GenericDataFileSetList
+  extractByNames extractByNames.GenericDataFileSetList nbrOfDataSets
+  extract.GenericDataFileSetList 
+  as.character.GenericDataFileSetList
+  getDefaultFullName.GenericDataFileSetList getFileSet
+  getFileSet.GenericDataFileSetList getFullNames.GenericDataFileSetList
+  getNames.GenericDataFileSetList 
+  print.GenericDataFileSetList
+  as.GenericDataFileSetList
+  as.GenericDataFileSetList.GenericDataFileSetList getAsteriskTags
+  getAsteriskTags.GenericDataFileSetList getSets
+  getSets.GenericDataFileSetList getSet
+  getSet.GenericDataFileSetList nbrOfSets
+  nbrOfSets.GenericDataFileSetList setTags.GenericDataFileSetList
+as.list.GenericDataFileSetList getTags.GenericDataFileSetList
+  getFileListV0 getFileListV0.GenericDataFileSetList
+  indexOf.GenericDataFileSetList length.GenericDataFileSetList
+  nbrOfFiles.GenericDataFileSetList
+getFileListClass getFileListClass.GenericDataFileSetList
