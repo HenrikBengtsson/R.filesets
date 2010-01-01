@@ -942,9 +942,11 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE, 
                                    all.files=FALSE, recursive=recursive);
   verbose && printf(verbose, "Found %d files/directories.\n", length(pathnames));
-  # Keep only files
-  keep <- sapply(pathnames, FUN=isFile);
-  pathnames <- pathnames[keep];
+  if (length(pathnames) > 0) {
+    # Keep only files
+    keep <- sapply(pathnames, FUN=isFile);
+    pathnames <- pathnames[keep];
+  }
   verbose && printf(verbose, "Found %d files.\n", length(pathnames));
   verbose && exit(verbose);
 
@@ -1383,6 +1385,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2009-12-31
+# o BUG FIX: byPath() of GenericDataFileSet would give "Error in
+#   pathnames[keep] : invalid subscript type 'list'" if there was no files.
 # 2009-12-30
 # o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() of
 #   GenericDataFileSet to be consistent with the documentation.

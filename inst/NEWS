@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 0.7.0 [2009-12-30]
+Version: 0.7.0 [2009-12-31]
 o Added protected as.data.frame() to GenericDataFileSetList.
 o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  
   Made all methods aware of such missing files.
