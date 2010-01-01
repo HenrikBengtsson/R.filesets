@@ -8,6 +8,8 @@ o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.
 o Now extract(ds, c(1,2,NA,4), onMissing="NA") returns a valid
   GenericDataFileSet where missing files are returned as missing
   GenericDataFile:s.
+o Added na.rm=TRUE to all getTags() so that it returns NULL in case
+  the file is missing.
 o copyTo() of GenericDataFileSet quietly ignores missing files.
 o Added Rd help for indexOf() of GenericDataFileSet.
 o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() 

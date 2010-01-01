@@ -19,7 +19,7 @@
   Gets the tags.
 }
 
-\usage{\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., useCustomTags=TRUE)}
+\usage{\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., na.rm=TRUE, useCustomTags=TRUE)}
 
 \arguments{
  \item{pattern}{An optional regular expression used to filter out tags.
@@ -27,6 +27,8 @@
  \item{collapse}{A \code{\link[base]{character}} string used to concatenate the tags.
     If \code{\link[base]{NULL}}, the tags are not concatenated.}
  \item{...}{Not used.}
+ \item{na.rm}{If \code{\link[base:logical]{TRUE}} and the fullname is \code{\link[base]{NA}}, then \code{\link[base]{NULL}} is returned,
+    otherwise (character) \code{\link[base]{NA}} is returned.}
 }
 
 \value{
