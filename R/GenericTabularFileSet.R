@@ -38,7 +38,7 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=
   if (is.null(files)) {
     files <- seq(length=nbrOfFiles);
   } else {
-    files <- Arguments$getIndices(files, range=c(1, nbrOfFiles));
+    files <- Arguments$getIndices(files, max=nbrOfFiles);
     nbrOfFiles <- length(files);
   }
 

@@ -35,12 +35,14 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   \code{\link{GenericDataFileSet}}s.
  }
 
- \usage{GenericDataFileSetList(dsList=list(), tags="*", ..., .setClass="GenericDataFileSet")}
+ \usage{GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet")}
 
  \arguments{
    \item{dsList}{A single or a \code{\link[base]{list}} of \code{\link{GenericDataFileSet}}:s.}
    \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
    \item{...}{Not used.}
+   \item{allowDuplicates}{If \code{\link[base:logical]{FALSE}}, files with duplicated names are not
+     allowed and an exception is thrown, otherwise not.}
    \item{.setClass}{A \code{\link[base]{character}} string specifying a name of the
      class that each data set must be an instance of.}
  }

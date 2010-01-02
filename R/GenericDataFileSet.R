@@ -417,7 +417,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
     }
   }
 
-  order <- Arguments$getIndices(order, range=c(1, nbrOfFiles(this)));
+  order <- Arguments$getIndices(order, max=nbrOfFiles(this));
   if (any(duplicated(order))) {
     bad <- order[duplicated(order)];
     throw("Argument 'order' contains duplicates: ", 
@@ -659,7 +659,7 @@ setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
     throw("Argument 'idx' must be a single index.");
   res <- this$files;
   n <- length(res);
-  idx <- Arguments$getIndex(idx, range=c(min(0L,n), n));
+  idx <- Arguments$getIndex(idx, max=n);
   res[[idx]];
 })
 
@@ -668,7 +668,7 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
   if (is.null(idxs)) {
   } else {
     n <- length(res);
-    idxs <- Arguments$getIndices(idxs, range=c(min(0L, n), n));
+    idxs <- Arguments$getIndices(idxs, max=n);
     res <- res[idxs];
   }
   res;
@@ -796,8 +796,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   } else if (is.element(onMissing, c("NA", "drop"))) {
     disallow <- c("NaN");
   }
-  files <- Arguments$getIndices(files, range=range(seq(this)), 
-                                                      disallow=disallow);
+  files <- Arguments$getIndices(files, max=length(this), disallow=disallow);
   missing <- which(is.na(files));
 
   # Drop non-existing files?

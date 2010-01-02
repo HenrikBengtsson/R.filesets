@@ -475,7 +475,7 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses
   # Arguments 'columns':
   if (is.numeric(columns)) {
     columnNames <- getColumnNames(this);
-    columns <- Arguments$getIndices(columns, range=c(1, length(columnNames)));
+    columns <- Arguments$getIndices(columns, max=length(columnNames));
     columnNames <- columnNames[columns];
   } else {
     columnNames <- Arguments$getCharacters(columnNames);

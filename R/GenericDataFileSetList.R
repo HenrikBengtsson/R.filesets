@@ -16,6 +16,8 @@
 #   \item{dsList}{A single or a @list of @see "GenericDataFileSet":s.}
 #   \item{tags}{A @character @vector of tags.}
 #   \item{...}{Not used.}
+#   \item{allowDuplicates}{If @FALSE, files with duplicated names are not
+#     allowed and an exception is thrown, otherwise not.}
 #   \item{.setClass}{A @character string specifying a name of the
 #     class that each data set must be an instance of.}
 # }
@@ -28,7 +30,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("GenericDataFileSetList", function(dsList=list(), tags="*", ..., .setClass="GenericDataFileSet") {
+setConstructorS3("GenericDataFileSetList", function(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet") {
   # Argument '.setClass':
   .setClass <- Arguments$getCharacter(.setClass, length=c(1,1));
 
@@ -45,16 +47,38 @@ setConstructorS3("GenericDataFileSetList", function(dsList=list(), tags="*", ...
     throw("Argument 'dsList' is not a list: ", class(dsList)[1]);
   }
 
+  # Arguments 'allowDuplicates':
+  allowDuplicates <- Arguments$getLogical(allowDuplicates);
+
   this <- extend(Object(), c("GenericDataFileSetList", uses("FullNameInterface")),
     .dsList = dsList,
-    .tags = NULL
+    .tags = NULL,
+    .allowDuplicates = allowDuplicates
   );
 
   setTags(this, tags);
 
+  assertDuplicates(this);
+
   this;
 })
 
+setMethodS3("assertDuplicates", "GenericDataFileSetList", function(this, ...) {
+  allowDuplicates <- this$.allowDuplicates;
+
+  if (!allowDuplicates) {
+    names <- getNames(this);
+    dups <- names[duplicated(names)];
+    n <- length(dups);
+    if (n > 0) {
+      if (n > 5) {
+        dups <- c(dups[1:2], "...", dups[n]);
+      }
+      dups <- paste(dups, collapse=", ");
+      throw(sprintf("Detected %n files with duplicated names, which are not allowed (onDuplicates=FALSE): %s", n, dups));
+    }
+  }
+}, protected=TRUE)
 
 
 
@@ -175,7 +199,7 @@ setMethodS3("getSets", "GenericDataFileSetList", function(this, idxs=NULL, ...) 
   if (is.null(idxs)) {
   } else {
     n <- length(res);
-    idxs <- Arguments$getIndices(idxs, range=c(min(0L, n), n));
+    idxs <- Arguments$getIndices(idxs, max=n);
     res <- res[idxs];
   }
   res;
@@ -186,7 +210,7 @@ setMethodS3("getSet", "GenericDataFileSetList", function(this, idx, ...) {
     throw("Argument 'idx' must be a single index.");
   res <- this$.dsList;
   n <- length(res);
-  idx <- Arguments$getIndex(idx, range=c(min(0L,n), n));
+  idx <- Arguments$getIndex(idx, max=n);
   res[[idx]];
 })
 
@@ -244,14 +268,31 @@ setMethodS3("getFullNames", "GenericDataFileSetList", function(this, ...) {
   names;
 })
 
-setMethodS3("getNames", "GenericDataFileSetList", function(this, ..., unique=FALSE) {
+
+setMethodS3("getNames", "GenericDataFileSetList", function(this, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  unionWithDuplicates <- function(x, y) {
+    keep <- is.element(x, y);
+    x <- x[keep];
+    keep <- is.element(y, x);
+    y <- y[keep];
+    z <- if(length(x) > length(y)) x else y;
+    sort(z);
+  }
+
   dsList <- getSets(this);
   names <- lapply(dsList, FUN=getNames);
 
-  names <- Reduce(union, names);
+  # Note, we cannot use union() if there may be duplicates
+  names <- Reduce(unionWithDuplicates, names);
 
   names <- unlist(names, use.names=FALSE);
 
+  # Return unique names?
+  allowDuplicates <- this$.allowDuplicates;
+  unique <- (!allowDuplicates);
   if (unique) {
     names <- unique(names);
   }
@@ -354,9 +395,23 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
     }
   }
 
+  # Avoid return duplicates if not allowed
+  allowDuplicates <- this$.allowDuplicates;
+  if (!allowDuplicates) {
+    dups <- files[duplicated(files)];
+    n <- length(dups);
+    if (n > 0) {
+      if (n > 1) {
+        dups <- c(dups[1:2], "...", dups[n]);
+      }
+      dups <- paste(dups, collapse=", ");
+      throw(sprintf("Argument 'files' contains %s duplicates, which is not allowed (allowDuplicates=FALSE): %s", n, dups));
+    }
+  }
+
   names <- getNames(this);
   n <- nbrOfFiles(this);
-  files <- Arguments$getIndices(files, range=c(min(0L,n),n), disallow="NaN");
+  files <- Arguments$getIndices(files, max=n, disallow="NaN");
   files <- names[files];
 
   dsList <- getSets(this);
@@ -372,6 +427,8 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
 
   res <- clone(this);
   res$.dsList <- dsList;
+
+  assertDuplicates(res);
 
   res;
 }, protected=TRUE)
@@ -490,6 +547,12 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
 ###########################################################################
 # HISTORY:
+# 2010-01-01
+# o BUG FIX: getNames() of GenericDataFileSetList would drop duplicated
+#   names if there where more than one data set.
+# o Added constructor argument 'allowDuplicates=TRUE'.  If FALSE, an
+#   error is thrown if a object with duplicates are tried to be created,
+#   either via the constructor or via extract().
 # 2009-12-30
 # o Rename getFileClass() to getFileListClass().
 # o Replaced getListOfSets() with getSets(), cf. getFiles().
