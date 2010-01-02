@@ -287,6 +287,8 @@
 \alias{nbrOfFiles.GenericDataFileSetList}
 \alias{getFileListClass}
 \alias{getFileListClass.GenericDataFileSetList}
+\alias{assertDuplicates}
+\alias{assertDuplicates.GenericDataFileSetList}
 
 \description{
   This page contains aliases for all "non-documented" objects that

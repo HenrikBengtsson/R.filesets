@@ -12,6 +12,7 @@ o Added na.rm=TRUE to all getTags() so that it returns NULL in case
   the file is missing.
 o copyTo() of GenericDataFileSet quietly ignores missing files.
 o Added Rd help for indexOf() of GenericDataFileSet.
+o ROBUSTNESS: Using new Arguments$getInstanceOf() were possible.
 o ROBUSTNESS: Now all index arguments are validated correctly 
   using the new 'max' argument of Arguments$getIndices().  Before
   the case where "max == 0" was not handled correctly.

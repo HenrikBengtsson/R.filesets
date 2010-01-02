@@ -139,3 +139,4 @@ as.list.GenericDataFileSetList getTags.GenericDataFileSetList
   indexOf.GenericDataFileSetList length.GenericDataFileSetList
   nbrOfFiles.GenericDataFileSetList
 getFileListClass getFileListClass.GenericDataFileSetList
+  assertDuplicates assertDuplicates.GenericDataFileSetList
