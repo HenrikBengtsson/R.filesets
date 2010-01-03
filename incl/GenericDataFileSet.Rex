@@ -28,15 +28,16 @@ print(sapply(ds, getExtension))
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Subsetting
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ds2 <- extract(ds, 1:4)
+n <- length(ds)
+ds2 <- extract(ds, 1:n)
 print(ds2)
 
-ds3 <- extract(ds, 4:1)
+ds3 <- extract(ds, n:1)
 print(ds3)
 
 stopifnot(identical(rev(getPathnames(ds3)), getPathnames(ds2)))
 
-idxs <- c(1,2,NA,4,NA,3)
+idxs <- c(1,2,NA,n,NA)
 ds4 <- extract(ds, idxs, onMissing="NA")
 print(ds4)
 print(getFullNames(ds4))
