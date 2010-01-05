@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.7.1 [2010-01-02]
+o Now setExtensionPattern(..., pattern=NULL) of GenericDataFile works.
+o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern() 
+  of GenericDataFile.  Before the default value was hardcoded
+  inside this function.
+
+
 Version: 0.7.0 [2010-01-02]
 o Added protected as.data.frame() to GenericDataFileSetList.
 o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  

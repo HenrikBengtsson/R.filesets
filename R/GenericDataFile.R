@@ -374,11 +374,17 @@ setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
 setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
 
 
-setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., force=FALSE) {
+setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., default="\\.([^.]+)$", force=FALSE) {
   pattern <- this$.extensionPattern;
   if (force || is.null(pattern)) {
+    # Argument 'default':
+    if (!is.null(default)) {
+      default <- Arguments$getRegularExpression(default);
+    }
+
     # Default pattern is anything following the last period
-    pattern <- "\\.([^.]+)$";
+    pattern <- default;
+
 ##   pattern <- toAsciiRegExprPattern(pattern); # Don't handle [.] and ~
     this$.extensionPattern <- pattern;
   }
@@ -386,8 +392,12 @@ setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., force=
 }, static=TRUE)
 
 
-setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern, ...) {
-  pattern <- Arguments$getRegularExpression(pattern);
+setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NULL, ...) {
+  # Argument 'pattern':
+  if (!is.null(pattern)) {
+    pattern <- Arguments$getRegularExpression(pattern);
+  }
+
   this$.extensionPattern <- pattern;
   invisible(this);
 })
@@ -933,6 +943,10 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-01-04
+# o Now setExtensionPattern(..., pattern=NULL) of GenericDataFile works.
+# o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern() of
+#   GenericDataFile.
 # 2009-12-30
 # o BUG FIX: Now GenericDataFile(pathname) throws an error if 'pathname'
 #   is refering to a directory.
