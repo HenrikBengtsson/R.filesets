@@ -374,9 +374,11 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'files':
+  nbrOfFiles <- length(this);
   if (is.null(files)) {
-    files <- seq(length=nbrOfFiles(this));
+    files <- seq(length=nbrOfFiles);
   } else if (is.logical(files)) {
+    files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
     files <- whichVector(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
@@ -410,8 +412,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   }
 
   names <- getNames(this);
-  n <- nbrOfFiles(this);
-  files <- Arguments$getIndices(files, max=n, disallow="NaN");
+  files <- Arguments$getIndices(files, max=nbrOfFiles, disallow="NaN");
   files <- names[files];
 
   dsList <- getSets(this);
@@ -547,6 +548,10 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
 ###########################################################################
 # HISTORY:
+# 2010-01-24
+# o ROBUSTNESS: If argument 'files' is logical, then extract() of
+#   GenericDataFileSetList now asserts that the length of 'files' matches
+#   the number of available files.
 # 2010-01-01
 # o BUG FIX: getNames() of GenericDataFileSetList would drop duplicated
 #   names if there where more than one data set.

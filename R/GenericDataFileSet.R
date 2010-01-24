@@ -765,7 +765,9 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'files':
+  nbrOfFiles <- length(this);
   if (is.logical(files)) {
+    files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
     files <- whichVector(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
@@ -796,7 +798,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   } else if (is.element(onMissing, c("NA", "drop"))) {
     disallow <- c("NaN");
   }
-  files <- Arguments$getIndices(files, max=length(this), disallow=disallow);
+  files <- Arguments$getIndices(files, max=nbrOfFiles, disallow=disallow);
   missing <- which(is.na(files));
 
   # Drop non-existing files?
@@ -1384,6 +1386,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2010-01-24
+# o ROBUSTNESS: If argument 'files' is logical, then extract() of
+#   GenericDataFileSet now asserts that the length of 'files' matches
+#   the number of available files.
 # 2009-12-31
 # o BUG FIX: byPath() of GenericDataFileSet would give "Error in
 #   pathnames[keep] : invalid subscript type 'list'" if there was no files.
