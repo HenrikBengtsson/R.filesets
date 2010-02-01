@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.7.4 [2010-01-31]
+o DOCUMENATION: Added Rd help paged to more methods for classes
+  GenericDataFile and GenericDataFileSet. 
+o DEPRECATION: Deprecated static fromFiles() of GenericDataSet.  
+  Use byPath() instead.
+
+
 Version: 0.7.3 [2010-01-24]
 o ROBUSTNESS: If argument 'files' is logical, then extract() of
   GenericDataFileSet and GenericDataFileSetList now asserts that the

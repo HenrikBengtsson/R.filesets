@@ -81,19 +81,6 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
 
 
 
-setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
-  label <- this$label;
-  if (is.null(label))
-    label <- getName(this, ...);
-  label;
-}, private=TRUE)
-
-setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
-  this$label <- label;
-  invisible(this);
-}, private=TRUE) 
-
-
 setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
   object <- NextMethod("clone", this, ...);
   if (clear)
@@ -102,6 +89,55 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
 }, private=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod equals
+#
+# @title "Checks if a file equals another"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{other}{The other @see "GenericDataFile" to be compared to.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns @TRUE if the file equals the other, otherwise @FALSE.
+#   If @FALSE, attributes are added specifying the pathnames of the two
+#   files compared, and the reason for them being different.
+# }
+#
+# \details{
+#   The two files compared are equal if they have the same pathname.
+#   
+#   The two files compared are \emph{not} equal if:
+#   \itemize{
+#    \item Argument \code{other} is not a @see "GenericDataFile", or
+#    \item their file sizes differ, or
+#    \item their file checksums differ.
+#   }
+#
+#   If none of the above occurs, the two files are considered equal.
+#
+#   Note that subclasses use refined rules.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "getFileSize".
+#   @seemethod "getChecksum".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
   # Default values
   notEqual <- FALSE;
@@ -229,7 +265,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # }
 #
 # \value{
-#   Returns a @character.
+#   Returns a @character string.
 # }
 #
 # @author
@@ -261,7 +297,7 @@ setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character.
+#   Returns a @character string.
 # }
 #
 # @author
@@ -334,7 +370,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character.
+#   Returns a @character string.
 # }
 #
 # \details{
@@ -367,11 +403,12 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALS
 }, protected=TRUE)
 
 
+setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
+
+
 setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
   getFilenameExtension(...);  
 }, protected=TRUE);
-
-setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
 
 
 setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., default="\\.([^.]+)$", force=FALSE) {
@@ -389,7 +426,7 @@ setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., defaul
     this$.extensionPattern <- pattern;
   }
   pattern;
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NULL, ...) {
@@ -400,30 +437,45 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 
   this$.extensionPattern <- pattern;
   invisible(this);
-})
+}, protected=TRUE)
 
 
 
+
+###########################################################################/**
+# @RdocMethod getExtension
+#
+# @title "Gets the filename extension"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Arguments passed to @seemethod "getFilename" and 
+#     @seemethod "getDefaultFullName".}
+# }
+#
+# \value{
+#   Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...);
+
+  # Why not getFullName()? /HB 2010-02-01
   fullname <- getDefaultFullName(this, ...);
+
   # Drop <fullname> and a possible '.'.
   substring(filename, first=nchar(fullname)+2);
-})
-
-
-
-setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
-  this$.alias;
-})
-
-setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
-  if (!is.null(alias)) {
-    alias <- Arguments$getFilename(alias);
-  }
-  
-  this$.alias <- alias;
-  invisible(this);
 })
 
 
@@ -466,16 +518,75 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 })
 
 
+###########################################################################/**
+# @RdocMethod isFile
+#
+# @title "Checks if this is an existing file"
+#
+# \description{
+#   @get "title" and not a directory.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @TRUE if an existing file (and not a directory),
+#   otherwise @FALSE.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "R.utils::isFile".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
   isFile(getPathname(this));
 })
 
 
+
+###########################################################################/**
+# @RdocMethod getFileSize
+#
+# @title "Gets the size of a file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{what}{A @character string specifying the data type returned.
+#   If \code{"numeric"}, then a @numeric value is returned.
+#   If \code{"units"}, then a human-readable @character string is returned.
+#  }
+#  \item{sep}{A @character string.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @numeric or a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "units"), sep="", ...) {
   # Argument 'what':
   what <- match.arg(what);
 
-  fileSize <-   file.info(this$.pathname)$size;
+  fileSize <- file.info(this$.pathname)$size;
   if (what == "numeric")
     return(fileSize);
 
@@ -497,21 +608,129 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 })
 
 
+###########################################################################/**
+# @RdocMethod getCreatedOn
+#
+# @title "Gets when the file was created"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a \code{POSIXct} time stamp.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
   file.info(this$.pathname)[["ctime"]];
 }, protected=TRUE)
 
 
+###########################################################################/**
+# @RdocMethod getLastModifiedOn
+#
+# @title "Gets when the file was last modified"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a \code{POSIXct} time stamp.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
   file.info(this$.pathname)[["mtime"]];
 }, protected=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod getLastAccessedOn
+#
+# @title "Gets when the file was last accessed"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a \code{POSIXct} time stamp.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
   file.info(this$.pathname)[["atime"]];
 }, protected=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod hasBeenModified
+#
+# @title "Checks whether the file has been modified"
+#
+# \description{
+#   @get "title" since last time checked.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+#  \item{unknown}{The @logical value returned if the timestamp for the 
+#   previous modification, if any, is unknown.}
+# }
+#
+# \value{
+#   Returns @TRUE, @FALSE, or the value of argument \code{unknown}.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TRUE) {
   lastModifiedOn <- getLastModifiedOn(this);
   prevModifiedOn <- this$.prevModifiedOn;
@@ -540,6 +759,41 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
 }, protected=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod fromFile
+#
+# @title "Defines a GenericDataFile from a pathname"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{filename, path}{The filename and the path to the file.  The file
+#    must exist, otherwise an exception is thrown.}
+#  \item{unknown}{The @logical value returned if the timestamp for the 
+#   previous modification, if any, is unknown.}
+#  \item{...}{Not used.}
+#  \item{recursive}{If TRUE, ...}
+#  \item{verbose}{...}
+#  \item{.checkArgs}{(Internal) If FALSE, validation of file existance and
+#   arguments are skipped.}
+# }
+#
+# \value{
+#   Returns a @see "GenericDataFile" (or a subclass thereof).
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "base::file.info".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL, ..., recursive=TRUE, verbose=FALSE, .checkArgs=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -576,6 +830,8 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
       # Try reading the file using the static fromFile() method of each class
       static <- getStaticInstance(clazz);
       tryCatch({
+        # Are we calling the same fromFile() instance multiple times here?
+        # Slow? /HB 2010-01-30
         res <- fromFile(static, filename=pathname, .checkArgs=FALSE);
         return(res);
       }, error = function(ex) {})
@@ -590,6 +846,54 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 
 
 
+
+###########################################################################/**
+# @RdocMethod copyTo
+#
+# @title "Safely copies a file to a new pathname"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{filename, path}{The filename and the path for the destination file.
+#   The default is to use the same filename as the source file.
+#   The destination pathname must not be the same as the source file, 
+#   otherwise an exception is thrown.}
+#  \item{overwrite}{If @TRUE, existing files are overwritten, otherwise not.
+#   If @FALSE and the file already exists, an exception is thrown.}
+#  \item{...}{Not used.}
+#  \item{recursive}{If TRUE, ...}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns a @see "GenericDataFile" (of the same class as the source file)
+#   refering to the new filname.
+#   If the source and destination pathnames are identical, an exception
+#   is thrown.
+# }
+# 
+# \details{
+#   In order to minimize the risk for corrupt copies, the
+#   @see "R.utils::copyFile" method of \pkg{R.utils} is used.
+#   That method first copies the file to a temporary file, which is then
+#   renamed.  This minimizes the risk of incomplete files.
+#   It also asserts that the file sizes of the source file and the copy
+#   are identical.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "renameTo".
+#   Internally @see "R.utils::copyFile" is used.
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -616,7 +920,8 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Fail-safe copying
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Copying file");
-  copyFile(getPathname(this), pathname, overwrite=overwrite, verbose=less(verbose, 10));
+  copyFile(getPathname(this), pathname, overwrite=overwrite, 
+                                                 verbose=less(verbose, 10));
   verbose && exit(verbose);
 
 
@@ -630,6 +935,38 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 
 
 
+###########################################################################/**
+# @RdocMethod renameTo
+#
+# @title "Renames/moves a file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{filename, path}{The filename and the path for the destination file.
+#   The default is to use the same filename as the source file.
+#   The destination pathname must not be the same as the source file, 
+#   otherwise an exception is thrown.}
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns the soure @see "GenericDataFile".
+# }
+# 
+# @author
+#
+# \seealso{
+#   @seemethod "copyTo".
+#   @see "base::file.rename".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -679,6 +1016,38 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 
 
 
+###########################################################################/**
+# @RdocMethod getChecksum
+#
+# @title "Gets the checksum of a file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{force}{If @FALSE, the file exists and has not be modified since,
+#    then the cached checksum is returned.}
+#  \item{verbose}{...}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character string, which can be @NA if file is missing.
+# }
+#
+# @author
+#
+# \seealso{
+#   Internally @see "digest::digest" is used.
+#   @seemethod "readChecksum".
+#   @seemethod "writeChecksum".
+#   @seemethod "compareChecksum".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -706,6 +1075,38 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
 })
 
 
+###########################################################################/**
+# @RdocMethod writeChecksum
+#
+# @title "Write the file checksum to a checksum file"
+#
+# \description{
+#   @get "title" having the same filename with suffix \code{.md5} added.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{skip}{If @TRUE, an already written checksum file is skipped.}
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns (invisibly) the pathname to the checksum file.
+#   An exception is thrown if the file does not exist.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "validateChecksum".
+#   @seemethod "compareChecksum".
+#   @seemethod "readChecksum".
+#   @seemethod "getChecksum".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -729,6 +1130,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
   # Skip existing checksum file?
   if (skip && isFile(outPathname)) {
     verbose && cat(verbose, "Found existing checksum file");
+    # Validating
     verbose && enter(verbose, "Reading existing checksum file");
     checksum <- readChecksum(this, verbose=less(verbose));
     verbose && cat(verbose, "Checksum (read): ", checksum);
@@ -748,6 +1150,44 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
 
 
 
+###########################################################################/**
+# @RdocMethod readChecksum
+#
+# @title "Reads the value of the corresponding checksum file"
+#
+# \description{
+#   @get "title", if existing.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns a @character string, which can be @NA if file is missing.
+#   An exception is thrown if the file does not exist, and hence not 
+#   the checkum file.
+# }
+#
+# \details{
+#   The content of the checksum file is trimmed from comment lines,
+#   whitespaces and then validated that the remaining part contains a
+#   hexadecimal value.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "validateChecksum".
+#   @seemethod "compareChecksum".
+#   @seemethod "writeChecksum".
+#   @seemethod "getChecksum".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -792,9 +1232,42 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
   verbose && exit(verbose);
 
   checksum;
-})
+}, protected=TRUE)
 
 
+###########################################################################/**
+# @RdocMethod compareChecksum
+#
+# @title "Compares the file checksum with the value of the checksum file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns @TRUE if the file checksum is identical to the stored value
+#   in the corresponding checksum file, otherwise @FALSE.  @FALSE is
+#   also returned if the checksum file does not exist.
+#   An exception is thrown if the file does not exist.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "validateChecksum".
+#   @seemethod "readChecksum".
+#   @seemethod "writeChecksum".
+#   @seemethod "getChecksum".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -829,6 +1302,37 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 })
 
 
+###########################################################################/**
+# @RdocMethod validateChecksum
+#
+# @title "Asserts that the file checksum matches the one of the checksum file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   An exception is thrown if not, that is, if @seemethod "compareChecksum"
+#   returns @FALSE.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "validateChecksum".
+#   @seemethod "readChecksum".
+#   @seemethod "writeChecksum".
+#   @seemethod "getChecksum".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -851,6 +1355,99 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 
   invisible(res);
 })
+
+
+
+
+
+###########################################################################/**
+# @RdocMethod gzip
+# @aliasmethod gunzip
+#
+# @title "Compresses/uncompresses a file"
+#
+# \description{
+#   @get "title" using gzip compression.  
+#   When compressing (uncompressing), the new filename has suffix \code{.gz}
+#   appended (removed).
+# }
+#
+# @synopsis
+#
+# \usage{\method{gunzip}{GenericDataFile}(this, ...)}
+#
+# \arguments{
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns (invisibly) the updated pathname.
+#   When compressing (uncompressing), an exception is thrown if the file
+#   is already compressed (not compressed).
+#   An exception is thrown if the file does not exist.
+# }
+#
+# @author
+#
+# \seealso{
+#   Internally @see "R.utils::gzip" is used.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("gzip", "GenericDataFile", function(this, ...) {
+  if (!isFile(this)) {
+    throw("Cannot gzip file. File does not exist: NA");
+  }   
+
+  pathname <- getPathname(this);
+  if (regexpr("[.]gz$", pathname) != -1)
+    throw("File is already gzip'ed: ", pathname);
+
+  outPathname <- sprintf("%s.gz", pathname);
+  gzip(pathname, destname=outPathname, ...);
+
+  this$.pathname <- outPathname;
+
+  invisible(pathname);
+}, protected=TRUE)
+
+
+
+setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
+  if (!isFile(this)) {
+    throw("Cannot gunzip file. File does not exist: NA");
+  }
+
+  pathname <- getPathname(this);
+  if (regexpr("[.]gz$", pathname) == -1)
+    throw("File is not gzip'ed: ", pathname);
+
+  outPathname <- gsub("[.]gz$", "", pathname);
+  gunzip(pathname, destname=outPathname, ...);
+
+  this$.pathname <- outPathname;
+
+  invisible(pathname);
+}, protected=TRUE)
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ODDS AND ENDS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
+  this$.alias;
+}, protected=TRUE)
+
+setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
+  if (!is.null(alias)) {
+    alias <- Arguments$getFilename(alias);
+  }
+  
+  this$.alias <- alias;
+  invisible(this);
+}, protected=TRUE)
 
 
 setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname, ...) {
@@ -909,40 +1506,26 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 }, static=TRUE, protected=TRUE)
 
 
+setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
+  label <- this$label;
+  if (is.null(label))
+    label <- getName(this, ...);
+  label;
+}, private=TRUE)
 
-setMethodS3("gzip", "GenericDataFile", function(this, ...) {
-  if (!isFile(this)) {
-    throw("Cannot gzip file. File does not exist: NA");
-  }   
+setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
+  this$label <- label;
+  invisible(this);
+}, private=TRUE) 
 
-  pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) != -1)
-    throw("File is already gzip'ed: ", pathname);
-  outPathname <- sprintf("%s.gz", pathname);
-  gzip(pathname, destname=outPathname, ...);
-  this$.pathname <- outPathname;
-  invisible(pathname);
-}, protected=TRUE)
-
-
-setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
-  if (!isFile(this)) {
-    throw("Cannot gunzip file. File does not exist: NA");
-  }
-
-  pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) == -1)
-    throw("File is not gzip'ed: ", pathname);
-  outPathname <- gsub("[.]gz$", "", pathname);
-  gunzip(pathname, destname=outPathname, ...);
-  this$.pathname <- outPathname;
-  invisible(pathname);
-}, protected=TRUE)
 
 
 
 ############################################################################
 # HISTORY:
+# 2010-01-31
+# o DOCUMENTATION: Added Rdoc comments to most methods.
+# o CLEAN UP: Made readChecksum() of GenericDataFile protected.
 # 2010-01-04
 # o Now setExtensionPattern(..., pattern=NULL) of GenericDataFile works.
 # o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern() of

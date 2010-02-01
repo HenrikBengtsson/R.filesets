@@ -49,22 +49,22 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{append} \tab  -\cr
- \tab \code{appendFiles} \tab  -\cr
+ \tab \code{\link[R.filesets:append.GenericDataFileSet]{append}} \tab Appends one data set to an existing one.\cr
+ \tab \code{\link[R.filesets:appendFiles.GenericDataFileSet]{appendFiles}} \tab Appends a list of files to a data set.\cr
  \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
- \tab \code{byName} \tab  -\cr
+ \tab \code{\link[R.filesets:byName.GenericDataFileSet]{byName}} \tab Locates and sets up a file set by its name.\cr
  \tab \code{\link[R.filesets:byPath.GenericDataFileSet]{byPath}} \tab Defines a GenericDataFileSet by searching for files in a directory.\cr
  \tab \code{clearCache} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
- \tab \code{findByName} \tab  -\cr
+ \tab \code{\link[R.filesets:findByName.GenericDataFileSet]{findByName}} \tab Locates all file sets that match the requested name.\cr
  \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
- \tab \code{getFile} \tab  -\cr
+ \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
  \tab \code{getFileClass} \tab  -\cr
  \tab \code{getFileSize} \tab  -\cr
  \tab \code{getFullNames} \tab  -\cr
- \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names of the files in the file set.\cr
+ \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names (or fullnames) of the files in the file set.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
  \tab \code{hasFile} \tab  -\cr

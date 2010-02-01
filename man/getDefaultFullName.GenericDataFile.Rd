@@ -30,7 +30,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}}.
+  Returns a \code{\link[base]{character}} string.
 }
 
 \details{

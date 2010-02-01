@@ -131,7 +131,7 @@ setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TR
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to @seemethod "getFullName".}
 # }
 #
 # \value{
@@ -178,13 +178,14 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #     If @NULL, all tags are returned.}
 #  \item{collapse}{A @character string used to concatenate the tags. 
 #     If @NULL, the tags are not concatenated.}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to @seemethod "getFullName".}
 #  \item{na.rm}{If @TRUE and the fullname is @NA, then @NULL is returned,
 #     otherwise (character) @NA is returned.}
+#  \item{useCustomTags}{If @TRUE, custom tags are used, otherwise not.}
 # }
 #
 # \value{
-#   Returns a @character @vector or @NULL.
+#   Returns a @character @vector (possibly @NA) or @NULL.
 # }
 #
 # \details{
@@ -266,15 +267,48 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 })
 
 
+###########################################################################/**
+# @RdocMethod hasTags
+# @aliasmethod hasTag
+#
+# @title "Checks whether the fullname contains a given set of tag(s)"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \usage{\method{hasTag}{FullNameInterface}(this, tag, ...)}
+#
+# \arguments{
+#  \item{tags, tag}{A @character @vector or scalar, of tags to looked for.}
+#  \item{...}{Additional arguments passed to @seemethod "getTags".}
+# }
+#
+# \value{
+#   Returns @TRUE if \emph{all} tags are part of the fullname, otherwise 
+#   @FALSE.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "getTags".
+#   @seemethod "getName".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("hasTags", "FullNameInterface", function(this, tags, ...) {
   tags <- strsplit(tags, split=",", fixed=TRUE);
   tags <- unlist(tags, use.names=FALSE);
-  all(tags %in% getTags(this));
+  all(is.element(tags, getTags(this, ...)));
 })
 
 setMethodS3("hasTag", "FullNameInterface", function(this, tag, ...) {
   hasTags(this, tags=tag, ...);
 })
+
 
 
 ###########################################################################/**
@@ -294,7 +328,7 @@ setMethodS3("hasTag", "FullNameInterface", function(this, tag, ...) {
 # }
 #
 # \value{
-#   Returns nothing.
+#   Returns (invisibly) itself.
 # }
 #
 # \details{
@@ -317,6 +351,8 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
   }
   
   this$.tags <- tags;
+
+  invisible(this);
 })
 
 
@@ -474,14 +510,73 @@ setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
 
 
 
+###########################################################################/**
+# @RdocMethod setFullName
+#
+# @title "Sets the full name"
+#
+# \description{
+#   @get "title".
+#   This is done using a fullname translator function that returns the
+#   specified fullname.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Arguments, typically a @character string, which are 
+#     passed to the fullname translator generator.
+#  }
+# }
+#
+# \value{
+#   Returns (invisibly) itself.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "getFullName".
+#   @seemethod "setName".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
  # Set a translator function that always returns a constant
  setFullNameTranslator(this, ...);
-}, protected=TRUE)
+})
 
 
 
-# Sets the name part of the fullname, leaving the tags untouched.
+###########################################################################/**
+# @RdocMethod setName
+#
+# @title "Sets the name part of the fullname"
+#
+# \description{
+#   @get "title", leaving the tags untouched.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{name}{The new name part of the fullname.  
+#    If @NULL, then the fullname is reset to the default.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns (invisibly) itself.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "setFullName".
+#   @seemethod "getName".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("setName", "FullNameInterface", function(this, name=NULL, ...) {
   # Argument 'name':
   if (!is.null(name)) {
@@ -499,18 +594,20 @@ setMethodS3("setName", "FullNameInterface", function(this, name=NULL, ...) {
       fullname;
     });
   }
-}, protected=TRUE)
+})
 
 
 
 setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
-})
+}, protected=TRUE)
 
 
 
 
 ############################################################################
 # HISTORY:
+# 2009-01-31
+# o DOCUMENTATION: Added more Rdoc comments.
 # 2009-10-31
 # o Now getTags(..., na.rm=TRUE) returns NULL in case the file is missing.
 # 2009-10-30

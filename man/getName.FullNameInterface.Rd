@@ -22,7 +22,7 @@
 \usage{\method{getName}{FullNameInterface}(this, ...)}
 
 \arguments{
- \item{...}{Not used.}
+ \item{...}{Additional arguments passed to \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.}
 }
 
 \value{

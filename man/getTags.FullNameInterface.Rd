@@ -26,13 +26,14 @@
     If \code{\link[base]{NULL}}, all tags are returned.}
  \item{collapse}{A \code{\link[base]{character}} string used to concatenate the tags.
     If \code{\link[base]{NULL}}, the tags are not concatenated.}
- \item{...}{Not used.}
+ \item{...}{Additional arguments passed to \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.}
  \item{na.rm}{If \code{\link[base:logical]{TRUE}} and the fullname is \code{\link[base]{NA}}, then \code{\link[base]{NULL}} is returned,
     otherwise (character) \code{\link[base]{NA}} is returned.}
+ \item{useCustomTags}{If \code{\link[base:logical]{TRUE}}, custom tags are used, otherwise not.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} \code{\link[base]{vector}} or \code{\link[base]{NULL}}.
+  Returns a \code{\link[base]{character}} \code{\link[base]{vector}} (possibly \code{\link[base]{NA}}) or \code{\link[base]{NULL}}.
 }
 
 \details{

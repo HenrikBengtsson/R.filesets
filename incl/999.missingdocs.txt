@@ -1,94 +1,10 @@
- append append.default append.GenericDataFileSet appendFiles
-  appendFiles.GenericDataFileSet as.character.GenericTabularFile
-  as.character.TabularTextFile byName byName.GenericDataFileSet
-  clearCache.GenericDataFileSet clone.GenericDataFile
-  clone.GenericDataFileSet compareChecksum
-  compareChecksum.GenericDataFile copyTo copyTo.GenericDataFile
-  copyTo.GenericDataFileSet dim.GenericTabularFile
-  dimension.TabularTextFile equals.GenericDataFile
-  equals.GenericDataFileSet extractMatrix
-  extractMatrix.GenericTabularFile extractMatrix.GenericTabularFileSet
-  findByName findByName.GenericDataFileSet fromFile
-  fromFile.GenericDataFile fromFiles GenericDataFileList
-  GenericTabularFile getAlias
-  getAlias.GenericDataFile getAttribute getAttribute.GenericDataFile
-  getAttributes getAttributes.GenericDataFile getChecksum
-  getChecksum.GenericDataFile getColumnNames
-  getColumnNames.GenericTabularFile getColumnNames.TabularTextFile
-  getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
-  getCreatedOn getCreatedOn.GenericDataFile getFile
-  getFile.GenericDataFileSet getFileClass
-  getFileClass.GenericDataFileSet 
-  getFileList getFileList.GenericDataFileSetList getFilename getFiles
-  getFiles.GenericDataFileSet getFileSize getFileSize.GenericDataFile
-  getFileSize.GenericDataFileSet getFileType getFullName getFullNames
-  getFullNames.GenericDataFileSet getFullNameTranslator
-  getFullNameTranslator.GenericDataFile
-  getFullNameTranslator.GenericDataFileSet getHeader
-  getHeader.TabularTextFile getLabel.GenericDataFile getLastAccessedOn
-  getLastAccessedOn.GenericDataFile getLastModifiedOn
-  getLastModifiedOn.GenericDataFile getNames getPathname getPathnames
-  getReadArguments getReadArguments.TabularTextFile getTags
-  gunzip.GenericDataFile gzip.GenericDataFile hasBeenModified
-  hasBeenModified.GenericDataFile hasColumnHeader
-  hasColumnHeader.TabularTextFile hasFile hasFile.GenericDataFileSet
-  hasTag hasTag.GenericDataFile hasTag.GenericDataFileSet hasTags
-  hasTags.GenericDataFile hasTags.GenericDataFileSet indexOf
-  isFile.GenericDataFile nbrOfColumns
-  nbrOfColumns.GenericTabularFile nbrOfFiles nbrOfLines
-  nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
-  nbrOfRows.TabularTextFile readChecksum
-  readChecksum.GenericDataFile readColumnNames
-  readColumnNames.TabularTextFile readColumns
-  readColumns.GenericTabularFile readColumns.TabularTextFile
-  readDataFrame readDataFrame.GenericTabularFile
-  readDataFrame.TabularTextFile readLines readLines.default
-  readLines.TabularTextFile readRawHeader readRawHeader.TabularTextFile
-  readTableHeader readTableHeader.default renameTo
-  renameTo.GenericDataFile renameToUpperCaseExt
-  renameToUpperCaseExt.GenericDataFile reorder.GenericDataFileSet
-  sapply sapply.default sapply.GenericDataFileSet setAlias
-  setAlias.GenericDataFile setAttribute setAttribute.GenericDataFile
-  setAttributes setAttributes.GenericDataFile setAttributesBy
-  setAttributesBy.GenericDataFile setAttributesByTags
-  setAttributesByTags.GenericDataFile setColumnNameTranslator
-  setColumnNameTranslator.GenericTabularFile setFullName
-  setFullName.GenericDataFile setFullName.GenericDataFileSet
-  setFullNamesTranslator setFullNamesTranslator.GenericDataFileSet
-  setFullNameTranslator setFullNameTranslator.GenericDataFile
-  setFullNameTranslator.GenericDataFileSet setLabel.GenericDataFile
-  setName setName.GenericDataFile setName.GenericDataFileSet setTags
-  TabularTextFile testAttributes testAttributes.GenericDataFile
-  translateColumnNames translateColumnNames.GenericTabularFile
-  translateFullName translateFullName.GenericDataFile
-  translateFullName.GenericDataFileSet update2
-  update2.GenericDataFileSet validate.GenericDataFileSet
-  validateChecksum validateChecksum.GenericDataFile verify
-  verify.GenericTabularFile verify.TabularTextFile writeChecksum
-  writeChecksum.GenericDataFile writeColumnsToFiles
- digest2
- getFilename.Arguments
-  byPath getFullNameTranslator.FullNameInterface 
-  getDefaultFullName
-  hasTag.FullNameInterface hasTags.FullNameInterface
-  setFullName.FullNameInterface setFullNamesTranslatorByfunction
-  setFullNamesTranslatorByfunction.GenericDataFileSet
-  setFullNamesTranslatorByNULL
-  setFullNamesTranslatorByNULL.GenericDataFileSet
-  setFullNameTranslator.FullNameInterface
-  setFullNameTranslatorByfunction
-  setFullNameTranslatorByfunction.FullNameInterface
-  setFullNameTranslatorByNULL
-  setFullNameTranslatorByNULL.FullNameInterface
-  setName.FullNameInterface translateFullName.FullNameInterface
-  updateFullName updateFullName.FullNameInterface
-  updateFullName.GenericDataFileSet updateFullNames
-  updateFullNames.GenericDataFileSet
-  [.TabularTextFile
+  [.TabularTextFile append append.default appendFiles
   appendFullNamesTranslator
   appendFullNamesTranslator.GenericDataFileSet
   appendFullNamesTranslatorByfunction
   appendFullNamesTranslatorByfunction.GenericDataFileSet
+  appendFullNamesTranslatorBylist
+  appendFullNamesTranslatorBylist.GenericDataFileSet
   appendFullNamesTranslatorByNULL
   appendFullNamesTranslatorByNULL.GenericDataFileSet
   appendFullNameTranslator appendFullNameTranslator.FullNameInterface
@@ -96,47 +12,91 @@
   appendFullNameTranslatorBycharacter.FullNameInterface
   appendFullNameTranslatorByfunction
   appendFullNameTranslatorByfunction.FullNameInterface
-  appendFullNameTranslatorByNULL
-  appendFullNameTranslatorByNULL.FullNameInterface
-  clearFullNamesTranslator clearFullNamesTranslator.GenericDataFileSet
-  clearFullNameTranslator clearFullNameTranslator.FullNameInterface
-  clearListOfFullNameTranslators
-  clearListOfFullNameTranslators.FullNameInterface
-  getListOfFullNameTranslators
-  getListOfFullNameTranslators.FullNameInterface
-  setListOfFullNameTranslators
-  setListOfFullNameTranslators.FullNameInterface
   appendFullNameTranslatorBylist
   appendFullNameTranslatorBylist.FullNameInterface
-  appendFullNamesTranslatorBylist
-  appendFullNamesTranslatorBylist.GenericDataFileSet
-  getDefaultFullNameAndExtension
-  getDefaultFullNameAndExtension.FullNameInterface getExtension
-  getExtension.FullNameInterface getExtensionPattern
-  getExtensionPattern.FullNameInterface hasExtension
-  hasExtension.FullNameInterface hasExtension.GenericDataFileSet
-  setExtensionPattern setExtensionPattern.FullNameInterface
-  getExtension.GenericDataFile getExtensionPattern.GenericDataFile
-  getFilenameExtension getFilenameExtension.GenericDataFile
-  getOutputExtension getOutputExtension.GenericDataFile
-  setExtensionPattern.GenericDataFile
-  as.data.frame.GenericDataFileSetList clone.GenericDataFileSetList
-  extractByNames extractByNames.GenericDataFileSetList nbrOfDataSets
-  extract.GenericDataFileSetList 
-  as.character.GenericDataFileSetList
-  getDefaultFullName.GenericDataFileSetList getFileSet
-  getFileSet.GenericDataFileSetList getFullNames.GenericDataFileSetList
-  getNames.GenericDataFileSetList 
-  print.GenericDataFileSetList
+  appendFullNameTranslatorByNULL
+  appendFullNameTranslatorByNULL.FullNameInterface
+  as.character.GenericDataFileSetList as.character.GenericTabularFile
+  as.character.TabularTextFile as.data.frame.GenericDataFileSetList
   as.GenericDataFileSetList
-  as.GenericDataFileSetList.GenericDataFileSetList getAsteriskTags
-  getAsteriskTags.GenericDataFileSetList getSets
-  getSets.GenericDataFileSetList getSet
-  getSet.GenericDataFileSetList nbrOfSets
-  nbrOfSets.GenericDataFileSetList setTags.GenericDataFileSetList
-as.list.GenericDataFileSetList getTags.GenericDataFileSetList
-  getFileListV0 getFileListV0.GenericDataFileSetList
-  indexOf.GenericDataFileSetList length.GenericDataFileSetList
-  nbrOfFiles.GenericDataFileSetList
-getFileListClass getFileListClass.GenericDataFileSetList
-  assertDuplicates assertDuplicates.GenericDataFileSetList
+  as.GenericDataFileSetList.GenericDataFileSetList
+  as.list.GenericDataFileSetList assertDuplicates
+  assertDuplicates.GenericDataFileSetList byName byPath
+  clearCache.GenericDataFileSet clearFullNamesTranslator
+  clearFullNamesTranslator.GenericDataFileSet clearFullNameTranslator
+  clearFullNameTranslator.FullNameInterface
+  clearListOfFullNameTranslators
+  clearListOfFullNameTranslators.FullNameInterface
+  clone.GenericDataFile clone.GenericDataFileSet
+  clone.GenericDataFileSetList compareChecksum copyTo digest2
+  dim.GenericTabularFile dimension.TabularTextFile
+  equals.GenericDataFileSet extract.GenericDataFileSetList
+  extractMatrix extractMatrix.GenericTabularFile
+  extractMatrix.GenericTabularFileSet findByName fromFile fromFiles
+  GenericDataFileList GenericTabularFile getAlias
+  getAlias.GenericDataFile getAsteriskTags
+  getAsteriskTags.GenericDataFileSetList getAttribute
+  getAttribute.GenericDataFile getAttributes
+  getAttributes.GenericDataFile getChecksum getColumnNames
+  getColumnNames.GenericTabularFile getColumnNames.TabularTextFile
+  getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
+  getCreatedOn getDefaultFullName
+  getDefaultFullName.GenericDataFileSetList getExtension
+  getExtensionPattern
+  getExtensionPattern.GenericDataFile getFile getFileClass
+  getFileClass.GenericDataFileSet getFileList
+  getFileList.GenericDataFileSetList getFileListClass
+  getFileListClass.GenericDataFileSetList getFileListV0
+  getFileListV0.GenericDataFileSetList getFilename
+  getFilename.Arguments getFilenameExtension
+  getFilenameExtension.GenericDataFile getFiles
+  getFiles.GenericDataFileSet getFileSize
+  getFileSize.GenericDataFileSet getFileType getFullName getFullNames
+  getFullNames.GenericDataFileSetList getFullNameTranslator
+  getFullNameTranslator.FullNameInterface getHeader
+  getHeader.TabularTextFile getLabel.GenericDataFile getLastAccessedOn
+  getLastModifiedOn getListOfFullNameTranslators
+  getListOfFullNameTranslators.FullNameInterface getNames
+  getNames.GenericDataFileSetList getOutputExtension
+  getOutputExtension.GenericDataFile getPathname getPathnames
+  getReadArguments getReadArguments.TabularTextFile getSet
+  getSet.GenericDataFileSetList getSets getSets.GenericDataFileSetList
+  getTags getTags.GenericDataFileSetList hasBeenModified
+  hasColumnHeader hasColumnHeader.TabularTextFile hasFile
+  hasFile.GenericDataFileSet indexOf indexOf.GenericDataFileSetList
+  length.GenericDataFileSetList nbrOfColumns
+  nbrOfColumns.GenericTabularFile nbrOfFiles
+  nbrOfFiles.GenericDataFileSetList nbrOfLines
+  nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
+  nbrOfRows.TabularTextFile nbrOfSets nbrOfSets.GenericDataFileSetList
+  readChecksum readColumnNames readColumnNames.TabularTextFile
+  readColumns readColumns.GenericTabularFile
+  readColumns.TabularTextFile readDataFrame
+  readDataFrame.GenericTabularFile readDataFrame.TabularTextFile
+  readLines readLines.default readLines.TabularTextFile readRawHeader
+  readRawHeader.TabularTextFile readTableHeader readTableHeader.default
+  renameTo renameToUpperCaseExt renameToUpperCaseExt.GenericDataFile
+  reorder.GenericDataFileSet sapply sapply.default
+  sapply.GenericDataFileSet setAlias setAlias.GenericDataFile
+  setAttribute setAttribute.GenericDataFile setAttributes
+  setAttributes.GenericDataFile setAttributesBy
+  setAttributesBy.GenericDataFile setAttributesByTags
+  setAttributesByTags.GenericDataFile setColumnNameTranslator
+  setColumnNameTranslator.GenericTabularFile setExtensionPattern
+  setExtensionPattern.GenericDataFile setFullName
+ setFullNamesTranslator
+  setFullNamesTranslator.GenericDataFileSet setFullNameTranslator
+  setFullNameTranslator.FullNameInterface setLabel.GenericDataFile
+  setListOfFullNameTranslators
+  setListOfFullNameTranslators.FullNameInterface setName
+ setTags setTags.GenericDataFileSetList
+  TabularTextFile testAttributes testAttributes.GenericDataFile
+  translateColumnNames translateColumnNames.GenericTabularFile
+  translateFullName translateFullName.FullNameInterface update2
+  update2.GenericDataFileSet updateFullName
+  updateFullName.FullNameInterface updateFullName.GenericDataFileSet
+  updateFullNames updateFullNames.GenericDataFileSet
+  validate.GenericDataFileSet validateChecksum verify
+  verify.GenericTabularFile verify.TabularTextFile writeChecksum
+  writeColumnsToFiles
+hasTag hasTags

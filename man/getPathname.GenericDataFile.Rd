@@ -26,7 +26,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}}.
+  Returns a \code{\link[base]{character}} string.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -144,6 +144,22 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
 
 
+setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
+  # Clear the cache of all files
+  lapply(this, clearCache);
+
+  # Clear cached values
+  fields <- c(".fileSize");
+  for (field in fields) {
+    this[[field]] <- NULL;
+  }
+
+  # Then for this object
+  NextMethod("clearCache", this);
+})
+
+
+
 setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
   # Clone itself
   object <- NextMethod("clone", this, ...);
@@ -324,6 +340,8 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
 #
 # @synopsis
 #
+# \usage{\method{nbrOfFiles}{GenericDataFileSet}(this, ...)}
+#
 # \value{
 #   Returns an @integer.
 # }
@@ -432,8 +450,9 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 
 ###########################################################################/**
 # @RdocMethod getNames
+# @aliasmethod getFullNames
 #
-# @title "Gets the names of the files in the file set"
+# @title "Gets the names (or fullnames) of the files in the file set"
 #
 # \description{
 #   @get "title".
@@ -441,12 +460,16 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #
 # @synopsis
 #
+# \usage{\method{getFullNames}{GenericDataFileSet}(this, ...)}
+#
 # \arguments{
-#  \item{...}{Arguments passed to \code{getName()} of each file.}
+#  \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})
+#    of each file.}
 # }
 #
 # \value{
-#   Returns a @character @vector.
+#   Returns a @character @vector of length equal to the number of files
+#   in the set.
 # }
 #
 # @author
@@ -654,6 +677,36 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, ...) {
   this$files;
 })
 
+
+###########################################################################/**
+# @RdocMethod getFile
+#
+# @title "Get a particular file of the file set"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{idx}{An @integer index specifying the file to be returned.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @GenericDataFile.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
   if (length(idx) != 1)
     throw("Argument 'idx' must be a single index.");
@@ -662,6 +715,7 @@ setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
   idx <- Arguments$getIndex(idx, max=n);
   res[[idx]];
 })
+
 
 setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
   res <- this$files;
@@ -675,6 +729,41 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 }, private=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod appendFiles
+#
+# @title "Appends a list of files to a data set"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{files}{A @list of @see "GenericDataFile":s to be appended.}
+#  \item{clone}{If @TRUE, each file is cloned before being appened.}
+#  \item{...}{Additional arguments passed to @seemethod "appendFiles".}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns (invisible) the data set itself.
+# }
+#
+# \details{
+#   The files appended must inherit the same class as the first file
+#   of the data set, otherwise an exception is thrown.
+# }
+#
+# @author
+#
+# \seealso{
+#   To append a data set, see @see "append".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -691,7 +780,8 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     # Validate classes?
     if (nbrOfFiles(this) > 0) {
       verbose && enter(verbose, "Validating file classes");
-      className <- class(this$files[[1]])[1];
+      aFile <- this$files[[1]];
+      className <- class(aFile)[1];
       isValid <- unlist(lapply(files, FUN=inherits, className));
       if (!all(isValid)) {
         throw("Some of the elements in argument 'files' are not '", 
@@ -720,6 +810,40 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 })
 
 
+###########################################################################/**
+# @RdocMethod append
+#
+# @title "Appends one data set to an existing one"
+#
+# \description{
+#   @get "title".
+#   The fullname of the merged data set is that of the first data set.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{values}{The data set to be appended to this data set.}
+#  \item{...}{Additional arguments passed to @seemethod "appendFiles".}
+# }
+#
+# \value{
+#   Returns a merged @see "GenericDataFileSet" of the same class as the
+#   first data set.
+# }
+#
+# \details{
+#   By default, in order to avoid downstream side effects on the data set
+#   being appended, each of its file is cloned before being appended.
+# }
+#
+# @author
+#
+# \seealso{
+#   To append one or more files, see @see "appendFiles".
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
   # To please R CMD check
   this <- x;
@@ -747,7 +871,10 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #  \item{files}{An @integer or a @logical @vector indicating which data files
 #    to be extracted.  Negative indices are excluded.}
 #  \item{...}{Not used.}
-#  \item{onMissing}{A @character specifying the action if a requested file does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"}, a @see "GenericDataFile" refering to an @NA pathname is used in place.  If \code{"drop"}, the missing file is dropped.}
+#  \item{onMissing}{A @character specifying the action if a requested file 
+#    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
+#    a @see "GenericDataFile" refering to an @NA pathname is used in place.
+#    If \code{"drop"}, the missing file is dropped.}
 # }
 #
 # \value{
@@ -845,22 +972,6 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   clearCache(res);
 
   res;
-})
-
-
-
-setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
-  # Clear the cache of all files
-  lapply(this, clearCache);
-
-  # Clear cached values
-  fields <- c(".fileSize");
-  for (field in fields) {
-    this[[field]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache", this);
 })
 
 
@@ -1008,11 +1119,43 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 }, static=TRUE)
 
 
-setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
-  byPath(static, ...);
-}, static=TRUE, protected=TRUE)
 
-
+###########################################################################/**
+# @RdocMethod copyTo
+#
+# @title "Copies a data set to another directory"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{path}{The destination directory.  If missing, it is created.}
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns a @see "GenericDataFileSet" consisting the new file copies.
+# }
+# 
+# \details{
+#   Each file is copied safely, but if this method is interrupted, it
+#   may results in a data set consisting of fewer than the original
+#   data set.
+#   FUTURE: In order to minimize the risk for this, we may consider to
+#   first copy to a temporary directory, which is then renamed, cf. how
+#   individual files are safely copied.
+# }
+# 
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -1051,6 +1194,39 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 
 
 
+###########################################################################/**
+# @RdocMethod findByName
+#
+# @title "Locates all file sets that match the requested name"
+#
+# \description{
+#   @get "title", tags, and sub directories, in any of the root paths.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{name, tags}{The name and the tags of the file set to be located.}
+#  \item{subdirs}{A @character @vector of the subpath where the file
+#     set is located.}
+#  \item{paths}{A @character @vector of root paths where to look for 
+#     the file set.}
+#  \item{mustExist}{If @TRUE, an exception is thrown if the file set was
+#     not found, otherwise not.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character @vector of paths.
+#   If no file sets where found, @NULL is returned.
+# }
+# 
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, mustExist=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -1159,6 +1335,42 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 }, static=TRUE) 
 
 
+
+
+###########################################################################/**
+# @RdocMethod byName
+#
+# @title "Locates and sets up a file set by its name"
+#
+# \description{
+#   @get "title", tags, root and sub directories.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{name, tags}{The name and the tags of the file set to be located.}
+#  \item{subdirs}{A @character @vector of the subpath where the file
+#     set is located.}
+#  \item{paths}{A @character @vector of root paths where to look for 
+#     the file set.}
+#  \item{...}{Not used.}
+#  \item{verbose}{...}
+# }
+#
+# \value{
+#   Returns a @see "GenericDataFileSet".
+#   If not found, an exception is thrown.
+# }
+# 
+# @author
+#
+# \seealso{
+#   Internally, @seemethod "findByName" is used to locate the data set,
+#   and @seemethod "byPath" to then set it up.
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, ...) {
   suppressWarnings({
     path <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
@@ -1169,6 +1381,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
     byPath(static, path=path, ...);
   })
 }, static=TRUE) 
+
 
 
 setMethodS3("hasFile", "GenericDataFileSet", function(this, file, ...) {
@@ -1383,9 +1596,21 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Deprecated
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
+  byPath(static, ...);
+}, static=TRUE, deprecated=TRUE, protected=TRUE)
+
+
+
 
 ############################################################################
 # HISTORY:
+# 2010-01-31
+# o DOCUMENTATION: Added Rd help for more methods.
+# o Deprecated static fromFiles() of GenericDataSet.  Use byPath() instead.
 # 2010-01-24
 # o ROBUSTNESS: If argument 'files' is logical, then extract() of
 #   GenericDataFileSet now asserts that the length of 'files' matches

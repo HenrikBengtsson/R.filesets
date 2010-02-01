@@ -25,6 +25,8 @@
 
 \usage{\method{length}{GenericDataFileSet}(x)}
 
+\usage{\method{nbrOfFiles}{GenericDataFileSet}(this, ...)}
+
 \value{
   Returns an \code{\link[base]{integer}}.
 }

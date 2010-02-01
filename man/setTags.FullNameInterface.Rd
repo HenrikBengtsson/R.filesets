@@ -27,7 +27,7 @@
 }
 
 \value{
-  Returns nothing.
+  Returns (invisibly) itself.
 }
 
 \details{

@@ -12,21 +12,29 @@
 \alias{getNames.GenericDataFileSet}
 \alias{getNames,GenericDataFileSet-method}
 
+\alias{GenericDataFileSet.getFullNames}
+\alias{getFullNames.GenericDataFileSet}
+\alias{getFullNames,GenericDataFileSet-method}
 
-\title{Gets the names of the files in the file set}
+
+\title{Gets the names (or fullnames) of the files in the file set}
 
 \description{
-  Gets the names of the files in the file set.
+  Gets the names (or fullnames) of the files in the file set.
 }
 
 \usage{\method{getNames}{GenericDataFileSet}(this, ...)}
 
+\usage{\method{getFullNames}{GenericDataFileSet}(this, ...)}
+
 \arguments{
- \item{...}{Arguments passed to \code{getName()} of each file.}
+ \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})
+   of each file.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
+  Returns a \code{\link[base]{character}} \code{\link[base]{vector}} of length equal to the number of files
+  in the set.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
