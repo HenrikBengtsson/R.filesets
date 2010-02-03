@@ -606,7 +606,7 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
-# 2009-01-31
+# 2010-01-31
 # o DOCUMENTATION: Added more Rdoc comments.
 # 2009-10-31
 # o Now getTags(..., na.rm=TRUE) returns NULL in case the file is missing.
