@@ -34,7 +34,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
  }
 
- \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, ...)}
+ \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
@@ -44,6 +44,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
    \item{alias}{A \code{\link[base]{character}} string specifying a name alias overriding the
       name inferred from the pathname.}
    \item{...}{Not used.}
+   \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+      if there are unknown arguments in \code{...}.}
  }
 
  \section{Fields and Methods}{

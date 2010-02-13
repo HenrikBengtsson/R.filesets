@@ -19,6 +19,8 @@
 #   \item{alias}{A @character string specifying a name alias overriding the
 #      name inferred from the pathname.}
 #   \item{...}{Not used.}
+#   \item{.onUnknownArgs}{A @character string specifying what should occur
+#      if there are unknown arguments in \code{...}.}
 # }
 #
 # \section{Fields and Methods}{
@@ -29,7 +31,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL, ...) {
+setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,11 +46,21 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL
     throw("Argument 'files' is of unknown type: ", mode(files)[1]);
   }
 
+  # Arguments '.onUnknownArgs':
+  .onUnknownArgs <- match.arg(.onUnknownArgs);
+
   # Arguments '...':
   args <- list(...);
   if (length(args) > 0) {
-    argsStr <- paste(names(args), collapse=", ");
-    throw("Unknown arguments: ", argsStr);
+    if (is.element(.onUnknownArgs, c("error", "warning"))) {
+      argsStr <- paste(names(args), collapse=", ");
+      msg <- sprintf("Unknown arguments: %s", argsStr);
+      if (.onUnknownArgs == "error") {
+        throw(msg);
+      } else if (.onUnknownArgs == "warning") {
+        warning(msg);
+      }
+    }
   }
 
 
@@ -527,6 +539,9 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., onMissing=c("NA", "error")) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'onMissing':
   onMissing <- match.arg(onMissing);
 
@@ -545,9 +560,17 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   patterns0 <- patterns;
   res <- lapply(patterns, FUN=function(pattern) {
+    # Assert that the regular expression has a "head" and a "tail".
     pattern <- sprintf("^%s$", pattern);
     pattern <- gsub("\\^\\^", "^", pattern);
     pattern <- gsub("\\$\\$", "$", pattern);
+
+    # Escape '+', and '*', if needed
+    lastPattern <- "";
+    while (pattern != lastPattern) {
+      lastPattern <- pattern;
+      pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
+    }
 
     # Specifying tags?
     if (regexpr(",", pattern) != -1) {
@@ -1608,9 +1631,15 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-02-13
+# o Added argument '.onUnknownArgs' to GenericDataFileSet().
+# 2010-02-07
+# o BUG FIX: indexOf() of GenericDataFileSet did not handle names with
+#   regular expression symbols '+' and '*'.
 # 2010-01-31
 # o DOCUMENTATION: Added Rd help for more methods.
-# o Deprecated static fromFiles() of GenericDataSet.  Use byPath() instead.
+# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath() 
+#   instead.
 # 2010-01-24
 # o ROBUSTNESS: If argument 'files' is logical, then extract() of
 #   GenericDataFileSet now asserts that the length of 'files' matches

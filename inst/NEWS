@@ -1,6 +1,19 @@
 Package: R.filesets
 ===================
 
+Version: 0.7.6 [2010-02-13]
+o Added argument '.onUnknownArgs' to GenericDataFile() and 
+  GenericDataFileSet().  As before, the default is to throw an
+  exception if there are unknown arguments.  However, in certain 
+  case it is useful to allow (and ignore) "stray" arguments.
+
+
+Version: 0.7.5 [2010-02-07]
+o BUG FIX: indexOf() of GenericDataFileSet and GenericDataFileSetList
+  did not handle names with regular expression symbols '+' and '*'. 
+  Thanks to Randy Gobbel for the initial error report.
+
+
 Version: 0.7.4 [2010-01-31]
 o DOCUMENATION: Added Rd help paged to more methods for classes
   GenericDataFile and GenericDataFileSet. 

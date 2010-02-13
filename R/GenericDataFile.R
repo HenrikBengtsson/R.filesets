@@ -20,6 +20,8 @@
 #   \item{mustExist}{If @TRUE, an exception is thrown if the file does
 #     not exists, otherwise not.}
 #   \item{...}{Not used.}
+#   \item{.onUnknownArgs}{A @character string specifying what should occur
+#      if there are unknown arguments in \code{...}.}
 # }
 #
 # \section{Fields and Methods}{
@@ -44,7 +46,7 @@
 #   An object of this class is typically part of an @see "GenericDataFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=TRUE, ...) {
+setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,8 +70,15 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   args <- args[keep];
 
   if (length(args) > 0) {
-    argsStr <- paste(names(args), collapse=", ");
-    throw("Unknown arguments: ", argsStr);
+    if (is.element(.onUnknownArgs, c("error", "warning"))) {
+      argsStr <- paste(names(args), collapse=", ");
+      msg <- sprintf("Unknown arguments: %s", argsStr);
+      if (.onUnknownArgs == "error") {
+        throw(msg);
+      } else if (.onUnknownArgs == "warning") {
+        warning(msg);
+      }
+    }
   }
 
   extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
@@ -1523,6 +1532,8 @@ setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-02-13
+# o Added argument '.onUnknownArgs' to GenericDataFile().
 # 2010-01-31
 # o DOCUMENTATION: Added Rdoc comments to most methods.
 # o CLEAN UP: Made readChecksum() of GenericDataFile protected.

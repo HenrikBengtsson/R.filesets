@@ -37,7 +37,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
  }
 
- \usage{GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...)}
+ \usage{GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{filename}{The filename of the file.}
@@ -45,6 +45,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
    \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file does
      not exists, otherwise not.}
    \item{...}{Not used.}
+   \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+      if there are unknown arguments in \code{...}.}
  }
 
  \section{Fields and Methods}{

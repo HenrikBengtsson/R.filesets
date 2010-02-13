@@ -333,9 +333,17 @@ setMethodS3("indexOf", "GenericDataFileSetList", function(this, patterns=NULL, .
 
   patterns0 <- patterns;
   res <- lapply(patterns, FUN=function(pattern) {
+    # Assert that the regular expression has a "head" and a "tail".
     pattern <- sprintf("^%s$", pattern);
     pattern <- gsub("\\^\\^", "^", pattern);
     pattern <- gsub("\\$\\$", "$", pattern);
+
+    # Escape '+', and '*', if needed
+    lastPattern <- "";
+    while (pattern != lastPattern) {
+      lastPattern <- pattern;
+      pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
+    }
 
     # Specifying tags?
     if (regexpr(",", pattern) != -1) {
@@ -548,6 +556,9 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
 ###########################################################################
 # HISTORY:
+# 2010-02-07
+# o BUG FIX: indexOf() of GenericDataFileSetList did not handle names with
+#   regular expression symbols '+' and '*'.
 # 2010-01-24
 # o ROBUSTNESS: If argument 'files' is logical, then extract() of
 #   GenericDataFileSetList now asserts that the length of 'files' matches
