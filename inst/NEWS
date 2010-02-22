@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 0.8.0 [2010-02-22]
+o Submitted to CRAN.  No changes since v0.7.6.
+
+
 Version: 0.7.6 [2010-02-13]
 o Added argument '.onUnknownArgs' to GenericDataFile() and 
   GenericDataFileSet().  As before, the default is to throw an
