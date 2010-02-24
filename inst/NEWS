@@ -19,7 +19,7 @@ o BUG FIX: indexOf() of GenericDataFileSet and GenericDataFileSetList
 
 
 Version: 0.7.4 [2010-01-31]
-o DOCUMENATION: Added Rd help paged to more methods for classes
+o DOCUMENTATION: Added Rd help paged to more methods for classes
   GenericDataFile and GenericDataFileSet. 
 o DEPRECATION: Deprecated static fromFiles() of GenericDataSet.  
   Use byPath() instead.
