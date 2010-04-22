@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 0.8.1 [2010-04-22]
+o Added "NA" to the default 'na.strings' returned by getReadArguments()
+  for TabularTextFile.
+
+
 Version: 0.8.0 [2010-02-22]
 o Submitted to CRAN.  No changes since v0.7.6.
 

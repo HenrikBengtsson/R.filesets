@@ -310,7 +310,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     quote       = fileHeader$quote,
     fill        = this$fill,
     check.names = FALSE,
-    na.strings  = c("---")
+    na.strings  = c("---", "NA")
   );
 
   # Overwrite with user specified arguments, if any
@@ -545,6 +545,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-04-22
+# o Added "NA" to the default 'na.strings' returned by getReadArguments()
+#   for TabularTextFile.
 # 2009-10-06
 # o Added subsetting via [() to TabularTextFile.
 # 2009-05-09
