@@ -1121,7 +1121,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   }
   verbose && enter(verbose, "Allocating a new ", className, " instance");
   verbose && cat(verbose, "Arguments:");
-  verbose && cat(verbose, "Number of files:", length(files));
+  verbose && cat(verbose, "Number of files: ", length(files));
   verbose && str(verbose, list(...));
   set <- newInstance(static, files, ...);
   verbose && exit(verbose);
