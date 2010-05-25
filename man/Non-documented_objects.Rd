@@ -224,6 +224,10 @@
 \alias{writeColumnsToFiles}
 \alias{hasTag}
 \alias{hasTags}
+\alias{appendFullNameTranslatorBydata.frame}
+\alias{appendFullNameTranslatorBydata.frame.FullNameInterface}
+\alias{appendFullNameTranslatorByTabularTextFile}
+\alias{appendFullNameTranslatorByTabularTextFile.FullNameInterface}
 
 \description{
   This page contains aliases for all "non-documented" objects that

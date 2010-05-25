@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 0.8.2 [2010-05-25]
+o Added appendFullNameTranslatorBy...() methods to the
+  FullNameInterface class for data frames and TabularTextFile:s.
+
+
 Version: 0.8.1 [2010-04-22]
 o Added "NA" to the default 'na.strings' returned by getReadArguments()
   for TabularTextFile.

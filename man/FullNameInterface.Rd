@@ -39,6 +39,7 @@ extends \link[R.oo]{Interface}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{appendFullNameTranslatorByTabularTextFile} \tab  -\cr
  \tab \code{clearFullNameTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:getFullName.FullNameInterface]{getFullName}} \tab Gets the full name.\cr
  \tab \code{\link[R.filesets:getName.FullNameInterface]{getName}} \tab Gets the name.\cr

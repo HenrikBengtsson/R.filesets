@@ -19,6 +19,8 @@
 #  @allmethods "public"
 # }
 # 
+# @examples "../incl/TabularTextFileSet.Rex"
+# 
 # @author
 #*/###########################################################################
 setConstructorS3("TabularTextFileSet", function(...) {

@@ -443,28 +443,6 @@ setMethodS3("appendFullNameTranslatorByNULL", "FullNameInterface", function(this
   invisible(this);
 }, protected=TRUE)
 
-setMethodS3("appendFullNameTranslatorBycharacter", "FullNameInterface", function(this, fullname, ...) {
-  # Append a translator function that always returns a constant string
-  appendFullNameTranslator(this, function(...) { fullname });
-}, protected=TRUE)
-
-
-setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(this, fcn, ...) {
-  # Arguments 'fcn':
-  if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
-  }
-
-  # Sanity check
-  names <- c("foo bar");
-  names <- fcn(names, file=this);
-
-  fnList <- getListOfFullNameTranslators(this);
-  fnList <- c(fnList, fcn);
-  setListOfFullNameTranslators(this, fnList);
-}, protected=TRUE)
-
-
 
 setMethodS3("appendFullNameTranslatorBylist", "FullNameInterface", function(this, list, ...) {
   # Arguments 'list':

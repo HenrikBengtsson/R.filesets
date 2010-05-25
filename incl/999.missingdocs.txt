@@ -100,3 +100,7 @@
   verify.GenericTabularFile verify.TabularTextFile writeChecksum
   writeColumnsToFiles
 hasTag hasTags
+  appendFullNameTranslatorBydata.frame
+  appendFullNameTranslatorBydata.frame.FullNameInterface
+  appendFullNameTranslatorByTabularTextFile
+  appendFullNameTranslatorByTabularTextFile.FullNameInterface
