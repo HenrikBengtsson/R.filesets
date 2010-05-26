@@ -1,4 +1,4 @@
 pattern	replacement
 fileA	sampleA
 fileB	sampleB
-fileC	sampleC
+(fileC)	sampleC,\1

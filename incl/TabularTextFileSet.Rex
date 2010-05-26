@@ -17,10 +17,13 @@ print(data)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Translation of fullnames
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ft <- TabularTextFile("all,fullnames.txt", path=getPath(ds))
-print(ft)
-print(readDataFrame(ft))
-appendFullNamesTranslator(ds, ft)
+fnts <- TabularTextFileSet$byPath(getPath(ds), pattern=",fullnames[.]txt$")
+appendFullNamesTranslator(ds, as.list(fnts))
+
+verbose && cat(verbose, "Default fullnames:");
+verbose && print(verbose, head(getFullNames(ds, translate=FALSE)));
+verbose && cat(verbose, "Translated fullnames:");
+verbose && print(verbose, head(getFullNames(ds)));
 
 cat("Default fullnames:\n")
 print(getFullNames(ds, translate=FALSE))

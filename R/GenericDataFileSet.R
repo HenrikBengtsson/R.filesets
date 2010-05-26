@@ -1581,6 +1581,24 @@ setMethodS3("appendFullNamesTranslatorByfunction", "GenericDataFileSet", functio
 }, protected=TRUE)
 
 
+setMethodS3("appendFullNamesTranslatorBydata.frame", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorBydata.frame, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslatorByTabularTextFile", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorByTabularTextFile, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslatorByTabularTextFileSet", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorByTabularTextFileSet, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
 setMethodS3("appendFullNamesTranslatorBylist", "GenericDataFileSet", function(this, fcn, ...) {
   sapply(this, appendFullNameTranslatorBylist, fcn, ...);
   invisible(this);
@@ -1631,6 +1649,11 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-05-26
+# o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
+# 2010-05-25
+# o Added appendFullNameTranslatorBy...() method for data frames and
+#   TabularTextFile:s. 
 # 2010-02-13
 # o Added argument '.onUnknownArgs' to GenericDataFileSet().
 # 2010-02-07

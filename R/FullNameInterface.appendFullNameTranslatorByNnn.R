@@ -82,9 +82,25 @@ setMethodS3("appendFullNameTranslatorByTabularTextFile", "FullNameInterface", fu
 })
 
 
+setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface", function(this, ds, ...) {
+  # Arguments 'ds':
+  if (!inherits(ds, "TabularTextFileSet")) {
+    throw("Argument 'ds' is not a TabularTextFileSet: ", class(ds)[1]);
+  }
+
+  dummy <- sapply(ds, function(df) {
+    appendFullNamesTranslator(this, df, ...);
+  });
+
+  invisible(this);
+})
+
+
 
 ############################################################################
 # HISTORY:
+# 2010-05-26
+# o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
 # 2010-05-25
 # o Added appendFullNameTranslatorBy...() method for data frames and
 #   TabularTextFile:s.

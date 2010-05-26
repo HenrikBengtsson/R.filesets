@@ -53,7 +53,7 @@ extends \link[R.filesets]{GenericTabularFileSet}\cr
 extractMatrix
 
  \bold{Methods inherited from GenericDataFileSet}:\cr
-append, appendFiles, appendFullNamesTranslator, appendFullNamesTranslatorByfunction, appendFullNamesTranslatorBylist, appendFullNamesTranslatorByNULL, as.list, byName, byPath, clearCache, clearFullNamesTranslator, copyTo, equals, extract, findByName, getAlias, getDefaultFullName, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, update2, updateFullName, updateFullNames, validate
+append, appendFiles, appendFullNamesTranslator, appendFullNamesTranslatorBydata.frame, appendFullNamesTranslatorByfunction, appendFullNamesTranslatorBylist, appendFullNamesTranslatorByNULL, appendFullNamesTranslatorByTabularTextFile, as.list, byName, byPath, clearCache, clearFullNamesTranslator, copyTo, equals, extract, findByName, getAlias, getDefaultFullName, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, update2, updateFullName, updateFullNames, validate
 
  \bold{Methods inherited from FullNameInterface}:\cr
 appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
@@ -84,10 +84,13 @@ print(data)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Translation of fullnames
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ft <- TabularTextFile("all,fullnames.txt", path=getPath(ds))
-print(ft)
-print(readDataFrame(ft))
-appendFullNamesTranslator(ds, ft)
+fnts <- TabularTextFileSet$byPath(getPath(ds), pattern=",fullnames[.]txt$")
+appendFullNamesTranslator(ds, as.list(fnts))
+
+verbose && cat(verbose, "Default fullnames:");
+verbose && print(verbose, head(getFullNames(ds, translate=FALSE)));
+verbose && cat(verbose, "Translated fullnames:");
+verbose && print(verbose, head(getFullNames(ds)));
 
 cat("Default fullnames:\n")
 print(getFullNames(ds, translate=FALSE))

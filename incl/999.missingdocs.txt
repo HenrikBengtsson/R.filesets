@@ -104,3 +104,11 @@ hasTag hasTags
   appendFullNameTranslatorBydata.frame.FullNameInterface
   appendFullNameTranslatorByTabularTextFile
   appendFullNameTranslatorByTabularTextFile.FullNameInterface
+  appendFullNameTranslatorByTabularTextFileSet
+  appendFullNameTranslatorByTabularTextFileSet.FullNameInterface
+  appendFullNamesTranslatorBydata.frame
+  appendFullNamesTranslatorBydata.frame.GenericDataFileSet
+  appendFullNamesTranslatorByTabularTextFile
+  appendFullNamesTranslatorByTabularTextFile.GenericDataFileSet
+  appendFullNamesTranslatorByTabularTextFileSet
+  appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet

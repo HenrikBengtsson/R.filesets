@@ -228,6 +228,14 @@
 \alias{appendFullNameTranslatorBydata.frame.FullNameInterface}
 \alias{appendFullNameTranslatorByTabularTextFile}
 \alias{appendFullNameTranslatorByTabularTextFile.FullNameInterface}
+\alias{appendFullNameTranslatorByTabularTextFileSet}
+\alias{appendFullNameTranslatorByTabularTextFileSet.FullNameInterface}
+\alias{appendFullNamesTranslatorBydata.frame}
+\alias{appendFullNamesTranslatorBydata.frame.GenericDataFileSet}
+\alias{appendFullNamesTranslatorByTabularTextFile}
+\alias{appendFullNamesTranslatorByTabularTextFile.GenericDataFileSet}
+\alias{appendFullNamesTranslatorByTabularTextFileSet}
+\alias{appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that
