@@ -67,6 +67,7 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
 
     # Drop empty tags
     names <- gsub("[,]+", ",", names, fixed=FALSE);
+    names <- gsub(",$", "", names, fixed=FALSE);
 
     names;
   } # fcn()
