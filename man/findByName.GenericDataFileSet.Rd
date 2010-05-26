@@ -19,8 +19,8 @@
    Locates all file sets that match the requested name, tags, and sub directories, in any of the root paths.
  }
 
- \synopsis{findByName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, mustExist=FALSE, ...)}
-\usage{GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, mustExist=FALSE, ...)}
+ \synopsis{findByName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
+\usage{GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
 
  \arguments{
   \item{name, tags}{The name and the tags of the file set to be located.}
@@ -31,6 +31,7 @@
   \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file set was
      not found, otherwise not.}
   \item{...}{Not used.}
+  \item{verbose}{...}
  }
 
  \value{

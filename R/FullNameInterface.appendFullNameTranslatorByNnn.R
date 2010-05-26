@@ -45,7 +45,9 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generate regular expression
   patterns <- df[,"pattern"];
+  patterns <- as.character(patterns);
   replacements <- df[,"replacement"];
+  replacements <- as.character(replacements);
   nbrOfRules <- length(patterns);
 
   # Generate translator function
@@ -63,6 +65,9 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
       names[idxs] <- gsub(pattern, replacement, names[idxs], fixed=FALSE);
     } # for (kk ...)
 
+    # Drop empty tags
+    names <- gsub("[,]+", ",", names, fixed=FALSE);
+
     names;
   } # fcn()
 
@@ -76,7 +81,7 @@ setMethodS3("appendFullNameTranslatorByTabularTextFile", "FullNameInterface", fu
     throw("Argument 'df' is not a TabularTextFile: ", class(df)[1]);
   }
 
-  df <- readDataFrame(df);
+  df <- readDataFrame(df, colClasses="character");
 
   appendFullNameTranslator(this, df, ...);
 })
@@ -89,7 +94,7 @@ setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface",
   }
 
   dummy <- sapply(ds, function(df) {
-    appendFullNamesTranslator(this, df, ...);
+    appendFullNameTranslator(this, df, ...);
   });
 
   invisible(this);

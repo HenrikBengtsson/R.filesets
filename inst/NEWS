@@ -2,6 +2,9 @@ Package: R.filesets
 ===================
 
 Version: 0.8.2 [2010-05-26]
+o Now GenericDataFileSet$findByName(..., mustExist=FALSE) do no longer
+  throw an exception even if there is no existing root path.
+o Added argument 'firstOnly=TRUE' to findByName() for GenericDataFileSet.
 o Added appendFullNameTranslatorBy...() methods to the
   FullNameInterface class for data frames, TabularTextFile:s, and
   TabularTextFileSet:s.

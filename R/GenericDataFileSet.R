@@ -1237,6 +1237,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #  \item{mustExist}{If @TRUE, an exception is thrown if the file set was
 #     not found, otherwise not.}
 #  \item{...}{Not used.}
+#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1250,7 +1251,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, mustExist=FALSE, ...) {
+setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1265,16 +1266,35 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
     paths <- ".";
   }
 
+  # Argument 'firstOnly':
+  firstOnly <- Arguments$getLogical(firstOnly);
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+
+  verbose && enter(verbose, "Locating data sets");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify existing root directories
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paths0 <- paths;
-  paths <- sapply(paths, FUN=filePath, expandLinks="any");
-  paths <- paths[sapply(paths, FUN=isDirectory)];
-  if (length(paths) == 0) {
-    throw("None of the data directories exist: ", 
-                                           paste(paths0, collapse=", "));
+  rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
+  rootPaths <- paths[sapply(rootPaths, FUN=isDirectory)];
+  if (length(rootPaths) == 0) {
+    if (mustExist) {
+      throw("None of the data directories exist: ", 
+                                           paste(paths, collapse=", "));
+    }
+    return(NULL);
   }
+
+  verbose && cat(verbose, "Search root path:");
+  verbose && print(verbose, rootPaths);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1282,31 +1302,46 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # The full name of the data set
   fullname <- paste(c(name, tags), collapse=",");
+  verbose && cat(verbose, "Fullname: ", fullname);
 
   # Look for matching data sets
-  paths <- file.path(paths, fullname);
+  dataSetPaths <- file.path(rootPaths, fullname);
 
   # Look for existing directories
-  paths <- sapply(paths, FUN=filePath, expandLinks="any");
-  paths <- paths[sapply(paths, FUN=isDirectory)];
-  if (length(paths) > 0) {
+  dataSetPaths <- sapply(dataSetPaths, FUN=filePath, expandLinks="any");
+  dataSetPaths <- dataSetPaths[sapply(dataSetPaths, FUN=isDirectory)];
+  dataSetPaths <- unname(dataSetPaths);
+
+  verbose && cat(verbose, "Search dataset paths:");
+  verbose && print(verbose, dataSetPaths);
+
+
+  paths <- NULL;
+  if (length(dataSetPaths) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Identify existing subdirectories
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (length(subdirs) >= 1) {
+      verbose && enter(verbose, "Search subdirectories");
+      verbose && print(verbose, subdirs);
+
       for (kk in seq(along=subdirs)) {
         dir <- subdirs[kk];
+        verbose && enter(verbose, sprintf("Subdirectory #%d ('%s') of %d", kk, dir, length(subdirs)));
+
         # Smart directory?
         if (identical(dir, "*"))
           dir <- ":.*:";
         pattern <- "^:([^:]*):$";
         isSmart <- (regexpr(pattern, dir) != -1);
         if (isSmart) {
+          verbose && enter(verbose, "Processing \"smart\" path");
+
           # Regular expression pattern for subsetting directories
           pattern <- gsub(pattern, "\\1", dir);
           pattern <- Arguments$getRegularExpression(pattern);
 
-          paths <- sapply(paths, FUN=function(path) {
+          pathsKK <- sapply(dataSetPaths, FUN=function(path) {
             # List all directories and files
             dirsT <- list.files(path=path, pattern=pattern, full.names=TRUE);
             if (length(dirsT) == 0)
@@ -1326,36 +1361,64 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
             file.path(path, dir);
           });
+
+          verbose && exit(verbose);
         } else {
-          paths <- file.path(paths, dir);
-        }
+          pathsKK <- file.path(dataSetPaths, dir);
+        } # if (isSmart)
+ 
         # In case there are NULLs
-        paths <- unlist(paths, use.names=FALSE);
+        pathsKK <- unlist(pathsKK, use.names=FALSE);
         # Keep only directories
-        paths <- sapply(paths, FUN=filePath, expandLinks="any");
-        paths <- paths[sapply(paths, FUN=isDirectory)];
+        pathsKK <- sapply(pathsKK, FUN=filePath, expandLinks="any");
+        pathsKK <- pathsKK[sapply(pathsKK, FUN=isDirectory)];
+        pathsKK <- unname(pathsKK);
+
+        verbose && cat(verbose, "Existing paths:");
+        verbose && print(verbose, pathsKK);
+
+        paths <- c(paths, pathsKK);
+
+        verbose && exit(verbose);
       } # for (kk ...)
-    } # if (length(subdirs) >= 1)
+
+      verbose && cat(verbose, "All existing paths:");
+      verbose && print(verbose, paths);
+
+      verbose && exit(verbose);
+    } else {
+      paths <- dataSetPaths;
+    }# if (length(subdirs) >= 1)
   
     if (length(paths) > 1) {
-      warning("Found duplicated data set: ", paste(paths, collapse=", "));
-      paths <- paths[1];
+      if (firstOnly) {
+        warning("Found duplicated data set: ", paste(paths, collapse=", "));
+        paths <- paths[1];
+        verbose && cat(verbose, "Dropped all but the first path.");
+      }
     }
-  } # if (length(paths) > 0)
+  } # if (length(dataSetPaths) > 0)
   
   if (length(paths) == 0) {
     paths <- NULL;
 
     if (mustExist) {
       msg <- sprintf("Failed to locate data set '%s'", fullname);
-      if (!is.null(subdirs))
-        msg <- sprintf("%s (in subdirectory '%s')", msg, subdirs);
+      if (!is.null(subdirs)) {
+        subdirsStr <- paste(subdirs, collapse=", ");
+        msg <- sprintf("%s (with subdirectory '%s')", msg, subdirsStr);
+      }
+        msg <- sprintf("%s in search path (%s)", 
+                                msg, paste(rootPaths, collapse=", "));
+
       throw(msg);
     }
   }
 
+  verbose && exit(verbose);
+
   paths;
-}, static=TRUE) 
+}, protected=TRUE, static=TRUE)
 
 
 
@@ -1394,15 +1457,33 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, ...) {
-  suppressWarnings({
-    path <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
-                                               paths=paths, mustExist=TRUE);
-  })
+setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE) {
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, sprintf("Setting up %s by its name", class(static)[1]));
+  verbose && cat(verbose, "Name: ", name);
+  verbose && cat(verbose, "Tags: ", paste(tags, collapse=","));
 
   suppressWarnings({
-    byPath(static, path=path, ...);
+    path <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
+            paths=paths, firstOnly=TRUE, mustExist=TRUE, verbose=verbose);
   })
+
+  verbose && cat(verbose, "Path to data set:");
+  verbose && print(verbose, path);
+
+  suppressWarnings({
+    res <- byPath(static, path=path, ..., verbose=verbose);
+  })
+
+  verbose && exit(verbose);
+
+  res;
 }, static=TRUE) 
 
 
@@ -1595,7 +1676,7 @@ setMethodS3("appendFullNamesTranslatorByTabularTextFile", "GenericDataFileSet", 
 
 setMethodS3("appendFullNamesTranslatorByTabularTextFileSet", "GenericDataFileSet", function(this, fcn, ...) {
   sapply(this, appendFullNameTranslatorByTabularTextFileSet, fcn, ...);
-  invisible(this);
+  invisible(this); 
 }, protected=TRUE)
 
 
@@ -1650,6 +1731,9 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 ############################################################################
 # HISTORY:
 # 2010-05-26
+# o Now GenericDataFileSet$findByName(..., mustExist=FALSE) do no longer
+#   throw an exception even if there is no existing root path.
+# o Added argument 'firstOnly=TRUE' to findByName() for GenericDataFileSet.
 # o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
 # 2010-05-25
 # o Added appendFullNameTranslatorBy...() method for data frames and

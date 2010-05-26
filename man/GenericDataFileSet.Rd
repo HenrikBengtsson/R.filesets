@@ -59,7 +59,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{clearCache} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
- \tab \code{\link[R.filesets:findByName.GenericDataFileSet]{findByName}} \tab Locates all file sets that match the requested name.\cr
  \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
@@ -81,7 +80,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
  \bold{Methods inherited from FullNameInterface}:\cr
-appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
+appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
