@@ -529,6 +529,8 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #   If an element of \code{patterns} contains a comma, then that element
 #   is matched against the @seemethod "getFullNames", otherwise it is
 #   matched against @seemethod "getNames".
+#   First each pattern is matched by regular expression rules, and if
+#   there is not match, then by fixed strings.
 # }
 #
 # @author
@@ -560,6 +562,18 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   patterns0 <- patterns;
   res <- lapply(patterns, FUN=function(pattern) {
+    # First try matching a regular expression, then a fixed string.
+    pattern0 <- pattern;
+    hasTags <- (regexpr(",", pattern, fixed=TRUE) != -1);
+    if (hasTags) {
+      searchStrings <- fullnames;
+    } else {
+      searchStrings <- names;
+    }
+
+    # - - - - - - - - - - - -
+    # 1. Regular expression
+    # - - - - - - - - - - - -
     # Assert that the regular expression has a "head" and a "tail".
     pattern <- sprintf("^%s$", pattern);
     pattern <- gsub("\\^\\^", "^", pattern);
@@ -572,14 +586,21 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
       pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
     }
 
-    # Specifying tags?
-    if (regexpr(",", pattern) != -1) {
-      idxs <- grep(pattern, fullnames);
-    } else {
-      idxs <- grep(pattern, names);
+    # Match
+    idxs <- grep(pattern, searchStrings, fixed=FALSE);
+
+    # - - - - - - - - - - - -
+    # 2. Fixed string?
+    # - - - - - - - - - - - -
+    if (length(idxs) == 0) {
+      pattern <- pattern0;
+      idxs <- grep(pattern, searchStrings, fixed=TRUE);
     }
-    if (length(idxs) == 0)
+
+    # Nothing matched?
+    if (length(idxs) == 0) {
       idxs <- naValue;
+    }
 
     # Note that 'idxs' may return more than one match
     idxs;
@@ -1730,6 +1751,11 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-07-06
+# o BUG FIX: indexOf() for GenericDataFileSet/List would return NA if the
+#   search pattern/string contained parentheses.  The reason is that
+#   such have a special meaning in regular expression.  Now indexOf()
+#   first search by regular expression patterns, then by fixed strings.
 # 2010-05-26
 # o Now GenericDataFileSet$findByName(..., mustExist=FALSE) do no longer
 #   throw an exception even if there is no existing root path.

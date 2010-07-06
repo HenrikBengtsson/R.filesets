@@ -36,6 +36,8 @@
   If an element of \code{patterns} contains a comma, then that element
   is matched against the \code{\link[R.filesets:getFullNames.GenericDataFileSet]{*getFullNames}()}, otherwise it is
   matched against \code{\link[R.filesets:getNames.GenericDataFileSet]{*getNames}()}.
+  First each pattern is matched by regular expression rules, and if
+  there is not match, then by fixed strings.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -314,65 +314,10 @@ setMethodS3("length", "GenericDataFileSetList", function(x, ...) {
 })
 
 
-setMethodS3("indexOf", "GenericDataFileSetList", function(this, patterns=NULL, ..., onMissing=c("NA", "error")) {
-  # Argument 'onMissing':
-  onMissing <- match.arg(onMissing);
-
-  names <- getNames(this);
-
-  # Return all indices
-  if (is.null(patterns)) {
-    res <- seq(along=names);
-    names(res) <- names;
-    return(res);
-  }
-
-  fullnames <- getFullNames(this);
-
-  naValue <- as.integer(NA);
-
-  patterns0 <- patterns;
-  res <- lapply(patterns, FUN=function(pattern) {
-    # Assert that the regular expression has a "head" and a "tail".
-    pattern <- sprintf("^%s$", pattern);
-    pattern <- gsub("\\^\\^", "^", pattern);
-    pattern <- gsub("\\$\\$", "$", pattern);
-
-    # Escape '+', and '*', if needed
-    lastPattern <- "";
-    while (pattern != lastPattern) {
-      lastPattern <- pattern;
-      pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
-    }
-
-    # Specifying tags?
-    if (regexpr(",", pattern) != -1) {
-      idxs <- grep(pattern, fullnames);
-    } else {
-      idxs <- grep(pattern, names);
-    }
-    if (length(idxs) == 0)
-      idxs <- naValue;
-
-    # Note that 'idxs' may return more than one match
-    idxs;
-  });
-
-  ns <- sapply(res, FUN=length);
-  names <- NULL;
-  for (kk in seq(along=ns)) {
-    names <- c(names, rep(patterns0[kk], times=ns[kk]));
-  }
-  res <- unlist(res, use.names=FALSE);
-  names(res) <- names;
-
-  # Not allowing missing values?
-  if (onMissing == "error" && any(is.na(res))) {
-    names <- names(res)[is.na(res)];
-    throw("Some names where not match: ", paste(names, collapse=", "));
-  }
-
-  res;
+setMethodS3("indexOf", "GenericDataFileSetList", function(this, ...) {
+  # Since indexOf() for GenericDataFileSetList were identical to that
+  # of GenericDataFileSet, we call the latter explicitly.
+  indexOf.GenericDataFileSet(this, ...);
 })
 
 
@@ -556,6 +501,9 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
 ###########################################################################
 # HISTORY:
+# 2010-07-06
+# o Now indexOf() for GenericDataFileSetList is identical to that of
+#   GenericDataFileSet.
 # 2010-02-07
 # o BUG FIX: indexOf() of GenericDataFileSetList did not handle names with
 #   regular expression symbols '+' and '*'.

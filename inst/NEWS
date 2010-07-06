@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 0.8.3 [2010-07-06]
+o BUG FIX: indexOf() for GenericDataFileSet/List would return NA if
+  the search pattern/string contained parentheses.  The reason is that
+  such have a special meaning in regular expression.  Now indexOf()
+  first search by regular expression patterns, then by fixed strings.
+  Thanks Johan Staaf at Lund University and Larry(?) for reporting
+  on this issue.
+
+
 Version: 0.8.2 [2010-05-26]
 o Now GenericDataFileSet$findByName(..., mustExist=FALSE) do no longer
   throw an exception even if there is no existing root path.
