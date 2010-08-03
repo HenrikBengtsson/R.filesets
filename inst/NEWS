@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.0 [2010-08-03]
+o Added sortBy() to GenericDataFileSet, which sorts files either
+  by lexicographic or mixedsort ordering.
+
+
 Version: 0.8.3 [2010-07-06]
 o BUG FIX: indexOf() for GenericDataFileSet/List would return NA if
   the search pattern/string contained parentheses.  The reason is that

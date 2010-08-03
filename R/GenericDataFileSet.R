@@ -461,6 +461,70 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 
 
 ###########################################################################/**
+# @RdocMethod sortBy
+#
+# @title "Sorts the set"
+#
+# \description{
+#   @get "title" by one of several ordering schema.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{by}{A @character string specifying the ordering scheme.}
+#  \item{caseSensitive}{If @TRUE, the ordering is case sensitive, 
+#        otherwise not.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns returns itself (invisibly) with the set ordered accordingly.
+# }
+#
+# \details{
+#   The set is ordering by the fullnames.
+#   If \code{by="lexicographic"}, lexicographic ordering is used, 
+#   sometimes also referred to as alphabetic ordering.
+#   If \code{by="mixedsort"}, mixedsort order is used, 
+#   cf. @see "gtools::mixedsort".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...) {
+  # Argument 'by':
+  by <- match.arg(by);
+
+  # Argument 'caseSensitive':
+  caseSensitive <- Arguments$getLogical(caseSensitive);
+
+  # Get the fullnames
+  fullnames <- getFullNames(this);
+  if (!caseSensitive) {
+    fullnames <- tolower(fullnames);
+  }
+
+  if (by == "lexicographic") {
+    order <- order(fullnames);
+  } else if (by == "mixedsort") {
+    order <- gtools::mixedorder(fullnames);
+  }
+
+  # Sanity check
+  stopifnot(!any(is.na(order)));
+  stopifnot(length(unique(order)) == length(order));
+
+  this$files <- this$files[order];
+  invisible(this);
+})
+
+
+###########################################################################/**
 # @RdocMethod getNames
 # @aliasmethod getFullNames
 #
@@ -1751,6 +1815,9 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-08-03
+# o Added sortBy() to GenericDataFileSet, which can sort files either
+#   by lexicographic or mixedsort ordering.
 # 2010-07-06
 # o BUG FIX: indexOf() for GenericDataFileSet/List would return NA if the
 #   search pattern/string contained parentheses.  The reason is that

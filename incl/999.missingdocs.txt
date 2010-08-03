@@ -112,3 +112,4 @@ hasTag hasTags
   appendFullNamesTranslatorByTabularTextFile.GenericDataFileSet
   appendFullNamesTranslatorByTabularTextFileSet
   appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet
+ sortBy
