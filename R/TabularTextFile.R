@@ -470,7 +470,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #   \item{rows}{(Optional) An @integer @vector specifying which rows to
 #    be read.}
 #   \item{nrow}{(Optional) An @integer specifying how many rows to read.
-#    If specified, it corresponds to specifying \code{rows=1:nrow}.}
+#    If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
 #   \item{...}{Passed to internal @seemethod "getReadArguments".}
 #   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
 # }
