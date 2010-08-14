@@ -63,13 +63,13 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{as.character} \tab  -\cr
- \tab \code{getColumnNames} \tab  -\cr
- \tab \code{getHeader} \tab  -\cr
- \tab \code{hasColumnHeader} \tab  -\cr
+ \tab \code{\link[R.filesets:getColumnNames.TabularTextFile]{getColumnNames}} \tab Gets the column names.\cr
+ \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
+ \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
  \tab \code{nbrOfLines} \tab  -\cr
  \tab \code{nbrOfRows} \tab  -\cr
  \tab \code{readColumnNames} \tab  -\cr
- \tab \code{readDataFrame} \tab  -\cr
+ \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
  \tab \code{readLines} \tab  -\cr
  \tab \code{\link[R.filesets:writeColumnsToFiles.TabularTextFile]{writeColumnsToFiles}} \tab Read each column from a data file and exports it to a separate file.\cr
 }
