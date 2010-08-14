@@ -81,7 +81,6 @@
 \alias{getChecksum}
 \alias{getColumnNames}
 \alias{getColumnNames.GenericTabularFile}
-\alias{getColumnNames.TabularTextFile}
 \alias{getColumnNameTranslator}
 \alias{getColumnNameTranslator.GenericTabularFile}
 \alias{getCreatedOn}
@@ -114,7 +113,6 @@
 \alias{getFullNameTranslator}
 \alias{getFullNameTranslator.FullNameInterface}
 \alias{getHeader}
-\alias{getHeader.TabularTextFile}
 \alias{getLabel.GenericDataFile}
 \alias{getLastAccessedOn}
 \alias{getLastModifiedOn}
@@ -136,7 +134,6 @@
 \alias{getTags.GenericDataFileSetList}
 \alias{hasBeenModified}
 \alias{hasColumnHeader}
-\alias{hasColumnHeader.TabularTextFile}
 \alias{hasFile}
 \alias{hasFile.GenericDataFileSet}
 \alias{indexOf}
@@ -161,7 +158,6 @@
 \alias{readColumns.TabularTextFile}
 \alias{readDataFrame}
 \alias{readDataFrame.GenericTabularFile}
-\alias{readDataFrame.TabularTextFile}
 \alias{readLines}
 \alias{readLines.default}
 \alias{readLines.TabularTextFile}
@@ -201,7 +197,6 @@
 \alias{setName}
 \alias{setTags}
 \alias{setTags.GenericDataFileSetList}
-\alias{TabularTextFile}
 \alias{testAttributes}
 \alias{testAttributes.GenericDataFile}
 \alias{translateColumnNames}

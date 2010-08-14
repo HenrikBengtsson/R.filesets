@@ -1,3 +1,44 @@
+###########################################################################/**
+# @RdocClass TabularTextFile
+#
+# @title "The TabularTextFile class"
+#
+# \description{
+#  @classhierarchy
+#
+#  A TabularTextFile is an object refering to a tabular text file 
+#  on a file system containing data in a tabular format.
+#  Methods for reading all or a subset of the tabular data exist.
+# }
+# 
+# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+#
+# \arguments{
+#   \item{...}{Arguments passed to @see "GenericDataFile".}
+#   \item{sep}{A @character specifying the symbol used to separate the 
+#     cell entries.  If more than one symbol is specified, it will try to
+#     select the correct one by peeking into the file.}
+#   \item{quote}{A @character specifying the quote symbol used, if any.}
+#   \item{fill}{As in @see "utils::read.table".}
+#   \item{skip}{As in @see "utils::read.table".}
+#   \item{columnNames}{A @logical or a @character @vector. If @TRUE,
+#      then column names are inferred from the file.  If a @character
+#      @vector, then the column names are given by this argument.}
+#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
+#      verified while the object is instantiated by the constructor.
+#      The verbose argument is passed to the verifier function.}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods "public"
+# }
+# 
+# @author
+#
+# \seealso{
+#   An object of this class is typically part of an @see "TabularTextFileSet".
+# }
+#*/###########################################################################
 setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE) {
   # Argument 'columnNames':
   if (is.logical(columnNames)) {
@@ -83,11 +124,69 @@ setMethodS3("readColumnNames", "TabularTextFile", function(this, ...) {
 })
 
 
+###########################################################################/**
+# @RdocMethod hasColumnHeader
+#
+# @title "Checks if there are column names in the header"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @logical.
+# }
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
   identical(this$readColumnNames, TRUE);
 })
 
 
+
+###########################################################################/**
+# @RdocMethod getColumnNames
+#
+# @title "Gets the column names"
+#
+# \description{
+#  @get "title", either by inferring the from the file or using the
+#  preset column names.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Possibly passed @seemethod "getHeader".}
+#   \item{translate}{If @TRUE, column names translators are applied,
+#    otherwise not.}
+# }
+#
+# \value{
+#   Returns @character @vector.
+# }
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("getColumnNames", "TabularTextFile", function(this, ..., translate=TRUE) {
   # Argument 'translate':
   translate <- Arguments$getLogical(translate);
@@ -105,6 +204,35 @@ setMethodS3("getColumnNames", "TabularTextFile", function(this, ..., translate=T
 
 
 
+
+###########################################################################/**
+# @RdocMethod getHeader
+#
+# @title "Gets the file header"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Passed to internal @seemethod "readRawHeader".}
+#   \item{force}{If @TRUE, an already retrieved header will be ignored.}
+# }
+#
+# \value{
+#   Returns a named @list.
+# }
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("getHeader", "TabularTextFile", function(this, ..., force=FALSE) {
   hdr <- this$.fileHeader;
   if (force || is.null(hdr)) {
@@ -324,6 +452,41 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 
 
 
+
+###########################################################################/**
+# @RdocMethod readDataFrame
+#
+# @title "Reads the tabular data as a data frame"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{con}{(Internal) If a @connection, then it is used, otherwies
+#   a new file connection is temporarly opened and used.}
+#   \item{rows}{(Optional) An @integer @vector specifying which rows to
+#    be read.}
+#   \item{nrow}{(Optional) An @integer specifying how many rows to read.
+#    If specified, it corresponds to specifying \code{rows=1:nrow}.}
+#   \item{...}{Passed to internal @seemethod "getReadArguments".}
+#   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
+# }
+#
+# \value{
+#   Returns a @data.frame.
+# }
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NULL, nrow=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -545,6 +708,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-08-14
+# o Added Rdoc comments.
 # 2010-04-22
 # o Added "NA" to the default 'na.strings' returned by getReadArguments()
 #   for TabularTextFile.

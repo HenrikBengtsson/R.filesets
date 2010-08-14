@@ -38,7 +38,7 @@
   getAsteriskTags.GenericDataFileSetList getAttribute
   getAttribute.GenericDataFile getAttributes
   getAttributes.GenericDataFile getChecksum getColumnNames
-  getColumnNames.GenericTabularFile getColumnNames.TabularTextFile
+  getColumnNames.GenericTabularFile 
   getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
   getCreatedOn getDefaultFullName
   getDefaultFullName.GenericDataFileSetList getExtension
@@ -54,7 +54,7 @@
   getFileSize.GenericDataFileSet getFileType getFullName getFullNames
   getFullNames.GenericDataFileSetList getFullNameTranslator
   getFullNameTranslator.FullNameInterface getHeader
-  getHeader.TabularTextFile getLabel.GenericDataFile getLastAccessedOn
+  getLabel.GenericDataFile getLastAccessedOn
   getLastModifiedOn getListOfFullNameTranslators
   getListOfFullNameTranslators.FullNameInterface getNames
   getNames.GenericDataFileSetList getOutputExtension
@@ -62,7 +62,7 @@
   getReadArguments getReadArguments.TabularTextFile getSet
   getSet.GenericDataFileSetList getSets getSets.GenericDataFileSetList
   getTags getTags.GenericDataFileSetList hasBeenModified
-  hasColumnHeader hasColumnHeader.TabularTextFile hasFile
+  hasColumnHeader hasFile
   hasFile.GenericDataFileSet indexOf indexOf.GenericDataFileSetList
   length.GenericDataFileSetList nbrOfColumns
   nbrOfColumns.GenericTabularFile nbrOfFiles
@@ -72,7 +72,7 @@
   readChecksum readColumnNames readColumnNames.TabularTextFile
   readColumns readColumns.GenericTabularFile
   readColumns.TabularTextFile readDataFrame
-  readDataFrame.GenericTabularFile readDataFrame.TabularTextFile
+  readDataFrame.GenericTabularFile 
   readLines readLines.default readLines.TabularTextFile readRawHeader
   readRawHeader.TabularTextFile readTableHeader readTableHeader.default
   renameTo renameToUpperCaseExt renameToUpperCaseExt.GenericDataFile
@@ -90,7 +90,7 @@
   setListOfFullNameTranslators
   setListOfFullNameTranslators.FullNameInterface setName
  setTags setTags.GenericDataFileSetList
-  TabularTextFile testAttributes testAttributes.GenericDataFile
+  testAttributes testAttributes.GenericDataFile
   translateColumnNames translateColumnNames.GenericTabularFile
   translateFullName translateFullName.FullNameInterface update2
   update2.GenericDataFileSet updateFullName
