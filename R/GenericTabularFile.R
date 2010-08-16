@@ -1,10 +1,45 @@
+###########################################################################/**
+# @RdocClass GenericTabularFile
+#
+# @title "The abstract GenericTabularFile class"
+#
+# \description{
+#  @classhierarchy
+#
+#  A TabularTextFile is an object refering to a tabular text file 
+#  on a file system containing data in a tabular format.
+#  Methods for reading all or a subset of the tabular data exist.
+# }
+# 
+# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+#
+# \arguments{
+#   \item{...}{Arguments passed to @see "GenericDataFile".}
+#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
+#      verified while the object is instantiated by the constructor.
+#      The verbose argument is passed to the verifier function.}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods "public"
+# }
+# 
+# @author
+#
+# \seealso{
+#   An object of this class is typically part of an 
+#   @see "GenericTabularFileSet".
+# }
+#*/###########################################################################
 setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE) {
   this <- extend(GenericDataFile(...), "GenericTabularFile");
 
-  if (.verify)
+  if (.verify) {
     verify(this, ..., verbose=verbose);
+  }
+
   this;
-})
+}, abstract=TRUE)
 
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
@@ -94,18 +129,137 @@ setMethodS3("translateColumnNames", "GenericTabularFile", function(this, names, 
 
 
 
+
+###########################################################################/**
+# @RdocMethod getColumnNames
+#
+# @title "Gets the column names"
+#
+# \description{
+#  @get "title", either by inferring the from the file or using the
+#  preset column names.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns @character @vector.
+# }
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("getColumnNames", "GenericTabularFile", abstract=TRUE);
 
-setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE);
 
-setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE);
 
-setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE);
-
+###########################################################################/**
+# @RdocMethod nbrOfColumns
+#
+# @title "Gets the number of columns"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer.
+# }
+# @author
+#
+# \seealso{
+#   @seemethod "nbrOfRows".
+#   @seemethod "dim".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
   length(getColumnNames(this));
 })
 
+
+
+###########################################################################/**
+# @RdocMethod nbrOfRows
+#
+# @title "Gets the number of data rows"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer.
+# }
+# @author
+#
+# \seealso{
+#   @seemethod "nbrOfColumns".
+#   @seemethod "dim".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE);
+
+
+
+
+###########################################################################/**
+# @RdocMethod dim
+#
+# @title "Gets the dimension of data table"
+#
+# \description{
+#  @get "title", which is the number of rows and the number of columns.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer @vector of length two.
+# }
+# @author
+#
+# \seealso{
+#   @seemethod "nbrOfRows".
+#   @seemethod "nbrOfColumns".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("dim", "GenericTabularFile", function(x) {
   # To please R CMD check.
   this <- x;
@@ -115,6 +269,106 @@ setMethodS3("dim", "GenericTabularFile", function(x) {
 
 
 
+
+
+
+###########################################################################/**
+# @RdocMethod readDataFrame
+#
+# @title "Reads the tabular data as a data frame"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @data.frame.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE);
+
+
+
+###########################################################################/**
+# @RdocMethod readDataFrame
+#
+# @title "Reads a subset of the columns as a data frame"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @data.frame.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE);
+
+
+
+
+###########################################################################/**
+# @RdocMethod extractMatrix
+#
+# @title "Reads one of the columns"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{column}{An @integer specifying the column to read.}
+#   \item{drop}{If @TRUE, a @vector is returned, 
+#     otherwise a one-column @matrix.}
+#   \item{...}{Additional arguments passed to @seemethod "readColumns".}
+#   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
+# }
+#
+# \value{
+#   Returns a Jx1 @matrix, or if \code{drop=TRUE} a @vector of length J.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -134,7 +388,7 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
   # Read data as data frame
   data <- readColumns(this, columns=column, ..., verbose=less(verbose, 5));
   # Drop dimension
-  data <- data[,1];
+  data <- data[,1,drop=TRUE];
 
   verbose && cat(verbose, "Raw data frame read:");
   verbose && str(verbose, data);
@@ -157,6 +411,8 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 
 ############################################################################
 # HISTORY:
+# 2010-08-16
+# o Added some Rdoc comments.
 # 2009-10-30
 # o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile throws
 #   an exception if some fullnames were translated into NA.

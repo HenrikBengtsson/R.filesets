@@ -75,7 +75,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{sapply} \tab  -\cr
  \tab \code{\link[R.filesets:seq.GenericDataFileSet]{seq}} \tab Gets an vector of file indices.\cr
  \tab \code{\link[R.filesets:setAlias.GenericDataFileSet]{setAlias}} \tab Sets the alias of the file set.\cr
- \tab \code{sortBy} \tab  -\cr
+ \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
  \tab \code{validate} \tab  -\cr
 }
 

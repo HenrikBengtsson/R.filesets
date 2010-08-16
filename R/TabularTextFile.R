@@ -14,7 +14,7 @@
 # \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "GenericDataFile".}
+#   \item{...}{Arguments passed to @see "GenericTabularFile".}
 #   \item{sep}{A @character specifying the symbol used to separate the 
 #     cell entries.  If more than one symbol is specified, it will try to
 #     select the correct one by peeking into the file.}
@@ -663,6 +663,38 @@ setMethodS3("dimension", "TabularTextFile", function(this, ...) {
 }, private=TRUE);
 
 
+
+###########################################################################/**
+# @RdocMethod nbrOfRows
+#
+# @title "Counts the number of data rows"
+#
+# \description{
+#  @get "title".  The count does not include the header rows or comments.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{fast}{Argument passed to @seemethod "nbrOfLines".}
+#   \item{...}{Optional arguments passed to @seemethod "getHeader".}
+# }
+#
+# \value{
+#   Returns a @character @vector.
+# }
+# @author
+#
+# \seealso{
+#    The number of data rows is always less or equal to the number of lines
+#    as returned by @seemethod "nbrOfLines".
+#   Internally, @seemethod "R.utils::countLines" is used.
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
   hdr <- getHeader(this, ...);
   n <- nbrOfLines(this, fast=fast);
@@ -672,6 +704,40 @@ setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
 })
 
 
+
+###########################################################################/**
+# @RdocMethod nbrOfLines
+#
+# @title "Counts the number of lines in the data file"
+#
+# \description{
+#  @get "title".  The count include header rows, comments and more.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{fast}{If @TRUE, @NA is returned for large data files (>1Mb),
+#     unless the number of lines has already been counted.}
+#   \item{...}{Optional arguments passed to @see "R.utils::countLines".}
+# }
+#
+# \value{
+#   Returns a @character @vector.
+# }
+#
+# @author
+#
+# \seealso{
+#    To count the number of data rows is the data table, 
+#    use @seemethod "nbrOfRows".
+#   Internally, @seemethod "R.utils::countLines" is used.
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("nbrOfLines", "TabularTextFile", function(this, fast=FALSE, ...) {
   pathname <- getPathname(this);
 
@@ -696,6 +762,36 @@ setMethodS3("nbrOfLines", "TabularTextFile", function(this, fast=FALSE, ...) {
 })
 
 
+
+
+###########################################################################/**
+# @RdocMethod readLines
+#
+# @title "Reads the lines of the data file as strings"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Optional arguments passed to @see "base::readLines".}
+# }
+#
+# \value{
+#   Returns a @character @vector.
+# }
+# @author
+#
+# \seealso{
+#   @seemethod "readDataFrame".
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
 setMethodS3("readLines", "TabularTextFile", function(con, ...) {
   # To please R CMD check
   this <- con;

@@ -18,7 +18,7 @@
 
 \description{
  Read each column from a data file and exports it to a separate file.
- Since each column is process independently of the others, this method
+ Since each column is processed independently of the others, this method
  is memory efficient and can handle very large data files.
 }
 
