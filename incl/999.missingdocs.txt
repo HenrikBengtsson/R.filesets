@@ -1,4 +1,4 @@
-  [.TabularTextFile append append.default appendFiles
+ [.TabularTextFile append append.default appendFiles
   appendFullNamesTranslator
   appendFullNamesTranslator.GenericDataFileSet
   appendFullNamesTranslatorByfunction
@@ -29,16 +29,15 @@
   clearListOfFullNameTranslators.FullNameInterface
   clone.GenericDataFile clone.GenericDataFileSet
   clone.GenericDataFileSetList compareChecksum copyTo digest2
-  dim.GenericTabularFile dimension.TabularTextFile
+   dimension.TabularTextFile
   equals.GenericDataFileSet extract.GenericDataFileSetList
-  extractMatrix extractMatrix.GenericTabularFile
+  extractMatrix
   extractMatrix.GenericTabularFileSet findByName fromFile fromFiles
-  GenericDataFileList GenericTabularFile getAlias
+  GenericDataFileList getAlias
   getAlias.GenericDataFile getAsteriskTags
   getAsteriskTags.GenericDataFileSetList getAttribute
   getAttribute.GenericDataFile getAttributes
   getAttributes.GenericDataFile getChecksum getColumnNames
-  getColumnNames.GenericTabularFile 
   getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
   getCreatedOn getDefaultFullName
   getDefaultFullName.GenericDataFileSetList getExtension
@@ -65,15 +64,14 @@
   hasColumnHeader hasFile
   hasFile.GenericDataFileSet indexOf indexOf.GenericDataFileSetList
   length.GenericDataFileSetList nbrOfColumns
-  nbrOfColumns.GenericTabularFile nbrOfFiles
+  nbrOfFiles
   nbrOfFiles.GenericDataFileSetList nbrOfLines
-  nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
-  nbrOfRows.TabularTextFile nbrOfSets nbrOfSets.GenericDataFileSetList
+   nbrOfRows
+   nbrOfSets nbrOfSets.GenericDataFileSetList
   readChecksum readColumnNames readColumnNames.TabularTextFile
   readColumns readColumns.GenericTabularFile
   readColumns.TabularTextFile readDataFrame
-  readDataFrame.GenericTabularFile 
-  readLines readLines.default readLines.TabularTextFile readRawHeader
+  readLines readLines.default readRawHeader
   readRawHeader.TabularTextFile readTableHeader readTableHeader.default
   renameTo renameToUpperCaseExt renameToUpperCaseExt.GenericDataFile
   reorder.GenericDataFileSet sapply sapply.default

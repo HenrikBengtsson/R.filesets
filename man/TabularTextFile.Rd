@@ -66,11 +66,11 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
  \tab \code{\link[R.filesets:getColumnNames.TabularTextFile]{getColumnNames}} \tab Gets the column names.\cr
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
  \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
- \tab \code{nbrOfLines} \tab  -\cr
- \tab \code{nbrOfRows} \tab  -\cr
+ \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
+ \tab \code{\link[R.filesets:nbrOfRows.TabularTextFile]{nbrOfRows}} \tab Counts the number of data rows.\cr
  \tab \code{readColumnNames} \tab  -\cr
  \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
- \tab \code{readLines} \tab  -\cr
+ \tab \code{\link[R.filesets:readLines.TabularTextFile]{readLines}} \tab Reads the lines of the data file as strings.\cr
  \tab \code{\link[R.filesets:writeColumnsToFiles.TabularTextFile]{writeColumnsToFiles}} \tab Read each column from a data file and exports it to a separate file.\cr
 }
 

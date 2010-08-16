@@ -11,7 +11,7 @@
 #  Methods for reading all or a subset of the tabular data exist.
 # }
 # 
-# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+# \usage{GenericTabularFile(..., .verify=TRUE, verbose=FALSE)}
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "GenericDataFile".}

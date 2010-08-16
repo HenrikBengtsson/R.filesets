@@ -38,7 +38,7 @@ extends \emph{\link[R.filesets]{GenericDataFile}}\cr
   Methods for reading all or a subset of the tabular data exist.
  }
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+ \usage{GenericTabularFile(..., .verify=TRUE, verbose=FALSE)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericDataFile}}.}
@@ -51,14 +51,14 @@ extends \emph{\link[R.filesets]{GenericDataFile}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{as.character} \tab  -\cr
- \tab \code{dim} \tab  -\cr
- \tab \code{extractMatrix} \tab  -\cr
- \tab \code{getColumnNames} \tab  -\cr
+ \tab \code{\link[R.filesets:dim.GenericTabularFile]{dim}} \tab Gets the dimension of data table.\cr
+ \tab \code{\link[R.filesets:extractMatrix.GenericTabularFile]{extractMatrix}} \tab Reads one of the columns.\cr
+ \tab \code{\link[R.filesets:getColumnNames.GenericTabularFile]{getColumnNames}} \tab Gets the column names.\cr
  \tab \code{getColumnNameTranslator} \tab  -\cr
- \tab \code{nbrOfColumns} \tab  -\cr
- \tab \code{nbrOfRows} \tab  -\cr
+ \tab \code{\link[R.filesets:nbrOfColumns.GenericTabularFile]{nbrOfColumns}} \tab Gets the number of columns.\cr
+ \tab \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{nbrOfRows}} \tab Gets the number of data rows.\cr
  \tab \code{readColumns} \tab  -\cr
- \tab \code{readDataFrame} \tab  -\cr
+ \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads a subset of the columns as a data frame.\cr
  \tab \code{setColumnNameTranslator} \tab  -\cr
 }
 
