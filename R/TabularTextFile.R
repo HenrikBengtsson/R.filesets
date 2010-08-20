@@ -688,7 +688,7 @@ setMethodS3("dimension", "TabularTextFile", function(this, ...) {
 # \seealso{
 #    The number of data rows is always less or equal to the number of lines
 #    as returned by @seemethod "nbrOfLines".
-#   Internally, @seemethod "R.utils::countLines" is used.
+#   Internally, @see "R.utils::countLines" is used.
 #   @seeclass
 # }
 #
@@ -731,7 +731,7 @@ setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
 # \seealso{
 #    To count the number of data rows is the data table, 
 #    use @seemethod "nbrOfRows".
-#   Internally, @seemethod "R.utils::countLines" is used.
+#   Internally, @see "R.utils::countLines" is used.
 #   @seeclass
 # }
 #

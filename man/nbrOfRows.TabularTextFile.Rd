@@ -34,7 +34,7 @@
 \seealso{
    The number of data rows is always less or equal to the number of lines
    as returned by \code{\link[R.filesets:nbrOfLines.TabularTextFile]{*nbrOfLines}()}.
-  Internally, \code{\link[R.filesets:R.utils::countLines.TabularTextFile]{*R.utils::countLines}()} is used.
+  Internally, \code{\link[R.utils]{countLines}} is used.
   For more information see \code{\link{TabularTextFile}}.
 }
 

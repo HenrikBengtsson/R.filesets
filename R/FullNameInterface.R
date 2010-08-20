@@ -277,9 +277,10 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 #   @get "title".
 # }
 #
-# @synopsis
-#
-# \usage{\method{hasTag}{FullNameInterface}(this, tag, ...)}
+# \usage{
+#  \method{hasTags}{FullNameInterface}(this, tags, ...)
+#  \method{hasTag}{FullNameInterface}(this, tag, ...)
+# }
 #
 # \arguments{
 #  \item{tags, tag}{A @character @vector or scalar, of tags to looked for.}

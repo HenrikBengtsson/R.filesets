@@ -23,9 +23,10 @@
   Gets the number of files in the file set.
 }
 
-\usage{\method{length}{GenericDataFileSet}(x)}
-
-\usage{\method{nbrOfFiles}{GenericDataFileSet}(this, ...)}
+\usage{
+ \method{length}{GenericDataFileSet}(x)
+ \method{nbrOfFiles}{GenericDataFileSet}(this, ...)
+}
 
 \value{
   Returns an \code{\link[base]{integer}}.

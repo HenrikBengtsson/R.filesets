@@ -350,9 +350,10 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
 #   @get "title".
 # }
 #
-# @synopsis
-#
-# \usage{\method{nbrOfFiles}{GenericDataFileSet}(this, ...)}
+# \usage{
+#  \method{length}{GenericDataFileSet}(x)
+#  \method{nbrOfFiles}{GenericDataFileSet}(this, ...)
+# }
 #
 # \value{
 #   Returns an @integer.
@@ -534,9 +535,10 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
 #   @get "title".
 # }
 #
-# @synopsis
-#
-# \usage{\method{getFullNames}{GenericDataFileSet}(this, ...)}
+# \usage{
+#  \method{getNames}{GenericDataFileSet}(this, ...)
+#  \method{getFullNames}{GenericDataFileSet}(this, ...)
+# }
 #
 # \arguments{
 #  \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})

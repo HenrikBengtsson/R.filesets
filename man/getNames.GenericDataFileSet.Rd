@@ -23,9 +23,10 @@
   Gets the names (or fullnames) of the files in the file set.
 }
 
-\usage{\method{getNames}{GenericDataFileSet}(this, ...)}
-
-\usage{\method{getFullNames}{GenericDataFileSet}(this, ...)}
+\usage{
+ \method{getNames}{GenericDataFileSet}(this, ...)
+ \method{getFullNames}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})

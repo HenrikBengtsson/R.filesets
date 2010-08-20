@@ -1381,12 +1381,14 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 #   appended (removed).
 # }
 #
-# @synopsis
-#
-# \usage{\method{gunzip}{GenericDataFile}(this, ...)}
+# \usage{
+#  \method{gzip}{GenericDataFile}(this, ...)
+#  \method{gunzip}{GenericDataFile}(this, ...)
+# }
 #
 # \arguments{
-#  \item{...}{Not used.}
+#  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip", 
+#    respectively.}
 #  \item{verbose}{...}
 # }
 #

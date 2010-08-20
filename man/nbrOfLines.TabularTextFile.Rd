@@ -36,7 +36,7 @@
 \seealso{
    To count the number of data rows is the data table,
    use \code{\link[R.filesets:nbrOfRows.TabularTextFile]{*nbrOfRows}()}.
-  Internally, \code{\link[R.filesets:R.utils::countLines.TabularTextFile]{*R.utils::countLines}()} is used.
+  Internally, \code{\link[R.utils]{countLines}} is used.
   For more information see \code{\link{TabularTextFile}}.
 }
 

@@ -23,9 +23,10 @@
   Checks whether the fullname contains a given set of tag(s).
 }
 
-\usage{\method{hasTags}{FullNameInterface}(this, tags, ...)}
-
-\usage{\method{hasTag}{FullNameInterface}(this, tag, ...)}
+\usage{
+ \method{hasTags}{FullNameInterface}(this, tags, ...)
+ \method{hasTag}{FullNameInterface}(this, tag, ...)
+}
 
 \arguments{
  \item{tags, tag}{A \code{\link[base]{character}} \code{\link[base]{vector}} or scalar, of tags to looked for.}
