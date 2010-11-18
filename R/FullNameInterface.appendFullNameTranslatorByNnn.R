@@ -21,30 +21,56 @@ setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(
 
 
 setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", function(this, df, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'df':
   if (!is.data.frame(df)) {
     throw("Argument 'df' is not a data.frame: ", class(df)[1]);
   }
 
-  reqColNames <- c("pattern", "replacement");
   colnames <- colnames(df);
+
+  reqColNamesList <- list(
+    fixed=c("fixed", "replacement"),
+    pattern=c("pattern", "replacement")
+  );
+
   if (is.null(colnames) && ncol(df) == 2) {
-    colnames <- reqColNames;
+    colnames <- reqColNamesList[["pattern"]];  # Assume pattern
     colnames(df) <- colnames;
-  } else {
-    res <- all(is.element(reqColNames, colnames));
-    if (!res) {
-      msg <- sprintf("The specified data frame does not have all of the required columns (%s): %s", paste(reqColNames, collapse=", "), paste(colnames, collapse=", "));
-      throw(msg);
-    }
   }
 
+  keep <- sapply(reqColNamesList, FUN=function(x) {
+    all(is.element(x, colnames));
+  });
+  keep <- which(keep);
+
+  if (length(keep) == 0) {
+    d <- sapply(reqColNamesList, FUN=function(s) {
+      paste(sprintf("'%s'", s), collapse=", ");
+    });    
+    d <- sprintf("(%s)", d);
+    msg <- sprintf("The specified data frame does not have all of the required columns (%s): %s", paste(d, collapse=" OR "), paste(colnames, collapse=", "));
+    throw(msg);
+  }
+
+  flavor <- names(keep);
+  reqColNames <- reqColNamesList[[flavor]];
+  
+  lookup <- reqColNames[1];
+
+  if (flavor == "fixed") {
+    fixed <- TRUE;
+  } else if (flavor == "pattern") {
+    fixed <- FALSE;
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Build function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generate regular expression
-  patterns <- df[,"pattern"];
+  patterns <- df[,lookup];
   patterns <- as.character(patterns);
   replacements <- df[,"replacement"];
   replacements <- as.character(replacements);
@@ -55,14 +81,14 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
     # For each rule
     for (kk in seq(length=nbrOfRules)) {
       pattern <- patterns[kk];
-      idxs <- grep(pattern, names, fixed=FALSE);
+      idxs <- grep(pattern, names, fixed=fixed);
       # No matches?
       if (length(idxs) == 0)
         next;
 
       # Translate
       replacement <- replacements[kk];
-      names[idxs] <- gsub(pattern, replacement, names[idxs], fixed=FALSE);
+      names[idxs] <- gsub(pattern, replacement, names[idxs], fixed=fixed);
     } # for (kk ...)
 
     # Drop empty tags
@@ -105,6 +131,9 @@ setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface",
 
 ############################################################################
 # HISTORY:
+# 2010-10-17
+# o Now appendFullNameTranslator(..., df) for FullNameInterface takes
+#   either 'pattern' or 'fixed' translations in data.frame.
 # 2010-05-26
 # o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
 # 2010-05-25
