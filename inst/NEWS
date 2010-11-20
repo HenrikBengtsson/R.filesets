@@ -1,7 +1,10 @@
 Package: R.filesets
 ===================
 
-Version: 0.9.1 [2010-11-17]
+Version: 0.9.1 [2010-11-19]
+o ROBUSTNESS: Now GenericDataFileSet$byName() asserts that arguments
+  'name' and 'tags' contain only valid characters.  This will for
+  instance prevent passing paths or pathnames by mistake.
 o Now appendFullNameTranslator(..., df) for FullNameInterface takes
   either 'pattern' or 'fixed' translations in data.frame.
 

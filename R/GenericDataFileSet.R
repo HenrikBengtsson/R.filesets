@@ -1347,6 +1347,12 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   if (nchar(name) == 0) {
     throw("A ", class(static)[1], " must have a non-empty name: ''");
   }
+  name <- Arguments$getFilename(name, .type="name");
+
+  # Arguments 'tags':
+  if (!is.null(tags)) {
+    tags <- sapply(tags, Arguments$getFilename, .type="name", .name="tags");
+  }
 
   # Arguments 'paths':
   if (is.null(paths)) {
@@ -1545,6 +1551,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 # }
 #*/###########################################################################
 setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -1817,6 +1826,10 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-11-19
+# o ROBUSTNESS: Now GenericDataFileSet$byName() asserts that arguments
+#   'name' and 'tags' contain only valid characters.  This will for
+#   instance prevent passing paths or pathnames by mistake.
 # 2010-08-03
 # o Added sortBy() to GenericDataFileSet, which can sort files either
 #   by lexicographic or mixedsort ordering.

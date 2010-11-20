@@ -16,15 +16,21 @@
 #   `abcdefghijklmnopqrstuvwxyz{|}~   (31)
 #
 #
-setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,64), class=c("safe"), ...) {
+setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,128), class=c("safe"), .name=NULL, .type="filename", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument '.name':
+  if (is.null(.name)) {
+    .name <- as.character(deparse(substitute(filename)));
+  }
+
   # Argument 'filename':
-  filename <- getCharacter(static, filename, nchar=nchar);
+  filename <- getCharacter(static, filename, nchar=nchar, .name=.name);
 
   # Argument 'class':
   class <- match.arg(class);
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Filter out valid characters
@@ -49,8 +55,9 @@ setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,64)
   if (nchar(chars) > 0) {
     chars <- unlist(strsplit(chars, split=""));
     chars <- sort(unique(chars));
-    chars <- paste(chars, collapse="");
-    throw("Not a valid filename. Argument 'filename' contains non-valid filename characters (", chars, "): ", filename);
+    chars <- sprintf("'%s'", chars);
+    chars <- paste(chars, collapse=", ");
+    throw(sprintf("Not a valid %s. Argument '%s' contains non-valid %s characters (%s): %s", .type, .name, .type, chars, filename));
   }
 
   filename;
@@ -59,6 +66,9 @@ setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,64)
 
 ############################################################################
 # HISTORY:
+# 2010-11-19
+# o Now Arguments$getFilename() correctly reports the name of the argument.
+# o Added argument private arguments .name and .type to getFilename().
 # 2006-11-20
 # o Added static getFilename() to Arguments to check if a string contains
 #   valid filename characters.
