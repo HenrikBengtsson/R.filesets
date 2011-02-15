@@ -852,14 +852,15 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{files}{A @list of @see "GenericDataFile":s to be appended.}
+#  \item{files}{A single @see "GenericDataFile" or a @list of such to
+#    be appended.}
 #  \item{clone}{If @TRUE, each file is cloned before being appened.}
-#  \item{...}{Additional arguments passed to @seemethod "appendFiles".}
+#  \item{...}{Additional arguments passed to @see "base::append".}
 #  \item{verbose}{...}
 # }
 #
 # \value{
-#   Returns (invisible) the data set itself.
+#   Returns (invisible) the appended data set (itself).
 # }
 #
 # \details{
@@ -875,6 +876,11 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 # }
 #*/###########################################################################
 setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., verbose=FALSE) {
+  # Argument 'files':
+  if (!is.list(files)) {
+    files <- list(files);
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -908,7 +914,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     }
 
     # Append
-    this$files <- append(this$files, files);
+    this$files <- base::append(this$files, files, ...);
 
     # Some cached values are incorrect now.
     clearCache(this);
@@ -959,9 +965,15 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
   this <- x;
   other <- values;
 
-  other <- Arguments$getInstanceOf(other, class(this)[1]);
+  # Argument 'other':
+  if (inherits(other, "GenericDataFileSet")) {
+    other <- Arguments$getInstanceOf(other, class(this)[1]);
+    files <- getFiles(other);
+  } else {
+    files <- other;
+  }
 
-  appendFiles(this, getFiles(other), ...);
+  appendFiles(this, files, ...);
 })
 
 
@@ -1826,6 +1838,13 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-13
+# o GENERALIZATION: Now append() for GenericDataFileSet tries to also
+#   append non-GenericDataFileSet object by passing them down to
+#   appendFiles() assuming they are GenericDataFile:s.
+# o GENERALIZATION: Now appendFiles() for GenericDataFileSet also accepts
+#   a single item.  Thus, there is no longer a need to wrap up single
+#   items in a list.
 # 2010-11-19
 # o ROBUSTNESS: Now GenericDataFileSet$byName() asserts that arguments
 #   'name' and 'tags' contain only valid characters.  This will for

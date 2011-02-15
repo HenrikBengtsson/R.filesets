@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.2 [2011-02-14]
+o GENERALIZATION: Now append() for GenericDataFileSet tries to also
+  append non-GenericDataFileSet object by passing them down to
+  appendFiles() assuming they are GenericDataFile:s.
+o GENERALIZATION: Now appendFiles() for GenericDataFileSet also accepts
+  a single item.  Thus, there is no longer a need to wrap up single
+  items in a list.
+
+
 Version: 0.9.1 [2010-11-19]
 o ROBUSTNESS: Now GenericDataFileSet$byName() asserts that arguments
   'name' and 'tags' contain only valid characters.  This will for
