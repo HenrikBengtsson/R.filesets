@@ -28,6 +28,8 @@
      set is located.}
   \item{paths}{A \code{\link[base]{character}} \code{\link[base]{vector}} of root paths where to look for
      the file set.}
+  \item{firstOnly}{If \code{\link[base:logical]{TRUE}}, only the first path found, if any, is returned,
+     otherwise all found paths are returned.}
   \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file set was
      not found, otherwise not.}
   \item{...}{Not used.}
@@ -36,7 +38,7 @@
 
  \value{
    Returns a \code{\link[base]{character}} \code{\link[base]{vector}} of paths.
-   If no file sets where found, \code{\link[base]{NULL}} is returned.
+   If no file sets were found, \code{\link[base]{NULL}} is returned.
  }
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

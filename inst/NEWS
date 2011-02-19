@@ -1,6 +1,21 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.3 [2011-02-18]
+o GENERALIZATION: Now byName() for GenericDataFileSet will try all
+  possible data set directories located when trying to setup a data set.
+  Before it only tried the first one located.  This new approach is
+  equally fast for the first data set directory as before.  The advantage
+  is that it adds further flexibilities, e.g. the first directory may
+  not be what we want but the second, which can be further tested by
+  the byPath() and downstream methods such as the constructor.
+o ROBUSTNESS: Now writeColumnsToFiles() for TabularTextFile writes
+  files atomically, which should minimize the risk for generating
+  incomplete files.
+o DEPRECATION: Added a warning message reporting that fromFiles() of
+  GenericDataFileSet has been deprecated, if still called by someone.
+
+
 Version: 0.9.2 [2011-02-14]
 o GENERALIZATION: Now append() for GenericDataFileSet tries to also
   append non-GenericDataFileSet object by passing them down to

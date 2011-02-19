@@ -22,14 +22,15 @@
 \usage{\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., verbose=FALSE)}
 
 \arguments{
- \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s to be appended.}
+ \item{files}{A single \code{\link{GenericDataFile}} or a \code{\link[base]{list}} of such to
+   be appended.}
  \item{clone}{If \code{\link[base:logical]{TRUE}}, each file is cloned before being appened.}
- \item{...}{Additional arguments passed to \code{\link[R.filesets:appendFiles.GenericDataFileSet]{*appendFiles}()}.}
+ \item{...}{Additional arguments passed to \code{\link[base]{append}}().}
  \item{verbose}{...}
 }
 
 \value{
-  Returns (invisible) the data set itself.
+  Returns (invisible) the appended data set (itself).
 }
 
 \details{

@@ -27,6 +27,13 @@
 #  Returns (invisibly) a @character @vector of all output files.
 # }
 #
+# \details{
+#  Each file generated is written atomically by first writing to a temporary
+#  file which is then renamed if successfully written.  This minimizes the
+#  risk for creating incomplete files, which otherwise may occur if for
+#  instance an interrupt occured.
+# }
+#
 # @author
 #
 # \seealso{
@@ -132,7 +139,11 @@ setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, f
       }
       verbose && str(verbose, df);
 
-      con <- file(pathname, open="w");
+      # Write atomically, by first writing to a temporary file
+      pathnameT <- sprintf("%s.tmp", pathname);
+      pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=TRUE);
+
+      con <- file(pathnameT, open="w");
       header$createdOn <- format(Sys.time(), "%Y-%m-%d %H:%M:%S");
       header$column <- cc;
       header$columnName <- columnName;
@@ -140,6 +151,14 @@ setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, f
       writeHeaderComments0(con=con, header);
       write.table(file=con, df, quote=FALSE, sep="\t", row.names=FALSE);
       close(con);
+
+      # Rename temporary file
+      verbose && enter(verbose, "Renaming temporary file to destination name");
+      res <- file.rename(pathnameT, pathname);
+      if (!res) {
+        throw("Failed to rename temporary file: ", pathnameT, " -> ", pathname);
+      }
+      verbose && exit(verbose);       
     } else {
       verbose && cat(verbose, "Column already extracted");
     }
@@ -155,6 +174,10 @@ setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, f
 
 ############################################################################
 # HISTORY:
+# 2011-02-18
+# o ROBUSTNESS: Now writeColumnsToFiles() for TabularTextFile writes
+#   files atomically, which should minimize the risk for generating
+#   incomplete files.
 # 2009-04-17
 # o Added Rdoc comments.
 # 2008-05-21
