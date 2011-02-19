@@ -111,3 +111,4 @@ hasTag hasTags
   appendFullNamesTranslatorByTabularTextFileSet
   appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet
  sortBy
+  getTags getTags.Arguments

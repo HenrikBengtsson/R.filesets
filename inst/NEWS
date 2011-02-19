@@ -12,6 +12,7 @@ o GENERALIZATION: Now byName() for GenericDataFileSet will try all
 o ROBUSTNESS: Now writeColumnsToFiles() for TabularTextFile writes
   files atomically, which should minimize the risk for generating
   incomplete files.
+o CLEANUP: Copied static getTags() for Arguments from aroma.core package.
 o DEPRECATION: Added a warning message reporting that fromFiles() of
   GenericDataFileSet has been deprecated, if still called by someone.
 
