@@ -112,3 +112,4 @@ hasTag hasTags
   appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet
  sortBy
   getTags getTags.Arguments
+dropRootPathTags dropRootPathTags.default
