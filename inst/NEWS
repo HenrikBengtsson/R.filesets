@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.4 [2011-02-24]
+o GENERALIZATION: Added support to findByName() for GenericDataFileSet
+  such that root paths also can be specified by simple regular expression
+  (still via argument 'paths').  Currently it is only the last 
+  subdirectory that can be expanded, e.g. foo/bar/data(,.*)/.
+
+
 Version: 0.9.3 [2011-02-18]
 o GENERALIZATION: Now byName() for GenericDataFileSet will try all
   possible data set directories located when trying to setup a data set.

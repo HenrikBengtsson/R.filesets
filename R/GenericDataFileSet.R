@@ -1387,9 +1387,33 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   verbose && enter(verbose, "Locating data sets");
 
+
+  verbose && enter(verbose, "Expanding paths by allowing for regular expression matching of the deepest subdirectory");
+
+  verbose && cat(verbose, "Possible search paths before expansion:");
+  verbose && print(verbose, paths);
+
+  # Expand paths by regular expressions, in case they exist
+  paths <- lapply(paths, FUN=function(path) {
+    parent <- dirname(path);
+    subdir <- basename(path);  # This will drop trailing slashes, if any.
+    pattern <- sprintf("^%s(|[.](lnk|LNK))$", subdir);
+    subdirs <- list.files(pattern=pattern, path=parent, full.names=FALSE);
+    file.path(parent, subdirs);
+  });
+  paths <- unlist(paths, use.names=FALSE);
+
+  verbose && cat(verbose, "Possible search paths after expansion:");
+  verbose && print(verbose, paths);
+
+  verbose && exit(verbose);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify existing root directories
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Filtering out root paths that are existing directories");
+
   rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
   rootPaths <- paths[sapply(rootPaths, FUN=isDirectory)];
   if (length(rootPaths) == 0) {
@@ -1402,6 +1426,8 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   verbose && cat(verbose, "Search root path:");
   verbose && print(verbose, rootPaths);
+
+  verbose && exit(verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1861,6 +1887,10 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o GENERALIZATION: Added support to findByName() for GenericDataFileSet
+#   such that root paths also can be specified by simple regular expression
+#   (still via argument 'paths').
 # 2011-02-18
 # o DEPRECATION: Added a warning message reporting that fromFiles() of
 #   GenericDataFileSet has been deprecated, if still called by someone.
