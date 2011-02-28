@@ -1,6 +1,14 @@
 Package: R.filesets
 ===================
 
+
+Version: 0.9.5 [2011-02-27]
+o BUG FIX: After the recent generalization of findByName() for
+  GenericDataFileSet it would throw "<simpleError in paths[sapply(
+  rootPaths, FUN = isDirectory)]: invalid subscript type 'list'>"
+  in case no matching root path directories existed.
+
+
 Version: 0.9.4 [2011-02-24]
 o Added dropRootPathTags().
 o GENERALIZATION: Added support to findByName() for GenericDataFileSet

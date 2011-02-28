@@ -1406,6 +1406,14 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   verbose && cat(verbose, "Possible search paths after expansion:");
   verbose && print(verbose, paths);
 
+  if (length(paths) == 0) {
+    if (mustExist) {
+      throw("No such root path directories: ", paste(paths, collapse=", "));
+    }
+    verbose && exit(verbose);
+    return(NULL);
+  }
+
   verbose && exit(verbose);
 
 
@@ -1415,14 +1423,15 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   verbose && enter(verbose, "Filtering out root paths that are existing directories");
 
   rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
-  rootPaths <- paths[sapply(rootPaths, FUN=isDirectory)];
   if (length(rootPaths) == 0) {
     if (mustExist) {
-      throw("None of the data directories exist: ", 
+      throw("None of the root path directories exist: ", 
                                            paste(paths, collapse=", "));
     }
+    verbose && exit(verbose);
     return(NULL);
   }
+  rootPaths <- rootPaths[sapply(rootPaths, FUN=isDirectory)];
 
   verbose && cat(verbose, "Search root path:");
   verbose && print(verbose, rootPaths);
@@ -1887,6 +1896,10 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-27
+# o BUG FIX: findByName() for GenericDataFileSet would throw "<simpleError
+#   in paths[sapply(rootPaths, FUN = isDirectory)]: invalid subscript type
+#   'list'>" in case no matching root path directories existed.
 # 2011-02-24
 # o GENERALIZATION: Added support to findByName() for GenericDataFileSet
 #   such that root paths also can be specified by simple regular expression
