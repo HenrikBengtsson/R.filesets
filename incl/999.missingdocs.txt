@@ -113,3 +113,4 @@ hasTag hasTags
  sortBy
   getTags getTags.Arguments
 dropRootPathTags dropRootPathTags.default
+fullname fullname.default name name.default tags tags.default

@@ -225,6 +225,12 @@
 \alias{getTags.Arguments}
 \alias{dropRootPathTags}
 \alias{dropRootPathTags.default}
+\alias{fullname}
+\alias{fullname.default}
+\alias{name}
+\alias{name.default}
+\alias{tags}
+\alias{tags.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that
