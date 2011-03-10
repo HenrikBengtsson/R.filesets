@@ -1,29 +1,39 @@
 setMethodS3("fullname", "default", function(name, tags=NULL, ..., collapse=TRUE) {
+  # Create a clean vector of parts
   args <- list(name, tags, ...);
   parts <- unlist(args, use.names=FALSE);
   parts <- paste(parts, collapse=",");
-  if (!collapse) {
-    parts <- strsplit(parts, split=",", fixed=TRUE);
-    parts <- unlist(parts, use.names=FALSE);
+  parts <- strsplit(parts, split=",", fixed=TRUE);
+  parts <- unlist(parts, use.names=FALSE);
+
+  parts <- parts[nchar(parts) > 0];
+
+  if (collapse) {
+    parts <- paste(parts, collapse=",");
   }
+
   parts;
 })
 
 
 setMethodS3("name", "default", function(...) {
-  fullname <- fullname(...);
-  parts <- strsplit(fullname, split=",", fixed=TRUE);
-  parts <- unlist(parts, use.names=FALSE);
+  # Create a clean vector of parts
+  parts <- fullname(..., collapse=FALSE);
+
+  # Extract the name
   name <- parts[1];
+
   name;
 })
 
 
 setMethodS3("tags", "default", function(..., collapse=FALSE) {
-  fullname <- fullname(...);
-  parts <- strsplit(fullname, split=",", fixed=TRUE);
-  parts <- unlist(parts, use.names=FALSE);
+  # Create a clean vector of parts
+  parts <- fullname(..., collapse=FALSE);
+
+  # Extract the tags
   tags <- parts[-1];
+
   if (collapse) {
     tags <- paste(tags, collapse=","); 
   }
@@ -31,8 +41,23 @@ setMethodS3("tags", "default", function(..., collapse=FALSE) {
 })
 
 
+setMethodS3("dropTags", "default", function(..., drop=NULL, collapse=FALSE) {
+  fullname <- fullname(..., collapse=FALSE);
+
+  # Argument 'drop':
+  drop <- fullname(drop, collapse=FALSE);
+
+  fullname <- setdiff(fullname, drop);
+
+  fullname(fullname, collapse=collapse);
+})
+
+
 ############################################################################
 # HISTORY:
+# 2011-03-09
+# o Added dropTags().
+# o Now all these functions drops empty tags (and names).
 # 2011-03-08
 # o Added fullname(), name(), and tags().  Amazing that I never thought
 #   of having these very basic functions.  They will make some code

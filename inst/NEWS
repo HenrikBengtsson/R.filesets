@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.7 [2011-03-09]
+o Added dropTags().
+o Added '=' to the list of safe characters for Arguments$getFilename().
+
+
 Version: 0.9.6 [2011-03-08]
 o Added fullname(), name(), and tags().
 

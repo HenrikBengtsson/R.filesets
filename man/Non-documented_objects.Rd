@@ -231,6 +231,8 @@
 \alias{name.default}
 \alias{tags}
 \alias{tags.default}
+\alias{dropTags}
+\alias{dropTags.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that

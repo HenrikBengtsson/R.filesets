@@ -47,6 +47,7 @@ setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,128
     chars <- gsub("[ ]", "", chars);
     chars <- gsub("[\\[\\]]", "", chars);
     chars <- gsub("[#$%&'()`{|}~]", "", chars);
+    chars <- gsub("[=]", "", chars);
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -66,6 +67,8 @@ setMethodS3("getFilename", "Arguments", function(static, filename, nchar=c(1,128
 
 ############################################################################
 # HISTORY:
+# 2011-03-09
+# o Added '=' to the list of safe characters for Arguments$getFilename().
 # 2010-11-19
 # o Now Arguments$getFilename() correctly reports the name of the argument.
 # o Added argument private arguments .name and .type to getFilename().
