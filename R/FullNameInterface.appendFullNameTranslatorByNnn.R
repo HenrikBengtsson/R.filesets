@@ -1,4 +1,7 @@
 setMethodS3("appendFullNameTranslatorBycharacter", "FullNameInterface", function(this, fullname, ...) {
+  # Validate argument 'fullname'
+  fullname <- Arguments$getCharacter(fullname, length=c(1,1));
+
   # Append a translator function that always returns a constant string
   appendFullNameTranslator(this, function(...) { fullname });
 }, protected=TRUE)
@@ -12,7 +15,12 @@ setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(
 
   # Sanity check
   names <- c("foo bar");
-  names <- fcn(names, file=this);
+  namesT <- fcn(names, file=this);
+
+  # More sanity checks
+  if (length(namesT) != 1) {
+    throw("Argument 'fcn' specifies a translator function that does not return exactly one string if given one string: ", length(namesT));
+  }
 
   fnList <- getListOfFullNameTranslators(this);
   fnList <- c(fnList, fcn);
@@ -131,6 +139,9 @@ setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface",
 
 ############################################################################
 # HISTORY:
+# 2011-03-11
+# o Now appendFullNameTranslatorBy<what>() for <character> and <function>
+#   assert that the translator correctly returns exactly one string.
 # 2010-10-17
 # o Now appendFullNameTranslator(..., df) for FullNameInterface takes
 #   either 'pattern' or 'fixed' translations in data.frame.

@@ -521,8 +521,8 @@ setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
- # Set a translator function that always returns a constant
- setFullNameTranslator(this, ...);
+  # Set a translator function that always returns a constant
+  setFullNameTranslator(this, ...);
 })
 
 

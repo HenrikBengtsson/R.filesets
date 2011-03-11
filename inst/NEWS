@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.7 [2011-03-11]
+o ROBUSTNESS: Now appendFullNameTranslatorBy<what>() for <character>
+  and <function> assert that the translator correctly returns exactly
+  one string.  This has the effect that setFullName() and friends
+  are also tested.
+
+
 Version: 0.9.6 [2011-03-09]
 o Added '=' to the list of safe characters for Arguments$getFilename().
 o Added fullname(), name(), tags(), and dropTags().
