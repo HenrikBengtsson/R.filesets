@@ -363,6 +363,15 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 
 
 
+  verbose && enter(verbose, "Building arguments for read.table()");
+
+
+  # Optional user arguments
+  userArgs <- list(...);
+  verbose && cat(verbose, "User arguments:");
+  verbose && str(verbose, userArgs);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Infer column classes
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -418,8 +427,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
       }
     }
   } else {
-    args <- list(...);
-    colClasses <- args$colClasses;
+    colClasses <- userArgs$colClasses;
   }
   
   verbose && cat(verbose, "Column classes:", level=-20);
@@ -442,10 +450,16 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   );
 
   # Overwrite with user specified arguments, if any
-  userArgs <- list(...);
-  for (key in names(userArgs)) {
-    args[[key]] <- userArgs[[key]];
+  if (length(userArgs) > 0) {
+    verbose && enter(verbose, "Overwriting inferred arguments with user arguments");
+    for (key in names(userArgs)) {
+      args[[key]] <- userArgs[[key]];
+    }
+    verbose && exit(verbose);
   }
+
+  verbose && exit(verbose);
+
 
   args;
 }, protected=TRUE);
@@ -804,6 +818,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-03-14
+# o Improved the verbose output of getReadArguments().
 # 2010-08-14
 # o Added Rdoc comments.
 # 2010-04-22
