@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.8 [2011-04-03]
+o CLEANUP: Utilizing hpaste() internally wherever applicable.
+
+
 Version: 0.9.7 [2011-03-11]
 o ROBUSTNESS: Now appendFullNameTranslatorBy<what>() for <character>
   and <function> assert that the translator correctly returns exactly

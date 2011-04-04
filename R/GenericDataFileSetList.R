@@ -71,11 +71,7 @@ setMethodS3("assertDuplicates", "GenericDataFileSetList", function(this, ...) {
     dups <- names[duplicated(names)];
     n <- length(dups);
     if (n > 0) {
-      if (n > 5) {
-        dups <- c(dups[1:2], "...", dups[n]);
-      }
-      dups <- paste(dups, collapse=", ");
-      throw(sprintf("Detected %n files with duplicated names, which are not allowed (onDuplicates=FALSE): %s", n, dups));
+      throw(sprintf("Detected %n files with duplicated names, which are not allowed (onDuplicates=FALSE): %s", n, hpaste(dups)));
     }
   }
 }, protected=TRUE)
@@ -107,11 +103,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
 
   # Unique names
   names <- getNames(this);
-  n <- length(names);
-  if (n >= 5)
-    names <- c(names[1:2], "...", names[n]);
-  names <- paste(names, collapse=", ");
-  s <- c(s, sprintf("Names: %s [%d]", names, n));
+  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
 
   # Number of file sets
   n <- nbrOfSets(this);
@@ -356,11 +348,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
     dups <- files[duplicated(files)];
     n <- length(dups);
     if (n > 0) {
-      if (n > 1) {
-        dups <- c(dups[1:2], "...", dups[n]);
-      }
-      dups <- paste(dups, collapse=", ");
-      throw(sprintf("Argument 'files' contains %s duplicates, which is not allowed (allowDuplicates=FALSE): %s", n, dups));
+      throw(sprintf("Argument 'files' contains %s duplicates, which is not allowed (allowDuplicates=FALSE): %s", n, hpaste(dups)));
     }
   }
 

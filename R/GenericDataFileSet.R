@@ -127,10 +127,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   # Names of files
   names <- getNames(this);
-  if (n >= 5)
-    names <- c(names[1:2], "...", names[n]);
-  names <- paste(names, collapse=", ");
-  s <- c(s, sprintf("Names: %s [%d]", names, n));
+  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
 
   # Pathname
   path <- getPath(this);
