@@ -175,8 +175,8 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
 
   value <- getChecksum(this);
   valueOther <- getChecksum(other);
-  if (identical(value, valueOther)) {
-    msg <- sprintf("The checksums differ: %d != %d",
+  if (!identical(value, valueOther)) {
+    msg <- sprintf("The checksums differ: %s != %s",
                                           value, valueOther);
     attr(notEqual, "reason") <- msg;
     return(notEqual);
@@ -1534,6 +1534,11 @@ setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-04-04
+# o BUG FIX: equals() for GenericDataFile would consider to files not
+#   to be equal only if their checksums was equal, and vice versa.
+#   Also, when creating the message string explaining why they differ
+#   an error would have been thrown.
 # 2010-02-13
 # o Added argument '.onUnknownArgs' to GenericDataFile().
 # 2010-01-31

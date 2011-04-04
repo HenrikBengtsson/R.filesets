@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 0.9.9 [2011-04-04]
+o BUG FIX: equals() for GenericDataFile would consider two files not
+  to be equal only if their checksums was equal, and vice versa.
+  Also, when creating the message string explaining why they differ
+  an error would have been thrown.
+
+
 Version: 0.9.8 [2011-04-03]
 o CLEANUP: Utilizing hpaste() internally wherever applicable.
 
