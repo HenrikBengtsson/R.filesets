@@ -103,6 +103,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
 
   # Unique names
   names <- getNames(this);
+  n <- length(names);
   s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
 
   # Number of file sets
