@@ -233,9 +233,7 @@
 \alias{tags.default}
 \alias{dropTags}
 \alias{dropTags.default}
-\alias{getChecksum.GenericDataFileSet}
 \alias{getChecksumObjects}
-\alias{getChecksumObjects.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

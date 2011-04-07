@@ -115,3 +115,4 @@ hasTag hasTags
 dropRootPathTags dropRootPathTags.default
 fullname fullname.default name name.default tags tags.default
 dropTags dropTags.default
+getChecksumObjects

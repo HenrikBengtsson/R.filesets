@@ -33,7 +33,7 @@
 
 \seealso{
   Internally, the checksum is calculated on the objects returned by
-  \code{\link[R.filesets:getChecksumData.GenericDataFileSet]{*getChecksumData}()}
+  \code{\link[R.filesets:getChecksumObjects.GenericDataFileSet]{*getChecksumObjects}()}.
 
   For more information see \code{\link{GenericDataFileSet}}.
 }

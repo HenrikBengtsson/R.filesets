@@ -4,6 +4,10 @@ Package: R.filesets
 Version: 1.0.0 [2011-04-06]
 o Added getChecksum() to GenericDataFileSet, which calculates the 
   checksum of the object returned by the protected getChecksumData().
+  Use with care, because what objects should be the basis of the
+  checksum is not clear, e.g. should it be only the file system
+  checksum, or should things such as translated fullnames be included
+  as well?
 
 
 Version: 0.9.9 [2011-04-04]

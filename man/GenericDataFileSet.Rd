@@ -60,7 +60,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
- \tab \code{getChecksum} \tab  -\cr
+ \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
  \tab \code{getFileClass} \tab  -\cr
