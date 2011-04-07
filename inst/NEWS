@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 1.0.0 [2011-04-06]
+o Added getChecksum() to GenericDataFileSet, which calculates the 
+  checksum of the object returned by the protected getChecksumData().
+
+
 Version: 0.9.9 [2011-04-04]
 o BUG FIX: equals() for GenericDataFile would consider two files not
   to be equal only if their checksums was equal, and vice versa.
