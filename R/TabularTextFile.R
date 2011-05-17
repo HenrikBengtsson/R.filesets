@@ -590,8 +590,9 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   data <- do.call(fcnName, args=args);
   nbrOfRowsRead <- nrow(data);
   verbose && cat(verbose, "Raw data read by read.table():");
-  verbose && cat(verbose, "Number of rows read: ", nbrOfRowsRead);
   verbose && str(verbose, data);
+  verbose && cat(verbose, "Number of rows read: ", nbrOfRowsRead);
+  verbose && cat(verbose, "Number of columns read: ", ncol(data));
 
   # Extract subset of rows?
   if (fcnName == "read.table") {
@@ -818,6 +819,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-05-12
+# o Added more verbose output to readDataFrame().
 # 2011-03-14
 # o Improved the verbose output of getReadArguments().
 # 2010-08-14

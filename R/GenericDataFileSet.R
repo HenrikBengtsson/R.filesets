@@ -853,6 +853,8 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 #    be appended.}
 #  \item{clone}{If @TRUE, each file is cloned before being appened.}
 #  \item{...}{Additional arguments passed to @see "base::append".}
+#  \item{.assertSameClass}{If @TRUE, the files to be appended must inherit
+#    from the same class as the existing files (the first file).}
 #  \item{verbose}{...}
 # }
 #
@@ -872,10 +874,35 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., verbose=FALSE) {
+setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., .assertSameClass=TRUE, verbose=FALSE) {
   # Argument 'files':
   if (!is.list(files)) {
     files <- list(files);
+  }
+  if (length(files) > 0) {
+    # Assert that all files are instances of the file class of this set.
+    className <- getFileClass(this);
+    isValid <- unlist(lapply(files, FUN=inherits, className));
+    if (!all(isValid)) {
+      classNames <- sapply(files, FUN=function(x) class(x)[1]);
+      classNames <- classNames[!isValid];
+      classNames <- unique(classNames);
+      throw(sprintf("Argument 'files' contains non-%s objects: %s", 
+                                    className, hpaste(classNames)));
+    }
+
+    # Must inherit from the same class as the existing files?
+    if (.assertSameClass && nbrOfFiles(this) > 0) {
+      aFile <- getFile(this, 1);
+      className <- class(aFile)[1];
+      isValid <- unlist(lapply(files, FUN=inherits, className));
+      if (!all(isValid)) {
+        classNames <- sapply(files, FUN=function(x) class(x)[1]);
+        classNames <- classNames[!isValid];
+        classNames <- unique(classNames);
+        throw(sprintf("Argument 'files' contains non-%s objects (which is what the set already contains): %s", className, hpaste(classNames)));
+      }
+    }
   }
 
   # Argument 'verbose':
@@ -887,22 +914,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
 
   verbose && enter(verbose, "Appending ", length(files), " files");
-  if (length(files) == 0) {
-    verbose && cat(verbose, "No files to append. Skipping.");
-  } else {
-    # Validate classes?
-    if (nbrOfFiles(this) > 0) {
-      verbose && enter(verbose, "Validating file classes");
-      aFile <- this$files[[1]];
-      className <- class(aFile)[1];
-      isValid <- unlist(lapply(files, FUN=inherits, className));
-      if (!all(isValid)) {
-        throw("Some of the elements in argument 'files' are not '", 
-          className, "'");
-      }
-      verbose && exit(verbose);
-    }
-
+  if (length(files) > 0) {
     # Clone file objects?
     if (clone) {
       verbose && enter(verbose, "Cloning files");
@@ -915,6 +927,8 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
     # Some cached values are incorrect now.
     clearCache(this);
+  } else {
+    verbose && cat(verbose, "No files to append. Skipping.");
   }
 
   verbose && exit(verbose);
@@ -1893,6 +1907,14 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-05-16
+# o Added argument '.assertSameClass' to appendFiles() for 
+#   GenericDataFileSet, which if TRUE asserts that the files to be 
+#   appended inherits from the same class as the existing files.
+#   Before this test was mandatory.
+# o ROBUSTNESS: Now appendFiles() for GenericDataFileSet asserts that all
+#   files to be appended are instances of the file class of this set as
+#   given by the static getFileClass().
 # 2011-02-27
 # o BUG FIX: findByName() for GenericDataFileSet would throw "<simpleError
 #   in paths[sapply(rootPaths, FUN = isDirectory)]: invalid subscript type
