@@ -27,7 +27,7 @@
 # }
 # 
 # \section{How to cite this package}{
-#   Please cite references [1] and [2] when using this package.
+#   Please cite references [1] when using this package.
 # }
 #
 # \author{

@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 1.0.2 [2011-05-23]
+o Added argument '.fileClass' to appendFiles() for GenericDataFileSet.
+
+
 Version: 1.0.1 [2011-05-16]
 o ROBUSTNESS: Now appendFiles() for GenericDataFileSet asserts that all
   files to be appended are instances of the file class of this set as

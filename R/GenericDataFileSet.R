@@ -853,6 +853,9 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 #    be appended.}
 #  \item{clone}{If @TRUE, each file is cloned before being appened.}
 #  \item{...}{Additional arguments passed to @see "base::append".}
+#  \item{.fileClass}{A @character string specifying the class that
+#    all files must inherit from.  
+#    If @NULL, @seemethod "getFileClass" is used.}
 #  \item{.assertSameClass}{If @TRUE, the files to be appended must inherit
 #    from the same class as the existing files (the first file).}
 #  \item{verbose}{...}
@@ -874,14 +877,22 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., .assertSameClass=TRUE, verbose=FALSE) {
+setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE) {
   # Argument 'files':
   if (!is.list(files)) {
     files <- list(files);
   }
+
+  # Argument '.fileClass':
+  if (is.null(.fileClass)) {
+    .fileClass <- getFileClass(this);
+  } else {
+    .fileClass <- Arguments$getCharacter(.fileClass);
+  }
+
   if (length(files) > 0) {
     # Assert that all files are instances of the file class of this set.
-    className <- getFileClass(this);
+    className <- .fileClass;
     isValid <- unlist(lapply(files, FUN=inherits, className));
     if (!all(isValid)) {
       classNames <- sapply(files, FUN=function(x) class(x)[1]);
@@ -1907,6 +1918,8 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-05-23
+# o Added argument '.fileClass' to appendFiles() for GenericDataFileSet.
 # 2011-05-16
 # o Added argument '.assertSameClass' to appendFiles() for 
 #   GenericDataFileSet, which if TRUE asserts that the files to be 
