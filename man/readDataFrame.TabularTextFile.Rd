@@ -19,7 +19,7 @@
  Reads the tabular data as a data frame.
 }
 
-\usage{\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, ..., verbose=FALSE)}
+\usage{\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., verbose=FALSE)}
 
 \arguments{
   \item{con}{(Internal) If a \code{\link[base:connections]{connection}}, then it is used, otherwies
@@ -28,6 +28,9 @@
    be read.}
   \item{nrow}{(Optional) An \code{\link[base]{integer}} specifying how many rows to read.
    If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
+  \item{trimQuotes}{(Optional) If \code{\link[base:logical]{TRUE}}, quotes are trimmed from numeric
+   columns before parsing them as numerics.  This makes it possible to
+   read quoted numeric values.}
   \item{...}{Passed to internal \code{\link[R.filesets:getReadArguments.TabularTextFile]{*getReadArguments}()}.}
   \item{verbose}{A \code{\link[base]{logical}} or a \code{\link[R.utils]{Verbose}} object.}
 }
@@ -35,6 +38,15 @@
 \value{
   Returns a \code{\link[base]{data.frame}}.
 }
+
+\section{Reading quoted numerics}{
+  If a specific data column is specified as being numeric in
+  argument \code{colClasses} and that column contains quoted values
+  it is necessary to use argument \code{trimQuotes=TRUE}, otherwise
+  \code{\link[base]{scan}}() throws an exception similar to:
+  \code{scan() expected 'a real', got '"1.0"'}.
+}
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{

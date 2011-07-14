@@ -1,6 +1,6 @@
 Package: R.filesets
-Version: 1.0.2
-Date: 2011-05-23
+Version: 1.0.3
+Date: 2011-07-13
 Title: Easy handling of and access to files organized in structured directories
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

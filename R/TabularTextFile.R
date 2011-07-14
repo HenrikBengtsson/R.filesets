@@ -32,7 +32,7 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # @author
 #
 # \seealso{
@@ -485,6 +485,9 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #    be read.}
 #   \item{nrow}{(Optional) An @integer specifying how many rows to read.
 #    If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
+#   \item{trimQuotes}{(Optional) If @TRUE, quotes are trimmed from numeric
+#    columns before parsing them as numerics.  This makes it possible to
+#    read quoted numeric values.}
 #   \item{...}{Passed to internal @seemethod "getReadArguments".}
 #   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
 # }
@@ -492,6 +495,15 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 # \value{
 #   Returns a @data.frame.
 # }
+#
+# \section{Reading quoted numerics}{
+#   If a specific data column is specified as being numeric in
+#   argument \code{colClasses} and that column contains quoted values
+#   it is necessary to use argument \code{trimQuotes=TRUE}, otherwise
+#   @see "base::scan" throws an exception similar to:
+#   \code{scan() expected 'a real', got '"1.0"'}.
+# }
+#
 # @author
 #
 # \seealso{
@@ -501,7 +513,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NULL, nrow=NULL, ..., verbose=FALSE) {
+setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -518,6 +530,9 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   if (!is.null(nrow)) {
     nrow <- Arguments$getInteger(nrow, range=c(1,Inf));
   }
+
+  # Argument 'trimQuotes':
+  trimQuotes <- Arguments$getLogical(trimQuotes);
   
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -534,13 +549,13 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   hdr <- getHeader(this, verbose=less(verbose, 5));
 
+
   # Get read arguments
   args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ..., 
                                                verbose=less(verbose, 5));
 
   verbose && cat(verbose, "Arguments inferred from file header:");
   verbose && print(verbose, args);
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify names of columns read
@@ -577,12 +592,42 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     })
   }
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   fcnName <- "read.table";
 #  fcnName <- "readTable";  ## BUGGY /HB 2008-06-17
   verbose && enter(verbose, sprintf("Calling %s()", fcnName));
+
+
+  # SPECIAL CASE/WORKAROUND: read.table()/scan() will give an error
+  # if a numeric value is quoted and 'colClasses' specifies it as
+  # a numeric value.  In order to read such values, we need to remove
+  # the quotes first. /HB 2011-07-13
+
+  # Check if we need to trim quotes
+  trimQuotes <- (trimQuotes && nchar(args$quote) > 0);
+  trimQuotes <- (trimQuotes && length(args$colClasses) > 0);
+  if (trimQuotes) {
+    classesToPatch <- c("integer", "numeric", "double", "complex");
+    toPatch <- is.element(args$colClasses, classesToPatch);
+    trimQuotes <- c(trimQuotes && any(toPatch));
+  }
+
+  # Read by first trimming quotes?
+  if (trimQuotes) {
+    verbose && enter(verbose, "Trimming quotes from numeric columns before parsing them as numbers");
+    # This is a workaround for reading quoted numerics. /HB 2011-07-13
+    verbose && cat(verbose, "Columns that need to have quotes trimmed:");
+    verbose && str(verbose, which(toPatch));
+    args0 <- args;
+
+    # (1) Read as to-be-patched columns as characters.
+    colClasses <- args$colClasses;
+    colClasses[toPatch] <- "character";
+    args$colClasses <- colClasses;
+  }
 
   verbose && cat(verbose, "Arguments used to read tabular file:");
   args <- c(list(con), args);
@@ -593,6 +638,66 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   verbose && str(verbose, data);
   verbose && cat(verbose, "Number of rows read: ", nbrOfRowsRead);
   verbose && cat(verbose, "Number of columns read: ", ncol(data));
+
+  # Not needed anymore
+  rm(args);
+
+  # Was data read by first trimming quotes?
+  if (trimQuotes) {
+    # (2) Re-read numeric columns one by one
+    colClasses <- args0$colClasses;
+
+    # Note that some columns may have been ignored
+    keep <- (colClasses != "NULL");
+    colClasses <- colClasses[keep];
+    toPatch <- toPatch[keep];
+
+    # Sanity check
+    stopifnot(length(colClasses) == ncol(data));
+
+    na.strings <- args0$na.strings;
+
+    verbose && enter(verbose, "Parsing numeric columns");
+    toPatch <- which(toPatch);
+    for (kk in seq(along=toPatch)) {
+      col <- toPatch[kk];
+      colClass <- colClasses[col];
+      verbose && enter(verbose, sprintf("Parsing #%d (column #%d as '%s') of %d", kk, col, colClass, length(toPatch)));
+      values <- data[[col]];
+
+      # Quick/bad way, but will turn non-valid values into NA
+      ##  storage.mode(values) <- colClass;
+
+      verbose && cat(verbose, "Non-parsed values:");
+      verbose && str(verbose, values);
+
+      bfr <- paste(values, collapse="\n");
+      conT <- textConnection(bfr, open="r");
+      on.exit({
+        if (!is.null(conT)) close(conT);
+      }, add=TRUE);
+      
+      # Try to read the values as the correct type.
+      valuesT <- read.table(file=conT, quote="", colClasses=colClass, na.strings=na.strings, blank.lines.skip=FALSE)[[1]];
+
+      verbose && cat(verbose, "Parsed values:");
+      verbose && str(verbose, valuesT);
+
+      # Sanity check
+      stopifnot(length(valuesT) == length(values));
+
+      close(conT); conT <- NULL;
+      data[[col]] <- valuesT;
+
+      # Not needed anymore
+      rm(bfr, values, valuesT);
+      verbose && exit(verbose);
+    } # for (kk ...)
+    verbose && exit(verbose);
+
+    verbose && exit(verbose);
+  }
+
 
   # Extract subset of rows?
   if (fcnName == "read.table") {
@@ -819,6 +924,11 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-07-13
+# o GENERALIZATION: Now readDataFrame() of TabularTextFile can read
+#   numeric columns that are quoted and for which 'colClasses' in non-NA.
+#   This is done by first reading the as quoted character strings, and
+#   dropping the quotes, and then rereading them as numeric values.
 # 2011-05-12
 # o Added more verbose output to readDataFrame().
 # 2011-03-14
