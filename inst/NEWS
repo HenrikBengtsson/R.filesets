@@ -4,7 +4,7 @@ Package: R.filesets
 Version: 1.0.3 [2011-07-13]
 o GENERALIZATION: Now readDataFrame(..., colClasses=..., trimQuotes=TRUE)
   of TabularTextFile will read numeric columns that are quoted.
-  This is done by first reading the as quoted character strings, and
+  This is done by first reading them as quoted character strings,
   dropping the quotes, and then rereading them as numeric values.
 
 
