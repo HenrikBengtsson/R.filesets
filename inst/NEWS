@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 1.0.4 [2011-07-15]
+o Added argument 'named' to getTags() for FullNameInterface.  If TRUE,
+  tags of format "<name>=<value>" will be parsed and returned as a
+  named "<value>", e.g. "foo,n=23,bar,n=42" is returned as
+  c("foo", "n"="23", "bar", "n"="42").
+
+
 Version: 1.0.3 [2011-07-13]
 o GENERALIZATION: Now readDataFrame(..., colClasses=..., trimQuotes=TRUE)
   of TabularTextFile will read numeric columns that are quoted.

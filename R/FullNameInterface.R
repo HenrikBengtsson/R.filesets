@@ -179,6 +179,11 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #  \item{collapse}{A @character string used to concatenate the tags. 
 #     If @NULL, the tags are not concatenated.}
 #  \item{...}{Additional arguments passed to @seemethod "getFullName".}
+#  \item{named}{If @TRUE, tags of format "<name>=<value>" will be parsed 
+#     as \emph{named} "<value>" tags, e.g. \code{"foo,n=23,bar,n=42"} is 
+#     parsed to \code{c("foo", "n"="23", "bar", "n"="42")}.
+#     Note that if \code{collapse} is @FALSE, the names will be dropped.
+#  }
 #  \item{na.rm}{If @TRUE and the fullname is @NA, then @NULL is returned,
 #     otherwise (character) @NA is returned.}
 #  \item{useCustomTags}{If @TRUE, custom tags are used, otherwise not.}
@@ -205,7 +210,7 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ..., na.rm=TRUE, useCustomTags=TRUE) {
+setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE, useCustomTags=TRUE) {
   fullname <- getFullName(this, ...);
 
   # If NA, return NA or NULL?
@@ -251,6 +256,16 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   # Keep only those matching a regular expression?
   if (!is.null(pattern)) {
     tags <- grep(pattern, tags, value=TRUE);
+  }
+
+  # Extract names, e.g. "foo,n=23" as c("foo", "n"="23")
+  if (named && length(tags) > 0) {
+    names <- rep(as.character(NA), times=length(tags));
+    pattern <- "^([^=]*)=(.*)";
+    idxs <- grep(pattern, tags);
+    names[idxs] <- gsub(pattern, "\\1", tags[idxs]);
+    tags[idxs] <- gsub(pattern, "\\2", tags[idxs]);
+    names(tags) <- names;
   }
 
   # Collapsed or split?
@@ -585,6 +600,8 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-07-15
+# o Added argument 'named' to getTags() for FullNameInterface.
 # 2010-01-31
 # o DOCUMENTATION: Added more Rdoc comments.
 # 2009-10-31
