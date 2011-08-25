@@ -31,7 +31,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL, depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,6 +44,11 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL
     });
   } else {
     throw("Argument 'files' is of unknown type: ", mode(files)[1]);
+  }
+
+  # Arguments 'depth':
+  if (!is.null(depth)) {
+    depth <- Arguments$getInteger(depth, range=c(0,32));
   }
 
   # Arguments '.onUnknownArgs':
@@ -66,6 +71,7 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL
 
   this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
     files = as.list(files),
+    .depth = depth,
     .alias = NULL,
     .tags = NULL
   );
@@ -120,6 +126,11 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   # Full names of file set
   s <- c(s, sprintf("Full name: %s", getFullName(this)));
+
+  # Subdirectories
+  subdirs <- getSubdirs(this);
+  if (length(subdirs) == 0) subdirs <- "<none>";
+  s <- c(s, sprintf("Subpath: %s", subdirs));
 
   # Number of files in set
   n <- nbrOfFiles(this);
@@ -335,6 +346,46 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
   getPath(files[[1]]);
 })
 
+
+setMethodS3("getDepth", "GenericDataFileSet", function(this, ...) {
+  depth <- this$.depth;
+  if (is.null(depth)) {
+    depth <- 0L;
+  }
+  depth;
+}, private=TRUE)
+
+
+setMethodS3("setDepth", "GenericDataFileSet", function(this, depth=0L, ...) {
+  # Argument 'depth':
+  depth <- Arguments$getInteger(depth, range=c(0,32));
+
+  this$.depth <- depth;
+
+  invisible(this);
+}, private=TRUE)
+
+
+setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...) {
+  if (!is.null(collapse)) {
+    collapse <- Arguments$getCharacter(collapse);
+  }
+
+  depth <- getDepth(this);
+  path <- getPath(this);
+  dirs <- character(length=depth);
+  for (dd in seq(length=depth)) {
+    dirs[dd] <- basename(path);
+    path <- dirname(path);
+  }
+  dirs <- rev(dirs);
+
+  if (length(dirs) > 1 && !is.null(collapse)) {
+    dirs <- paste(dirs, collapse=collapse);
+  }
+
+  dirs;
+}, protected=TRUE) # getSubdirs()
 
 
 ###########################################################################/**
@@ -1160,7 +1211,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, recursive=FALSE, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
+setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0L, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1187,6 +1238,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 
   verbose && enter(verbose, "Defining an ", class(static)[1], " object from files");
   verbose && cat(verbose, "Path: ", path);
+  verbose && cat(verbose, "Depth: ", depth);
   verbose && cat(verbose, "Pattern: ", pattern);
   verbose && cat(verbose, "File class: ", class(dfStatic)[1]);
 
@@ -1251,6 +1303,9 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   verbose && enter(verbose, "Updating newly allocated ", className);
   update2(set, ..., verbose=less(verbose, 5));
   verbose && exit(verbose);
+
+  # Set depth
+  setDepth(set, depth);
 
   # Validate?
   if (.validate) {
@@ -1637,6 +1692,18 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
   verbose && cat(verbose, "Name: ", name);
   verbose && cat(verbose, "Tags: ", paste(tags, collapse=","));
 
+  # Record the "depth"/"subdirs".
+  if (length(subdirs) > 0) {
+    subdirsT <- unlist(strsplit(subdirs, split="/\\"));
+    depth <- length(subdirsT);
+  } else {
+    depth <- 0L;
+  }
+
+  verbose && printf(verbose, "Subpath [%d]: %s\n", 
+                    depth, paste(subdirs, collapse="/"));
+
+
   suppressWarnings({
     paths <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
              paths=paths, firstOnly=FALSE, mustExist=TRUE, verbose=verbose);
@@ -1652,7 +1719,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
     verbose && cat(verbose, "Path: ", path);
 
     suppressWarnings({
-      res <- byPath(static, path=path, ..., verbose=verbose);
+      res <- byPath(static, path=path, depth=depth, ..., verbose=verbose);
     });
 
     if (!is.null(res)) {
@@ -1791,7 +1858,7 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=0, ...) {
+setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=getDepth(this), ...) {
   # Argument 'parent':
   parent <- Arguments$getInteger(parent, range=c(0,32));
 
@@ -1918,6 +1985,10 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-07-25
+# o Now getDefaultFullName() of GenericDataFileSet utilizes getDepth().
+# o Now as.character() of GenericDataFileSet displays the subdirs.
+# o Added argument 'depth' to GenericDataFileSet.
 # 2011-05-23
 # o Added argument '.fileClass' to appendFiles() for GenericDataFileSet.
 # 2011-05-16

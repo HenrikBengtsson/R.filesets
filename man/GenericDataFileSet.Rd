@@ -34,7 +34,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
  }
 
- \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
+ \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
