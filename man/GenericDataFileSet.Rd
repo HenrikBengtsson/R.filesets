@@ -34,13 +34,14 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
  }
 
- \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
+ \usage{GenericDataFileSet(files=NULL, tags="*", depth=NULL, alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
    \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be used for this file set.
       The string \code{"*"} indicates that it should be replaced by the
       tags part of the file set pathname.}
+   \item{depth}{An non-negative \code{\link[base]{integer}}.}
    \item{alias}{A \code{\link[base]{character}} string specifying a name alias overriding the
       name inferred from the pathname.}
    \item{...}{Not used.}

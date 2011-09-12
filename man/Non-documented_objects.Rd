@@ -234,6 +234,12 @@
 \alias{dropTags}
 \alias{dropTags.default}
 \alias{getChecksumObjects}
+\alias{getDepth}
+\alias{getDepth.GenericDataFileSet}
+\alias{getSubdirs}
+\alias{getSubdirs.GenericDataFileSet}
+\alias{setDepth}
+\alias{setDepth.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

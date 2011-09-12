@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 1.1.2 [2011-09-11]
+o BUG FIX: GenericDataFileSet$byName(..., subdirs) would throw 'Error
+  in strsplit(subdirs, split = "/\\")' iff subdirs != NULL.
+o Improved the handling of the newly introduced 'depth' parameter,
+  e.g. by making it optional/backward compatible.
+
+
 Version: 1.1.1 [2011-07-25]
 o Added "depth" to GenericDataFileSet, such that one can correctly
   infer fullname and subdirs from the path.

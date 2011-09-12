@@ -16,6 +16,7 @@
 #   \item{tags}{A @character @vector of tags to be used for this file set.
 #      The string \code{"*"} indicates that it should be replaced by the
 #      tags part of the file set pathname.}
+#   \item{depth}{An non-negative @integer.}
 #   \item{alias}{A @character string specifying a name alias overriding the
 #      name inferred from the pathname.}
 #   \item{...}{Not used.}
@@ -31,7 +32,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL, depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL, alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,10 +128,11 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   # Full names of file set
   s <- c(s, sprintf("Full name: %s", getFullName(this)));
 
-  # Subdirectories
-  subdirs <- getSubdirs(this);
-  if (length(subdirs) == 0) subdirs <- "<none>";
-  s <- c(s, sprintf("Subpath: %s", subdirs));
+  # Subdirectories(?)
+  subdirs <- getSubdirs(this, default=NULL);
+  if (length(subdirs) > 0) {
+    s <- c(s, sprintf("Subpath: %s", subdirs));
+  }
 
   # Number of files in set
   n <- nbrOfFiles(this);
@@ -347,10 +349,15 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
 })
 
 
-setMethodS3("getDepth", "GenericDataFileSet", function(this, ...) {
+setMethodS3("getDepth", "GenericDataFileSet", function(this, default=0L, ...) {
+  # Argument 'default':
+  if (!is.null(default)) {
+    default <- Arguments$getInteger(default, range=c(0,32));
+  }
+
   depth <- this$.depth;
   if (is.null(depth)) {
-    depth <- 0L;
+    depth <- default;
   }
   depth;
 }, private=TRUE)
@@ -358,7 +365,9 @@ setMethodS3("getDepth", "GenericDataFileSet", function(this, ...) {
 
 setMethodS3("setDepth", "GenericDataFileSet", function(this, depth=0L, ...) {
   # Argument 'depth':
-  depth <- Arguments$getInteger(depth, range=c(0,32));
+  if (!is.null(depth)) {
+    depth <- Arguments$getInteger(depth, range=c(0,32));
+  }
 
   this$.depth <- depth;
 
@@ -371,7 +380,11 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
     collapse <- Arguments$getCharacter(collapse);
   }
 
-  depth <- getDepth(this);
+  depth <- getDepth(this, ...);
+  if (is.null(depth)) {
+    return(NULL);
+  }
+
   path <- getPath(this);
   dirs <- character(length=depth);
   for (dd in seq(length=depth)) {
@@ -1694,7 +1707,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
 
   # Record the "depth"/"subdirs".
   if (length(subdirs) > 0) {
-    subdirsT <- unlist(strsplit(subdirs, split="/\\"));
+    subdirsT <- unlist(strsplit(subdirs, split="/\\\\"), use.names=FALSE);
     depth <- length(subdirsT);
   } else {
     depth <- 0L;
@@ -1858,9 +1871,11 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=getDepth(this), ...) {
+setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=getDepth(this, default=NULL), ...) {
   # Argument 'parent':
-  parent <- Arguments$getInteger(parent, range=c(0,32));
+  if (!is.null(parent)) {
+    parent <- Arguments$getInteger(parent, range=c(0,32));
+  }
 
   # The name of a file set is inferred from the pathname of the directory
   # of the set assuming path/to/<fullname>/<something>/<subdir>/
@@ -1872,10 +1887,12 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=ge
     return(naValue);
   }
 
-  while (parent > 0) {
-    # path/to/<fullname>/<something>
-    path <- dirname(path);
-    parent <- parent - 1;
+  if (!is.null(parent)) {
+    while (parent > 0) {
+      # path/to/<fullname>/<something>
+      path <- dirname(path);
+      parent <- parent - 1;
+    }
   }
 
   # <fullname>
@@ -1985,6 +2002,10 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-09-11
+# o Added argument 'default' to getDepth().
+# o BUG FIX: GenericDataFileSet$byName(..., subdirs) would throw 'Error
+#   in strsplit(subdirs, split = "/\\")' iff subdirs != NULL.
 # 2011-07-25
 # o Now getDefaultFullName() of GenericDataFileSet utilizes getDepth().
 # o Now as.character() of GenericDataFileSet displays the subdirs.
