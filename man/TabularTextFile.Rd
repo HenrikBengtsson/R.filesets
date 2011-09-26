@@ -53,6 +53,8 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
    \item{columnNames}{A \code{\link[base]{logical}} or a \code{\link[base]{character}} \code{\link[base]{vector}}. If \code{\link[base:logical]{TRUE}},
       then column names are inferred from the file.  If a \code{\link[base]{character}}
       \code{\link[base]{vector}}, then the column names are given by this argument.}
+   \item{commentChar}{A single \code{\link[base]{character}} specifying which symbol
+      should be used for comments, cf. \code{\link[utils]{read.table}}.}
    \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
       verified while the object is instantiated by the constructor.
       The verbose argument is passed to the verifier function.}

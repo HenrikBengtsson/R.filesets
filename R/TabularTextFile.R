@@ -24,6 +24,8 @@
 #   \item{columnNames}{A @logical or a @character @vector. If @TRUE,
 #      then column names are inferred from the file.  If a @character
 #      @vector, then the column names are given by this argument.}
+#   \item{commentChar}{A single @character specifying which symbol
+#      should be used for comments, cf. @see "utils::read.table".}
 #   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
 #      verified while the object is instantiated by the constructor.
 #      The verbose argument is passed to the verifier function.}
