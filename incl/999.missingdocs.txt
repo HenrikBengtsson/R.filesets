@@ -118,3 +118,5 @@ dropTags dropTags.default
 getChecksumObjects
   getDepth getDepth.GenericDataFileSet getSubdirs
   getSubdirs.GenericDataFileSet setDepth setDepth.GenericDataFileSet
+ getCommentChar getCommentChar.TabularTextFile setCommentChar
+ setCommentChar.TabularTextFile

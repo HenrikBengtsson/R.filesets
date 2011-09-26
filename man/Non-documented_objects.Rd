@@ -240,6 +240,10 @@
 \alias{getSubdirs.GenericDataFileSet}
 \alias{setDepth}
 \alias{setDepth.GenericDataFileSet}
+\alias{getCommentChar}
+\alias{getCommentChar.TabularTextFile}
+\alias{setCommentChar}
+\alias{setCommentChar.TabularTextFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

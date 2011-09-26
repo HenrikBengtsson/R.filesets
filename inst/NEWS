@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 1.1.3 [2011-09-26]
+o Added methods set- and getCommentChar() to TabularTextFile and
+  argument 'commentChar' to its constructor.  This allows to use
+  custom comment characters other than just "#".
+
+
 Version: 1.1.2 [2011-09-11]
 o BUG FIX: GenericDataFileSet$byName(..., subdirs) would throw 'Error
   in strsplit(subdirs, split = "/\\")' iff subdirs != NULL.
