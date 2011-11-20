@@ -26,7 +26,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}}.
+  Returns a \code{\link[base]{character}} string (\code{\link[base]{NA}} if an "empty" file).
 }
 
 \details{

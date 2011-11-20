@@ -30,7 +30,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string.
+  Returns a \code{\link[base]{character}} string (\code{\link[base]{NA}} if "empty" file).
 }
 
 \details{

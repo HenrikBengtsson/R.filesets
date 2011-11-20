@@ -102,7 +102,8 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
 
 setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
   # Nothing to do?
-  if (is.null(getPathname(this)))
+  pathname <- getPathname(this);
+  if (is.null(pathname) || is.na(pathname))
     return(invisible(this));
 
 

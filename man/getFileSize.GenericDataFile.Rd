@@ -32,6 +32,7 @@
 
 \value{
   Returns a \code{\link[base]{numeric}} or a \code{\link[base]{character}} string.
+  A missing value (\code{\link[base]{NA}}) is returned if the file does not exist.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

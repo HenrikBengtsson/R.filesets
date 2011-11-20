@@ -233,11 +233,13 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   # Pathname
   pathname <- getPathname(this);
-  pathnameR <- getRelativePath(pathname);
-  if (nchar(pathnameR) < nchar(pathname)) {
-    pathname <- pathnameR;
+  if (!is.null(pathname)) {
+    pathnameR <- getRelativePath(pathname);
+    if (nchar(pathnameR) < nchar(pathname)) {
+      pathname <- pathnameR;
+    }
   }
-  s <- c(s, sprintf("Pathname: %s", pathname));
+  s <- c(s, paste("Pathname: ", pathname, sep=""));
 
   # File size
   fileSize <- getFileSize(this, "units");
@@ -274,7 +276,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # }
 #
 # \value{
-#   Returns a @character string.
+#   Returns a @character string (@NULL if an "empty" file).
 # }
 #
 # @author
@@ -284,7 +286,8 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
-  this$.pathname;
+  pathname <- this$.pathname;
+  pathname;
 })
 
 
@@ -306,7 +309,7 @@ setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character string.
+#   Returns a @character string (@NA if an "empty" file).
 # }
 #
 # @author
@@ -316,7 +319,10 @@ setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFile", function(this, ...) {
-  dirname(this$.pathname);
+  res <- getPathname(this);
+  if (is.null(res)) res <- as.character(NA);
+  res <- dirname(res);
+  res;
 })
 
 
@@ -338,7 +344,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character.
+#   Returns a @character string (@NA if an "empty" file).
 # }
 #
 # \details{
@@ -354,7 +360,10 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
-  basename(this$.pathname);
+  res <- getPathname(this);
+  if (is.null(res)) res <- as.character(NA);
+  res <- basename(res);
+  res;
 })
 
 
@@ -379,7 +388,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character string.
+#   Returns a @character string (@NA if "empty" file).
 # }
 #
 # \details{
@@ -403,7 +412,7 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALS
   } else {
     filename <- getFilename(this);
     if (is.null(filename))
-      return("");
+      return(as.character(NA));
     pattern <- getExtensionPattern(this);
     fullname <- gsub(pattern, "", filename);
   }
@@ -468,7 +477,7 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 # }
 #
 # \value{
-#   Returns a @character string.
+#   Returns a @character string (which is of length zero if "empty" file).
 # }
 #
 # @author
@@ -506,7 +515,8 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @character in lower case letters.
+#   Returns a @character in lower case letters
+#   (which is of length zero if "empty" file).
 # }
 #
 # \details{
@@ -522,7 +532,7 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
   pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$";
-  ext <- gsub(pattern, "\\2", this$.pathname);
+  ext <- gsub(pattern, "\\2", getFilename(this));
   tolower(ext);
 })
 
@@ -555,7 +565,8 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
-  isFile(getPathname(this));
+  res <- getPathname(this);
+  isFile(res);
 })
 
 
@@ -582,6 +593,7 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 #
 # \value{
 #   Returns a @numeric or a @character string.
+#   A missing value (@NA) is returned if the file does not exist.
 # }
 #
 # @author
@@ -595,7 +607,13 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   # Argument 'what':
   what <- match.arg(what);
 
-  fileSize <- file.info(this$.pathname)$size;
+  pathname <- this$.pathname;
+  if (is.null(pathname)) {
+    fileSize <- as.double(NA);
+  } else {
+    fileSize <- file.info(pathname)$size;
+  }
+
   if (what == "numeric")
     return(fileSize);
 
@@ -644,7 +662,13 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 # }
 #*/###########################################################################
 setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
-  file.info(this$.pathname)[["ctime"]];
+  pathname <- this$.pathname;
+  if (is.null(pathname)) {
+    res <- as.POSIXct(NA);
+  } else {
+    res <- file.info(pathname)[["ctime"]];
+  }
+  res;
 }, protected=TRUE)
 
 
@@ -675,7 +699,13 @@ setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
-  file.info(this$.pathname)[["mtime"]];
+  pathname <- this$.pathname;
+  if (is.null(pathname)) {
+    res <- as.POSIXct(NA);
+  } else {
+    res <- file.info(pathname)[["mtime"]];
+  }
+  res;
 }, protected=TRUE)
 
 
@@ -707,7 +737,13 @@ setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
-  file.info(this$.pathname)[["atime"]];
+  pathname <- this$.pathname;
+  if (is.null(pathname)) {
+    res <- as.POSIXct(NA);
+  } else {
+    res <- file.info(pathname)[["atime"]];
+  }
+  res;
 }, protected=TRUE)
 
 
@@ -1534,6 +1570,9 @@ setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Now more methods for GenericDataFile handle a so called "empty" file,
+#   which is a file with pathname equal to NULL.
 # 2011-04-04
 # o BUG FIX: equals() for GenericDataFile would consider to files not
 #   to be equal only if their checksums was equal, and vice versa.

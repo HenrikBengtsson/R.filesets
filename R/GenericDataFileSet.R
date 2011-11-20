@@ -144,13 +144,13 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   # Pathname
   path <- getPath(this);
-  if (!is.na(path)) {
+  if (!is.null(path) && !is.na(path)) {
     pathR <- getRelativePath(path);
     if (nchar(pathR) < nchar(path)) {
       path <- pathR;
     }
   }
-  s <- c(s, sprintf("Path (to the first file): %s", path));
+  s <- c(s, paste("Path (to the first file): ", path, sep=""));
 
   # File size
   fileSizeB <- sprintf("%.2f MB", getFileSize(this, "numeric")/1024^2);
@@ -1882,7 +1882,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=ge
 
   # Get the path of this file set
   path <- getPath(this);
-  if (is.na(path)) {
+  if (is.null(path) || is.na(path)) {
     naValue <- as.character(NA);
     return(naValue);
   }

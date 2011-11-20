@@ -26,7 +26,8 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}} in lower case letters.
+  Returns a \code{\link[base]{character}} in lower case letters
+  (which is of length zero if "empty" file).
 }
 
 \details{
