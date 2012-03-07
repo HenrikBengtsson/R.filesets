@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 1.1.5 [2012-03-06]
+o CRAN POLICY: Removed all internal copies of 'base' functions that
+  have .Internal() calls.
+
+
 Version: 1.1.4 [2011-11-19]
 o Now more methods for GenericDataFile and GenericDataFileSet handle
   so called "empty" files, which are files with NULL pathnames.
