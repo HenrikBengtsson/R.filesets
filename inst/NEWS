@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 1.1.6 [2012-09-01]
+o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
+  names just as ditto for GenericTabularFileSet does.
+
+
 Version: 1.1.5 [2012-03-06]
 o CRAN POLICY: Removed all internal copies of 'base' functions that
   have .Internal() calls.

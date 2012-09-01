@@ -26,7 +26,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string (\code{\link[base]{NA}} if an "empty" file).
+  Returns a \code{\link[base]{character}} string (\code{\link[base]{NULL}} if an "empty" file).
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

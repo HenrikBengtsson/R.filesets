@@ -397,6 +397,7 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
   # Coerce into a matrix?
   if (!drop) {
     data <- as.matrix(data);
+    colnames(data) <- getName(this); 
   } else {
     verbose && cat(verbose, "Dropping singleton dimensions");
   }
@@ -412,6 +413,9 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 
 ############################################################################
 # HISTORY:
+# 2012-09-01
+# o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
+#   names just as ditto for GenericTabularFileSet does.
 # 2010-08-16
 # o Added some Rdoc comments.
 # 2009-10-30

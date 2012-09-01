@@ -80,12 +80,12 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
  \section{Filename convention}{
    The filename of an \code{GenericDataFile} is structured as follows:
    \itemize{
-    \item{filename}{\code{"sample001,a,b,c.CEL"}
+    \item{filename}{: \code{"sample001,a,b,c.CEL"}
        (this follows the \R convention, but not the Unix convention)}
-    \item{fullname}{\code{"sample001,a,b,c"}}
-    \item{name}{\code{"sample001"}}
-    \item{tags}{\code{c("a", "b", "c")}}
-    \item{extension}{\code{"CEL"}}
+    \item{fullname}{: \code{"sample001,a,b,c"}}
+    \item{name}{: \code{"sample001"}}
+    \item{tags}{: \code{c("a", "b", "c")}}
+    \item{extension}{: \code{"CEL"}}
    }
  }
 
