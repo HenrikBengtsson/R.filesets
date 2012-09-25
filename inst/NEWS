@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 1.2.0 [2012-09-25]
+o Now R.filesets imports R.methodsS3, R.oo and R.utils.
+  This solves issues such as trim() being overridden by ditto 
+  from the IRanges package, iff loaded.
+
+
 Version: 1.1.6 [2012-09-01]
 o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
   names just as ditto for GenericTabularFileSet does.

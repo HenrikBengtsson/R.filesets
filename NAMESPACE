@@ -2,6 +2,8 @@
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # importFrom(R.utils, cat)
+import(R.methodsS3)
+import(R.oo)
 import(R.utils)
 
 
