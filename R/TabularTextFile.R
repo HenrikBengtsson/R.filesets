@@ -403,7 +403,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 
 
   # Optional user arguments
-  userArgs <- list(...);
+  userArgs <- list(stringsAsFactors=stringsAsFactors, ...);
   verbose && cat(verbose, "User arguments:");
   verbose && str(verbose, userArgs);
 
