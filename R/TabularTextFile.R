@@ -381,8 +381,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
 }, protected=TRUE); # readRawHeader()
 
 
-
-setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClassPatterns=c("*"=NA), defColClass="NULL", ..., verbose=FALSE) {
+setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClassPatterns=c("*"=NA), defColClass="NULL", stringsAsFactors=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -962,6 +961,10 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-27
+# o Added argument 'stringsAsFactors=FALSE' to getReadArguments() for 
+#   TabularTextFile such that the default is to read strings as character
+#   rather than as factors.
 # 2011-09-26
 # o Added methods set- and getCommentChar() to TabularTextFile and
 #   argument 'commentChar' to its constructor.  This allows to use
