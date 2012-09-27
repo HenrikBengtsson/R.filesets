@@ -262,7 +262,7 @@ setMethodS3("getColumnNames", "TabularTextFile", function(this, ..., translate=T
 #*/###########################################################################
 setMethodS3("getHeader", "TabularTextFile", function(this, ..., force=FALSE) {
   hdr <- this$.fileHeader;
-  if (force || is.null(hdr)) {
+  if (force || is.null(hdr) || hasBeenModified(this)) {
     hdr <- readRawHeader(this, ...);
     if (hasColumnHeader(this)) {
       hdr$columns <- hdr$topRows[[1]];
@@ -962,6 +962,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 ############################################################################
 # HISTORY:
 # 2012-09-27
+# o ROBUSTNESS: Now getHeader() for TabularTextFile checks if the file
+#   has been modified before returned cached results.
 # o Added argument 'stringsAsFactors=FALSE' to getReadArguments() for 
 #   TabularTextFile such that the default is to read strings as character
 #   rather than as factors.

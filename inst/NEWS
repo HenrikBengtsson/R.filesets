@@ -6,6 +6,8 @@ o Now readDataFrame() for TabularTextFile defaults to read strings
   as characters rather than as factors.  To read strings as factors,
   just pass argument stringsAsFactors=TRUE.
 o Added readDataFrame() for TabularTextFileSet.
+o ROBUSTNESS: Now getHeader() for TabularTextFile checks if the
+  file has been modified before returned cached results.
 
 
 Version: 1.2.0 [2012-09-25]
