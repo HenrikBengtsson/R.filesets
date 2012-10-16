@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 1.2.2 [2012-10-16]
+o DOCUMENTATION: Added Rd help for a few more methods.
+o CLEANUP: Moved Arguments$getFilename() from this package to 
+  R.utils v1.17.0.
+o CLEANUP: static fromFiles() for GenericDataFileSet is now defunct 
+  in placefor byName(), which has been recommended since January 2010.
+o ROBUSTNESS: Bumped up package dependencies.
+
+
 Version: 1.2.1 [2012-09-27]
 o Now readDataFrame() for TabularTextFile defaults to read strings
   as characters rather than as factors.  To read strings as factors,

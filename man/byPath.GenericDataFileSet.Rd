@@ -12,10 +12,6 @@
 \alias{byPath.GenericDataFileSet}
 \alias{byPath,GenericDataFileSet-method}
 
-\alias{GenericDataFileSet.fromFiles}
-\alias{fromFiles.GenericDataFileSet}
-\alias{fromFiles,GenericDataFileSet-method}
-
 
 \title{Defines a GenericDataFileSet by searching for files in a directory}
 

@@ -1187,7 +1187,6 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
 ###########################################################################/**
 # @RdocMethod byPath
-# @aliasmethod fromFiles
 #
 # @title "Defines a GenericDataFileSet by searching for files in a directory"
 #
@@ -1989,17 +1988,6 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Deprecated
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
-  warning("Static method fromFiles() for GenericDataFileSet has been deprecated (since January 2010). Instead use static byPath(), e.g. GenericDataFileSet$byPath().");
-  byPath(static, ...);
-}, static=TRUE, deprecated=TRUE, protected=TRUE)
-
-
-
-
 ############################################################################
 # HISTORY:
 # 2011-09-11
@@ -2029,8 +2017,6 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 #   such that root paths also can be specified by simple regular expression
 #   (still via argument 'paths').
 # 2011-02-18
-# o DEPRECATION: Added a warning message reporting that fromFiles() of
-#   GenericDataFileSet has been deprecated, if still called by someone.
 # o GENERALIZATION: Now byName() for GenericDataFileSet will try all
 #   possible data set directories located when trying to setup a data set.
 #   Before it only tried the first one located.  This new approach is
@@ -2073,8 +2059,6 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 #   regular expression symbols '+' and '*'.
 # 2010-01-31
 # o DOCUMENTATION: Added Rd help for more methods.
-# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath() 
-#   instead.
 # 2010-01-24
 # o ROBUSTNESS: If argument 'files' is logical, then extract() of
 #   GenericDataFileSet now asserts that the length of 'files' matches
