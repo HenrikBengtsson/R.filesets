@@ -84,7 +84,7 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   class <- class(s);
   if (hasColumnHeader(this)) {
     columns <- paste("'", getColumnNames(this), "'", sep="");

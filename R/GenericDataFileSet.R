@@ -177,14 +177,14 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod("clearCache", this);
+  NextMethod("clearCache");
 })
 
 
 
 setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
   # Clone itself
-  object <- NextMethod("clone", this, ...);
+  object <- NextMethod("clone");
 
   # Clone each file object
   files <- as.list(object);

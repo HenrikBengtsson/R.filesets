@@ -46,7 +46,7 @@ setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   class <- class(s);
   s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)));
 

@@ -120,7 +120,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
 })
 
 setMethodS3("clone", "GenericDataFileSetList", function(this, ...) {
-  res <- NextMethod("clone", this);
+  res <- NextMethod("clone");
   dsList <- getSets(this);
   for (kk in seq(along=dsList)) {
     dsList[[kk]] <- clone(dsList[[kk]]);
@@ -156,7 +156,7 @@ setMethodS3("setTags", "GenericDataFileSetList", function(this, tags=NULL, ...) 
 
 setMethodS3("getTags", "GenericDataFileSetList", function(this, ...) {
   # AD HOC; custom tags are taken care of in getDefaultFullName().
-  NextMethod("getTags", this, ..., collapse=NULL, useCustomTags=FALSE);
+  NextMethod("getTags", collapse=NULL, useCustomTags=FALSE);
 }, protected=TRUE)
 
 
