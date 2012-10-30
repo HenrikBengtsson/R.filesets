@@ -1511,7 +1511,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Filtering out root paths that are existing directories");
 
-  rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
+  rootPaths <- sapply(paths, FUN=function(path) {
+    Arguments$getReadablePath(path, mustExist=FALSE);
+  });
   if (length(rootPaths) == 0) {
     if (mustExist) {
       throw("None of the root path directories exist: ", 
@@ -1539,7 +1541,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   dataSetPaths <- file.path(rootPaths, fullname);
 
   # Look for existing directories
-  dataSetPaths <- sapply(dataSetPaths, FUN=filePath, expandLinks="any");
+  dataSetPaths <- sapply(dataSetPaths, FUN=function(path) {
+    Arguments$getReadablePath(path, mustExist=FALSE);
+  });
   dataSetPaths <- dataSetPaths[sapply(dataSetPaths, FUN=isDirectory)];
   dataSetPaths <- unname(dataSetPaths);
 
@@ -1578,7 +1582,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
             if (length(dirsT) == 0)
               return(NULL);
             # Keep only directories
-            dirsT <- sapply(dirsT, FUN=filePath, expandLinks="any");
+            dirsT <- sapply(dirsT, FUN=function(path) {
+              Arguments$getReadablePath(path, mustExist=FALSE);
+            });
             dirsT <- dirsT[sapply(dirsT, FUN=isDirectory)];
             if (length(dirsT) == 0)
               return(NULL);
@@ -1601,7 +1607,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
         # In case there are NULLs
         pathsKK <- unlist(pathsKK, use.names=FALSE);
         # Keep only directories
-        pathsKK <- sapply(pathsKK, FUN=filePath, expandLinks="any");
+        pathsKK <- sapply(pathsKK, FUN=function(path) {
+          Arguments$getReadablePath(path, mustExist=FALSE);
+        });
         pathsKK <- pathsKK[sapply(pathsKK, FUN=isDirectory)];
         pathsKK <- unname(pathsKK);
 
