@@ -235,7 +235,6 @@
 \alias{updateFullName.GenericDataFileSet}
 \alias{updateFullNames}
 \alias{updateFullNames.GenericDataFileSet}
-\alias{validate.GenericDataFileSet}
 \alias{validateChecksum}
 \alias{verify}
 \alias{verify.GenericTabularFile}

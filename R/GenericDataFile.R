@@ -570,6 +570,38 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 })
 
 
+###########################################################################/**
+# @RdocMethod validate
+#
+# @title "Validates the content of a file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   If the file is invalid, then an error is thrown.
+#   If the files is valid, then @TRUE is returned.
+#   Otherwise, @NA is returned, which happens if the file was not validated.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("validate", "GenericDataFile", function(this, ...) {
+  NA;
+})
+
+
 
 ###########################################################################/**
 # @RdocMethod getFileSize
@@ -1570,6 +1602,8 @@ setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-10-30
+# o Added validate() to GenericDataFile.
 # 2011-11-19
 # o Now more methods for GenericDataFile handle a so called "empty" file,
 #   which is a file with pathname equal to NULL.

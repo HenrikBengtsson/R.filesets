@@ -214,8 +214,45 @@ setMethodS3("getFileClass", "GenericDataFileSet", function(static, ...) {
 
 
 
+###########################################################################/**
+# @RdocMethod validate
+#
+# @title "Validates all files in the data set"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   If one of the files is invalid, then an error is thrown.
+#   If all of the files are valid, then @TRUE is returned.
+#   Otherwise, @NA is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
 setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
-  invisible(TRUE);
+  I <- length(this);
+  res <- rep(NA, times=I);
+  for (ii in seq(length=I)) {
+    df <- getFile(this, ii);
+    res[ii] <- validate(df, ...);
+  }
+
+  # Summarize across all files
+  res <- all(res, na.rm=FALSE);
+
+  res;
 }, protected=FALSE)
 
 
@@ -1998,6 +2035,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-10-30
+# o Added validate() to GenericDataFileSet, which iteratively calls
+#   validate() on all the GenericDataFile:s in the set.
 # 2011-09-11
 # o Added argument 'default' to getDepth().
 # o BUG FIX: GenericDataFileSet$byName(..., subdirs) would throw 'Error

@@ -99,7 +99,6 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
 })
 
 
-
 setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
   # Nothing to do?
   pathname <- getPathname(this);
