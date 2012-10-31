@@ -525,6 +525,8 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #    columns before parsing them as numerics.  This makes it possible to
 #    read quoted numeric values.}
 #   \item{...}{Passed to internal @seemethod "getReadArguments".}
+#   \item{debug}{If @TRUE, additional details on the file and how it was
+#    read is returned as part of the attributes.}
 #   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
 # }
 #
@@ -549,7 +551,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., verbose=FALSE) {
+setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -569,6 +571,9 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
   # Argument 'trimQuotes':
   trimQuotes <- Arguments$getLogical(trimQuotes);
+
+  # Argument 'debug':
+  debug <- Arguments$getLogical(debug);
   
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -762,12 +767,15 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   verbose && str(verbose, data);
   verbose && exit(verbose);
 
-  attr(data, "fileHeader") <- hdr;
+  if (debug) {
+    attr(data, "fileHeader") <- hdr;
+  }
 
   verbose && exit(verbose);
 
   data;
-})
+}) # readDataFrame()
+
 
 
 setMethodS3("[", "TabularTextFile", function(this, i=NULL, j=NULL, drop=FALSE) {
@@ -960,6 +968,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-10-31
+# o CLEANUP: Now readDataFrame() for TabularTextFile no longer returns
+#   attribute 'fileHeader', unless argument 'debug' is TRUE.
 # 2012-09-27
 # o ROBUSTNESS: Now getHeader() for TabularTextFile checks if the file
 #   has been modified before returned cached results.

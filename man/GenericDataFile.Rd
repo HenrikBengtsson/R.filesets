@@ -63,7 +63,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFile]{getPath}} \tab Gets the path (directory) of the file.\cr
  \tab \code{\link[R.filesets:getPathname.GenericDataFile]{getPathname}} \tab Gets the pathname of the file.\cr
  \tab \code{\link[R.filesets:isFile.GenericDataFile]{isFile}} \tab Checks if this is an existing file.\cr
- \tab \code{validate} \tab  -\cr
+ \tab \code{\link[R.filesets:validate.GenericDataFile]{validate}} \tab Validates the content of a file.\cr
  \tab \code{\link[R.filesets:validateChecksum.GenericDataFile]{validateChecksum}} \tab Asserts that the file checksum matches the one of the checksum file.\cr
  \tab \code{\link[R.filesets:writeChecksum.GenericDataFile]{writeChecksum}} \tab Write the file checksum to a checksum file.\cr
 }
