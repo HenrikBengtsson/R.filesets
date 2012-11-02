@@ -89,12 +89,19 @@ setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
 
 
 
-setMethodS3("getColumnNameTranslator", "GenericTabularFile", function(this, ...) {
+setMethodS3("getColumnNamesTranslator", "GenericTabularFile", function(this, ...) {
   this$.columnNameTranslator;
 })
 
+setMethodS3("setColumnNames", "GenericTabularFile", function(this, names, ...) {
+  cnt <- function(...) {
+    names;
+  } # cnt()
+  setColumnNamesTranslator(this, cnt, ...);
+})
 
-setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(this, fcn, ...) {
+
+setMethodS3("setColumnNamesTranslator", "GenericTabularFile", function(this, fcn, ...) {
   # Arguments 'fcn':
   if (is.null(fcn)) {
   } else if (!is.function(fcn)) {
@@ -102,11 +109,12 @@ setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(this, fcn,
   }
 
   this$.columnNameTranslator <- fcn;
+  invisible(this);
 })
 
 
 setMethodS3("translateColumnNames", "GenericTabularFile", function(this, names, ...) {
-  nameTranslator <- getColumnNameTranslator(this);	
+  nameTranslator <- getColumnNamesTranslator(this);	
   if (!is.null(nameTranslator)) {
     names2 <- nameTranslator(names);
 
@@ -413,6 +421,9 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 
 ############################################################################
 # HISTORY:
+# 2012-11-01
+# o Added setColumnNames() for GenericTabularFile, which utilizes
+#   setColumnNamesTranslator().
 # 2012-09-01
 # o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
 #   names just as ditto for GenericTabularFileSet does.

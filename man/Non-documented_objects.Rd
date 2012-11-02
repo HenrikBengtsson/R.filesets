@@ -98,6 +98,12 @@
 \alias{getChecksumObjects}
 \alias{getColumnNameTranslator}
 \alias{getColumnNameTranslator.GenericTabularFile}
+\alias{getColumnNamesTranslator}
+\alias{getColumnNamesTranslator.GenericTabularFile}
+\alias{setColumnNamesTranslator}
+\alias{setColumnNamesTranslator.GenericTabularFile}
+\alias{setColumnNames}
+\alias{setColumnNames.GenericTabularFile}
 \alias{getColumnNames}
 \alias{getCommentChar}
 \alias{getCommentChar.TabularTextFile}

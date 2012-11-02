@@ -54,12 +54,13 @@ extends \emph{\link[R.filesets]{GenericDataFile}}\cr
  \tab \code{\link[R.filesets:dim.GenericTabularFile]{dim}} \tab Gets the dimension of data table.\cr
  \tab \code{\link[R.filesets:extractMatrix.GenericTabularFile]{extractMatrix}} \tab Reads one of the columns.\cr
  \tab \code{\link[R.filesets:getColumnNames.GenericTabularFile]{getColumnNames}} \tab Gets the column names.\cr
- \tab \code{getColumnNameTranslator} \tab  -\cr
+ \tab \code{getColumnNamesTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:nbrOfColumns.GenericTabularFile]{nbrOfColumns}} \tab Gets the number of columns.\cr
  \tab \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{nbrOfRows}} \tab Gets the number of data rows.\cr
  \tab \code{readColumns} \tab  -\cr
  \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads a subset of the columns as a data frame.\cr
- \tab \code{setColumnNameTranslator} \tab  -\cr
+ \tab \code{setColumnNames} \tab  -\cr
+ \tab \code{setColumnNamesTranslator} \tab  -\cr
 }
 
 

@@ -80,7 +80,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 
 
  \bold{Methods inherited from GenericTabularFile}:\cr
-as.character, dim, extractMatrix, getColumnNames, getColumnNameTranslator, nbrOfColumns, nbrOfRows, readColumns, readDataFrame, setColumnNameTranslator, translateColumnNames
+as.character, dim, extractMatrix, getColumnNames, getColumnNamesTranslator, nbrOfColumns, nbrOfRows, readColumns, readDataFrame, setColumnNames, setColumnNamesTranslator, translateColumnNames
 
  \bold{Methods inherited from GenericDataFile}:\cr
 compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum
