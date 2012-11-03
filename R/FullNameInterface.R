@@ -47,10 +47,6 @@ setConstructorS3("FullNameInterface", function(...) {
 # @synopsis
 #
 # \arguments{
-#  \item{aliased}{If @TRUE, and an alias has been set, the alias is 
-#     returned, otherwise the default full name is returned.}
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
-#     is translated before returned.}
 #  \item{...}{Not used.}
 # }
 #
@@ -89,7 +85,7 @@ setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=
 # @synopsis
 #
 # \arguments{
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
+#  \item{translate}{If @TRUE and a fullname translator is set, the fullname
 #     is translated before returned.}
 #  \item{...}{Not used.}
 # }

@@ -247,6 +247,30 @@
 \alias{verify.TabularTextFile}
 \alias{writeChecksum}
 \alias{writeColumnsToFiles}
+\alias{appendColumnNamesTranslator}
+\alias{appendColumnNamesTranslator.ColumnNamesInterface}
+\alias{appendColumnNamesTranslatorByNULL}
+\alias{appendColumnNamesTranslatorByNULL.ColumnNamesInterface}
+\alias{appendColumnNamesTranslatorBylist}
+\alias{appendColumnNamesTranslatorBylist.ColumnNamesInterface}
+\alias{clearColumnNamesTranslator}
+\alias{clearColumnNamesTranslator.ColumnNamesInterface}
+\alias{clearListOfColumnNamesTranslators}
+\alias{clearListOfColumnNamesTranslators.ColumnNamesInterface}
+\alias{getColumnNamesTranslator.ColumnNamesInterface}
+\alias{getDefaultColumnNames}
+\alias{getListOfColumnNamesTranslators}
+\alias{getListOfColumnNamesTranslators.ColumnNamesInterface}
+\alias{setColumnNamesTranslator.ColumnNamesInterface}
+\alias{setListOfColumnNamesTranslators}
+\alias{setListOfColumnNamesTranslators.ColumnNamesInterface}
+\alias{translateColumnNames.ColumnNamesInterface}
+\alias{updateColumnNames}
+\alias{updateColumnNames.ColumnNamesInterface}
+\alias{appendColumnNamesTranslatorBycharacter}
+\alias{appendColumnNamesTranslatorBycharacter.ColumnNamesInterface}
+\alias{appendColumnNamesTranslatorByfunction}
+\alias{appendColumnNamesTranslatorByfunction.ColumnNamesInterface}
 
 \description{
   This page contains aliases for all "non-documented" objects that

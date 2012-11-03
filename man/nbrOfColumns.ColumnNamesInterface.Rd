@@ -1,16 +1,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  GenericTabularFile.R
+%  ColumnNamesInterface.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{nbrOfColumns.GenericTabularFile}
-\alias{nbrOfColumns.GenericTabularFile}
-\alias{GenericTabularFile.nbrOfColumns}
-\alias{nbrOfColumns.GenericTabularFile}
-\alias{nbrOfColumns,GenericTabularFile-method}
+\name{nbrOfColumns.ColumnNamesInterface}
+\alias{nbrOfColumns.ColumnNamesInterface}
+\alias{ColumnNamesInterface.nbrOfColumns}
+\alias{nbrOfColumns.ColumnNamesInterface}
+\alias{nbrOfColumns,ColumnNamesInterface-method}
 
 
 \title{Gets the number of columns}
@@ -19,7 +19,7 @@
  Gets the number of columns.
 }
 
-\usage{\method{nbrOfColumns}{GenericTabularFile}(this, ...)}
+\usage{\method{nbrOfColumns}{ColumnNamesInterface}(this, ...)}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,9 +31,8 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{*nbrOfRows}()}.
-  \code{\link[R.filesets:dim.GenericTabularFile]{*dim}()}.
-  For more information see \code{\link{GenericTabularFile}}.
+  \code{\link[R.filesets:getColumnNames.ColumnNamesInterface]{*getColumnNames}()}.
+  For more information see \code{\link{ColumnNamesInterface}}.
 }
 
 

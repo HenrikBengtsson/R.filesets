@@ -184,25 +184,23 @@ setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getColumnNames
+# @RdocMethod getDefaultColumnNames
 #
-# @title "Gets the column names"
+# @title "Gets the default column names"
 #
 # \description{
-#  @get "title", either by inferring the from the file or using the
-#  preset column names.
+#  @get "title" by inferring the from the file header.
 # }
 #
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Possibly passed @seemethod "getHeader".}
-#   \item{translate}{If @TRUE, column names translators are applied,
-#    otherwise not.}
+#   \item{...}{Optional arguments passed @seemethod "getHeader".}
 # }
 #
 # \value{
-#   Returns @character @vector.
+#   Returns @character @vector,
+#   or @NULL if there are no column names in the file header.
 # }
 # @author
 #
@@ -213,17 +211,11 @@ setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("getColumnNames", "TabularTextFile", function(this, ..., translate=TRUE) {
-  # Argument 'translate':
-  translate <- Arguments$getLogical(translate);
-
+setMethodS3("getDefaultColumnNames", "TabularTextFile", function(this, ...) {
   if (hasColumnHeader(this)) {
     colnames <- getHeader(this, ...)$columns;
-    if (translate) {
-      colnames <- translateColumnNames(this, colnames);
-    }
   } else {
-    colnames <- this$.columnNames;
+    colnames <- NULL;
   }
   colnames;
 })
@@ -968,6 +960,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-02
+# o Added getDefaultColumnNames() for TabularTextFile and dropped
+#   getColumnNames(), which is implemented by ColumnNamesInterface.
 # 2012-10-31
 # o CLEANUP: Now readDataFrame() for TabularTextFile no longer returns
 #   attribute 'fileHeader', unless argument 'debug' is TRUE.

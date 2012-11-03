@@ -31,7 +31,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.filesets:nbrOfColumns.GenericTabularFile]{*nbrOfColumns}()}.
   \code{\link[R.filesets:dim.GenericTabularFile]{*dim}()}.
   For more information see \code{\link{GenericTabularFile}}.
 }

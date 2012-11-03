@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 1.5.0 [2012-11-02]
+o Added ColumnNamesInterface which GenericTabularFile now implements.
+  Classes inheriting from GenericTabularFile should rename any
+  getColumnNames() method to getDefaultColumnNames().
+
+
 Version: 1.4.2 [2012-11-01]
 o Added setColumnNames() for GenericTabularFile, which utilizes
   setColumnNamesTranslator().

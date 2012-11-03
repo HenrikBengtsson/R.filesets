@@ -22,10 +22,6 @@
 \usage{\method{getDefaultFullName}{FullNameInterface}(...)}
 
 \arguments{
- \item{aliased}{If \code{\link[base:logical]{TRUE}}, and an alias has been set, the alias is
-    returned, otherwise the default full name is returned.}
- \item{translate}{If \code{\link[base:logical]{TRUE}}, an a fullname translator is set, the fullname
-    is translated before returned.}
  \item{...}{Not used.}
 }
 

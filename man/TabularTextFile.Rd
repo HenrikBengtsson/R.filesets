@@ -23,9 +23,11 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFile}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{\link[R.filesets]{GenericTabularFile}}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.filesets]{ColumnNamesInterface}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{TabularTextFile}}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{\link[R.filesets]{GenericTabularFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{TabularTextFile}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -65,8 +67,8 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{as.character} \tab  -\cr
- \tab \code{\link[R.filesets:getColumnNames.TabularTextFile]{getColumnNames}} \tab Gets the column names.\cr
  \tab \code{getCommentChar} \tab  -\cr
+ \tab \code{\link[R.filesets:getDefaultColumnNames.TabularTextFile]{getDefaultColumnNames}} \tab Gets the default column names.\cr
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
  \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
  \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
@@ -80,7 +82,10 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 
 
  \bold{Methods inherited from GenericTabularFile}:\cr
-as.character, dim, extractMatrix, getColumnNames, getColumnNamesTranslator, nbrOfColumns, nbrOfRows, readColumns, readDataFrame, setColumnNames, setColumnNamesTranslator, translateColumnNames
+as.character, dim, extractMatrix, nbrOfRows, readColumns, readDataFrame
+
+ \bold{Methods inherited from ColumnNamesInterface}:\cr
+appendColumnNamesTranslator, appendColumnNamesTranslatorBycharacter, appendColumnNamesTranslatorByfunction, appendColumnNamesTranslatorBylist, appendColumnNamesTranslatorByNULL, clearColumnNamesTranslator, clearListOfColumnNamesTranslators, getColumnNames, getColumnNamesTranslator, getDefaultColumnNames, getListOfColumnNamesTranslators, nbrOfColumns, setColumnNames, setColumnNamesTranslator, setListOfColumnNamesTranslators, updateColumnNames
 
  \bold{Methods inherited from GenericDataFile}:\cr
 compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum

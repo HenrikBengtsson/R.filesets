@@ -32,7 +32,6 @@
 
 \seealso{
   \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{*nbrOfRows}()}.
-  \code{\link[R.filesets:nbrOfColumns.GenericTabularFile]{*nbrOfColumns}()}.
   For more information see \code{\link{GenericTabularFile}}.
 }
 

@@ -32,7 +32,7 @@
 # }
 #*/###########################################################################
 setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE) {
-  this <- extend(GenericDataFile(...), "GenericTabularFile");
+  this <- extend(GenericDataFile(...), c("GenericTabularFile", uses("ColumnNamesInterface")));
 
   if (.verify) {
     verify(this, ..., verbose=verbose);
@@ -89,121 +89,6 @@ setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
 
 
 
-setMethodS3("getColumnNamesTranslator", "GenericTabularFile", function(this, ...) {
-  this$.columnNameTranslator;
-})
-
-setMethodS3("setColumnNames", "GenericTabularFile", function(this, names, ...) {
-  cnt <- function(...) {
-    names;
-  } # cnt()
-  setColumnNamesTranslator(this, cnt, ...);
-})
-
-
-setMethodS3("setColumnNamesTranslator", "GenericTabularFile", function(this, fcn, ...) {
-  # Arguments 'fcn':
-  if (is.null(fcn)) {
-  } else if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
-  }
-
-  this$.columnNameTranslator <- fcn;
-  invisible(this);
-})
-
-
-setMethodS3("translateColumnNames", "GenericTabularFile", function(this, names, ...) {
-  nameTranslator <- getColumnNamesTranslator(this);	
-  if (!is.null(nameTranslator)) {
-    names2 <- nameTranslator(names);
-
-    # Sanity check
-    if (any(is.na(names2))) {
-      throw("Failed to translate names. Some names were translated to NA:s ", 
-            paste(head(names[is.na(names2)]), collapse=", "));
-    }
-    if (length(names2) != length(names)) {
-      throw(sprintf("Failed to translate column names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)));
-    }
-    names <- names2;
-
-    if (identical(attr(names, "isFinal"), TRUE))
-      return(names);
-  }
-
-  # Do nothing
-  names;
-}, protected=TRUE)
-
-
-
-
-###########################################################################/**
-# @RdocMethod getColumnNames
-#
-# @title "Gets the column names"
-#
-# \description{
-#  @get "title", either by inferring the from the file or using the
-#  preset column names.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns @character @vector.
-# }
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-# @keyword programming
-#*/###########################################################################
-setMethodS3("getColumnNames", "GenericTabularFile", abstract=TRUE);
-
-
-
-###########################################################################/**
-# @RdocMethod nbrOfColumns
-#
-# @title "Gets the number of columns"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-# @author
-#
-# \seealso{
-#   @seemethod "nbrOfRows".
-#   @seemethod "dim".
-#   @seeclass
-# }
-#
-# @keyword IO
-# @keyword programming
-#*/###########################################################################
-setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
-  length(getColumnNames(this));
-})
-
 
 
 ###########################################################################/**
@@ -227,7 +112,6 @@ setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "nbrOfColumns".
 #   @seemethod "dim".
 #   @seeclass
 # }
@@ -262,7 +146,6 @@ setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE);
 #
 # \seealso{
 #   @seemethod "nbrOfRows".
-#   @seemethod "nbrOfColumns".
 #   @seeclass
 # }
 #
@@ -417,10 +300,15 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 
   data;
 })
- 
+
 
 ############################################################################
 # HISTORY:
+# 2012-11-02
+# o CLEANUP: Dropped all methods that are now in ColumnNamesInterface, e.g.
+#   getColumnNames(), setColumnNames(), getColumnNamesTranslator().
+# o Now GenericTabularFile implements ColumnNamesInterface.
+# o CLEANUP: Moved nbrOfColumns() to ColumnNamesInterface.
 # 2012-11-01
 # o Added setColumnNames() for GenericTabularFile, which utilizes
 #   setColumnNamesTranslator().

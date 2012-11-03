@@ -22,7 +22,7 @@
 \usage{\method{getFullName}{FullNameInterface}(this, ..., translate=TRUE)}
 
 \arguments{
- \item{translate}{If \code{\link[base:logical]{TRUE}}, an a fullname translator is set, the fullname
+ \item{translate}{If \code{\link[base:logical]{TRUE}} and a fullname translator is set, the fullname
     is translated before returned.}
  \item{...}{Not used.}
 }
