@@ -325,7 +325,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
     files <- seq(length=nbrOfFiles);
   } else if (is.logical(files)) {
     files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
-    files <- whichVector(files);
+    files <- which(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
   } else if (is.numeric(files)) {

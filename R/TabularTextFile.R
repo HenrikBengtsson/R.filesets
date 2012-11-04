@@ -406,32 +406,19 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   columns <- getColumnNames(this);
   if (!is.null(columns)) {
     nbrOfColumns <- length(columns);
-    defColClasses <- rep(defColClass, nbrOfColumns);
+    defColClasses <- rep(defColClass, times=nbrOfColumns);
     defColClassPatterns <- defColClasses;
 
     # Default columns?
-    pos <- whichVector(names(colClassPatterns) == "*");
-    if (length(pos) > 0) {
-      # Exclude extra '*':s
-      if (length(pos) > 1) {
-        colClassPatterns <- colClassPatterns[-(pos[-1])];
-        pos <- pos[1];
-      }
-  
-      # Insert defaults
-      colClass <- colClassPatterns[pos];
-      names <- names(colClassPatterns);
-      if (length(colClassPatterns) > 1) {
-        names <- insert(names[-pos], at=pos, values=rep("*", nbrOfColumns));
-        idxs <- whichVector(names == "*");
+    pos <- which(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
   
         colClassPatterns <- insert(colClassPatterns[-pos], at=pos, 
-                                   values=rep("*", nbrOfColumns));
+                                   values=rep("*", times=nbrOfColumns));
         names(colClassPatterns) <- names;
         colClassPatterns[idxs] <- colClass;
       } else {
-        colClassPatterns <- rep(colClass, nbrOfColumns);
+        colClassPatterns <- rep(colClass, times=nbrOfColumns);
         names(colClassPatterns) <- sprintf("^%s$", columns);
       }
     }
@@ -447,7 +434,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     # Update column classes according to patterns
     for (kk in seq(along=colClassPatterns)) {
       pattern <- names(colClassPatterns)[kk];
-      idxs <- whichVector(regexpr(pattern, columns) != -1);
+      idxs <- which(regexpr(pattern, columns) != -1);
       if (length(idxs) > 0) {
         colClass <- colClassPatterns[kk];
         colClasses[idxs] <- colClass;
@@ -787,7 +774,7 @@ setMethodS3("[", "TabularTextFile", function(this, i=NULL, j=NULL, drop=FALSE) {
 })
 
 
-setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses=rep("character", length(columns)), ...) {
+setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses=rep("character", times=length(columns)), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

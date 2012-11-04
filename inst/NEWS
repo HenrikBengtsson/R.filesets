@@ -5,6 +5,8 @@ Version: 1.5.0 [2012-11-02]
 o Added ColumnNamesInterface which GenericTabularFile now implements.
   Classes inheriting from GenericTabularFile should rename any
   getColumnNames() method to getDefaultColumnNames().
+o CLEANUP: Replaced all whichVector() with which(), because the
+  latter is now the fastest again.
 
 
 Version: 1.4.2 [2012-11-01]

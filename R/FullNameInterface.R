@@ -233,7 +233,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
       # Replace asterisk custom tags?
       hasAsteriskTags <- is.element("*", customTags);
       if (hasAsteriskTags) {
-        pos <- whichVector("*" == customTags);
+        pos <- which("*" == customTags);
         customTags <- customTags[-pos];
         
         asteriskTags <- tags;

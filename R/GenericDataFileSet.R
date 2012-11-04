@@ -540,7 +540,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
     } else {
       order <- as.list(order);
       order[!idx] <- names[pos];
-      order[[whichVector(idx)]] <- setdiff(names, names[pos]);
+      order[[which(idx)]] <- setdiff(names, names[pos]);
       order <- unlist(order, use.names=FALSE);
       order <- match(order, names);
     }
@@ -1140,7 +1140,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   nbrOfFiles <- length(this);
   if (is.logical(files)) {
     files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
-    files <- whichVector(files);
+    files <- which(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
   } else if (is.numeric(files)) {
