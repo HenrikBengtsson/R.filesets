@@ -410,7 +410,21 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     defColClassPatterns <- defColClasses;
 
     # Default columns?
+    names <- names(colClassPatterns);
     pos <- which(names == "*");
+    if (length(pos) > 0) {
+      # Exclude extra '*':s
+      if (length(pos) > 1) {
+        colClassPatterns <- colClassPatterns[-(pos[-1])];
+        pos <- pos[1];
+      }
+  
+      # Insert defaults
+      colClass <- colClassPatterns[pos];
+      names <- names(colClassPatterns);
+      if (length(colClassPatterns) > 1) {
+        names <- insert(names[-pos], at=pos, values=rep("*", times=nbrOfColumns));
+        idxs <- whichVector(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
   
         colClassPatterns <- insert(colClassPatterns[-pos], at=pos, 
