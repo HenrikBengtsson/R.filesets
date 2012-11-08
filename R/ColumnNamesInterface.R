@@ -134,7 +134,7 @@ setMethodS3("getColumnNames", "ColumnNamesInterface", function(this, ..., transl
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("clearListOfColumnNamesTranslators", "ColumnNamesInterface", function(this, ...) {
-  this$.listOfColumnNamesTranslators <- list();
+  setListOfColumnNamesTranslators(this, list());
 }, protected=TRUE)
 
 setMethodS3("clearColumnNamesTranslator", "ColumnNamesInterface", function(this, ...) {
@@ -338,6 +338,9 @@ setMethodS3("updateColumnNames", "ColumnNamesInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-07
+# o Now clearListOfColumnNamesTranslators() utilizes
+#   setListOfColumnNamesTranslators().
 # 2012-11-02
 # o Created from FullNameInterface.R
 ############################################################################

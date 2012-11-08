@@ -372,7 +372,7 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("clearListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
-  this$.listOfFullNameTranslators <- list();
+  setListOfFullNameTranslators(this, list());
 }, protected=TRUE)
 
 setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) {
@@ -596,6 +596,9 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-07
+# o Now clearListOfFullNamesTranslators() utilizes
+#   setListOfFullNamesTranslators(). 
 # 2011-07-15
 # o Added argument 'named' to getTags() for FullNameInterface.
 # 2010-01-31
