@@ -271,6 +271,10 @@
 \alias{appendColumnNamesTranslatorBycharacter.ColumnNamesInterface}
 \alias{appendColumnNamesTranslatorByfunction}
 \alias{appendColumnNamesTranslatorByfunction.ColumnNamesInterface}
+\alias{getDefaultColumnClassPatterns}
+\alias{getDefaultColumnClassPatterns.TabularTextFile}
+\alias{getDefaultColumnClasses}
+\alias{getDefaultColumnClasses.TabularTextFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

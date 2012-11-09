@@ -1,6 +1,20 @@
 Package: R.filesets
 ===================
 
+Version: 1.5.1 [2012-11-08]
+o Now TabularTextFile() tries to infer whether the data section
+  contains column names or not.  This is done by comparing to
+  the optional 'columnNames' header argument.  If that is not
+  available, it will (as before) assume there are column names.
+o Now readDataFrame() acknowledge header comment arguments 
+  'columnNames' and 'columnClasses' if specified in the file.
+o Now getDefaultColumnNames() for TabularTextFile falls back to 
+  header comment argument 'columnNames', if there are no column
+  names in the actual data table.
+o Now readRawHeader() for TabularTextFile also parses and returns
+  header comment arguments.
+
+
 Version: 1.5.0 [2012-11-02]
 o Added ColumnNamesInterface which GenericTabularFile now implements.
   Classes inheriting from GenericTabularFile should rename any

@@ -68,12 +68,9 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
  \tab \code{[} \tab  -\cr
  \tab \code{as.character} \tab  -\cr
  \tab \code{getCommentChar} \tab  -\cr
- \tab \code{\link[R.filesets:getDefaultColumnNames.TabularTextFile]{getDefaultColumnNames}} \tab Gets the default column names.\cr
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
- \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
  \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
  \tab \code{\link[R.filesets:nbrOfRows.TabularTextFile]{nbrOfRows}} \tab Counts the number of data rows.\cr
- \tab \code{readColumnNames} \tab  -\cr
  \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
  \tab \code{\link[R.filesets:readLines.TabularTextFile]{readLines}} \tab Reads the lines of the data file as strings.\cr
  \tab \code{setCommentChar} \tab  -\cr

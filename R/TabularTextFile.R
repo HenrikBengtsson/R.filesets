@@ -41,7 +41,7 @@
 #   An object of this class is typically part of an @see "TabularTextFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, commentChar="#", .verify=TRUE, verbose=FALSE) {
+setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE) {
   # Argument 'columnNames':
   if (is.logical(columnNames)) {
     readColumnNames <- columnNames;
@@ -86,8 +86,9 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
 
   s <- NextMethod("as.character");
   class <- class(s);
-  if (hasColumnHeader(this)) {
-    columns <- paste("'", getColumnNames(this), "'", sep="");
+  colnames <- getColumnNames(this);
+  if (length(colnames) > 0L) {
+    columns <- paste("'", colnames, "'", sep="");
     s <- c(s, sprintf("Columns [%d]: %s", length(columns), paste(columns, collapse=", ")));
   } else {
     s <- c(s, sprintf("Columns [NA]: <not reading column names>"));
@@ -146,8 +147,30 @@ setMethodS3("setCommentChar", "TabularTextFile", function(this, ch, ...) {
 
 
 setMethodS3("readColumnNames", "TabularTextFile", function(this, ...) {
-  as.logical(this$readColumnNames);
-})
+  res <- as.logical(this$readColumnNames);
+
+  # No need to infer from header?
+  if (!is.na(res)) {
+    return(res);
+  }
+
+  hdr <- readRawHeader(this, ...);
+  namesHdr <- hdr$commentArgs$columnNames;
+  if (is.null(namesHdr)) {
+    msg <- sprintf("Cannot infer whether the data table has column names or not, because header comment argument 'columnNames' is missing. Will assume there are column names (readColumnNames=TRUE): %s", getPathname(this));
+#    warning(msg);
+    return(TRUE);
+  }
+
+  # If argument 'columnNames' equals the first data row, then yes.
+  namesData <- hdr$topRows[[1]];
+  res <- all(namesData == namesHdr);
+
+  # Store results(?!?)
+#  this$readColumnNames <- res;
+
+  res;
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -178,8 +201,8 @@ setMethodS3("readColumnNames", "TabularTextFile", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
-  identical(this$readColumnNames, TRUE);
-})
+  readColumnNames(this);
+}, protected=TRUE)
 
 
 
@@ -212,14 +235,56 @@ setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("getDefaultColumnNames", "TabularTextFile", function(this, ...) {
-  if (hasColumnHeader(this)) {
-    colnames <- getHeader(this, ...)$columns;
-  } else {
-    colnames <- NULL;
-  }
-  colnames;
-})
+  hdr <- getHeader(this, ...);
 
+  # (a) Infer column names from data table
+  if (hasColumnHeader(this)) {
+    names <- hdr$columns;
+    return(names);
+  }
+
+  # (b) Infer column names from header argument 'columnNames'
+  args <- hdr$commentArgs;
+  if (length(args) > 0L) {
+    names <- args$columnNames;
+    return(names);
+  }
+
+  # (c) There are no column names
+  NULL;
+}, protected=TRUE)
+
+
+setMethodS3("getDefaultColumnClasses", "TabularTextFile", function(this, ...) {
+  ncol <- nbrOfColumns(this);
+
+  hdr <- getHeader(this, ...);
+
+  # (a) Infer column names from header argument 'columnNames'
+  args <- hdr$commentArgs;
+  if (length(args) > 0L) {
+    colClasses <- args$columnClasses;
+    if (!is.null(colClasses)) {
+      # Sanity check
+      stopifnot(length(colClasses) == ncol);
+      return(colClasses);
+    }
+  }
+
+  # (b) Column classes are not specified in the file
+  NULL;
+}, protected=TRUE)
+
+
+setMethodS3("getDefaultColumnClassPatterns", "TabularTextFile", function(this, ...) {
+  names <- getColumnNames(this, ...);
+  colClasses <- getDefaultColumnClasses(this, ...);
+  if (is.null(colClasses)) return(NULL);
+
+  names <- sprintf("^%s$", names);
+  names(colClasses) <- names;
+  colClasses;
+}, protected=TRUE)
 
 
 
@@ -320,6 +385,24 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
   verbose && cat(verbose, "Header comments:", level=-20);
   verbose && str(verbose, comments, level=-20);
 
+
+  # Parse header comments
+  pattern <- sprintf("^%s[ ]*([^:]+):[ ]*(.*)", ch);
+  commentArgs <- grep(pattern, comments, value=TRUE);
+  if (length(commentArgs) > 0L) {
+    keys <- gsub(pattern, "\\1", commentArgs);
+    keys <- trim(keys);
+    commentArgs <- gsub(pattern, "\\2", commentArgs);
+    commentArgs <- trim(commentArgs);
+    commentArgs <- strsplit(commentArgs, split="\t", fixed=TRUE);
+    names(commentArgs) <- keys;
+  } else {
+    commentArgs <- NULL;
+  }
+  verbose && cat(verbose, "Header comment arguments:", level=-20);
+  verbose && str(verbose, commentArgs, level=-20);
+
+
   # Infer column separator from the first line after the header comments?
   sep <- this$sep;
   if (length(sep) > 1) {
@@ -358,6 +441,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
 
   hdr <- list(
     comments=comments,
+    commentArgs=commentArgs,
     sep=sep,
     quote=quote,
     skip=this$skip,
@@ -372,7 +456,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
 }, protected=TRUE); # readRawHeader()
 
 
-setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClassPatterns=c("*"=NA), defColClass="NULL", stringsAsFactors=FALSE, ..., verbose=FALSE) {
+setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClassPatterns=c("*"=NA, getDefaultColumnClassPatterns(this)), defColClass="NULL", stringsAsFactors=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -961,6 +1045,16 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-08
+# o Now getReadArguments() for TabularTextFile also includes column
+#   class patterns from getDefaultColumnClassPatterns().
+# o Added getDefaultColumnClass() and getDefaultColumnClassPatterns()
+#   to TabularTextFile.
+# o Now getDefaultColumnNames() for TabularTextFile falls back to 
+#   header comment argument 'columnNames', if there are no column
+#   names in the actual data table.
+# o Now readRawHeader() for TabularTextFile also parses and returns
+#   header comment arguments.
 # 2012-11-02
 # o Added getDefaultColumnNames() for TabularTextFile and dropped
 #   getColumnNames(), which is implemented by ColumnNamesInterface.
