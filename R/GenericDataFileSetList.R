@@ -295,14 +295,14 @@ setMethodS3("getNames", "GenericDataFileSetList", function(this, ...) {
 })
 
 
-setMethodS3("length", "GenericDataFileSetList", function(this, ...) {
+setMethodS3("length", "GenericDataFileSetList", function(x, ...) {
+  # To please R CMD check
+  this <- x;
   names <- getNames(this, ...);
   length(names);
 })
 
-setMethodS3("nbrOfFiles", "GenericDataFileSetList", function(x, ...) {
-  # To please R CMD check
-  this <- x;
+setMethodS3("nbrOfFiles", "GenericDataFileSetList", function(this, ...) {
   length(this, ...);
 }, protected=TRUE)
 
