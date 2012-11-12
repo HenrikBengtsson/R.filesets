@@ -63,7 +63,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{getSets} \tab  -\cr
  \tab \code{indexOf} \tab  -\cr
  \tab \code{length} \tab  -\cr
- \tab \code{nbrOfFiles} \tab  -\cr
  \tab \code{nbrOfSets} \tab  -\cr
  \tab \code{setTags} \tab  -\cr
 }

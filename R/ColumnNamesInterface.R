@@ -152,7 +152,7 @@ setMethodS3("getListOfColumnNamesTranslators", "ColumnNamesInterface", function(
 
 setMethodS3("setListOfColumnNamesTranslators", "ColumnNamesInterface", function(this, fnList, ...) {
   # Argument 'fnList':
-  for (kk in seq(along=fnList)) {
+  for (kk in seq_along(fnList)) {
     fcn <- fnList[[kk]];
     if (!is.function(fcn)) {
       throw("Element #", kk, " of argument 'fnList' is not a function: ", 
@@ -176,7 +176,7 @@ setMethodS3("getColumnNamesTranslator", "ColumnNamesInterface", function(this, .
 
   # Create names translator function
   res <- function(names, ...) {
-    for (kk in seq(along=fnList)) {
+    for (kk in seq_along(fnList)) {
       fcn <- fnList[[kk]];
       names <- fcn(names, ...);
     }
@@ -224,7 +224,7 @@ setMethodS3("appendColumnNamesTranslatorBylist", "ColumnNamesInterface", functio
     throw("Argument 'list' is not a list: ", class(list)[1]);
   }
 
-  for (kk in seq(along=list)) {
+  for (kk in seq_along(list)) {
     by <- list[[kk]];
     appendColumnNamesTranslator(this, by, ...);
   }

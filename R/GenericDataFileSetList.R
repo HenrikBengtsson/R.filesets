@@ -110,7 +110,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
   n <- nbrOfSets(this);
   s <- c(s, sprintf("Number of file sets: %d", n));
 
-  for (kk in seq(length=n)) {
+  for (kk in seq_len(n)) {
     ds <- getSet(this, kk);
     s <- c(s, sprintf("<File set #%d ('%s') of %d>", kk, getName(ds), n));
     s <- c(s, as.character(ds));
@@ -122,7 +122,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
 setMethodS3("clone", "GenericDataFileSetList", function(this, ...) {
   res <- NextMethod("clone");
   dsList <- getSets(this);
-  for (kk in seq(along=dsList)) {
+  for (kk in seq_along(dsList)) {
     dsList[[kk]] <- clone(dsList[[kk]]);
   }
   res$.dsList <- dsList;
@@ -236,7 +236,7 @@ setMethodS3("getFileListClass", "GenericDataFileSetList", function(this, ...) {
   clazz <- Class$forName(className);
   classNames <- c(getKnownSubclasses(clazz), className);
   clazz <- NULL;
-  for (kk in seq(along=classNames)) {
+  for (kk in seq_along(classNames)) {
      className <- classNames[kk];
      tryCatch({
        clazz <- Class$forName(className);
@@ -295,16 +295,16 @@ setMethodS3("getNames", "GenericDataFileSetList", function(this, ...) {
 })
 
 
-setMethodS3("nbrOfFiles", "GenericDataFileSetList", function(this, ...) {
+setMethodS3("length", "GenericDataFileSetList", function(this, ...) {
   names <- getNames(this, ...);
   length(names);
 })
 
-setMethodS3("length", "GenericDataFileSetList", function(x, ...) {
+setMethodS3("nbrOfFiles", "GenericDataFileSetList", function(x, ...) {
   # To please R CMD check
   this <- x;
-  nbrOfFiles(this, ...);
-})
+  length(this, ...);
+}, protected=TRUE)
 
 
 setMethodS3("indexOf", "GenericDataFileSetList", function(this, ...) {
@@ -322,7 +322,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   # Argument 'files':
   nbrOfFiles <- length(this);
   if (is.null(files)) {
-    files <- seq(length=nbrOfFiles);
+    files <- seq_len(nbrOfFiles);
   } else if (is.logical(files)) {
     files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
     files <- which(files);
@@ -335,7 +335,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
     if (any(files < 0, na.rm=TRUE)) {
       incl <- files[files > 0];
       if (length(incl) == 0) {
-        incl <- seq(this);
+        incl <- seq_along(this);
       }
       excl <- na.omit(files[files < 0]);
       files <- setdiff(incl, -excl);
@@ -392,7 +392,7 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
   # Argument 'row.names':
   if (is.null(row.names)) {
     if (any(is.na(names))) {
-      row.names <- seq(along=names);
+      row.names <- seq_along(names);
     } else {
       row.names <- names;
     }
@@ -463,7 +463,7 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
   dfList <- list();
   names <- character(0);
-  for (kk in seq(along=dsList)) {
+  for (kk in seq_along(dsList)) {
     ds <- dsList[[kk]];
     idx <- indexOf(ds, name);
     if (!is.na(idx)) {
@@ -490,6 +490,10 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 
 ###########################################################################
 # HISTORY:
+# 2012-11-12
+# o CLEANUP: Now nbrOfFiles() for GenericDataFileSetList calls length()
+#   and not vice versa.  This will make it easier to phase out
+#   nbrOfFiles() in the future.
 # 2010-07-06
 # o Now indexOf() for GenericDataFileSetList is identical to that of
 #   GenericDataFileSet.

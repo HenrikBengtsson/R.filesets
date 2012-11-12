@@ -87,7 +87,7 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
   # Generate translator function
   fcn <- function(names, ...) {
     # For each rule
-    for (kk in seq(length=nbrOfRules)) {
+    for (kk in seq_len(nbrOfRules)) {
       pattern <- patterns[kk];
       idxs <- grep(pattern, names, fixed=fixed);
       # No matches?

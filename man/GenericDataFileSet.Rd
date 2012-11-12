@@ -73,9 +73,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{hasFile} \tab  -\cr
  \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
  \tab \code{\link[R.filesets:lapply.GenericDataFileSet]{lapply}} \tab Applies a function to each of the data files.\cr
- \tab \code{nbrOfFiles} \tab  -\cr
  \tab \code{sapply} \tab  -\cr
- \tab \code{\link[R.filesets:seq.GenericDataFileSet]{seq}} \tab Gets an vector of file indices.\cr
  \tab \code{\link[R.filesets:setAlias.GenericDataFileSet]{setAlias}} \tab Sets the alias of the file set.\cr
  \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
  \tab \code{\link[R.filesets:validate.GenericDataFileSet]{validate}} \tab Validates all files in the data set.\cr

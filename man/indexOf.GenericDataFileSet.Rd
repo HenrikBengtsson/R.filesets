@@ -29,7 +29,7 @@
 
 \value{
   Returns an \code{\link[base]{integer}} \code{\link[base]{vector}} of length K with elements in
-  [1,\code{\link[R.filesets:nbrOfFiles.GenericDataFileSet]{*nbrOfFiles}()}] or (integer) \code{\link[base]{NA}} (for non-matched names).
+  [1,\code{\link[R.filesets:length.GenericDataFileSet]{*length}()}] or (integer) \code{\link[base]{NA}} (for non-matched names).
 }
 
 \details{

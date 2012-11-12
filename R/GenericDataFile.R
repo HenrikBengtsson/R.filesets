@@ -654,7 +654,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
     
   units <- c("bytes", "kB", "MB", "GB", "TB");
   scale <- 1;
-  for (kk in seq(along=units)) {
+  for (kk in seq_along(units)) {
     unit <- units[kk];
     if (fileSize < 1000)
       break;

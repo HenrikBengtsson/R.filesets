@@ -35,7 +35,7 @@ setMethodS3("dropRootPathTags", "default", function(path, depth, ..., verbose=FA
   }
   verbose && cat(verbose, "Root path without tags: ", rootPath);
 
-  subdirs <- sapply(seq(length=depth), FUN=function(d) {
+  subdirs <- sapply(seq_len(depth), FUN=function(d) {
     basename(getParent(path, depth=d-1L));
   });
   subdirs <- rev(subdirs);

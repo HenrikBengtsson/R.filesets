@@ -135,7 +135,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   }
 
   # Number of files in set
-  n <- nbrOfFiles(this);
+  n <- length(this);
   s <- c(s, sprintf("Number of files: %d", n));
 
   # Names of files
@@ -188,7 +188,7 @@ setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
 
   # Clone each file object
   files <- as.list(object);
-  for (kk in seq(along=files)) {
+  for (kk in seq_along(files)) {
     files[[kk]] <- clone(files[[kk]], clear=TRUE);
   }
   object$files <- files;
@@ -244,7 +244,7 @@ setMethodS3("getFileClass", "GenericDataFileSet", function(static, ...) {
 setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
   I <- length(this);
   res <- rep(NA, times=I);
-  for (ii in seq(length=I)) {
+  for (ii in seq_len(I)) {
     df <- getFile(this, ii);
     res[ii] <- validate(df, ...);
   }
@@ -424,7 +424,7 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
 
   path <- getPath(this);
   dirs <- character(length=depth);
-  for (dd in seq(length=depth)) {
+  for (dd in seq_len(depth)) {
     dirs[dd] <- basename(path);
     path <- dirname(path);
   }
@@ -442,7 +442,7 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
 # @RdocMethod length
 # @aliasmethod nbrOfFiles
 #
-# @title "Gets the number of files in the file set"
+# @title "Gets the number of files in the set"
 #
 # \description{
 #   @get "title".
@@ -454,7 +454,7 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
 # }
 #
 # \value{
-#   Returns an @integer.
+#   Returns an non-negative @integer.
 # }
 #
 # @author
@@ -473,7 +473,7 @@ setMethodS3("length", "GenericDataFileSet", function(x) {
 
 setMethodS3("nbrOfFiles", "GenericDataFileSet", function(this, ...) {
   length(this, ...);
-})
+}, protected=TRUE)
 
 
 
@@ -546,7 +546,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
     }
   }
 
-  order <- Arguments$getIndices(order, max=nbrOfFiles(this));
+  order <- Arguments$getIndices(order, max=length(this));
   if (any(duplicated(order))) {
     bad <- order[duplicated(order)];
     throw("Argument 'order' contains duplicates: ", 
@@ -686,7 +686,7 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #
 # \value{
 #   Returns an @integer @vector of length K with elements in
-#   [1,@seemethod "nbrOfFiles"] or (integer) @NA (for non-matched names).
+#   [1,@seemethod "length"] or (integer) @NA (for non-matched names).
 # }
 #
 # \details{
@@ -715,7 +715,7 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   # Return all indices
   if (is.null(patterns)) {
-    res <- seq(along=names);
+    res <- seq_along(names);
     names(res) <- names;
     return(res);
   }
@@ -772,7 +772,7 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   ns <- sapply(res, FUN=length);
   names <- NULL;
-  for (kk in seq(along=ns)) {
+  for (kk in seq_along(ns)) {
     names <- c(names, rep(patterns0[kk], times=ns[kk]));
   }
   res <- unlist(res, use.names=FALSE);
@@ -822,7 +822,7 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 ###########################################################################/**
 # @RdocMethod seq
 #
-# @title "Gets an vector of file indices"
+# @title "Gets an integer vector of file indices"
 #
 # \description{
 #   @get "title".
@@ -836,7 +836,7 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 #
 # \value{
 #   Returns an @integer @vector in [1,N] where N is the number of files,
-#   or an empty vector if the file set is empty.
+#   or an empty vector if the set is empty.
 # }
 #
 # @author
@@ -844,10 +844,12 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 # \seealso{
 #   @seeclass
 # }
+# 
+# @keyword internal
 #*/###########################################################################
 setMethodS3("seq", "GenericDataFileSet", function(this, ...) {
-  seq(length=nbrOfFiles(this));
-})
+  seq_along(this);
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -1004,7 +1006,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     }
 
     # Must inherit from the same class as the existing files?
-    if (.assertSameClass && nbrOfFiles(this) > 0) {
+    if (.assertSameClass && length(this) > 0) {
       aFile <- getFile(this, 1);
       className <- class(aFile)[1];
       isValid <- unlist(lapply(files, FUN=inherits, className));
@@ -1139,7 +1141,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   # Argument 'files':
   nbrOfFiles <- length(this);
   if (is.logical(files)) {
-    files <- Arguments$getVector(files, length=rep(nbrOfFiles, 2));
+    files <- Arguments$getVector(files, length=rep(nbrOfFiles, times=2));
     files <- which(files);
   } else if (is.character(files)) {
     files <- indexOf(this, files, ...);
@@ -1150,7 +1152,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
     if (any(files < 0, na.rm=TRUE)) {
       incl <- files[files > 0];
       if (length(incl) == 0) {
-        incl <- seq(this);
+        incl <- seq_along(this);
       }
       excl <- na.omit(files[files < 0]);
       files <- setdiff(incl, -excl);
@@ -1316,7 +1318,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Defining ", length(pathnames), " files");
     files <- list();
-    for (kk in seq(along=pathnames)) {
+    for (kk in seq_along(pathnames)) {
       if (as.logical(verbose)) cat(kk, ", ", sep="");
       df <- fromFile(dfStatic, pathnames[kk], recursive=recursive, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
@@ -1419,7 +1421,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
   }
 
 
-  nbrOfFiles <- nbrOfFiles(this);
+  nbrOfFiles <- length(this);
   verbose && enter(verbose, sprintf("Copying %d files", nbrOfFiles));
   verbose && cat(verbose, "Output path for files: ", path);
 
@@ -1597,7 +1599,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
       verbose && enter(verbose, "Search subdirectories");
       verbose && print(verbose, subdirs);
 
-      for (kk in seq(along=subdirs)) {
+      for (kk in seq_along(subdirs)) {
         dir <- subdirs[kk];
         verbose && enter(verbose, sprintf("Subdirectory #%d ('%s') of %d", kk, dir, length(subdirs)));
 
@@ -1770,7 +1772,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
   verbose && print(verbose, paths);
 
   res <- NULL;
-  for (kk in seq(along=paths)) {
+  for (kk in seq_along(paths)) {
     path <- paths[kk];
     verbose && enter(verbose, sprintf("Trying path #%d of %d", kk, length(paths)));
     verbose && cat(verbose, "Path: ", path);
@@ -1804,7 +1806,7 @@ setMethodS3("hasFile", "GenericDataFileSet", function(this, file, ...) {
   file <- Arguments$getInstanceOf(file, "GenericDataFile");
 
   files <- getFiles(this);
-  for (kk in seq(along=files)) {
+  for (kk in seq_along(files)) {
     if (identical(file, files[[kk]]))
       return(TRUE);
   }
@@ -1835,10 +1837,10 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
     return(notEqual);
   }
 
-  nbrOfFiles <- nbrOfFiles(this);
+  nbrOfFiles <- length(this);
 
   value <- nbrOfFiles;
-  valueOther <- nbrOfFiles(other);
+  valueOther <- length(other);
   if (value != valueOther) {
     msg <- sprintf("The number of files differ: %d != %d",
                                               value, valueOther);
@@ -1849,7 +1851,7 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
   if (identical(getPathnames(this), getPathnames(other)))
     return(TRUE);
 
-  for (kk in seq(this)) {
+  for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("File #%d of %d", kk, nbrOfFiles));
 
     df1 <- getFile(this, 1);
@@ -2035,6 +2037,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-11-12
+# o CLEANUP: Made seq() protected. It will eventually become deprecated.
 # 2012-10-30
 # o Added validate() to GenericDataFileSet, which iteratively calls
 #   validate() on all the GenericDataFile:s in the set.

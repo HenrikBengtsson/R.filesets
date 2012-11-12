@@ -87,7 +87,7 @@ setMethodS3("setAttributesByTags", "GenericDataFile", function(this, tags=getTag
   # Get all <name>=<value> tags
   pattern <- "^([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+)=(.*)$";
   values <- grep(pattern, tags, value=TRUE);
-  for (kk in seq(along=values)) {
+  for (kk in seq_along(values)) {
     tag <- values[[kk]];
     key <- gsub(pattern, "\\1", tag);
     value <- gsub(pattern, "\\2", tag);

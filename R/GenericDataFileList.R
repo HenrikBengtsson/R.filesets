@@ -2,7 +2,7 @@ setConstructorS3("GenericDataFileList", function(dfList=list(), ...) {
   # Argument 'dfList':
   if (is.list(dfList)) {
     className <- "GenericDataFile";
-    for (kk in seq(along=dfList)) {
+    for (kk in seq_along(dfList)) {
       df <- dfList[[kk]];
       if (!inherits(df, className)) {
         throw(sprintf("Element #%d of argument 'dfList' is not of class %s: ", kk, class(df)[1]));

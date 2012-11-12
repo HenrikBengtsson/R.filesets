@@ -530,7 +530,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     names(colClasses) <- columns;
   
     # Update column classes according to patterns
-    for (kk in seq(along=colClassPatterns)) {
+    for (kk in seq_along(colClassPatterns)) {
       pattern <- names(colClassPatterns)[kk];
       idxs <- which(regexpr(pattern, columns) != -1);
       if (length(idxs) > 0) {
@@ -597,7 +597,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #   \item{rows}{(Optional) An @integer @vector specifying which rows to
 #    be read.}
 #   \item{nrow}{(Optional) An @integer specifying how many rows to read.
-#    If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
+#    If specified, it corresponds to specifying \code{rows=seq_len(nrow)}.}
 #   \item{trimQuotes}{(Optional) If @TRUE, quotes are trimmed from numeric
 #    columns before parsing them as numerics.  This makes it possible to
 #    read quoted numeric values.}
@@ -777,7 +777,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
     verbose && enter(verbose, "Parsing numeric columns");
     toPatch <- which(toPatch);
-    for (kk in seq(along=toPatch)) {
+    for (kk in seq_along(toPatch)) {
       col <- toPatch[kk];
       colClass <- colClasses[col];
       verbose && enter(verbose, sprintf("Parsing #%d (column #%d as '%s') of %d", kk, col, colClass, length(toPatch)));

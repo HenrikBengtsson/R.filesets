@@ -116,7 +116,7 @@ setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, f
   pathnames <- c();
 
   colClassPatterns <- "character";
-  for (cc in seq(along=columnNames)) {
+  for (cc in seq_along(columnNames)) {
     columnName <- columnNames[cc];
     verbose && enter(verbose, sprintf("Column #%d ('%s') of %d", 
                                        cc, columnName, length(columnNames)));

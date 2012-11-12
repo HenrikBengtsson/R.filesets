@@ -27,7 +27,7 @@
   \item{rows}{(Optional) An \code{\link[base]{integer}} \code{\link[base]{vector}} specifying which rows to
    be read.}
   \item{nrow}{(Optional) An \code{\link[base]{integer}} specifying how many rows to read.
-   If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
+   If specified, it corresponds to specifying \code{rows=seq_len(nrow)}.}
   \item{trimQuotes}{(Optional) If \code{\link[base:logical]{TRUE}}, quotes are trimmed from numeric
    columns before parsing them as numerics.  This makes it possible to
    read quoted numeric values.}

@@ -32,11 +32,11 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfFiles <- nbrOfFiles(this);
+  nbrOfFiles <- length(this);
 
   # Argument 'files':
   if (is.null(files)) {
-    files <- seq(length=nbrOfFiles);
+    files <- seq_len(nbrOfFiles);
   } else {
     files <- Arguments$getIndices(files, max=nbrOfFiles);
     nbrOfFiles <- length(files);
@@ -44,7 +44,7 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=
 
 
   data <- NULL;
-  for (kk in seq(length=nbrOfFiles)) {
+  for (kk in seq_len(nbrOfFiles)) {
     file <- files[kk];
     dataFile <- getFile(this, file);
     dataKK <- extractMatrix(dataFile, ...);

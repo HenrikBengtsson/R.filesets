@@ -17,10 +17,10 @@
 \alias{nbrOfFiles,GenericDataFileSet-method}
 
 
-\title{Gets the number of files in the file set}
+\title{Gets the number of files in the set}
 
 \description{
-  Gets the number of files in the file set.
+  Gets the number of files in the set.
 }
 
 \usage{
@@ -29,7 +29,7 @@
 }
 
 \value{
-  Returns an \code{\link[base]{integer}}.
+  Returns an non-negative \code{\link[base]{integer}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
