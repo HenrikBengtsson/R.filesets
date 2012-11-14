@@ -70,6 +70,7 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
   this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
     files = as.list(files),
+    "cached:.fileSize" = NULL,
     .depth = depth,
     .tags = NULL
   );
@@ -173,12 +174,6 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   # Clear the cache of all files
   lapply(this, clearCache);
-
-  # Clear cached values
-  fields <- c(".fileSize");
-  for (field in fields) {
-    this[[field]] <- NULL;
-  }
 
   # Then for this object
   NextMethod("clearCache");
@@ -1959,6 +1954,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-11-13
+# o CLEANUP: Now clearCache() for GenericDataFileSet relies on ditto
+#   of Object to clear all cached fields (=with field modifier "cached").
 # 2012-11-12
 # o CLEANUP: Made seq() protected. It will eventually become deprecated.
 # 2012-10-30

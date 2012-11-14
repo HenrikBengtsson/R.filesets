@@ -2,6 +2,8 @@ Package: R.filesets
 ===================
 
 Version: 1.5.3 [2012-11-13]
+o CLEANUP: Now clearCache() for GenericDataFileSet relies on ditto
+  of Object to clear all cached fields (=with field modifier "cached").
 o CLEANUP: Deprecated (get|set)Label() for GenericDataFile and
   (get|set)Alias() for GenericData(File|FileSet).  Related
   arguments such at 'alias' to GenericDataFileSet and 'aliased'
