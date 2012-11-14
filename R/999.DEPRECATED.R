@@ -78,7 +78,7 @@ setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
-  .Deprecated("getAlias");
+  .Deprecated("getFullName");
   this$.alias;
 }, protected=TRUE, deprecated=TRUE)
 
@@ -117,7 +117,7 @@ setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
-  .Deprecated("setAlias");
+  .Deprecated("setFullName");
   # Argument 'alias':
   if (!is.null(alias)) {
     alias <- Arguments$getFilename(alias);  # Valid filename?
