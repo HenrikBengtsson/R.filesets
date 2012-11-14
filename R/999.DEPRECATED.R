@@ -22,7 +22,7 @@ setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(...) {
 
 
 setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
-  .Deprecated("getLabel");
+  .Deprecated("getName");
   label <- this$label;
   if (is.null(label))
     label <- getName(this, ...);
@@ -30,18 +30,18 @@ setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
 }, private=TRUE, deprecated=TRUE)
 
 setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
-  .Deprecated("setLabel");
+  .Deprecated("setName");
   this$label <- label;
   invisible(this);
 }, private=TRUE, deprecated=TRUE)
 
 setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
-  .Deprecated("getAlias");
+  .Deprecated("getFullName");
   this$.alias;
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
-  .Deprecated("setAlias");
+  .Deprecated("setFullName");
   if (!is.null(alias)) {
     alias <- Arguments$getFilename(alias);
   }
