@@ -1585,20 +1585,6 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
-  label <- this$label;
-  if (is.null(label))
-    label <- getName(this, ...);
-  label;
-}, private=TRUE)
-
-setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
-  this$label <- label;
-  invisible(this);
-}, private=TRUE) 
-
-
-
 
 ############################################################################
 # HISTORY:

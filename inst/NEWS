@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 1.5.3 [2012-11-13]
+o CLEANUP: Deprecated (get|set)Label() for GenericDataFile.
+
+
 Version: 1.5.2 [2012-11-12]
 o CLEANUP: Now seq_along(x) instead of seq(along=x) everywhere.
   Similarly, seq(ds) where 'ds' is GenericDataFileSet is now
