@@ -17,8 +17,6 @@
 #      The string \code{"*"} indicates that it should be replaced by the
 #      tags part of the file set pathname.}
 #   \item{depth}{An non-negative @integer.}
-#   \item{alias}{A @character string specifying a name alias overriding the
-#      name inferred from the pathname.}
 #   \item{...}{Not used.}
 #   \item{.onUnknownArgs}{A @character string specifying what should occur
 #      if there are unknown arguments in \code{...}.}
@@ -32,7 +30,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL, alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,12 +71,18 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
   this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
     files = as.list(files),
     .depth = depth,
-    .alias = NULL,
     .tags = NULL
   );
 
   setTags(this, tags);
-  setAlias(this, alias);
+
+  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'alias'.
+  args <- list(...);
+  if (is.element("alias", names(args))) {
+    .Deprecated(msg="Argument 'alias' of GenericDataFileSet() is deprecated.  Use fullname translators instead.");
+    alias <- args[["alias"]];
+    if (!is.null(alias)) setAlias(this, alias);
+  }
 
   this;
 })
@@ -254,88 +258,6 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
 
   res;
 }, protected=FALSE)
-
-
-
-
-
-###########################################################################/**
-# @RdocMethod getAlias
-#
-# @title "Gets the alias of the file set"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character, or @NULL if no alias is set.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
-  this$.alias;
-})
-
-
-
-###########################################################################/**
-# @RdocMethod setAlias
-#
-# @title "Sets the alias of the file set"
-#
-# \description{
-#   @get "title".
-#   If specified, the alias overrides the name inferred from the pathname
-#   of the file set.  This can be used in order to use another name of the
-#   output data set than the input data set of many transforms and models.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{alias}{A @character string for the new alias of the file set.
-#   The alias must consists of valid filename characters, and must not
-#   contain commas, which are used to separate tags.}
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
-  # Argument 'alias':
-  if (!is.null(alias)) {
-    alias <- Arguments$getFilename(alias);  # Valid filename?
-
-    # Assert that no commas are used.
-    if (regexpr("[,]", alias) != -1) {
-      throw("File-set aliases (names) must not contain commas: ", alias);
-    }
-  }
-
-  this$.alias <- alias;
-})
-
-
 
 
 

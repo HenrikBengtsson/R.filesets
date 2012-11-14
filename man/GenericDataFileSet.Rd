@@ -34,7 +34,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
  }
 
- \usage{GenericDataFileSet(files=NULL, tags="*", depth=NULL, alias=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
+ \usage{GenericDataFileSet(files=NULL, tags="*", depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
@@ -42,8 +42,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
       The string \code{"*"} indicates that it should be replaced by the
       tags part of the file set pathname.}
    \item{depth}{An non-negative \code{\link[base]{integer}}.}
-   \item{alias}{A \code{\link[base]{character}} string specifying a name alias overriding the
-      name inferred from the pathname.}
    \item{...}{Not used.}
    \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
       if there are unknown arguments in \code{...}.}
@@ -60,7 +58,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{clearCache} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
- \tab \code{\link[R.filesets:getAlias.GenericDataFileSet]{getAlias}} \tab Gets the alias of the file set.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
@@ -74,7 +71,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
  \tab \code{\link[R.filesets:lapply.GenericDataFileSet]{lapply}} \tab Applies a function to each of the data files.\cr
  \tab \code{sapply} \tab  -\cr
- \tab \code{\link[R.filesets:setAlias.GenericDataFileSet]{setAlias}} \tab Sets the alias of the file set.\cr
  \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
  \tab \code{\link[R.filesets:validate.GenericDataFileSet]{validate}} \tab Validates all files in the data set.\cr
 }

@@ -82,7 +82,6 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   }
 
   extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
-    .alias = NULL,
     .pathname = pathname,
     .attributes = list()
   )
@@ -380,10 +379,6 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{aliased}{If @TRUE, and an alias has been set, the alias is 
-#     returned, otherwise the default full name is returned.}
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
-#     is translated before returned.}
 #  \item{...}{Not used.}
 # }
 #
@@ -404,18 +399,26 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALSE, ...) {
-  if (aliased) {
-    alias <- getAlias(this);
-    if (!is.null(alias))
-      fullname <- alias;
-  } else {
-    filename <- getFilename(this);
-    if (is.null(filename))
-      return(as.character(NA));
-    pattern <- getExtensionPattern(this);
-    fullname <- gsub(pattern, "", filename);
+setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
+  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'aliased' is deprecated.
+  args <- list(...);
+  if (is.element("aliased", names(args))) {
+    .Deprecated(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
+    aliased <- args[["aliased"]];
+    if (aliased) {
+      alias <- getAlias(this);
+      if (!is.null(alias)) {
+        fullname <- alias;
+        return(fullname);
+      }
+    }
   }
+
+  filename <- getFilename(this);
+  if (is.null(filename))
+    return(as.character(NA));
+  pattern <- getExtensionPattern(this);
+  fullname <- gsub(pattern, "", filename);
 
   fullname;
 }, protected=TRUE)
@@ -1515,20 +1518,6 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ODDS AND ENDS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
-  this$.alias;
-}, protected=TRUE)
-
-setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
-  if (!is.null(alias)) {
-    alias <- Arguments$getFilename(alias);
-  }
-  
-  this$.alias <- alias;
-  invisible(this);
-}, protected=TRUE)
-
-
 setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Local functions

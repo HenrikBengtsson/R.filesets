@@ -19,13 +19,9 @@
   Gets the full name of the file, that is the filename without the filename extension.
 }
 
-\usage{\method{getDefaultFullName}{GenericDataFile}(this, aliased=FALSE, ...)}
+\usage{\method{getDefaultFullName}{GenericDataFile}(this, ...)}
 
 \arguments{
- \item{aliased}{If \code{\link[base:logical]{TRUE}}, and an alias has been set, the alias is
-    returned, otherwise the default full name is returned.}
- \item{translate}{If \code{\link[base:logical]{TRUE}}, an a fullname translator is set, the fullname
-    is translated before returned.}
  \item{...}{Not used.}
 }
 

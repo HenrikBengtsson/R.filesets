@@ -34,11 +34,108 @@ setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
   this$label <- label;
   invisible(this);
 }, private=TRUE, deprecated=TRUE)
+
+setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
+  .Deprecated("getAlias");
+  this$.alias;
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
+  .Deprecated("setAlias");
+  if (!is.null(alias)) {
+    alias <- Arguments$getFilename(alias);
+  }
+  this$.alias <- alias;
+  invisible(this);
+}, protected=TRUE, deprecated=TRUE)
  
+
+
+###########################################################################/**
+# @set "class=GenericDataFile"
+# @RdocMethod getAlias
+#
+# @title "Gets the alias of the file set"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character, or @NULL if no alias is set.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
+  .Deprecated("getAlias");
+  this$.alias;
+}, protected=TRUE, deprecated=TRUE)
+
+
+
+###########################################################################/**
+# @set "class=GenericDataFile"
+# @RdocMethod setAlias
+#
+# @title "Sets the alias of the file set"
+#
+# \description{
+#   @get "title".
+#   If specified, the alias overrides the name inferred from the pathname
+#   of the file set.  This can be used in order to use another name of the
+#   output data set than the input data set of many transforms and models.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{alias}{A @character string for the new alias of the file set.
+#   The alias must consists of valid filename characters, and must not
+#   contain commas, which are used to separate tags.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns nothing.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
+  .Deprecated("setAlias");
+  # Argument 'alias':
+  if (!is.null(alias)) {
+    alias <- Arguments$getFilename(alias);  # Valid filename?
+
+    # Assert that no commas are used.
+    if (regexpr("[,]", alias) != -1) {
+      throw("File-set aliases (names) must not contain commas: ", alias);
+    }
+  }
+
+  this$.alias <- alias;
+}, protected=TRUE, deprecated=TRUE)
+
 
 ############################################################################
 # HISTORY:
 # 2012-11-12
+# o CLEANUP: Deprecated (get|set)Alias() for GenericData(File|FileSet).
 # o CLEANUP: Deprecated (get|set)Label() for GenericDataFile.
 # 2012-11-01
 # o CLEANUP: Deprecated (get|set)ColumnNameTranslator() in favor of
