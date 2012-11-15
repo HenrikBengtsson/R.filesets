@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 1.6.0 [2012-11-15]
+o No updates. Bumped the version for CRAN release.
+
+
 Version: 1.5.4 [2012-11-15]
 o BACKWARD COMPATIBILITY: Made it possible for TabularTextFile to ignore
   header comment arguments when inferring column names and classes.  
