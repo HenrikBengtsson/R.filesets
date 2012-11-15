@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 1.5.4 [2012-11-15]
+o BACKWARD COMPATIBILITY: Made it possible for TabularTextFile to ignore
+  header comment arguments when inferring column names and classes.  
+
+
 Version: 1.5.3 [2012-11-13]
 o CLEANUP: Now clearCache() for GenericDataFileSet relies on ditto
   of Object to clear all cached fields (=with field modifier "cached").

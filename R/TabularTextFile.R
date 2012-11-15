@@ -243,11 +243,15 @@ setMethodS3("getDefaultColumnNames", "TabularTextFile", function(this, ...) {
     return(names);
   }
 
-  # (b) Infer column names from header argument 'columnNames'
-  args <- hdr$commentArgs;
-  if (length(args) > 0L) {
-    names <- args$columnNames;
-    return(names);
+  # (b) Infer column names from header argument 'columnNames'?
+  useHeaderArgs <- this$.useHeaderArgs;
+  if (is.null(useHeaderArgs)) useHeaderArgs <- TRUE;
+  if (useHeaderArgs) {
+    args <- hdr$commentArgs;
+    if (length(args) > 0L) {
+      names <- args$columnNames;
+      return(names);
+    }
   }
 
   # (c) There are no column names
@@ -260,14 +264,18 @@ setMethodS3("getDefaultColumnClasses", "TabularTextFile", function(this, ...) {
 
   hdr <- getHeader(this, ...);
 
-  # (a) Infer column names from header argument 'columnNames'
-  args <- hdr$commentArgs;
-  if (length(args) > 0L) {
-    colClasses <- args$columnClasses;
-    if (!is.null(colClasses)) {
-      # Sanity check
-      stopifnot(length(colClasses) == ncol);
-      return(colClasses);
+  # (a) Infer column names from header argument 'columnNames'?
+  useHeaderArgs <- this$.useHeaderArgs;
+  if (is.null(useHeaderArgs)) useHeaderArgs <- TRUE;
+  if (useHeaderArgs) {
+    args <- hdr$commentArgs;
+    if (length(args) > 0L) {
+      colClasses <- args$columnClasses;
+      if (!is.null(colClasses)) {
+        # Sanity check
+        stopifnot(length(colClasses) == ncol);
+        return(colClasses);
+      }
     }
   }
 
@@ -1045,6 +1053,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-15
+# o Made it possible for TabularTextFile to ignore header comment 
+#   arguments when inferring column names and classes.
 # 2012-11-08
 # o Now getReadArguments() for TabularTextFile also includes column
 #   class patterns from getDefaultColumnClassPatterns().
