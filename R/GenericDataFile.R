@@ -83,7 +83,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
 
   this <- extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
     "cached:.checksum" = NULL,
-    "cached:.prevModifiedOn" = NULL,
+    .prevModifiedOn = NULL,
     .pathname = pathname,
     .attributes = list()
   );
