@@ -4,7 +4,10 @@ Package: R.filesets
 Version: 1.6.1 [2012-11-28]
 o Now GenericDataFile() retrieves the file time stamps such that
   hasBeenModified() returns a correct value also when first called,
-  and not only TRUE just in case.
+  and not only TRUE just in case.  This has the effect that
+  getChecksum() will detected cached results already at the
+  second call as long as the file has to been modified.  Previously
+  it took two calls to getChecksum() for it to be properly cached.
 o Now declaring more internal and temporary Object fields as "cached",
   which means they will be cleared if clearCache() or gc() is called on
   the corresponding object.
