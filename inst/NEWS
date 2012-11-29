@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 1.6.1 [2012-11-28x]
+Version: 1.6.1 [2012-11-28]
 o Now GenericDataFile() retrieves the file time stamps such that
   hasBeenModified() returns a correct value also when first called,
   and not only TRUE just in case.
