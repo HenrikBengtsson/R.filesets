@@ -59,7 +59,8 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
 
   this <- extend(GenericTabularFile(..., .verify=FALSE), "TabularTextFile",
-    .fileHeader = NULL,
+    "cached:.fileHeader" = NULL,
+    "cached:.nbrOfLines" = NULL,
     .columnNameTranslator = NULL,
     sep = sep,
     quote = quote,
@@ -97,7 +98,7 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
 
   class(s) <- class;
   s;
-})
+}, protected=TRUE)
 
 
 setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
@@ -134,7 +135,7 @@ setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
 
 setMethodS3("getCommentChar", "TabularTextFile", function(this, ...) {
   this$.commentChar;
-})
+}, protected=TRUE)
 
 
 setMethodS3("setCommentChar", "TabularTextFile", function(this, ch, ...) {
@@ -143,7 +144,7 @@ setMethodS3("setCommentChar", "TabularTextFile", function(this, ch, ...) {
   }
   this$.commentChar <- ch;
   invisible(this);
-})
+}, protected=TRUE)
 
 
 setMethodS3("readColumnNames", "TabularTextFile", function(this, ...) {
@@ -877,7 +878,7 @@ setMethodS3("[", "TabularTextFile", function(this, i=NULL, j=NULL, drop=FALSE) {
   }
   
   data;
-})
+}, protected=TRUE)
 
 
 setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses=rep("character", times=length(columns)), ...) {
@@ -1053,6 +1054,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-28
+# o Declaring '.fileHeader' and '.nbrOfLines' as 'cached' fields.
 # 2012-11-15
 # o Made it possible for TabularTextFile to ignore header comment 
 #   arguments when inferring column names and classes.

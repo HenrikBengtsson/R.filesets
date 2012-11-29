@@ -52,7 +52,7 @@ setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
 
   class(s) <- class;
   s;
-})
+}, protected=TRUE)
 
 
 
@@ -197,7 +197,7 @@ setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE);
 
 
 ###########################################################################/**
-# @RdocMethod readDataFrame
+# @RdocMethod readColumns
 #
 # @title "Reads a subset of the columns as a data frame"
 #

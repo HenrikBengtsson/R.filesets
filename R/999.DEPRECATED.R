@@ -132,6 +132,41 @@ setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, dropMissing=TRUE, ...) {
+  .Defunct("getFileList");
+
+  # Argument 'name':
+  name <- Arguments$getCharacter(name);
+
+  dsList <- getSets(this);
+
+  dfList <- list();
+  names <- character(0);
+  for (kk in seq_along(dsList)) {
+    ds <- dsList[[kk]];
+    idx <- indexOf(ds, name);
+    if (!is.na(idx)) {
+      dfList[[kk]] <- getFile(ds, idx);
+      names[kk] <- names(dsList)[kk];
+    }
+  }
+  if (!is.null(names(dfList))) {
+    names(dfList) <- names;
+  }
+
+  if (dropMissing) {
+    dfList <- dfList[!sapply(dfList, FUN=is.null)];
+  }
+
+  # Coerce to a file list
+  className <- getFileListClass(this);
+  clazz <- Class$forName(className);
+  dfList <- newInstance(clazz, dfList);
+
+  dfList;
+}, deprecated=TRUE, protected=TRUE)
+
+
 ############################################################################
 # HISTORY:
 # 2012-11-12

@@ -69,8 +69,8 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
 
   this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
-    files = as.list(files),
     "cached:.fileSize" = NULL,
+    files = as.list(files),
     .depth = depth,
     .tags = NULL
   );
@@ -166,7 +166,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -177,7 +177,7 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 
   # Then for this object
   NextMethod("clearCache");
-})
+}, protected=TRUE)
 
 
 
@@ -197,7 +197,7 @@ setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
     clearCache(object);
 
   object;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

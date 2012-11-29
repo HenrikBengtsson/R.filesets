@@ -81,10 +81,17 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
     }
   }
 
-  extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
+  this <- extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
+    "cached:.checksum" = NULL,
+    "cached:.prevModifiedOn" = NULL,
     .pathname = pathname,
     .attributes = list()
-  )
+  );
+
+  # Update time stamps
+  hasBeenModified(this);
+
+  this;
 }, abstract=TRUE)
 
 
@@ -94,7 +101,7 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
   if (clear)
     clearCache(object);
   object;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -254,7 +261,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -424,12 +431,12 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
+setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE)
 
 
 setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
   getFilenameExtension(...);  
-}, protected=TRUE);
+}, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., default="\\.([^.]+)$", force=FALSE) {
@@ -922,7 +929,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
   res <- newInstance(static, filename=pathname, ...);
 
   res;
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -1577,6 +1584,12 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2012-11-28
+# o Now GenericDataFile() retrieves the file time stamps such that
+#   hasBeenModified() returns a correct value also when first called,
+#   and not only TRUE just in case.
+# o Now declaring the .checksum field as a 'cached' field, which will
+#   be cleared if clearCache() or gc() is called on the object.
 # 2012-10-30
 # o Added validate() to GenericDataFile.
 # 2011-11-19

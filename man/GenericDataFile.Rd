@@ -54,7 +54,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:compareChecksum.GenericDataFile]{compareChecksum}} \tab Compares the file checksum with the value of the checksum file.\cr
  \tab \code{\link[R.filesets:equals.GenericDataFile]{equals}} \tab Checks if a file equals another.\cr
- \tab \code{\link[R.filesets:fromFile.GenericDataFile]{fromFile}} \tab Defines a GenericDataFile from a pathname.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFile]{getChecksum}} \tab Gets the checksum of a file.\cr
  \tab \code{\link[R.filesets:getExtension.GenericDataFile]{getExtension}} \tab Gets the filename extension.\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr

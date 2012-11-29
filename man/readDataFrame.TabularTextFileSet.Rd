@@ -19,7 +19,7 @@
  Reads the tabular data from all files as data frames and combines them into one data frame (by default).
 }
 
-\usage{\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x))}
+\usage{\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x), verbose=FALSE)}
 
 \arguments{
   \item{...}{Arguments passed to

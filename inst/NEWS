@@ -1,6 +1,17 @@
 Package: R.filesets
 ===================
 
+Version: 1.6.1 [2012-11-28x]
+o Now GenericDataFile() retrieves the file time stamps such that
+  hasBeenModified() returns a correct value also when first called,
+  and not only TRUE just in case.
+o Now declaring more internal and temporary Object fields as "cached",
+  which means they will be cleared if clearCache() or gc() is called on
+  the corresponding object.
+o Added further verbose output to TabularTextFileSet.
+o DOCUMENTATION: Minor corrections to help pages.
+
+
 Version: 1.6.0 [2012-11-15]
 o No updates. Bumped the version for CRAN release.
 

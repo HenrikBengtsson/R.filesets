@@ -13,10 +13,10 @@
 \alias{readDataFrame,GenericTabularFile-method}
 
 
-\title{Reads a subset of the columns as a data frame}
+\title{Reads the tabular data as a data frame}
 
 \description{
- Reads a subset of the columns as a data frame.
+ Reads the tabular data as a data frame.
 }
 
 \usage{\method{readDataFrame}{GenericTabularFile}(...)}

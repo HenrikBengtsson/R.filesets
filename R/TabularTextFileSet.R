@@ -67,7 +67,10 @@ setConstructorS3("TabularTextFileSet", function(...) {
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy=function(x) Reduce(rbind, x)) {
+setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy=function(x) Reduce(rbind, x), verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'combineBy':
   if (!is.null(combineBy)) {
     if (!is.function(combineBy)) {
@@ -75,11 +78,29 @@ setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy
     }
   }
 
-  # Read
-  data <- lapply(this, readDataFrame, ...);
-  if (is.function(combineBy)) {
-    data <- combineBy(data);
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
   }
+ 
+
+  verbose && enter(verbose, "Reading data set as data frame");
+
+  # Read
+  verbose && enter(verbose, "Reading all data files");
+  verbose && cat(verbose, "Number of files: ", length(this));
+  data <- lapply(this, readDataFrame, ..., verbose=less(verbose));
+  verbose && exit(verbose);
+
+  if (is.function(combineBy)) {
+    verbose && enter(verbose, "Combining all data");
+    data <- combineBy(data);
+    verbose && exit(verbose);
+  }
+
+  verbose && exit(verbose);
 
   data;
 })
@@ -87,6 +108,8 @@ setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy
 
 ###########################################################################
 # HISTORY:
+# 2012-11-27
+# o Added verbose output to readDataFrame().
 # 2012-09-27
 # o Added readDataFrame() for TabularTextFileSet.
 # 2008-05-16

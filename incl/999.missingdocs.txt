@@ -88,7 +88,7 @@ name name.default nbrOfColumns nbrOfFiles
 nbrOfFiles.GenericDataFileSetList nbrOfLines nbrOfRows
 nbrOfSets nbrOfSets.GenericDataFileSetList readChecksum
 readColumnNames readColumnNames.TabularTextFile readColumns
-readColumns.GenericTabularFile readColumns.TabularTextFile
+readColumns.TabularTextFile
 readDataFrame readLines readLines.default readRawHeader
 readRawHeader.TabularTextFile readTableHeader
 readTableHeader.default renameTo renameToUpperCaseExt

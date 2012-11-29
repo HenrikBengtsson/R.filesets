@@ -50,12 +50,9 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{as.character} \tab  -\cr
  \tab \code{as} \tab  -\cr
  \tab \code{as.GenericDataFileSetList} \tab  -\cr
  \tab \code{as.list} \tab  -\cr
- \tab \code{clone} \tab  -\cr
- \tab \code{getDefaultFullName} \tab  -\cr
  \tab \code{getFileList} \tab  -\cr
  \tab \code{getFullNames} \tab  -\cr
  \tab \code{getNames} \tab  -\cr
@@ -64,7 +61,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{indexOf} \tab  -\cr
  \tab \code{length} \tab  -\cr
  \tab \code{nbrOfSets} \tab  -\cr
- \tab \code{setTags} \tab  -\cr
 }
 
 

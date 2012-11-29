@@ -55,7 +55,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
  \tab \code{\link[R.filesets:byName.GenericDataFileSet]{byName}} \tab Locates and sets up a file set by its name.\cr
  \tab \code{\link[R.filesets:byPath.GenericDataFileSet]{byPath}} \tab Defines a GenericDataFileSet by searching for files in a directory.\cr
- \tab \code{clearCache} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
