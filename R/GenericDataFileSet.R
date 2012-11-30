@@ -173,7 +173,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
 setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   # Clear the cache of all files
-  lapply(this, clearCache);
+  lapply(this, FUN=clearCache);
 
   # Then for this object
   NextMethod("clearCache");
@@ -392,45 +392,6 @@ setMethodS3("nbrOfFiles", "GenericDataFileSet", function(this, ...) {
   length(this, ...);
 }, protected=TRUE)
 
-
-
-###########################################################################/**
-# @RdocMethod lapply
-#
-# @title "Applies a function to each of the data files"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a named @list where the names are the names of the date files
-#   according to @seemethod "getNames".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("lapply", "GenericDataFileSet", function(this, ...) {
-  res <- base::lapply(this$files, ...);
-  names(res) <- unlist(lapply(as.list(this), FUN=getFullName));
-  res;
-})
-
-setMethodS3("sapply", "GenericDataFileSet", function(this, ...) {
-  res <- sapply(this$files, ...);
-  names(res) <- unlist(lapply(as.list(this), FUN=getFullName));
-  res;
-})
 
 
 setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
@@ -797,11 +758,8 @@ setMethodS3("seq", "GenericDataFileSet", function(this, ...) {
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("as.list", "GenericDataFileSet", function(x, ...) {
-  # To please R CMD check.
-  this <- x;
-
-  this$files;
+setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
+  getFiles(x, ..., useNames=useNames);
 })
 
 
@@ -844,16 +802,23 @@ setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
 })
 
 
-setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, ...) {
+setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, useNames=FALSE, ...) {
   res <- this$files;
-  if (is.null(idxs)) {
-  } else {
+
+  # Subset?
+  if (!is.null(idxs)) {
     n <- length(res);
     idxs <- Arguments$getIndices(idxs, max=n);
     res <- res[idxs];
   }
+
+  # Add names?
+  if (useNames) {
+    names(res) <- sapply(res, FUN=getFullName, ...);
+  }
+
   res;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -1410,7 +1375,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   # Arguments 'tags':
   if (!is.null(tags)) {
-    tags <- sapply(tags, Arguments$getFilename, .type="name", .name="tags");
+    tags <- sapply(tags, FUN=Arguments$getFilename, .type="name", .name="tags");
   }
 
   # Arguments 'paths':
@@ -1880,42 +1845,42 @@ setMethodS3("updateFullNames", "GenericDataFileSet", function(this, ...) {
 
 
 setMethodS3("clearFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
-  sapply(this, clearFullNameTranslator, ...);
+  sapply(this, FUN=clearFullNameTranslator, ...);
   invisible(this);
 }, protected=TRUE)
 
 setMethodS3("appendFullNamesTranslatorByNULL", "GenericDataFileSet", function(this, ...) {
-  sapply(this, appendFullNameTranslatorByNULL, NULL, ...);
+  sapply(this, FUN=appendFullNameTranslatorByNULL, NULL, ...);
   invisible(this);
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNamesTranslatorByfunction", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, appendFullNameTranslatorByfunction, fcn, ...);
+  sapply(this, FUN=appendFullNameTranslatorByfunction, fcn, ...);
   invisible(this);
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNamesTranslatorBydata.frame", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, appendFullNameTranslatorBydata.frame, fcn, ...);
+  sapply(this, FUN=appendFullNameTranslatorBydata.frame, fcn, ...);
   invisible(this);
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNamesTranslatorByTabularTextFile", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, appendFullNameTranslatorByTabularTextFile, fcn, ...);
+  sapply(this, FUN=appendFullNameTranslatorByTabularTextFile, fcn, ...);
   invisible(this);
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNamesTranslatorByTabularTextFileSet", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, appendFullNameTranslatorByTabularTextFileSet, fcn, ...);
+  sapply(this, FUN=appendFullNameTranslatorByTabularTextFileSet, fcn, ...);
   invisible(this); 
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNamesTranslatorBylist", "GenericDataFileSet", function(this, fcn, ...) {
-  sapply(this, appendFullNameTranslatorBylist, fcn, ...);
+  sapply(this, FUN=appendFullNameTranslatorBylist, fcn, ...);
   invisible(this);
 }, protected=TRUE)
 
@@ -1935,7 +1900,7 @@ setMethodS3("appendFullNamesTranslator", "GenericDataFileSet", function(this, by
     res <- fcn(this, by, ...);
   } else {
     # ...otherwise, apply the fullname translator to each file
-    res <- sapply(this, appendFullNameTranslator, by, ...);
+    res <- sapply(this, FUN=appendFullNameTranslator, by, ...);
   }
 
   # Allow the object to update itself according to these new rules.
@@ -1954,6 +1919,14 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o CLEANUP: Removed lapply() and sapply() for GenericDataSet because
+#   the corresponding functions in the 'base' package utilizes 
+#   as.list().
+# o Added argument 'useNames' to as.list() for GenericDataFileSet.
+# o Added argument 'useNames' to getFiles() for GenericDataFileSet.
+# o Now lapply() and sapply() for GenericDataFileSet pass '...' also
+#   to getFullName() for each file, e.g. translate=FALSE.
 # 2012-11-13
 # o CLEANUP: Now clearCache() for GenericDataFileSet relies on ditto
 #   of Object to clear all cached fields (=with field modifier "cached").

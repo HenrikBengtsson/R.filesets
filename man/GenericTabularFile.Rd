@@ -55,8 +55,8 @@ extends \emph{\link[R.filesets]{ColumnNamesInterface}}\cr
  \tab \code{\link[R.filesets:dim.GenericTabularFile]{dim}} \tab Gets the dimension of data table.\cr
  \tab \code{\link[R.filesets:extractMatrix.GenericTabularFile]{extractMatrix}} \tab Reads one of the columns.\cr
  \tab \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{nbrOfRows}} \tab Gets the number of data rows.\cr
- \tab \code{readColumns} \tab  -\cr
- \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads a subset of the columns as a data frame.\cr
+ \tab \code{\link[R.filesets:readColumns.GenericTabularFile]{readColumns}} \tab Reads a subset of the columns as a data frame.\cr
+ \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
 }
 
 

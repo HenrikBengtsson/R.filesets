@@ -19,7 +19,7 @@
  Returns the files of the file set.
 }
 
-\usage{\method{as.list}{GenericDataFileSet}(x, ...)}
+\usage{\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)}
 
 \arguments{
   \item{...}{Not used.}

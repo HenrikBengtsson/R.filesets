@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 1.7.0 [2012-11-29]
+o Updated as.list() for GenericDataSet to return a *named* list of 
+  GenericDataFile:s (previously it had no names).  The names are
+  the (translated) full names of the GenericDataFile:s.
+o CLEANUP: Removed lapply() and sapply() for GenericDataSet because
+  the corresponding functions in the 'base' package utilizes 
+  as.list().
+
+
 Version: 1.6.1 [2012-11-28]
 o Now GenericDataFile() retrieves the file time stamps such that
   hasBeenModified() returns a correct value also when first called,
