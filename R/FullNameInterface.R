@@ -379,6 +379,10 @@ setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) 
   clearListOfFullNameTranslators(this);
 })
 
+setMethodS3("resetFullName", "FullNameInterface", function(this, ...) {
+  clearFullNameTranslator(this, ...);
+})
+
 
 setMethodS3("getListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
   res <- this$.listOfFullNameTranslators;
@@ -596,6 +600,8 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-30
+# o Added resetFullName() for FullNameInterface, which is just an alias.
 # 2012-11-07
 # o Now clearListOfFullNamesTranslators() utilizes
 #   setListOfFullNamesTranslators(). 

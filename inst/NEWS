@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 1.7.0 [2012-11-29]
+Version: 1.7.0 [2012-11-30]
 o Updated as.list() for GenericDataSet to return a *named* list of 
   GenericDataFile:s (previously it had no names).  The names are
   the (translated) full names of the GenericDataFile:s.
