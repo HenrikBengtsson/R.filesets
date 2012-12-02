@@ -47,6 +47,7 @@ extends \link[R.oo]{Interface}\cr
  \tab \code{\link[R.filesets:getTags.FullNameInterface]{getTags}} \tab Gets the tags.\cr
  \tab \code{hasTag} \tab  -\cr
  \tab \code{\link[R.filesets:hasTags.FullNameInterface]{hasTags}} \tab Checks whether the fullname contains a given set of tag(s).\cr
+ \tab \code{resetFullName} \tab  -\cr
  \tab \code{\link[R.filesets:setFullName.FullNameInterface]{setFullName}} \tab Sets the full name.\cr
  \tab \code{setFullNameTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:setName.FullNameInterface]{setName}} \tab Sets the name part of the fullname.\cr

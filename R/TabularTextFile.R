@@ -122,7 +122,7 @@ setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Validating file contents");
 
   tryCatch({
-    data <- readDataFrame(this, skip=this$skip, nrow=10, verbose=verbose);
+    data <- readDataFrame(this, skip=this$skip, nrow=10L, verbose=verbose);
   }, error = function(ex) {
     throw("File format error of the tabular file ('", getPathname(this), "'): ", ex$message);
   })
@@ -213,7 +213,7 @@ setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
 # @title "Gets the default column names"
 #
 # \description{
-#  @get "title" by inferring the from the file header.
+#  @get "title" by inferring it from the file header.
 # }
 #
 # @synopsis
@@ -236,15 +236,21 @@ setMethodS3("hasColumnHeader", "TabularTextFile", function(this, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("getDefaultColumnNames", "TabularTextFile", function(this, ...) {
+  # (a) Hardcoded/user-specified column names?
+  names <- this$.columnNames;
+  if (!is.null(names)) {
+    return(names);
+  }
+
   hdr <- getHeader(this, ...);
 
-  # (a) Infer column names from data table
+  # (b) Infer column names from data table
   if (hasColumnHeader(this)) {
     names <- hdr$columns;
     return(names);
   }
 
-  # (b) Infer column names from header argument 'columnNames'?
+  # (c) Infer column names from header argument 'columnNames'?
   useHeaderArgs <- this$.useHeaderArgs;
   if (is.null(useHeaderArgs)) useHeaderArgs <- TRUE;
   if (useHeaderArgs) {
@@ -580,11 +586,16 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     verbose && exit(verbose);
   }
 
+
+  # Drop NULL arguments
+  keep <- !sapply(args, FUN=is.null);
+  args <- args[keep];
+
   verbose && exit(verbose);
 
 
   args;
-}, protected=TRUE);
+}, protected=TRUE) # getReadArguments()
 
 
 
@@ -1054,6 +1065,14 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-02
+# o BUG FIX: getDefaultColumnNames() for TabularTextFile did not use
+#   'columnNames' if it was set when creating the TabularTextFile object.
+# o BUG FIX: Now getReadArguments() for TabularTextFile drops arguments
+#   that are NULL, because they could cause errors downstreams, e.g.
+#   readDataFrame() calling read.table(..., colClasses=NULL) =>
+#   rep_len(NULL, x) => "Error in rep_len(colClasses, cols) :
+#   cannot replicate NULL to a non-zero length".
 # 2012-11-28
 # o Declaring '.fileHeader' and '.nbrOfLines' as 'cached' fields.
 # 2012-11-15

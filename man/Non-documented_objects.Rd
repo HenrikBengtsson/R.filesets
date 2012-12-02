@@ -274,6 +274,10 @@
 \alias{getDefaultColumnClassPatterns.TabularTextFile}
 \alias{getDefaultColumnClasses}
 \alias{getDefaultColumnClasses.TabularTextFile}
+\alias{resetFullName}
+\alias{resetFullName.FullNameInterface}
+\alias{resetFullNames}
+\alias{resetFullNames.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that
