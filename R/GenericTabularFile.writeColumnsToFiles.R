@@ -1,5 +1,5 @@
 ###########################################################################/**
-# @set "class=TabularTextFile"
+# @set "class=GenericTabularFile"
 # @RdocMethod writeColumnsToFiles
 #
 # @title "Read each column from a data file and exports it to a separate file"
@@ -43,7 +43,7 @@
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, filenameFmt="%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE) {
+setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath, filenameFmt="%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,6 +174,9 @@ setMethodS3("writeColumnsToFiles", "TabularTextFile", function(this, destPath, f
 
 ############################################################################
 # HISTORY:
+# 2012-12-03
+# o Generalized writeColumnsToFiles() to GenericTabularFile.  Used to
+#   be only for TabularTextFile.
 # 2011-02-18
 # o ROBUSTNESS: Now writeColumnsToFiles() for TabularTextFile writes
 #   files atomically, which should minimize the risk for generating

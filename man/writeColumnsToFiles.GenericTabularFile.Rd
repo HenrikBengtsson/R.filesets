@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{writeColumnsToFiles.TabularTextFile}
-\alias{writeColumnsToFiles.TabularTextFile}
-\alias{TabularTextFile.writeColumnsToFiles}
-\alias{writeColumnsToFiles.TabularTextFile}
-\alias{writeColumnsToFiles,TabularTextFile-method}
+\name{writeColumnsToFiles.GenericTabularFile}
+\alias{writeColumnsToFiles.GenericTabularFile}
+\alias{GenericTabularFile.writeColumnsToFiles}
+\alias{writeColumnsToFiles.GenericTabularFile}
+\alias{writeColumnsToFiles,GenericTabularFile-method}
 
 
 \title{Read each column from a data file and exports it to a separate file}
@@ -22,7 +22,7 @@
  is memory efficient and can handle very large data files.
 }
 
-\usage{\method{writeColumnsToFiles}{TabularTextFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)}
+\usage{\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)}
 
 \arguments{
   \item{destPath}{The output directory where to write the files.}
@@ -49,7 +49,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{TabularTextFile}}.
+  For more information see \code{\link{GenericTabularFile}}.
 }
 
 

@@ -16,7 +16,7 @@
 \title{Gets the default column names}
 
 \description{
- Gets the default column names by inferring the from the file header.
+ Gets the default column names by inferring it from the file header.
 }
 
 \usage{\method{getDefaultColumnNames}{TabularTextFile}(this, ...)}

@@ -57,6 +57,7 @@ extends \emph{\link[R.filesets]{ColumnNamesInterface}}\cr
  \tab \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{nbrOfRows}} \tab Gets the number of data rows.\cr
  \tab \code{\link[R.filesets:readColumns.GenericTabularFile]{readColumns}} \tab Reads a subset of the columns as a data frame.\cr
  \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
+ \tab \code{\link[R.filesets:writeColumnsToFiles.GenericTabularFile]{writeColumnsToFiles}} \tab Read each column from a data file and exports it to a separate file.\cr
 }
 
 
