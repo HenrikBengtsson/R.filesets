@@ -503,7 +503,7 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   fullname <- getDefaultFullName(this, ...);
 
   # Drop <fullname> and a possible '.'.
-  substring(filename, first=nchar(fullname)+2);
+  substring(filename, first=nchar(fullname)+2L);
 })
 
 
@@ -1450,18 +1450,21 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 ###########################################################################/**
 # @RdocMethod gzip
 # @aliasmethod gunzip
+# @aliasmethod isGzipped
 #
 # @title "Compresses/uncompresses a file"
 #
 # \description{
-#   @get "title" using gzip compression.  
+#   @get "title" using gzip compression.
 #   When compressing (uncompressing), the new filename has suffix \code{.gz}
-#   appended (removed).
+#   appended (removed), which is also used to test if a file is gzip'ed
+#   or not.
 # }
 #
 # \usage{
 #  \method{gzip}{GenericDataFile}(this, ...)
 #  \method{gunzip}{GenericDataFile}(this, ...)
+#  \method{isGzipped}{GenericDataFile}(this, ...)
 # }
 #
 # \arguments{
@@ -1490,8 +1493,9 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   }   
 
   pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) != -1)
+  if (isGzipped(this)) {
     throw("File is already gzip'ed: ", pathname);
+  }
 
   outPathname <- sprintf("%s.gz", pathname);
   gzip(pathname, destname=outPathname, ...);
@@ -1509,8 +1513,9 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   }
 
   pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) == -1)
+  if (!isGzipped(this)) {
     throw("File is not gzip'ed: ", pathname);
+  }
 
   outPathname <- gsub("[.]gz$", "", pathname);
   gunzip(pathname, destname=outPathname, ...);
@@ -1518,6 +1523,12 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
+}, protected=TRUE)
+
+
+setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
+  filename <- getFilename(this, ...);
+  (regexpr("[.]gz$", filename) != -1L);
 }, protected=TRUE)
 
 
@@ -1584,6 +1595,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2012-12-03
+# o Added isGzipped() to GenericDataFile.
 # 2012-11-28
 # o Now GenericDataFile() retrieves the file time stamps such that
 #   hasBeenModified() returns a correct value also when first called,

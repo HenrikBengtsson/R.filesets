@@ -278,6 +278,7 @@
 \alias{resetFullName.FullNameInterface}
 \alias{resetFullNames}
 \alias{resetFullNames.GenericDataFileSet}
+\alias{isGzipped}
 
 \description{
   This page contains aliases for all "non-documented" objects that

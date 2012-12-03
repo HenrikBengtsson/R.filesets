@@ -144,3 +144,4 @@ getDefaultColumnClassPatterns.TabularTextFile
 getDefaultColumnClasses getDefaultColumnClasses.TabularTextFile
 resetFullName resetFullName.FullNameInterface resetFullNames
 resetFullNames.GenericDataFileSet
+isGzipped

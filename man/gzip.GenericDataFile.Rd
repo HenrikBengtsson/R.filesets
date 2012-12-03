@@ -16,18 +16,24 @@
 \alias{gunzip.GenericDataFile}
 \alias{gunzip,GenericDataFile-method}
 
+\alias{GenericDataFile.isGzipped}
+\alias{isGzipped.GenericDataFile}
+\alias{isGzipped,GenericDataFile-method}
+
 
 \title{Compresses/uncompresses a file}
 
 \description{
   Compresses/uncompresses a file using gzip compression.
   When compressing (uncompressing), the new filename has suffix \code{.gz}
-  appended (removed).
+  appended (removed), which is also used to test if a file is gzip'ed
+  or not.
 }
 
 \usage{
  \method{gzip}{GenericDataFile}(this, ...)
  \method{gunzip}{GenericDataFile}(this, ...)
+ \method{isGzipped}{GenericDataFile}(this, ...)
 }
 
 \arguments{
