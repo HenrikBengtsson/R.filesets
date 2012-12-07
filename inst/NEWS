@@ -2,10 +2,14 @@ Package: R.filesets
 ===================
 
 Version: 1.8.0 [2012-12-06]
+o Added getOneFile() for GenericDataFileSet, which returns the first
+  GenericDataFile with a non-missing pathname.
 o Added argument 'absolute=FALSE' to getPathname() for GenericDataFile.
 o ROBUSTNESS: Now GenericDataFile stores the absolute pathname of
   the file, even if a relative pathname is given.  This makes sure
   that the file is found also when the working directory is changed.
+o BUG FIX: equals() for GenericDataFileSet would only compare the first
+  GenericDataFile in each set.
 
 
 Version: 1.7.3 [2012-12-03]

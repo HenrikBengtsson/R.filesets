@@ -64,6 +64,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{getFileSize} \tab  -\cr
  \tab \code{getFullNames} \tab  -\cr
  \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names (or fullnames) of the files in the file set.\cr
+ \tab \code{getOneFile} \tab  -\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
  \tab \code{hasFile} \tab  -\cr

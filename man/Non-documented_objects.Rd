@@ -279,6 +279,8 @@
 \alias{resetFullNames}
 \alias{resetFullNames.GenericDataFileSet}
 \alias{isGzipped}
+\alias{getOneFile}
+\alias{getOneFile.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -42,7 +42,7 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
       Arguments$getInstanceOf(df, reqFileClass)
     });
   } else {
-    throw("Argument 'files' is of unknown type: ", mode(files)[1]);
+    throw("Argument 'files' is of unknown type: ", mode(files)[1L]);
   }
 
   # Arguments 'depth':
@@ -55,7 +55,7 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
   # Arguments '...':
   args <- list(...);
-  if (length(args) > 0) {
+  if (length(args) > 0L) {
     if (is.element(.onUnknownArgs, c("error", "warning"))) {
       argsStr <- paste(names(args), collapse=", ");
       msg <- sprintf("Unknown arguments: %s", argsStr);
@@ -121,7 +121,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- sprintf("%s:", class(this)[1]);
+  s <- sprintf("%s:", class(this)[1L]);
 
   # Name and tags of file set
   s <- c(s, sprintf("Name: %s", getName(this)));
@@ -135,7 +135,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   # Subdirectories(?)
   subdirs <- getSubdirs(this, default=NULL);
-  if (length(subdirs) > 0) {
+  if (length(subdirs) > 0L) {
     s <- c(s, sprintf("Subpath: %s", subdirs));
   }
 
@@ -149,11 +149,9 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
 
   # Pathname
   path <- getPath(this);
-  if (!is.null(path) && !is.na(path)) {
+  if (!is.na(path)) {
     pathR <- getRelativePath(path);
-    if (nchar(pathR) < nchar(path)) {
-      path <- pathR;
-    }
+    if (nchar(pathR) < nchar(path)) path <- pathR;
   }
   s <- c(s, paste("Path (to the first file): ", path, sep=""));
 
@@ -204,9 +202,9 @@ setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
 
 setMethodS3("getFileClass", "GenericDataFileSet", function(static, ...) {
   # By default, infer the file class from the set class.
-  name <- class(static)[1];
+  name <- class(static)[1L];
   name <- gsub("Set$", "", name);
-  if (regexpr("File$", name) == -1) {
+  if (regexpr("File$", name) == -1L) {
     name <- paste(name, "File", sep="");
   }
   name;
@@ -297,12 +295,9 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 # }
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
-  files <- getFiles(this);
-  if (length(files) == 0) {
-    naValue <- as.character(NA);
-    return(naValue);
-  }
-  getPath(files[[1]]);
+  # Find a file with a non-missing pathname
+  file <- getOneFile(this, default=GenericDataFile());
+  getPath(file, ...);
 })
 
 
@@ -350,7 +345,7 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
   }
   dirs <- rev(dirs);
 
-  if (length(dirs) > 1 && !is.null(collapse)) {
+  if (length(dirs) > 1L && !is.null(collapse)) {
     dirs <- paste(dirs, collapse=collapse);
   }
 
@@ -611,7 +606,7 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
   res <- lapply(patterns, FUN=function(pattern) {
     # First try matching a regular expression, then a fixed string.
     pattern0 <- pattern;
-    hasTags <- (regexpr(",", pattern, fixed=TRUE) != -1);
+    hasTags <- (regexpr(",", pattern, fixed=TRUE) != -1L);
     if (hasTags) {
       searchStrings <- fullnames;
     } else {
@@ -639,13 +634,13 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
     # - - - - - - - - - - - -
     # 2. Fixed string?
     # - - - - - - - - - - - -
-    if (length(idxs) == 0) {
+    if (length(idxs) == 0L) {
       pattern <- pattern0;
       idxs <- grep(pattern, searchStrings, fixed=TRUE);
     }
 
     # Nothing matched?
-    if (length(idxs) == 0) {
+    if (length(idxs) == 0L) {
       idxs <- naValue;
     }
 
@@ -800,8 +795,9 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
-  if (length(idx) != 1)
+  if (length(idx) != 1L) {
     throw("Argument 'idx' must be a single index.");
+  }
   res <- this$files;
   n <- length(res);
   idx <- Arguments$getIndex(idx, max=n);
@@ -826,6 +822,19 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, useNames
 
   res;
 }, protected=TRUE)
+
+
+setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NULL, ...) {
+  pathnames <- getPathnames(this, ...);
+  if (length(pathnames) == 0L) {
+    return(default);
+  }
+  idxs <- which(!is.na(pathnames));
+  if (length(idxs) == 0L) {
+    return(default);
+  }
+  getFile(this, idxs[1L]);
+}) # getOneFile()
 
 
 
@@ -882,12 +891,12 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     .fileClass <- Arguments$getCharacter(.fileClass);
   }
 
-  if (length(files) > 0) {
+  if (length(files) > 0L) {
     # Assert that all files are instances of the file class of this set.
     className <- .fileClass;
     isValid <- unlist(lapply(files, FUN=inherits, className));
     if (!all(isValid)) {
-      classNames <- sapply(files, FUN=function(x) class(x)[1]);
+      classNames <- sapply(files, FUN=function(x) class(x)[1L]);
       classNames <- classNames[!isValid];
       classNames <- unique(classNames);
       throw(sprintf("Argument 'files' contains non-%s objects: %s", 
@@ -895,12 +904,12 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     }
 
     # Must inherit from the same class as the existing files?
-    if (.assertSameClass && length(this) > 0) {
-      aFile <- getFile(this, 1);
-      className <- class(aFile)[1];
+    if (.assertSameClass && length(this) > 0L) {
+      aFile <- getOneFile(this);
+      className <- class(aFile)[1L];
       isValid <- unlist(lapply(files, FUN=inherits, className));
       if (!all(isValid)) {
-        classNames <- sapply(files, FUN=function(x) class(x)[1]);
+        classNames <- sapply(files, FUN=function(x) class(x)[1L]);
         classNames <- classNames[!isValid];
         classNames <- unique(classNames);
         throw(sprintf("Argument 'files' contains non-%s objects (which is what the set already contains): %s", className, hpaste(classNames)));
@@ -917,7 +926,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
 
   verbose && enter(verbose, "Appending ", length(files), " files");
-  if (length(files) > 0) {
+  if (length(files) > 0L) {
     # Clone file objects?
     if (clone) {
       verbose && enter(verbose, "Cloning files");
@@ -981,7 +990,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 
   # Argument 'other':
   if (inherits(other, "GenericDataFileSet")) {
-    other <- Arguments$getInstanceOf(other, class(this)[1]);
+    other <- Arguments$getInstanceOf(other, class(this)[1L]);
     files <- getFiles(other);
   } else {
     files <- other;
@@ -1038,12 +1047,12 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
     files <- Arguments$getIntegers(files, disallow="NaN");
 
     # Exclude indices?
-    if (any(files < 0, na.rm=TRUE)) {
-      incl <- files[files > 0];
-      if (length(incl) == 0) {
+    if (any(files < 0L, na.rm=TRUE)) {
+      incl <- files[files > 0L];
+      if (length(incl) == 0L) {
         incl <- seq_along(this);
       }
-      excl <- na.omit(files[files < 0]);
+      excl <- na.omit(files[files < 0L]);
       files <- setdiff(incl, -excl);
       rm(incl, excl);
     }
@@ -1065,15 +1074,15 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   missing <- which(is.na(files));
 
   # Drop non-existing files?
-  if (length(missing) > 0 && onMissing == "drop") {
+  if (length(missing) > 0L && onMissing == "drop") {
     files <- files[is.finite(files)];
-    missing <- integer(0);
+    missing <- 0L;
   }
 
   # Check for duplicates?
   if (onDuplicates != "ignore") {
     dups <- which(is.finite(files) & duplicated(names(files)));
-    if (length(dups) > 0) {
+    if (length(dups) > 0L) {
       dupNames <- names(files)[head(dups)];
       dupNames <- paste(dupNames, collapse=", ");
       if (onDuplicates == "error") {
@@ -1090,8 +1099,8 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   files <- this$files[files];
 
   # Any missing files?
-  if (length(missing) > 0) {
-    className <- class(this$files[[1]])[1];
+  if (length(missing) > 0L) {
+    className <- class(this$files[[1L]])[1L];
     if (is.null(className)) {
       className <- getFileClass(this);
     }
@@ -1176,11 +1185,11 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   }
 
 
-  verbose && enter(verbose, "Defining an ", class(static)[1], " object from files");
+  verbose && enter(verbose, "Defining an ", class(static)[1L], " object from files");
   verbose && cat(verbose, "Path: ", path);
   verbose && cat(verbose, "Depth: ", depth);
   verbose && cat(verbose, "Pattern: ", pattern);
-  verbose && cat(verbose, "File class: ", class(dfStatic)[1]);
+  verbose && cat(verbose, "File class: ", class(dfStatic)[1L]);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create set of GenericDataFile objects from matching files
@@ -1190,7 +1199,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE, 
                                    all.files=FALSE, recursive=recursive);
   verbose && printf(verbose, "Found %d files/directories.\n", length(pathnames));
-  if (length(pathnames) > 0) {
+  if (length(pathnames) > 0L) {
     # Keep only files
     keep <- sapply(pathnames, FUN=isFile);
     pathnames <- pathnames[keep];
@@ -1198,7 +1207,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   verbose && printf(verbose, "Found %d files.\n", length(pathnames));
   verbose && exit(verbose);
 
-  if (length(pathnames) > 0) {
+  if (length(pathnames) > 0L) {
     # Sort files in lexicographic order
     pathnames <- sort(pathnames);
 
@@ -1216,7 +1225,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
         # that if the second file cannot be instanciated with the same
         # class as the first one, then the files are incompatible.
         # Note that 'df' might be of a subclass of 'dfStatic'.
-        clazz <- Class$forName(class(df)[1]);
+        clazz <- Class$forName(class(df)[1L]);
         dfStatic <- getStaticInstance(clazz);
       }
     }
@@ -1230,7 +1239,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   if (inherits(static, "Class")) {
     className <- getName(static);
   } else {
-    className <- class(static)[1];
+    className <- class(static)[1L];
   }
   verbose && enter(verbose, "Allocating a new ", className, " instance");
   verbose && cat(verbose, "Arguments:");
@@ -1375,8 +1384,8 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'name':
   name <- Arguments$getCharacter(name);
-  if (nchar(name) == 0) {
-    throw("A ", class(static)[1], " must have a non-empty name: ''");
+  if (nchar(name) == 0L) {
+    throw("A ", class(static)[1L], " must have a non-empty name: ''");
   }
   name <- Arguments$getFilename(name, .type="name");
 
@@ -1423,7 +1432,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   verbose && cat(verbose, "Possible search paths after expansion:");
   verbose && print(verbose, paths);
 
-  if (length(paths) == 0) {
+  if (length(paths) == 0L) {
     if (mustExist) {
       throw("No such root path directories: ", paste(paths, collapse=", "));
     }
@@ -1442,7 +1451,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   rootPaths <- sapply(paths, FUN=function(path) {
     Arguments$getReadablePath(path, mustExist=FALSE);
   });
-  if (length(rootPaths) == 0) {
+  if (length(rootPaths) == 0L) {
     if (mustExist) {
       throw("None of the root path directories exist: ", 
                                            paste(paths, collapse=", "));
@@ -1480,11 +1489,11 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
 
   paths <- NULL;
-  if (length(dataSetPaths) > 0) {
+  if (length(dataSetPaths) > 0L) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Identify existing subdirectories
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (length(subdirs) >= 1) {
+    if (length(subdirs) >= 1L) {
       verbose && enter(verbose, "Search subdirectories");
       verbose && print(verbose, subdirs);
 
@@ -1496,7 +1505,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
         if (identical(dir, "*"))
           dir <- ":.*:";
         pattern <- "^:([^:]*):$";
-        isSmart <- (regexpr(pattern, dir) != -1);
+        isSmart <- (regexpr(pattern, dir) != -1L);
         if (isSmart) {
           verbose && enter(verbose, "Processing \"smart\" path");
 
@@ -1507,14 +1516,14 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
           pathsKK <- sapply(dataSetPaths, FUN=function(path) {
             # List all directories and files
             dirsT <- list.files(path=path, pattern=pattern, full.names=TRUE);
-            if (length(dirsT) == 0)
+            if (length(dirsT) == 0L)
               return(NULL);
             # Keep only directories
             dirsT <- sapply(dirsT, FUN=function(path) {
               Arguments$getReadablePath(path, mustExist=FALSE);
             });
             dirsT <- dirsT[sapply(dirsT, FUN=isDirectory)];
-            if (length(dirsT) == 0)
+            if (length(dirsT) == 0L)
               return(NULL);
             # Work only with the directory names
             dirsT <- basename(dirsT);
@@ -1522,7 +1531,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
             # Keep only the first match
             # TO DO: Find a more powerful set of selecting directories
             # /HB 2009-02-11
-            dir <- dirsT[1];
+            dir <- dirsT[1L];
 
             file.path(path, dir);
           });
@@ -1555,19 +1564,19 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
       verbose && exit(verbose);
     } else {
       paths <- dataSetPaths;
-    } # if (length(subdirs) >= 1)
+    } # if (length(subdirs) >= 1L)
 
 
-    if (length(paths) > 1) {
+    if (length(paths) > 1L) {
       if (firstOnly) {
         warning("Found duplicated data set: ", paste(paths, collapse=", "));
-        paths <- paths[1];
+        paths <- paths[1L];
         verbose && cat(verbose, "Dropped all but the first path.");
       }
     }
-  } # if (length(dataSetPaths) > 0)
+  } # if (length(dataSetPaths) > 0L)
   
-  if (length(paths) == 0) {
+  if (length(paths) == 0L) {
     paths <- NULL;
 
     if (mustExist) {
@@ -1636,12 +1645,12 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, sprintf("Setting up %s by its name", class(static)[1]));
+  verbose && enter(verbose, sprintf("Setting up %s by its name", class(static)[1L]));
   verbose && cat(verbose, "Name: ", name);
   verbose && cat(verbose, "Tags: ", paste(tags, collapse=","));
 
   # Record the "depth"/"subdirs".
-  if (length(subdirs) > 0) {
+  if (length(subdirs) > 0L) {
     subdirsT <- unlist(strsplit(subdirs, split="/\\\\"), use.names=FALSE);
     depth <- length(subdirsT);
   } else {
@@ -1721,7 +1730,7 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
 
   if (!inherits(other, "GenericDataFileSet")) {
     msg <- sprintf("The 'other' is not a GenericDataFileSet: %s",
-                                                 class(other)[1]);
+                                                 class(other)[1L]);
     attr(notEqual, "reason") <- msg;
     return(notEqual);
   }
@@ -1742,15 +1751,13 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
 
   for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("File #%d of %d", kk, nbrOfFiles));
-
-    df1 <- getFile(this, 1);
-    df2 <- getFile(other, 1);
+    df1 <- getFile(this, kk);
+    df2 <- getFile(other, kk);
     eqls <- equals(df1, df2, ...);
     if (!eqls) {
       verbose && cat(verbose, "Not equal");
       return(eqls);
     }
-
     verbose && exit(verbose);
   }
 
@@ -1823,7 +1830,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=ge
   }
 
   if (!is.null(parent)) {
-    while (parent > 0) {
+    while (parent > 0L) {
       # path/to/<fullname>/<something>
       path <- dirname(path);
       parent <- parent - 1;
@@ -1913,8 +1920,8 @@ setMethodS3("appendFullNamesTranslator", "GenericDataFileSet", function(this, by
   keep <- sapply(methodNames, FUN=exists, mode="function");
   methodNames <- methodNames[keep];
 
-  if (length(methodNames) > 0) {
-    methodName <- methodNames[1];
+  if (length(methodNames) > 0L) {
+    methodName <- methodNames[1L];
     fcn <- get(methodName, mode="function");
     res <- fcn(this, by, ...);
   } else {
@@ -1938,6 +1945,11 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-12-06
+# o BUG FIX: equals() for GenericDataFileSet would only compare the first
+#   GenericDataFile in each set.
+# o Added getOneFile() for GenericDataFileSet, which returns the first
+#   GenericDataFile with a non-missing pathname.
 # 2012-11-30
 # o Added resetFullNames() for GenericDataFileSet, which is an alias
 #   for clearFullNamesTranslator().
