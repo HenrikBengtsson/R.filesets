@@ -296,7 +296,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
   # Find a file with a non-missing pathname
-  file <- getOneFile(this, default=GenericDataFile());
+  file <- getOneFile(this);
   getPath(file, ...);
 })
 
@@ -824,15 +824,46 @@ setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, useNames
 }, protected=TRUE)
 
 
-setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NULL, ...) {
+setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustExist=is.null(default), ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  getDefault <- function() {
+    if (is.null(default)) return(NULL);
+    if (!is.object(default) && is.na(default)) {
+      className <- getFileClass(this);
+      clazz <- Class$forName(className);
+      default <- newInstance(clazz);
+    } else if (is.numeric(default)) {
+      default <- getFile(this, default);
+    }
+    default <- Arguments$getInstanceOf(default, "GenericDataFile");
+    default;
+  } # getDefault()
+
+
+  # Argument 'mustExist':
+  mustExist <- Arguments$getLogical(mustExist);
+
   pathnames <- getPathnames(this, ...);
+
+  # Nothing?
   if (length(pathnames) == 0L) {
-    return(default);
+    if (mustExist) {
+      throw("Cannot retrieve a file with a non-missing pathname. File set is empty.");
+    }
+    return(getDefault());
   }
+
+  # Nothing?
   idxs <- which(!is.na(pathnames));
   if (length(idxs) == 0L) {
-    return(default);
+    if (mustExist) {
+      throw("Cannot retrieve a file with a non-missing pathname. File set contains no such files.");
+    }
+    return(getDefault());
   }
+
   getFile(this, idxs[1L]);
 }) # getOneFile()
 
