@@ -22,7 +22,7 @@
 \usage{\method{getPath}{GenericDataFile}(this, ...)}
 
 \arguments{
- \item{...}{Not used.}
+ \item{...}{Optional arguments passed to \code{\link[R.filesets:getPathname.GenericDataFile]{*getPathname}()}.}
 }
 
 \value{

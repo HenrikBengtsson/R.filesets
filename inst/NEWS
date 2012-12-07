@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 1.8.0 [2012-12-06]
+o Added argument 'absolute=FALSE' to getPathname() for GenericDataFile.
+o ROBUSTNESS: Now GenericDataFile stores the absolute pathname of
+  the file, even if a relative pathname is given.  This makes sure
+  that the file is found also when the working directory is changed.
+
+
 Version: 1.7.3 [2012-12-03]
 o Added isGzipped() to GenericDataFile.
 

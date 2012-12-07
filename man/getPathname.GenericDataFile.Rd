@@ -19,14 +19,17 @@
   Gets the pathname of the file.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, ...)}
+\usage{\method{getPathname}{GenericDataFile}(this, absolute=FALSE, ...)}
 
 \arguments{
+ \item{absolute}{If \code{\link[base:logical]{TRUE}}, the absolute pathname is returned,
+    otherwise the relative.}
  \item{...}{Not used.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string (\code{\link[base]{NULL}} if an "empty" file).
+  Returns the pathname as \code{\link[base]{character}} string
+  (or \code{\link[base]{NULL}} if an "empty" file).
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
