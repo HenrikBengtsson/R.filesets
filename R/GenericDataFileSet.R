@@ -768,6 +768,7 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFile
+# @aliasmethod "[["
 #
 # @title "Get a particular file of the file set"
 #
@@ -804,6 +805,13 @@ setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
   idx <- Arguments$getIndex(idx, max=n);
   res[[idx]];
 })
+
+
+setMethodS3("[[", "GenericDataFileSet", function(x, ...) {
+  xList <- as.list(x);
+  xList[[...]];
+}, protected=TRUE)
+
 
 
 setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, useNames=FALSE, ...) {
@@ -846,26 +854,36 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
   # Argument 'mustExist':
   mustExist <- Arguments$getLogical(mustExist);
 
-  pathnames <- getPathnames(this, ...);
+
+  files <- getFiles(this);
+  I <- length(files);
 
   # Nothing?
-  if (length(pathnames) == 0L) {
+  if (I == 0L) {
     if (mustExist) {
       throw("Cannot retrieve a file with a non-missing pathname. File set is empty.");
     }
     return(getDefault());
   }
 
-  # Nothing?
-  idxs <- which(!is.na(pathnames));
-  if (length(idxs) == 0L) {
-    if (mustExist) {
-      throw("Cannot retrieve a file with a non-missing pathname. File set contains no such files.");
+
+  # Find first file with a non-missing pathname
+  for (ii in seq_len(I)) {
+    file <- files[[ii]];
+    pathname <- getPathname(file);
+    # Found?
+    if (!is.na(pathname)) {
+      return(file);
     }
-    return(getDefault());
+  } # for (ii ...)
+
+
+  # Nothing found
+  if (mustExist) {
+    throw("Cannot retrieve a file with a non-missing pathname. File set contains no such files.");
   }
 
-  getFile(this, idxs[1L]);
+  return(getDefault());
 }) # getOneFile()
 
 
@@ -1977,6 +1995,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-12-09
+# o Added [[() for GenericDataFileSet.
+# o Now getOneFile() returns as soon as possible.  Before it was querying
+#   the pathnames of all files before making a decision.
 # 2012-12-06
 # o BUG FIX: equals() for GenericDataFileSet would only compare the first
 #   GenericDataFile in each set.
