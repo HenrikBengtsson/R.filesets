@@ -765,6 +765,7 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 })
 
 
+
 ###########################################################################/**
 # @RdocMethod getFile
 #

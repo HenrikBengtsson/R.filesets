@@ -10,6 +10,8 @@ import("R.utils")
 importFrom("digest", "digest")
 
 importFrom("stats", "reorder") # generic function
+importFrom("utils", "head") # generic function
+importFrom("utils", "tail") # generic function
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -194,9 +196,12 @@ S3method("verify", "GenericTabularFile")
 S3method("nbrOfRows", "GenericTabularFile")
 S3method("dim", "GenericTabularFile")
 S3method("readDataFrame", "GenericTabularFile")
+S3method("head", "GenericTabularFile")
+S3method("tail", "GenericTabularFile")
 S3method("readColumns", "GenericTabularFile")
 S3method("extractMatrix", "GenericTabularFile")
 S3method("writeColumnsToFiles", "GenericTabularFile")
+S3method("[", "GenericTabularFile")
 
 S3method("as.character", "TabularTextFile")
 S3method("verify", "TabularTextFile")
@@ -211,7 +216,6 @@ S3method("getHeader", "TabularTextFile")
 S3method("readRawHeader", "TabularTextFile")
 S3method("getReadArguments", "TabularTextFile")
 S3method("readDataFrame", "TabularTextFile")
-S3method("[", "TabularTextFile")
 S3method("readColumns", "TabularTextFile")
 S3method("nbrOfRows", "TabularTextFile")
 S3method("nbrOfLines", "TabularTextFile")

@@ -1,4 +1,4 @@
-GenericDataFileList [.TabularTextFile append append.default
+GenericDataFileList append append.default
 appendFiles appendFullNameTranslator
 appendFullNameTranslator.FullNameInterface
 appendFullNameTranslatorByNULL
@@ -147,3 +147,6 @@ resetFullNames.GenericDataFileSet
 isGzipped
 getOneFile
 getOneFile.GenericDataFileSet
+head.GenericTabularFile tail.GenericTabularFile
+[.GenericTabularFile
+

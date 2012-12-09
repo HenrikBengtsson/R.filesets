@@ -875,29 +875,14 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
 
 
-setMethodS3("[", "TabularTextFile", function(this, i=NULL, j=NULL, drop=FALSE) {
-  # Read data
-  data <- readDataFrame(this, rows=i, columns=j);
-
-  # Drop dimensions?
-  if (drop) {
-    if (ncol(data) == 1) {
-      data <- data[,1];
-    } else if (nrow(data) == 1) {
-      data <- data[1,];
-    }
-  }
-  
-  data;
-}, protected=TRUE)
-
-
-setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses=rep("character", times=length(columns)), ...) {
+setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(ncol(this)), colClasses=rep("character", times=length(columns)), ..., check.names=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'columns':
-  if (is.numeric(columns)) {
+  if (is.null(columns)) {
+    columnNames <- getColumnNames(this);
+  } else if (is.numeric(columns)) {
     columnNames <- getColumnNames(this);
     columns <- Arguments$getIndices(columns, max=length(columnNames));
     columnNames <- columnNames[columns];
@@ -905,10 +890,24 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns, colClasses
     columnNames <- Arguments$getCharacters(columns);
   }
 
-
   colClassPatterns <- colClasses;
   names(colClassPatterns) <- sprintf("^%s$", columnNames);
-  readDataFrame(this, colClassPatterns=colClassPatterns, ...);
+  data <- readDataFrame(this, colClassPatterns=colClassPatterns, ...);
+  if (ncol(data) > 0L) {
+    cols <- match(columnNames, names(data));
+    # Need to rearrange?
+    if (any(diff(cols) != 1L)) {
+      data <- data[,cols];
+      if (!check.names) {
+        colnames(data) <- columnNames;
+      }
+    }
+  }
+
+  # Sanity check
+  stopifnot(ncol(data) == length(columnNames));
+
+  data;
 }, protected=TRUE)
 
 
@@ -958,9 +957,17 @@ setMethodS3("dimension", "TabularTextFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
   hdr <- getHeader(this, ...);
+
+  nbrOfCommentRows <- length(hdr$comments);
+  nbrOfRowsToSkip <- hdr$skip;
+  hasColumnNames <- (length(hdr$columns) > 0L);
+  nbrOfNonDataRows <- nbrOfCommentRows + nbrOfRowsToSkip + 
+                      as.integer(hasColumnNames);
+
   n <- nbrOfLines(this, fast=fast);
-  n <- n - hdr$skip - as.integer(length(hdr$columns) > 0);
+  n <- n - nbrOfNonDataRows;
   n <- as.integer(n);
+
   n;
 })
 
@@ -1065,6 +1072,11 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-08
+# o BUG FIX: nbrOfRows() for TabularTextFile forgot to exclude comment
+#   rows in the file header.
+# o BUG FIX: readColumns() for TabularTextFile would not preserve the
+#   order of the requested 'columns'.
 # 2012-12-02
 # o BUG FIX: getDefaultColumnNames() for TabularTextFile did not use
 #   'columnNames' if it was set when creating the TabularTextFile object.

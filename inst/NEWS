@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 1.8.1 [2012-12-08]
+o Added head() and tail() for GenericTabularFile.
+o Added subsetting via [() to GenericTabularFile.
+o BUG FIX: nbrOfRows() for TabularTextFile forgot to exclude comment
+  rows in the file header.
+o BUG FIX: readColumns() for GenericTabularFile would not preserve
+  the order of the requested 'columns'.
+
+
 Version: 1.8.0 [2012-12-06]
 o Added getOneFile() for GenericDataFileSet, which returns the first
   GenericDataFile with a non-missing pathname.

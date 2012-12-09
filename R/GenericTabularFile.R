@@ -261,11 +261,14 @@ setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE);
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop=FALSE, ..., verbose=FALSE) {
+setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1L, drop=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfColumns <- nbrOfColumns(this);
+
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -302,8 +305,62 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 })
 
 
+setMethodS3("[", "GenericTabularFile", function(this, i=NULL, j=NULL, drop=FALSE) {
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
+
+  # Read data
+  if (missing(j) || is.null(j)) {
+    data <- readColumns(this, rows=i);
+  } else {
+    data <- readColumns(this, rows=i, columns=j);
+  }
+
+  # Drop dimensions?
+  if (drop) {
+    if (ncol(data) == 1L) {
+      data <- data[,1L];
+    } else if (nrow(data) == 1L) {
+      data <- data[1L,];
+    }
+  }
+  
+  data;
+}, protected=TRUE)
+
+
+setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
+  stopifnot(length(n) == 1L);
+  nrow <- nrow(x);
+  if (n < 0L) {
+    n <- max(nrow + n, 0L);
+  } else {
+    n <- min(n, nrow);
+  }
+  rows <- seq_len(n);
+  x[rows,, drop=FALSE];
+})
+
+
+setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
+  stopifnot(length(n) == 1L);
+  nrow <- nrow(x);
+  if (n < 0L) {
+    n <- max(nrow + n, 0L);
+  } else {
+    n <- min(n, nrow);
+  }
+  rows <- seq.int(to=nrow, length.out=n);
+  x[rows,, drop=FALSE];
+})
+
+
+
 ############################################################################
 # HISTORY:
+# 2012-12-08
+# o GENERALIZATION: Moved "["() to GenericTabularFile (from
+#   TabularTextFile) and made it utilize readColumns().
 # 2012-11-02
 # o CLEANUP: Dropped all methods that are now in ColumnNamesInterface, e.g.
 #   getColumnNames(), setColumnNames(), getColumnNamesTranslator().
