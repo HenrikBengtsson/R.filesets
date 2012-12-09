@@ -768,7 +768,6 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFile
-# @aliasmethod "[["
 #
 # @title "Get a particular file of the file set"
 #
@@ -805,13 +804,6 @@ setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
   idx <- Arguments$getIndex(idx, max=n);
   res[[idx]];
 })
-
-
-setMethodS3("[[", "GenericDataFileSet", function(x, ...) {
-  xList <- as.list(x);
-  xList[[...]];
-}, protected=TRUE)
-
 
 
 setMethodS3("getFiles", "GenericDataFileSet", function(this, idxs=NULL, useNames=FALSE, ...) {

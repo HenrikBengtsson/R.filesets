@@ -1,11 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 1.8.2 [2012-12-09]
-o Reintroduced [[() for GenericDataFileSet.
-
-
-Version: 1.8.1 [2012-12-08]
+Version: 1.8.1 [2012-12-09]
 o Added head() and tail() for GenericTabularFile.
 o Added subsetting via [() to GenericTabularFile.
 o BUG FIX: nbrOfRows() for TabularTextFile forgot to exclude comment
