@@ -586,6 +586,12 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument '...':
+  args <- list(...);
+  if (is.element("names", names(args))) {
+    throw("Unknown argument 'names' to indexOf() for GenericDataFileSet.");
+  }
+
   # Argument 'onMissing':
   onMissing <- match.arg(onMissing);
 
@@ -1987,6 +1993,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2012-12-20
+# o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an exception
+#   if use tries to pass an argument 'names'.
 # 2012-12-09
 # o Added [[() for GenericDataFileSet.
 # o Now getOneFile() returns as soon as possible.  Before it was querying

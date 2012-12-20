@@ -115,7 +115,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathnames <- c();
 
-  colClassPatterns <- "character";
+  colClasses <- "character";
   for (cc in seq_along(columnNames)) {
     columnName <- columnNames[cc];
     verbose && enter(verbose, sprintf("Column #%d ('%s') of %d", 
@@ -128,8 +128,8 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
 
     # Check if file already exists
     if (!isFile(pathname)) {
-      names(colClassPatterns) <- sprintf("^%s$", columnName);
-      values <- readDataFrame(this, colClassPatterns=colClassPatterns);
+      names(colClasses) <- sprintf("^%s$", columnName);
+      values <- readDataFrame(this, colClasses=colClasses);
       values <- trim(values[[1]]);
       df <- data.frame(dummy=values, stringsAsFactors=FALSE);
       if (is.null(hdrColumnName)) {

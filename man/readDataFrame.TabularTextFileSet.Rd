@@ -63,12 +63,12 @@ cat("Common column names:\n")
 print(colNames)
 
 # Read the *common* columns "as is" (hence 'NA')
-colClassPatterns <- rep(NA, times=length(colNames))
-names(colClassPatterns) <- colNames
+colClasses <- rep(NA, times=length(colNames))
+names(colClasses) <- colNames
 cat("Column class patterns:\n")
-print(colClassPatterns)
+print(colClasses)
 
-data <- readDataFrame(ds, colClassPatterns=colClassPatterns)
+data <- readDataFrame(ds, colClasses=colClasses)
 print(data)
 }
 
