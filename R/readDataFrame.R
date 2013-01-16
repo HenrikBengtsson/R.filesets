@@ -32,7 +32,7 @@ setMethodS3("readDataFrame", "default", function(filename, path=NULL, ..., fileC
   # Argument 'fileClass':
   clazz <- Class$forName(fileClass);
 
-  db <- newInstance(clazz, filename, path=path);
+  db <- newInstance(clazz, filename, path=path, .verify=FALSE);
   db <- Arguments$getInstanceOf(db, "TabularTextFile");
 
   readDataFrame(db, ...);

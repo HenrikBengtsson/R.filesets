@@ -348,10 +348,14 @@ setMethodS3("getHeader", "TabularTextFile", function(this, ..., force=FALSE) {
 
 
 
-setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., verbose=FALSE) {
+setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=this$skip, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'skip':
+  if (is.null(skip)) skip <- 0L;
+  skip <- Arguments$getInteger(skip, range=c(0,Inf));
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -379,7 +383,6 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
 
   # Read header comments
   comments <- c();
-  skip <- this$skip;
   ch <- getCommentChar(this);
   if (!is.null(ch)) {
     pattern <- sprintf("^%s", ch);
@@ -479,7 +482,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'fileHeader':
   if (is.null(fileHeader)) {
-    fileHeader <- getHeader(this);
+    fileHeader <- getHeader(this, ...);
   }
 
   # Argument 'verbose':
@@ -698,7 +701,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading header to infer read.table() arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  hdr <- getHeader(this, verbose=less(verbose, 5));
+  hdr <- getHeader(this, ..., verbose=less(verbose, 5));
   attributes$header <- hdr;
 
   # Get read arguments
@@ -1090,6 +1093,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 ############################################################################
 # HISTORY:
 # 2013-01-16
+# o Added argument 'skip' to readRawHeader(..., skip=this$skip).
+# o Now arguments '...' to readDataFrame() for TabularTextFile are passed
+#   to getHeader().
 # o Now readDataFrame(..., debug=TRUE) returns also the read arguments.
 # 2012-12-20
 # o Renamed argument 'colClassPatterns' of getReadArguments() for 
