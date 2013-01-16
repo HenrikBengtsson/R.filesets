@@ -44,7 +44,7 @@ print(df)
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
  \seealso{
-   \code{\link[base]{read.table}}.
+   \code{\link[utils]{read.table}}.
    For further control, see the \code{\link{TabularTextFile}} class.
  }
 
