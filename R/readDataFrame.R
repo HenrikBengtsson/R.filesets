@@ -11,7 +11,7 @@
 #
 # \arguments{
 #   \item{filename, path}{@character strings specifying the file to be read.}
-#   \item{...}{Additional arguments passed to \code{\link[=readDataFrame.TabularTextFile]{readDataFrame}}.}
+#   \item{...}{Additional arguments passed to \code{\link[=readDataFrame.TabularTextFile]{readDataFrame}} for class @see "TabularTextFile".}
 #   \item{fileClass}{(optional) A @character string specifying the @see "TabularTextFile" class.}
 # }
 #
