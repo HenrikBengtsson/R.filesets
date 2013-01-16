@@ -35,6 +35,8 @@
 #  @allmethods "public"
 # }
 #
+# @examples "../incl/TabularTextFile.readDataFrame.Rex"
+#
 # @author
 #
 # \seealso{
@@ -689,11 +691,15 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   verbose && enter(verbose, "Reading ", class(this)[1]);
 
 
+  # Attributes to be added
+  attributes <- list();
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading header to infer read.table() arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   hdr <- getHeader(this, verbose=less(verbose, 5));
-
+  attributes$header <- hdr;
 
   # Get read arguments
   args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ..., 
@@ -701,6 +707,8 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
   verbose && cat(verbose, "Arguments inferred from file header:");
   verbose && print(verbose, args);
+  attributes$readArguments <- args;
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify names of columns read
@@ -873,6 +881,9 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
   if (debug) {
     attr(data, "fileHeader") <- hdr;
+    for (key in names(attributes)) {
+      attr(data, key) <- attributes[[key]];
+    }
   }
 
   verbose && exit(verbose);
@@ -1078,6 +1089,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-01-16
+# o Now readDataFrame(..., debug=TRUE) returns also the read arguments.
 # 2012-12-20
 # o Renamed argument 'colClassPatterns' of getReadArguments() for 
 #   TabularTextFile to 'colClasses'.  However, if the old name is

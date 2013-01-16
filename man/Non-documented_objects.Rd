@@ -180,7 +180,6 @@
 \alias{readColumnNames.TabularTextFile}
 \alias{readColumns}
 \alias{readColumns.TabularTextFile}
-\alias{readDataFrame}
 \alias{readLines}
 \alias{readLines.default}
 \alias{readRawHeader}

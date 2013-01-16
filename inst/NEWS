@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.0.0 [2013-01-16]
+o Added a default readDataFrame() for reading data from a tabular
+  text file utilizing the TabularTextFile class.
+
+
 Version: 1.9.0 [2012-12-20]
 o Argument 'colClassPatterns' of readDataFrame() for TabularTextFile
   has been renamed to 'colClasses'.
