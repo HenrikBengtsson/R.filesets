@@ -20,7 +20,7 @@
 
  \arguments{
    \item{filename, path}{\code{\link[base]{character}} strings specifying the file to be read.}
-   \item{...}{Additional arguments passed to \code{\link[readDataFrame.TabularTextFile]{readDataFrame}}.}
+   \item{...}{Additional arguments passed to \code{\link[=readDataFrame.TabularTextFile]{readDataFrame}}.}
    \item{fileClass}{(optional) A \code{\link[base]{character}} string specifying the \code{\link{TabularTextFile}} class.}
  }
 
