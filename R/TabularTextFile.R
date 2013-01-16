@@ -124,7 +124,7 @@ setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Validating file contents");
 
   tryCatch({
-    data <- readDataFrame(this, skip=this$skip, nrow=10L, verbose=verbose);
+    data <- readDataFrame(this, nrow=10L, verbose=verbose);
   }, error = function(ex) {
     throw("File format error of the tabular file ('", getPathname(this), "'): ", ex$message);
   })
@@ -380,24 +380,31 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
     })
   }
 
+  # Skip?
+  if (skip > 0L) {
+    skippedLines <- readLines(con, n=skip);
+    skip <- 0L;
+  }
 
   # Read header comments
   comments <- c();
   ch <- getCommentChar(this);
   if (!is.null(ch)) {
     pattern <- sprintf("^%s", ch);
+    skipLeft <- skip;
     ready <- FALSE;
     while (!ready) {
-      line <- readLines(con, n=1);
-      isEmpty <- (regexpr("^$", line) != -1);
+      line <- readLines(con, n=1L);
+      isEmpty <- (regexpr("^$", line) != -1L);
       if (!isEmpty) {
-        isComments <- (regexpr(pattern, line) != -1);
+        isComments <- (regexpr(pattern, line) != -1L);
         if (!isComments) {
-          if (skip == 0)
+          if (skipLeft == 0L)
             break;
-          skip <- skip - 1;
+          skipLeft <- skipLeft - 1L;
+        } else {
+          comments <- c(comments, line);
         }
-        comments <- c(comments, line);
       }
     } # while(!ready)
   }
@@ -464,7 +471,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
     commentArgs=commentArgs,
     sep=sep,
     quote=quote,
-    skip=this$skip,
+    skip=skip,
     topRows=topRows
   );
 
@@ -1093,6 +1100,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 ############################################################################
 # HISTORY:
 # 2013-01-16
+# o Now 'skip' simply skips the first 'skip' lines before parsing
+#   the header or the data.  This is how read.table() works.
 # o Added argument 'skip' to readRawHeader(..., skip=this$skip).
 # o Now arguments '...' to readDataFrame() for TabularTextFile are passed
 #   to getHeader().
