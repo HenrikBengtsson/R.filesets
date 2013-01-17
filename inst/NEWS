@@ -1,12 +1,15 @@
 Package: R.filesets
 ===================
 
-Version: 2.0.0 [2013-01-16]
-o Added a default readDataFrame() for reading data from a tabular
-  text file utilizing the TabularTextFile class.
+Version: 2.0.0 [2013-01-17]
+o In addition to a fixed integer, argument 'skip' for readDataFrame()
+  (default and for TabularTextFile) may also specify a regular
+  expression matching the first row of the data section.
 o Now argument 'skip' to TabularTextFile and readDataFrame() for
   that class causes the parser to skip that many lines including
   commented lines, whereas before it did not count commented lines.
+o Added a default readDataFrame() for reading data from one or more
+  tabular text files via the TabularTextFile/TabularTextFileSet classes.
 
 
 Version: 1.9.0 [2012-12-20]

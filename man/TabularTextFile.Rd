@@ -42,7 +42,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
   Methods for reading all or a subset of the tabular data exist.
  }
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
+ \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}

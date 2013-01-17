@@ -11,7 +11,7 @@
 #  Methods for reading all or a subset of the tabular data exist.
 # }
 # 
-# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
+# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "GenericTabularFile".}
@@ -43,7 +43,7 @@
 #   An object of this class is typically part of an @see "TabularTextFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE) {
+setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE) {
   # Argument 'columnNames':
   if (is.logical(columnNames)) {
     readColumnNames <- columnNames;
@@ -353,8 +353,13 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'skip':
-  if (is.null(skip)) skip <- 0L;
-  skip <- Arguments$getInteger(skip, range=c(0,Inf));
+  if (is.null(skip)) {
+    skip <- 0L;
+  } else if (is.character(skip)) {
+    skip <- Arguments$getRegularExpression(skip);
+  } else {
+    skip <- Arguments$getInteger(skip, range=c(0,Inf));
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -380,10 +385,22 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
     })
   }
 
-  # Skip?
-  if (skip > 0L) {
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # How to skip
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  skipMax <- 0L;
+
+  # Skip a fixed number of rows?
+  if (is.numeric(skip)) {
     skippedLines <- readLines(con, n=skip);
-    skip <- 0L;
+    skipMax <- skipMax + skip;
+  }
+
+  # Skip until regular expression?
+  skipUntil <- NULL;
+  if (is.character(skip)) {
+    skipUntil <- skip;
   }
 
   # Read header comments
@@ -391,23 +408,27 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
   ch <- getCommentChar(this);
   if (!is.null(ch)) {
     pattern <- sprintf("^%s", ch);
-    skipLeft <- skip;
     ready <- FALSE;
     while (!ready) {
       line <- readLines(con, n=1L);
       isEmpty <- (regexpr("^$", line) != -1L);
       if (!isEmpty) {
-        isComments <- (regexpr(pattern, line) != -1L);
-        if (!isComments) {
-          if (skipLeft == 0L)
+        if (!is.null(skipUntil)) {
+          if (regexpr(skipUntil, line) != -1L) {
             break;
-          skipLeft <- skipLeft - 1L;
-        } else {
+          }
+        }
+        isComments <- (regexpr(pattern, line) != -1L);
+        if (isComments) {
           comments <- c(comments, line);
+          skipMax <- skipMax + 1L;
+        } else if (is.null(skipUntil)) {
+          break;
         }
       }
     } # while(!ready)
   }
+
 
   verbose && cat(verbose, "Header comments:", level=-20);
   verbose && str(verbose, comments, level=-20);
@@ -472,6 +493,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
     sep=sep,
     quote=quote,
     skip=skip,
+    skipMax=skipMax,
     topRows=topRows
   );
 
@@ -483,13 +505,13 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
 }, protected=TRUE); # readRawHeader()
 
 
-setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClasses=c("*"=NA, getDefaultColumnClassPatterns(this)), defColClass="NULL", stringsAsFactors=FALSE, ..., verbose=FALSE) {
+setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClasses=c("*"=NA, getDefaultColumnClassPatterns(this)), defColClass="NULL", stringsAsFactors=FALSE, skip=this$skip, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'fileHeader':
   if (is.null(fileHeader)) {
-    fileHeader <- getHeader(this, ...);
+    fileHeader <- getHeader(this, skip=skip, ...);
   }
 
   # Argument 'verbose':
@@ -587,7 +609,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   args <- list(
     header       = hasColumnHeader(this),
     colClasses   = colClasses,
-    skip         = fileHeader$skip,
+    skip         = fileHeader$skipMax,
     sep          = fileHeader$sep,
     quote        = fileHeader$quote,
     fill         = this$fill,
@@ -1099,6 +1121,13 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-01-17
+# o In addition to a fixed integer, argument 'skip' for readDataFrame()
+#   (default and for TabularTextFile) may also specify a regular
+#   expression matching the first row of the data section.
+# o SPEEDUP: Now getReadArguments() for TabularTextFile returns 'skip'
+#   as the maximum number of rows possible for read.table() to skip,
+#   which includes the original skip plus all skipped comment rows.
 # 2013-01-16
 # o Now 'skip' simply skips the first 'skip' lines before parsing
 #   the header or the data.  This is how read.table() works.
