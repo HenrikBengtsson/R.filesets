@@ -19,7 +19,9 @@
  Gets the default column names by inferring it from the file header.
 }
 
-\usage{\method{getDefaultColumnNames}{TabularTextFile}(this, ...)}
+\usage{
+\method{getDefaultColumnNames}{TabularTextFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Optional arguments passed \code{\link[R.filesets:getHeader.TabularTextFile]{*getHeader}()}.}

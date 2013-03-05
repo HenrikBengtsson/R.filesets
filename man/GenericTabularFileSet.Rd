@@ -37,7 +37,9 @@ extends \link[R.filesets]{GenericDataFileSet}\cr
   \code{\link{GenericTabularFile}}s.
  }
 
- \usage{GenericTabularFileSet(...)}
+ \usage{
+GenericTabularFileSet(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericDataFileSet}}.}

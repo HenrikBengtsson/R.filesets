@@ -19,7 +19,9 @@
   Sorts the set by one of several ordering schema.
 }
 
-\usage{\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...)}
+\usage{
+\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...)
+}
 
 \arguments{
  \item{by}{A \code{\link[base]{character}} string specifying the ordering scheme.}

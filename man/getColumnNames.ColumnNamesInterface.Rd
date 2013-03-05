@@ -19,7 +19,9 @@
   Gets the column names.
 }
 
-\usage{\method{getColumnNames}{ColumnNamesInterface}(this, ..., translate=TRUE)}
+\usage{
+\method{getColumnNames}{ColumnNamesInterface}(this, ..., translate=TRUE)
+}
 
 \arguments{
  \item{translate}{If \code{\link[base:logical]{TRUE}} and a names translator is set, the

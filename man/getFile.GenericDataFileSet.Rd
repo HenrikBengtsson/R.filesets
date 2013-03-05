@@ -19,7 +19,9 @@
  Get a particular file of the file set.
 }
 
-\usage{\method{getFile}{GenericDataFileSet}(this, idx, ...)}
+\usage{
+\method{getFile}{GenericDataFileSet}(this, idx, ...)
+}
 
 \arguments{
   \item{idx}{An \code{\link[base]{integer}} index specifying the file to be returned.}

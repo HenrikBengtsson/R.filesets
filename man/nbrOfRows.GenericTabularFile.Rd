@@ -19,7 +19,9 @@
  Gets the number of data rows.
 }
 
-\usage{\method{nbrOfRows}{GenericTabularFile}(...)}
+\usage{
+\method{nbrOfRows}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

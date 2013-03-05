@@ -19,7 +19,9 @@
   Gets the full name of the file, that is the filename without the filename extension.
 }
 
-\usage{\method{getDefaultFullName}{GenericDataFile}(this, ...)}
+\usage{
+\method{getDefaultFullName}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

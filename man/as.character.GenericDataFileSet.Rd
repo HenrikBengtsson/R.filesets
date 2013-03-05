@@ -19,7 +19,9 @@
  Returns a short string describing the file set.
 }
 
-\usage{\method{as.character}{GenericDataFileSet}(x, ...)}
+\usage{
+\method{as.character}{GenericDataFileSet}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

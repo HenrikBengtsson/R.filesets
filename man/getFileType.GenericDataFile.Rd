@@ -19,7 +19,9 @@
   Gets the file type of a file.
 }
 
-\usage{\method{getFileType}{GenericDataFile}(this, ...)}
+\usage{
+\method{getFileType}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

@@ -20,8 +20,13 @@
  Gets and validates tags.
 }
 
-\synopsis{getTags.Arguments(static, ..., na.rm=TRUE, collapse=",")}
-\usage{Arguments$getTags(..., na.rm=TRUE, collapse=",")}
+\usage{
+## Static method (use this):
+## Arguments$getTags(..., na.rm=TRUE, collapse=",")
+
+## Don't use the below:
+\method{getTags}{Arguments}(static, ..., na.rm=TRUE, collapse=",")
+}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} \code{\link[base]{vector}} of tags.}

@@ -19,7 +19,9 @@
  Returns a short string describing the file.
 }
 
-\usage{\method{as.character}{GenericDataFile}(x, ...)}
+\usage{
+\method{as.character}{GenericDataFile}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

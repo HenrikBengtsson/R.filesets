@@ -19,7 +19,9 @@
  Gets the dimension of data table, which is the number of rows and the number of columns.
 }
 
-\usage{\method{dim}{GenericTabularFile}(x)}
+\usage{
+\method{dim}{GenericTabularFile}(x)
+}
 
 \arguments{
   \item{...}{Not used.}

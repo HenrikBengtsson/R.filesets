@@ -19,7 +19,9 @@
   Gets the path (directory) of the file set.
 }
 
-\usage{\method{getPath}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getPath}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

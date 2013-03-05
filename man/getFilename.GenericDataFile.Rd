@@ -19,7 +19,9 @@
   Gets the filename of the file.
 }
 
-\usage{\method{getFilename}{GenericDataFile}(this, ...)}
+\usage{
+\method{getFilename}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Optional arguments passed to \code{\link[R.filesets:getPathname.GenericDataFile]{*getPathname}()}.}

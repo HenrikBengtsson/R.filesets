@@ -19,7 +19,9 @@
   Gets the checksum of a file.
 }
 
-\usage{\method{getChecksum}{GenericDataFile}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{getChecksum}{GenericDataFile}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{force}{If \code{\link[base:logical]{FALSE}}, the file exists and has not be modified since,

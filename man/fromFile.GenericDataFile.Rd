@@ -19,8 +19,13 @@
   Defines a GenericDataFile from a pathname.
 }
 
-\synopsis{fromFile.GenericDataFile(static, filename, path=NULL, ..., recursive=TRUE, verbose=FALSE, .checkArgs=TRUE)}
-\usage{GenericDataFile$fromFile(filename, path=NULL, ..., recursive=TRUE, verbose=FALSE, .checkArgs=TRUE)}
+\usage{
+## Static method (use this):
+## GenericDataFile$fromFile(filename, path=NULL, ..., recursive=TRUE, verbose=FALSE, .checkArgs=TRUE)
+
+## Don't use the below:
+\method{fromFile}{GenericDataFile}(static, filename, path=NULL, ..., recursive=TRUE, verbose=FALSE, .checkArgs=TRUE)
+}
 
 \arguments{
  \item{filename, path}{The filename and the path to the file.  The file

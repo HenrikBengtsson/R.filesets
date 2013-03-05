@@ -19,7 +19,9 @@
  Gets the file header.
 }
 
-\usage{\method{getHeader}{TabularTextFile}(this, ..., force=FALSE)}
+\usage{
+\method{getHeader}{TabularTextFile}(this, ..., force=FALSE)
+}
 
 \arguments{
   \item{...}{Passed to internal \code{\link[R.filesets:readRawHeader.TabularTextFile]{*readRawHeader}()}.}

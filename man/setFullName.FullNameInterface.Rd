@@ -21,7 +21,9 @@
   specified fullname.
 }
 
-\usage{\method{setFullName}{FullNameInterface}(this, ...)}
+\usage{
+\method{setFullName}{FullNameInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments, typically a \code{\link[base]{character}} string, which are

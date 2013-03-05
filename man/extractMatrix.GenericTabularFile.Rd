@@ -19,7 +19,9 @@
  Reads one of the columns.
 }
 
-\usage{\method{extractMatrix}{GenericTabularFile}(this, column=1, drop=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{extractMatrix}{GenericTabularFile}(this, column=1, drop=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{column}{An \code{\link[base]{integer}} specifying the column to read.}

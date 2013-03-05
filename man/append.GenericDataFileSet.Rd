@@ -20,7 +20,9 @@
   The fullname of the merged data set is that of the first data set.
 }
 
-\usage{\method{append}{GenericDataFileSet}(x, values, ...)}
+\usage{
+\method{append}{GenericDataFileSet}(x, values, ...)
+}
 
 \arguments{
  \item{values}{The data set to be appended to this data set.}

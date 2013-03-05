@@ -19,7 +19,9 @@
   Write the file checksum to a checksum file having the same filename with suffix \code{.md5} added.
 }
 
-\usage{\method{writeChecksum}{GenericDataFile}(this, ..., skip=FALSE, verbose=FALSE)}
+\usage{
+\method{writeChecksum}{GenericDataFile}(this, ..., skip=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{skip}{If \code{\link[base:logical]{TRUE}}, an already written checksum file is skipped.}

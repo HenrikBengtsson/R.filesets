@@ -19,7 +19,9 @@
   Finds indices of a subset of files whose names match a given set of names or name patterns.
 }
 
-\usage{\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, ..., onMissing=c("NA", "error"))}
+\usage{
+\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, ..., onMissing=c("NA", "error"))
+}
 
 \arguments{
  \item{patterns}{A \code{\link[base]{character}} \code{\link[base]{vector}} of length K of names and/or

@@ -19,7 +19,9 @@
   Extract a subset of the file set.
 }
 
-\usage{\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error"))}
+\usage{
+\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error"))
+}
 
 \arguments{
  \item{files}{An \code{\link[base]{integer}} or a \code{\link[base]{logical}} \code{\link[base]{vector}} indicating which data files

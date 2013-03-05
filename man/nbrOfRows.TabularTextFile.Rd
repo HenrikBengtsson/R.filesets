@@ -19,7 +19,9 @@
  Counts the number of data rows.  The count does not include the header rows or comments.
 }
 
-\usage{\method{nbrOfRows}{TabularTextFile}(this, fast=FALSE, ...)}
+\usage{
+\method{nbrOfRows}{TabularTextFile}(this, fast=FALSE, ...)
+}
 
 \arguments{
   \item{fast}{Argument passed to \code{\link[R.filesets:nbrOfLines.TabularTextFile]{*nbrOfLines}()}.}

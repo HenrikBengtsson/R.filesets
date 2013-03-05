@@ -19,7 +19,9 @@
   Checks whether the file has been modified since last time checked.
 }
 
-\usage{\method{hasBeenModified}{GenericDataFile}(this, ..., unknown=TRUE)}
+\usage{
+\method{hasBeenModified}{GenericDataFile}(this, ..., unknown=TRUE)
+}
 
 \arguments{
  \item{...}{Not used.}

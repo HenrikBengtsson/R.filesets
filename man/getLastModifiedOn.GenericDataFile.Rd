@@ -19,7 +19,9 @@
   Gets when the file was last modified.
 }
 
-\usage{\method{getLastModifiedOn}{GenericDataFile}(this, ...)}
+\usage{
+\method{getLastModifiedOn}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

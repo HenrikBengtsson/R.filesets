@@ -22,7 +22,9 @@
  is memory efficient and can handle very large data files.
 }
 
-\usage{\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)}
+\usage{
+\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{destPath}{The output directory where to write the files.}

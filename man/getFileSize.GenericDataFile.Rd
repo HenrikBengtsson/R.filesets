@@ -19,7 +19,9 @@
   Gets the size of a file.
 }
 
-\usage{\method{getFileSize}{GenericDataFile}(this, what=c("numeric", "units"), sep="", ...)}
+\usage{
+\method{getFileSize}{GenericDataFile}(this, what=c("numeric", "units"), sep="", ...)
+}
 
 \arguments{
  \item{what}{A \code{\link[base]{character}} string specifying the data type returned.

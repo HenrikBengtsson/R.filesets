@@ -20,7 +20,9 @@
  Retrieves objects that uniquely identifying the data set.
 }
 
-\usage{\method{getChecksumObjects}{GenericDataFileSet}(this, ..., verbose=FALSE)}
+\usage{
+\method{getChecksumObjects}{GenericDataFileSet}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

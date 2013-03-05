@@ -21,7 +21,9 @@
   specified names.
 }
 
-\usage{\method{setColumnNames}{ColumnNamesInterface}(this, ...)}
+\usage{
+\method{setColumnNames}{ColumnNamesInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments, typically a \code{\link[base]{character}} string, which are

@@ -19,7 +19,9 @@
   Sets the tags.
 }
 
-\usage{\method{setTags}{FullNameInterface}(this, tags="*", ...)}
+\usage{
+\method{setTags}{FullNameInterface}(this, tags="*", ...)
+}
 
 \arguments{
  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}

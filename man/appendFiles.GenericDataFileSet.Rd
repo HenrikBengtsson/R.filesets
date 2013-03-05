@@ -19,7 +19,9 @@
   Appends a list of files to a data set.
 }
 
-\usage{\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE)}
+\usage{
+\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE)
+}
 
 \arguments{
  \item{files}{A single \code{\link{GenericDataFile}} or a \code{\link[base]{list}} of such to

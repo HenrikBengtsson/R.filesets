@@ -19,7 +19,9 @@
  Reads the tabular data as a data frame.
 }
 
-\usage{\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE, verbose=FALSE)}
+\usage{
+\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{con}{(Internal) If a \code{\link[base:connections]{connection}}, then it is used, otherwies

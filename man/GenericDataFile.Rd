@@ -37,7 +37,9 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
  }
 
- \usage{GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
+ \usage{
+GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore"))
+}
 
  \arguments{
    \item{filename}{The filename of the file.}

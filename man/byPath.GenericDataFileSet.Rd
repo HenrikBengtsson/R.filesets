@@ -19,8 +19,13 @@
   Defines a GenericDataFileSet by searching for files in a directory.
 }
 
-\synopsis{byPath.GenericDataFileSet(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)}
-\usage{GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+
+## Don't use the below:
+\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{path}{The directory where to search for files.}

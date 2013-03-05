@@ -19,7 +19,9 @@
    Copies a data set to another directory.
  }
 
- \usage{\method{copyTo}{GenericDataFileSet}(this, path=NULL, ..., verbose=FALSE)}
+ \usage{
+\method{copyTo}{GenericDataFileSet}(this, path=NULL, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{path}{The destination directory.  If missing, it is created.}

@@ -19,7 +19,9 @@
   Reads the value of the corresponding checksum file, if existing.
 }
 
-\usage{\method{readChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{readChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}

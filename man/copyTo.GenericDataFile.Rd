@@ -19,7 +19,9 @@
    Safely copies a file to a new pathname.
  }
 
- \usage{\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE)}
+ \usage{
+\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE)
+}
 
  \arguments{
   \item{filename, path}{The filename and the path for the destination file.

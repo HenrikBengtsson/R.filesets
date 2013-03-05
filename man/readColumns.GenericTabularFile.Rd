@@ -19,7 +19,9 @@
  Reads a subset of the columns as a data frame.
 }
 
-\usage{\method{readColumns}{GenericTabularFile}(...)}
+\usage{
+\method{readColumns}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -19,7 +19,9 @@
   Sets the name part of the fullname, leaving the tags untouched.
 }
 
-\usage{\method{setName}{FullNameInterface}(this, name=NULL, ...)}
+\usage{
+\method{setName}{FullNameInterface}(this, name=NULL, ...)
+}
 
 \arguments{
  \item{name}{The new name part of the fullname.

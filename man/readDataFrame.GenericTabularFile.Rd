@@ -19,7 +19,9 @@
  Reads the tabular data as a data frame.
 }
 
-\usage{\method{readDataFrame}{GenericTabularFile}(...)}
+\usage{
+\method{readDataFrame}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

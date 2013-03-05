@@ -19,7 +19,9 @@
   Gets the full name consisting of a name and tags.
 }
 
-\usage{\method{getFullName}{FullNameInterface}(this, ..., translate=TRUE)}
+\usage{
+\method{getFullName}{FullNameInterface}(this, ..., translate=TRUE)
+}
 
 \arguments{
  \item{translate}{If \code{\link[base:logical]{TRUE}} and a fullname translator is set, the fullname

@@ -19,7 +19,9 @@
   Gets the pathname of the file.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, absolute=FALSE, ...)}
+\usage{
+\method{getPathname}{GenericDataFile}(this, absolute=FALSE, ...)
+}
 
 \arguments{
  \item{absolute}{If \code{\link[base:logical]{TRUE}}, the absolute pathname is returned,

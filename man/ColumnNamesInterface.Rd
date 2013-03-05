@@ -30,7 +30,9 @@ extends \link[R.oo]{Interface}\cr
 
  }
 
- \usage{ColumnNamesInterface(...)}
+ \usage{
+ColumnNamesInterface(...)
+}
 
  \arguments{
    \item{...}{Not used.}

@@ -19,7 +19,9 @@
    Gets an integer vector of file indices.
  }
 
- \usage{\method{seq}{GenericDataFileSet}(this, ...)}
+ \usage{
+\method{seq}{GenericDataFileSet}(this, ...)
+}
 
  \arguments{
   \item{...}{Not used.}

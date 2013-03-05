@@ -19,7 +19,9 @@
  Checks if there are column names in the header.
 }
 
-\usage{\method{hasColumnHeader}{TabularTextFile}(this, ...)}
+\usage{
+\method{hasColumnHeader}{TabularTextFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

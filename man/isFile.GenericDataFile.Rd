@@ -19,7 +19,9 @@
   Checks if this is an existing file and not a directory.
 }
 
-\usage{\method{isFile}{GenericDataFile}(this, ...)}
+\usage{
+\method{isFile}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

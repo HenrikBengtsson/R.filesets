@@ -19,7 +19,9 @@
   Checks if a file equals another.
  }
 
- \usage{\method{equals}{GenericDataFile}(this, other, ...)}
+ \usage{
+\method{equals}{GenericDataFile}(this, other, ...)
+}
 
  \arguments{
    \item{other}{The other \code{\link{GenericDataFile}} to be compared to.}

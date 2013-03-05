@@ -19,7 +19,9 @@
  Generates a deterministic checksum for an R object that can be used to identify the data set.
 }
 
-\usage{\method{getChecksum}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getChecksum}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.filesets:getChecksumObjects.GenericDataFileSet]{*getChecksumObjects}()}.}

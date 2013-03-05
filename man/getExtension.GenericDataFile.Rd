@@ -19,7 +19,9 @@
   Gets the filename extension.
 }
 
-\usage{\method{getExtension}{GenericDataFile}(this, ...)}
+\usage{
+\method{getExtension}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{\link[R.filesets:getFilename.GenericDataFile]{*getFilename}()} and

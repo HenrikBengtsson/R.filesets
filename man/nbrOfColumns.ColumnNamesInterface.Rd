@@ -19,7 +19,9 @@
  Gets the number of columns.
 }
 
-\usage{\method{nbrOfColumns}{ColumnNamesInterface}(this, ...)}
+\usage{
+\method{nbrOfColumns}{ColumnNamesInterface}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

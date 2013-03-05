@@ -19,7 +19,9 @@
  Returns the files of the file set.
 }
 
-\usage{\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)}
+\usage{
+\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.filesets:getFiles.GenericDataFileSet]{*getFiles}()}.}

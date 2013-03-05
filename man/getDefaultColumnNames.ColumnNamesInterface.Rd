@@ -19,7 +19,9 @@
   Gets the default column names, that is, the column names without translations.
 }
 
-\usage{\method{getDefaultColumnNames}{ColumnNamesInterface}(...)}
+\usage{
+\method{getDefaultColumnNames}{ColumnNamesInterface}(...)
+}
 
 \arguments{
  \item{...}{Not used.}

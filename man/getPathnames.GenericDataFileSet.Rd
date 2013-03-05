@@ -19,7 +19,9 @@
   Gets the pathnames of the files in the file set.
 }
 
-\usage{\method{getPathnames}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getPathnames}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

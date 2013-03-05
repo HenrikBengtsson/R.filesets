@@ -19,7 +19,9 @@
  Reads the lines of the data file as strings.
 }
 
-\usage{\method{readLines}{TabularTextFile}(con, ...)}
+\usage{
+\method{readLines}{TabularTextFile}(con, ...)
+}
 
 \arguments{
   \item{...}{Optional arguments passed to \code{\link[base]{readLines}}().}

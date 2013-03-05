@@ -19,7 +19,9 @@
   Gets the name.
 }
 
-\usage{\method{getName}{FullNameInterface}(this, ...)}
+\usage{
+\method{getName}{FullNameInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Additional arguments passed to \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.}

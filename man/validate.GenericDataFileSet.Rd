@@ -19,7 +19,9 @@
   Validates all files in the data set.
 }
 
-\usage{\method{validate}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{validate}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

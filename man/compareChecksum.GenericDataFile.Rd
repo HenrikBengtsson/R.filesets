@@ -19,7 +19,9 @@
   Compares the file checksum with the value of the checksum file.
 }
 
-\usage{\method{compareChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{compareChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}

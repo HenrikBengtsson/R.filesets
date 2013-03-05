@@ -38,7 +38,9 @@ extends \link[R.filesets]{GenericTabularFileSet}\cr
   An TabularTextFileSet object represents a set of \code{\link{TabularTextFile}}s.
  }
 
- \usage{TabularTextFileSet(...)}
+ \usage{
+TabularTextFileSet(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericTabularFileSet}}.}

@@ -30,7 +30,9 @@ extends \link[R.oo]{Interface}\cr
 
  }
 
- \usage{FullNameInterface(...)}
+ \usage{
+FullNameInterface(...)
+}
 
  \arguments{
    \item{...}{Not used.}

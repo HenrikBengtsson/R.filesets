@@ -19,7 +19,9 @@
   Validates the content of a file.
 }
 
-\usage{\method{validate}{GenericDataFile}(this, ...)}
+\usage{
+\method{validate}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

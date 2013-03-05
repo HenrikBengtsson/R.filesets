@@ -19,7 +19,9 @@
   Asserts that the file checksum matches the one of the checksum file.
 }
 
-\usage{\method{validateChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{validateChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}

@@ -19,8 +19,13 @@
    Locates and sets up a file set by its name, tags, root and sub directories.
  }
 
- \synopsis{byName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)}
-\usage{GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)}
+ \usage{
+## Static method (use this):
+## GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{byName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{name, tags}{The name and the tags of the file set to be located.}

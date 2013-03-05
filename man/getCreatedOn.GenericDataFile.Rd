@@ -19,7 +19,9 @@
   Gets when the file was created.
 }
 
-\usage{\method{getCreatedOn}{GenericDataFile}(this, ...)}
+\usage{
+\method{getCreatedOn}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

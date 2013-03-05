@@ -19,8 +19,13 @@
    Locates all file sets that match the requested name, tags, and sub directories, in any of the root paths.
  }
 
- \synopsis{findByName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
-\usage{GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
+ \usage{
+## Static method (use this):
+## GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{findByName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{name, tags}{The name and the tags of the file set to be located.}

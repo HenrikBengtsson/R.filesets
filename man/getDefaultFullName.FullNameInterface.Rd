@@ -19,7 +19,9 @@
   Gets the default full name, that is, the fullname without translations.
 }
 
-\usage{\method{getDefaultFullName}{FullNameInterface}(...)}
+\usage{
+\method{getDefaultFullName}{FullNameInterface}(...)
+}
 
 \arguments{
  \item{...}{Not used.}

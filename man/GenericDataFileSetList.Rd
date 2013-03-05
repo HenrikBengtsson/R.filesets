@@ -35,7 +35,9 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   \code{\link{GenericDataFileSet}}s.
  }
 
- \usage{GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet")}
+ \usage{
+GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet")
+}
 
  \arguments{
    \item{dsList}{A single or a \code{\link[base]{list}} of \code{\link{GenericDataFileSet}}:s.}

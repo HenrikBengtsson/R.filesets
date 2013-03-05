@@ -19,7 +19,9 @@
    Renames/moves a file.
  }
 
- \usage{\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE)}
+ \usage{
+\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE)
+}
 
  \arguments{
   \item{filename, path}{The filename and the path for the destination file.
