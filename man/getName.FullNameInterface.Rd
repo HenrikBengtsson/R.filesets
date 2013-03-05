@@ -9,9 +9,7 @@
 \name{getName.FullNameInterface}
 \alias{getName.FullNameInterface}
 \alias{FullNameInterface.getName}
-\alias{getName.FullNameInterface}
 \alias{getName,FullNameInterface-method}
-
 
 \title{Gets the name}
 

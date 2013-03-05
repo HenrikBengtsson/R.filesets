@@ -9,9 +9,7 @@
 \name{getChecksum.GenericDataFileSet}
 \alias{getChecksum.GenericDataFileSet}
 \alias{GenericDataFileSet.getChecksum}
-\alias{getChecksum.GenericDataFileSet}
 \alias{getChecksum,GenericDataFileSet-method}
-
 
 \title{Generates a deterministic checksum for an R object}
 

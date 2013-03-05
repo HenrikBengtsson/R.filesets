@@ -9,9 +9,7 @@
 \name{compareChecksum.GenericDataFile}
 \alias{compareChecksum.GenericDataFile}
 \alias{GenericDataFile.compareChecksum}
-\alias{compareChecksum.GenericDataFile}
 \alias{compareChecksum,GenericDataFile-method}
-
 
 \title{Compares the file checksum with the value of the checksum file}
 

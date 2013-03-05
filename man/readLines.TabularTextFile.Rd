@@ -9,9 +9,7 @@
 \name{readLines.TabularTextFile}
 \alias{readLines.TabularTextFile}
 \alias{TabularTextFile.readLines}
-\alias{readLines.TabularTextFile}
 \alias{readLines,TabularTextFile-method}
-
 
 \title{Reads the lines of the data file as strings}
 

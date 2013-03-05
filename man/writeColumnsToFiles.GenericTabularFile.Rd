@@ -10,9 +10,7 @@
 \name{writeColumnsToFiles.GenericTabularFile}
 \alias{writeColumnsToFiles.GenericTabularFile}
 \alias{GenericTabularFile.writeColumnsToFiles}
-\alias{writeColumnsToFiles.GenericTabularFile}
 \alias{writeColumnsToFiles,GenericTabularFile-method}
-
 
 \title{Read each column from a data file and exports it to a separate file}
 

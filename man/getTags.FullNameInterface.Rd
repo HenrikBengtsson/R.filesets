@@ -9,9 +9,7 @@
 \name{getTags.FullNameInterface}
 \alias{getTags.FullNameInterface}
 \alias{FullNameInterface.getTags}
-\alias{getTags.FullNameInterface}
 \alias{getTags,FullNameInterface-method}
-
 
 \title{Gets the tags}
 

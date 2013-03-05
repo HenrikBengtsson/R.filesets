@@ -9,9 +9,7 @@
 \name{isFile.GenericDataFile}
 \alias{isFile.GenericDataFile}
 \alias{GenericDataFile.isFile}
-\alias{isFile.GenericDataFile}
 \alias{isFile,GenericDataFile-method}
-
 
 \title{Checks if this is an existing file}
 

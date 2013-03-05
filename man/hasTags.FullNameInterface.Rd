@@ -9,9 +9,7 @@
 \name{hasTags.FullNameInterface}
 \alias{hasTags.FullNameInterface}
 \alias{FullNameInterface.hasTags}
-\alias{hasTags.FullNameInterface}
 \alias{hasTags,FullNameInterface-method}
-
 \alias{FullNameInterface.hasTag}
 \alias{hasTag.FullNameInterface}
 \alias{hasTag,FullNameInterface-method}

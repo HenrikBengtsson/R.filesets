@@ -9,9 +9,7 @@
 \name{readDataFrame.TabularTextFileSet}
 \alias{readDataFrame.TabularTextFileSet}
 \alias{TabularTextFileSet.readDataFrame}
-\alias{readDataFrame.TabularTextFileSet}
 \alias{readDataFrame,TabularTextFileSet-method}
-
 
 \title{Reads the tabular data from all files as data frames}
 

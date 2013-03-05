@@ -9,9 +9,7 @@
 \name{dim.GenericTabularFile}
 \alias{dim.GenericTabularFile}
 \alias{GenericTabularFile.dim}
-\alias{dim.GenericTabularFile}
 \alias{dim,GenericTabularFile-method}
-
 
 \title{Gets the dimension of data table}
 

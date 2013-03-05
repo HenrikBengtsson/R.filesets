@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.GenericDataFile}
+\name{GenericDataFile$fromFile}
+\alias{GenericDataFile$fromFile}
 \alias{fromFile.GenericDataFile}
 \alias{GenericDataFile.fromFile}
-\alias{fromFile.GenericDataFile}
 \alias{fromFile,GenericDataFile-method}
-
 
 \title{Defines a GenericDataFile from a pathname}
 

@@ -9,9 +9,7 @@
  \name{copyTo.GenericDataFileSet}
 \alias{copyTo.GenericDataFileSet}
 \alias{GenericDataFileSet.copyTo}
-\alias{copyTo.GenericDataFileSet}
 \alias{copyTo,GenericDataFileSet-method}
-
 
  \title{Copies a data set to another directory}
 

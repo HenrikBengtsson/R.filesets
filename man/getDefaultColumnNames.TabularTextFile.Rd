@@ -9,9 +9,7 @@
 \name{getDefaultColumnNames.TabularTextFile}
 \alias{getDefaultColumnNames.TabularTextFile}
 \alias{TabularTextFile.getDefaultColumnNames}
-\alias{getDefaultColumnNames.TabularTextFile}
 \alias{getDefaultColumnNames,TabularTextFile-method}
-
 
 \title{Gets the default column names}
 

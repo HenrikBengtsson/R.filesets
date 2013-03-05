@@ -9,9 +9,7 @@
 \name{gzip.GenericDataFile}
 \alias{gzip.GenericDataFile}
 \alias{GenericDataFile.gzip}
-\alias{gzip.GenericDataFile}
 \alias{gzip,GenericDataFile-method}
-
 \alias{GenericDataFile.gunzip}
 \alias{gunzip.GenericDataFile}
 \alias{gunzip,GenericDataFile-method}

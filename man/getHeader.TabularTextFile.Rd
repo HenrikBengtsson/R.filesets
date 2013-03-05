@@ -9,9 +9,7 @@
 \name{getHeader.TabularTextFile}
 \alias{getHeader.TabularTextFile}
 \alias{TabularTextFile.getHeader}
-\alias{getHeader.TabularTextFile}
 \alias{getHeader,TabularTextFile-method}
-
 
 \title{Gets the file header}
 

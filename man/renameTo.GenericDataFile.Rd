@@ -9,9 +9,7 @@
  \name{renameTo.GenericDataFile}
 \alias{renameTo.GenericDataFile}
 \alias{GenericDataFile.renameTo}
-\alias{renameTo.GenericDataFile}
 \alias{renameTo,GenericDataFile-method}
-
 
  \title{Renames/moves a file}
 

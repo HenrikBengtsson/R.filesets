@@ -9,9 +9,7 @@
 \name{setTags.FullNameInterface}
 \alias{setTags.FullNameInterface}
 \alias{FullNameInterface.setTags}
-\alias{setTags.FullNameInterface}
 \alias{setTags,FullNameInterface-method}
-
 
 \title{Sets the tags}
 

@@ -9,9 +9,7 @@
 \name{setColumnNames.ColumnNamesInterface}
 \alias{setColumnNames.ColumnNamesInterface}
 \alias{ColumnNamesInterface.setColumnNames}
-\alias{setColumnNames.ColumnNamesInterface}
 \alias{setColumnNames,ColumnNamesInterface-method}
-
 
 \title{Sets the column names}
 

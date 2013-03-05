@@ -9,9 +9,7 @@
 \name{validate.GenericDataFile}
 \alias{validate.GenericDataFile}
 \alias{GenericDataFile.validate}
-\alias{validate.GenericDataFile}
 \alias{validate,GenericDataFile-method}
-
 
 \title{Validates the content of a file}
 

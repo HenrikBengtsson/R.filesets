@@ -9,9 +9,7 @@
 \name{as.list.GenericDataFileSet}
 \alias{as.list.GenericDataFileSet}
 \alias{GenericDataFileSet.as.list}
-\alias{as.list.GenericDataFileSet}
 \alias{as.list,GenericDataFileSet-method}
-
 
 \title{Returns the files of the file set}
 

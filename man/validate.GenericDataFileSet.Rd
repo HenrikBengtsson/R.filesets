@@ -9,9 +9,7 @@
 \name{validate.GenericDataFileSet}
 \alias{validate.GenericDataFileSet}
 \alias{GenericDataFileSet.validate}
-\alias{validate.GenericDataFileSet}
 \alias{validate,GenericDataFileSet-method}
-
 
 \title{Validates all files in the data set}
 

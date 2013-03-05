@@ -9,9 +9,7 @@
  \name{equals.GenericDataFile}
 \alias{equals.GenericDataFile}
 \alias{GenericDataFile.equals}
-\alias{equals.GenericDataFile}
 \alias{equals,GenericDataFile-method}
-
 
  \title{Checks if a file equals another}
 

@@ -9,9 +9,7 @@
 \name{nbrOfLines.TabularTextFile}
 \alias{nbrOfLines.TabularTextFile}
 \alias{TabularTextFile.nbrOfLines}
-\alias{nbrOfLines.TabularTextFile}
 \alias{nbrOfLines,TabularTextFile-method}
-
 
 \title{Counts the number of lines in the data file}
 

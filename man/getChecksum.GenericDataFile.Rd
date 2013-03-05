@@ -9,9 +9,7 @@
 \name{getChecksum.GenericDataFile}
 \alias{getChecksum.GenericDataFile}
 \alias{GenericDataFile.getChecksum}
-\alias{getChecksum.GenericDataFile}
 \alias{getChecksum,GenericDataFile-method}
-
 
 \title{Gets the checksum of a file}
 

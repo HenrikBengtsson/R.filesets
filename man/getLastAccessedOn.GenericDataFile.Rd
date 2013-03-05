@@ -9,9 +9,7 @@
 \name{getLastAccessedOn.GenericDataFile}
 \alias{getLastAccessedOn.GenericDataFile}
 \alias{GenericDataFile.getLastAccessedOn}
-\alias{getLastAccessedOn.GenericDataFile}
 \alias{getLastAccessedOn,GenericDataFile-method}
-
 
 \title{Gets when the file was last accessed}
 

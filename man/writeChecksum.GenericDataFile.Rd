@@ -9,9 +9,7 @@
 \name{writeChecksum.GenericDataFile}
 \alias{writeChecksum.GenericDataFile}
 \alias{GenericDataFile.writeChecksum}
-\alias{writeChecksum.GenericDataFile}
 \alias{writeChecksum,GenericDataFile-method}
-
 
 \title{Write the file checksum to a checksum file}
 

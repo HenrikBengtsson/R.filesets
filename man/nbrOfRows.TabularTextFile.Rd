@@ -9,9 +9,7 @@
 \name{nbrOfRows.TabularTextFile}
 \alias{nbrOfRows.TabularTextFile}
 \alias{TabularTextFile.nbrOfRows}
-\alias{nbrOfRows.TabularTextFile}
 \alias{nbrOfRows,TabularTextFile-method}
-
 
 \title{Counts the number of data rows}
 

@@ -9,9 +9,7 @@
  \name{copyTo.GenericDataFile}
 \alias{copyTo.GenericDataFile}
 \alias{GenericDataFile.copyTo}
-\alias{copyTo.GenericDataFile}
 \alias{copyTo,GenericDataFile-method}
-
 
  \title{Safely copies a file to a new pathname}
 

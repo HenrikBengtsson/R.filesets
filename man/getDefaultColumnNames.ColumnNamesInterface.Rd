@@ -9,9 +9,7 @@
 \name{getDefaultColumnNames.ColumnNamesInterface}
 \alias{getDefaultColumnNames.ColumnNamesInterface}
 \alias{ColumnNamesInterface.getDefaultColumnNames}
-\alias{getDefaultColumnNames.ColumnNamesInterface}
 \alias{getDefaultColumnNames,ColumnNamesInterface-method}
-
 
 \title{Gets the default column names}
 

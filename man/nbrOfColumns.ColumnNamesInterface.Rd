@@ -9,9 +9,7 @@
 \name{nbrOfColumns.ColumnNamesInterface}
 \alias{nbrOfColumns.ColumnNamesInterface}
 \alias{ColumnNamesInterface.nbrOfColumns}
-\alias{nbrOfColumns.ColumnNamesInterface}
 \alias{nbrOfColumns,ColumnNamesInterface-method}
-
 
 \title{Gets the number of columns}
 

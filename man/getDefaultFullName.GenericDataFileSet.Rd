@@ -9,9 +9,7 @@
 \name{getDefaultFullName.GenericDataFileSet}
 \alias{getDefaultFullName.GenericDataFileSet}
 \alias{GenericDataFileSet.getDefaultFullName}
-\alias{getDefaultFullName.GenericDataFileSet}
 \alias{getDefaultFullName,GenericDataFileSet-method}
-
 
 \title{Gets the default full name of the file set}
 

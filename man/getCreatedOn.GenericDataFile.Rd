@@ -9,9 +9,7 @@
 \name{getCreatedOn.GenericDataFile}
 \alias{getCreatedOn.GenericDataFile}
 \alias{GenericDataFile.getCreatedOn}
-\alias{getCreatedOn.GenericDataFile}
 \alias{getCreatedOn,GenericDataFile-method}
-
 
 \title{Gets when the file was created}
 

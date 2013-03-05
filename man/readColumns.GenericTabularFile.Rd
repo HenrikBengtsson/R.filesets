@@ -9,9 +9,7 @@
 \name{readColumns.GenericTabularFile}
 \alias{readColumns.GenericTabularFile}
 \alias{GenericTabularFile.readColumns}
-\alias{readColumns.GenericTabularFile}
 \alias{readColumns,GenericTabularFile-method}
-
 
 \title{Reads a subset of the columns as a data frame}
 

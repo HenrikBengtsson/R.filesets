@@ -9,9 +9,7 @@
 \name{hasColumnHeader.TabularTextFile}
 \alias{hasColumnHeader.TabularTextFile}
 \alias{TabularTextFile.hasColumnHeader}
-\alias{hasColumnHeader.TabularTextFile}
 \alias{hasColumnHeader,TabularTextFile-method}
-
 
 \title{Checks if there are column names in the header}
 

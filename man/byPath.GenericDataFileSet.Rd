@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byPath.GenericDataFileSet}
+\name{GenericDataFileSet$byPath}
+\alias{GenericDataFileSet$byPath}
 \alias{byPath.GenericDataFileSet}
 \alias{GenericDataFileSet.byPath}
-\alias{byPath.GenericDataFileSet}
 \alias{byPath,GenericDataFileSet-method}
-
 
 \title{Defines a GenericDataFileSet by searching for files in a directory}
 

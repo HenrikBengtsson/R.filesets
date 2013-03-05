@@ -9,9 +9,7 @@
 \name{indexOf.GenericDataFileSet}
 \alias{indexOf.GenericDataFileSet}
 \alias{GenericDataFileSet.indexOf}
-\alias{indexOf.GenericDataFileSet}
 \alias{indexOf,GenericDataFileSet-method}
-
 
 \title{Finds indices of a subset of files}
 

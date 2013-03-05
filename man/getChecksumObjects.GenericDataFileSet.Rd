@@ -10,9 +10,7 @@
 \name{getChecksumObjects.GenericDataFileSet}
 \alias{getChecksumObjects.GenericDataFileSet}
 \alias{GenericDataFileSet.getChecksumObjects}
-\alias{getChecksumObjects.GenericDataFileSet}
 \alias{getChecksumObjects,GenericDataFileSet-method}
-
 
 \title{Retrieves objects that uniquely identifying the data set}
 

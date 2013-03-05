@@ -9,9 +9,7 @@
 \name{getDefaultFullName.FullNameInterface}
 \alias{getDefaultFullName.FullNameInterface}
 \alias{FullNameInterface.getDefaultFullName}
-\alias{getDefaultFullName.FullNameInterface}
 \alias{getDefaultFullName,FullNameInterface-method}
-
 
 \title{Gets the default full name}
 

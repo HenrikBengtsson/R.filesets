@@ -9,9 +9,7 @@
 \name{getFileSize.GenericDataFile}
 \alias{getFileSize.GenericDataFile}
 \alias{GenericDataFile.getFileSize}
-\alias{getFileSize.GenericDataFile}
 \alias{getFileSize,GenericDataFile-method}
-
 
 \title{Gets the size of a file}
 

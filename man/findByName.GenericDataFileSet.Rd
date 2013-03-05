@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{findByName.GenericDataFileSet}
+ \name{GenericDataFileSet$findByName}
+\alias{GenericDataFileSet$findByName}
 \alias{findByName.GenericDataFileSet}
 \alias{GenericDataFileSet.findByName}
-\alias{findByName.GenericDataFileSet}
 \alias{findByName,GenericDataFileSet-method}
-
 
  \title{Locates all file sets that match the requested name}
 

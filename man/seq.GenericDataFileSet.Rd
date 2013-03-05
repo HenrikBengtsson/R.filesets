@@ -9,9 +9,7 @@
  \name{seq.GenericDataFileSet}
 \alias{seq.GenericDataFileSet}
 \alias{GenericDataFileSet.seq}
-\alias{seq.GenericDataFileSet}
 \alias{seq,GenericDataFileSet-method}
-
 
  \title{Gets an integer vector of file indices}
 

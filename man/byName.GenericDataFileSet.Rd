@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{byName.GenericDataFileSet}
+ \name{GenericDataFileSet$byName}
+\alias{GenericDataFileSet$byName}
 \alias{byName.GenericDataFileSet}
 \alias{GenericDataFileSet.byName}
-\alias{byName.GenericDataFileSet}
 \alias{byName,GenericDataFileSet-method}
-
 
  \title{Locates and sets up a file set by its name}
 

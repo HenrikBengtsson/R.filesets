@@ -9,9 +9,7 @@
 \name{appendFiles.GenericDataFileSet}
 \alias{appendFiles.GenericDataFileSet}
 \alias{GenericDataFileSet.appendFiles}
-\alias{appendFiles.GenericDataFileSet}
 \alias{appendFiles,GenericDataFileSet-method}
-
 
 \title{Appends a list of files to a data set}
 

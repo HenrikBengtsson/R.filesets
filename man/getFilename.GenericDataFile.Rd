@@ -9,9 +9,7 @@
 \name{getFilename.GenericDataFile}
 \alias{getFilename.GenericDataFile}
 \alias{GenericDataFile.getFilename}
-\alias{getFilename.GenericDataFile}
 \alias{getFilename,GenericDataFile-method}
-
 
 \title{Gets the filename of the file}
 

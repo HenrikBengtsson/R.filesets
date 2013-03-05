@@ -9,9 +9,7 @@
 \name{setFullName.FullNameInterface}
 \alias{setFullName.FullNameInterface}
 \alias{FullNameInterface.setFullName}
-\alias{setFullName.FullNameInterface}
 \alias{setFullName,FullNameInterface-method}
-
 
 \title{Sets the full name}
 

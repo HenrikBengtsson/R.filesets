@@ -9,9 +9,7 @@
 \name{readDataFrame.TabularTextFile}
 \alias{readDataFrame.TabularTextFile}
 \alias{TabularTextFile.readDataFrame}
-\alias{readDataFrame.TabularTextFile}
 \alias{readDataFrame,TabularTextFile-method}
-
 
 \title{Reads the tabular data as a data frame}
 

@@ -9,9 +9,7 @@
 \name{getPathnames.GenericDataFileSet}
 \alias{getPathnames.GenericDataFileSet}
 \alias{GenericDataFileSet.getPathnames}
-\alias{getPathnames.GenericDataFileSet}
 \alias{getPathnames,GenericDataFileSet-method}
-
 
 \title{Gets the pathnames of the files in the file set}
 

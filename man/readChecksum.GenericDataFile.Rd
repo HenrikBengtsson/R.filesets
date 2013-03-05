@@ -9,9 +9,7 @@
 \name{readChecksum.GenericDataFile}
 \alias{readChecksum.GenericDataFile}
 \alias{GenericDataFile.readChecksum}
-\alias{readChecksum.GenericDataFile}
 \alias{readChecksum,GenericDataFile-method}
-
 
 \title{Reads the value of the corresponding checksum file}
 

@@ -9,9 +9,7 @@
 \name{getPath.GenericDataFile}
 \alias{getPath.GenericDataFile}
 \alias{GenericDataFile.getPath}
-\alias{getPath.GenericDataFile}
 \alias{getPath,GenericDataFile-method}
-
 
 \title{Gets the path (directory) of the file}
 

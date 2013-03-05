@@ -9,9 +9,7 @@
 \name{extractMatrix.GenericTabularFile}
 \alias{extractMatrix.GenericTabularFile}
 \alias{GenericTabularFile.extractMatrix}
-\alias{extractMatrix.GenericTabularFile}
 \alias{extractMatrix,GenericTabularFile-method}
-
 
 \title{Reads one of the columns}
 

@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{getTags.Arguments}
+\name{Arguments$getTags}
+\alias{Arguments$getTags}
 \alias{getTags.Arguments}
 \alias{Arguments.getTags}
-\alias{getTags.Arguments}
 \alias{getTags,Arguments-method}
-
 
 \title{Gets and validates tags}
 

@@ -9,9 +9,7 @@
 \name{getFile.GenericDataFileSet}
 \alias{getFile.GenericDataFileSet}
 \alias{GenericDataFileSet.getFile}
-\alias{getFile.GenericDataFileSet}
 \alias{getFile,GenericDataFileSet-method}
-
 
 \title{Get a particular file of the file set}
 

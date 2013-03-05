@@ -9,9 +9,7 @@
 \name{validateChecksum.GenericDataFile}
 \alias{validateChecksum.GenericDataFile}
 \alias{GenericDataFile.validateChecksum}
-\alias{validateChecksum.GenericDataFile}
 \alias{validateChecksum,GenericDataFile-method}
-
 
 \title{Asserts that the file checksum matches the one of the checksum file}
 

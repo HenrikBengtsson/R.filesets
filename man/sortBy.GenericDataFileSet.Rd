@@ -9,9 +9,7 @@
 \name{sortBy.GenericDataFileSet}
 \alias{sortBy.GenericDataFileSet}
 \alias{GenericDataFileSet.sortBy}
-\alias{sortBy.GenericDataFileSet}
 \alias{sortBy,GenericDataFileSet-method}
-
 
 \title{Sorts the set}
 

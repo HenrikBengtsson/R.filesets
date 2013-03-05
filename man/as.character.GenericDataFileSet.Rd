@@ -9,9 +9,7 @@
 \name{as.character.GenericDataFileSet}
 \alias{as.character.GenericDataFileSet}
 \alias{GenericDataFileSet.as.character}
-\alias{as.character.GenericDataFileSet}
 \alias{as.character,GenericDataFileSet-method}
-
 
 \title{Returns a short string describing the file set}
 

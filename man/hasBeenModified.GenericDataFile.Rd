@@ -9,9 +9,7 @@
 \name{hasBeenModified.GenericDataFile}
 \alias{hasBeenModified.GenericDataFile}
 \alias{GenericDataFile.hasBeenModified}
-\alias{hasBeenModified.GenericDataFile}
 \alias{hasBeenModified,GenericDataFile-method}
-
 
 \title{Checks whether the file has been modified}
 

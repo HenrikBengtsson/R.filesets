@@ -9,9 +9,7 @@
 \name{as.character.GenericDataFile}
 \alias{as.character.GenericDataFile}
 \alias{GenericDataFile.as.character}
-\alias{as.character.GenericDataFile}
 \alias{as.character,GenericDataFile-method}
-
 
 \title{Returns a short string describing the file}
 
