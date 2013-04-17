@@ -29,7 +29,7 @@
   Returns the checksum as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, the checksum is calculated on the objects returned by

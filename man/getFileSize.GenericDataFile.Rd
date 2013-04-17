@@ -35,7 +35,7 @@
   A missing value (\code{\link[base]{NA}}) is returned if the file does not exist.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

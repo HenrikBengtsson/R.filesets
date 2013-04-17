@@ -31,7 +31,7 @@
   Returns a \code{\link[base]{character}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getName.FullNameInterface]{*getName}()}.

@@ -34,7 +34,7 @@
  For instance, the name of \code{foo,a.2,b} is \code{foo}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.

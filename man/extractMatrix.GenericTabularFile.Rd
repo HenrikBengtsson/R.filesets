@@ -33,7 +33,7 @@
   Returns a Jx1 \code{\link[base]{matrix}}, or if \code{drop=TRUE} a \code{\link[base]{vector}} of length J.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericTabularFile}}.

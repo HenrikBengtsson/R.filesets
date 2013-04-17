@@ -41,7 +41,7 @@
    If not found, an exception is thrown.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    Internally, \code{\link[R.filesets:findByName.GenericDataFileSet]{*findByName}()} is used to locate the data set,

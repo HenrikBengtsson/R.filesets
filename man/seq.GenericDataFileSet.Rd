@@ -30,7 +30,7 @@
    or an empty vector if the set is empty.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For more information see \code{\link{GenericDataFileSet}}.

@@ -40,7 +40,7 @@
  used, e.g. \code{foo,c}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

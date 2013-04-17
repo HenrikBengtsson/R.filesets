@@ -40,7 +40,7 @@
  \code{\link[base]{character}} \code{\link[base]{vector}} (iff \code{collapse} is \code{\link[base]{NULL}}).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link[R.utils]{Arguments}}.

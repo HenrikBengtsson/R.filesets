@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string (\code{\link[base]{NA}} if an "empty" file).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

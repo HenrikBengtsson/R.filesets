@@ -47,7 +47,7 @@
    Note that subclasses use refined rules.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[R.filesets:getFileSize.GenericDataFile]{*getFileSize}()}.

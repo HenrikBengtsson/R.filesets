@@ -31,7 +31,7 @@
   Returns \code{\link[base:logical]{TRUE}}, \code{\link[base:logical]{FALSE}}, or the value of argument \code{unknown}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

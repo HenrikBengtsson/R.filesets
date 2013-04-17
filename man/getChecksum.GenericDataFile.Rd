@@ -32,7 +32,7 @@
   Returns a \code{\link[base]{character}} string, which can be \code{\link[base]{NA}} if file is missing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link[digest]{digest}} is used.

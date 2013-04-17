@@ -40,7 +40,7 @@
   there is not match, then by fixed strings.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getNames.GenericDataFileSet]{*getNames}()}

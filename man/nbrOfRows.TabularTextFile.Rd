@@ -29,7 +29,7 @@
 \value{
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
    The number of data rows is always less or equal to the number of lines

@@ -32,7 +32,7 @@
   (or \code{\link[base]{NULL}} if an "empty" file).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

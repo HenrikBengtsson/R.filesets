@@ -34,7 +34,7 @@
   See \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()} for so called \emph{special tags}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()}.

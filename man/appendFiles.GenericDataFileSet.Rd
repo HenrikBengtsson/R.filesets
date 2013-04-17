@@ -43,7 +43,7 @@
   of the data set, otherwise an exception is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To append a data set, see \code{\link{append}}().

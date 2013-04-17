@@ -37,7 +37,7 @@
   being appended, each of its file is cloned before being appended.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To append one or more files, see \code{\link{appendFiles}}().

@@ -30,7 +30,7 @@
   Returns a \code{\link[base]{character}} string (which is of length zero if "empty" file).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

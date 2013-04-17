@@ -81,7 +81,7 @@ df <- readDataFrame(pathname, skip="^x")
 print(df)
 }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[utils]{read.table}}.

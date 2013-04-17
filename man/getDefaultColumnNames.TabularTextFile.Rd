@@ -29,7 +29,7 @@
   Returns \code{\link[base]{character}} \code{\link[base]{vector}},
   or \code{\link[base]{NULL}} if there are no column names in the file header.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{TabularTextFile}}.
