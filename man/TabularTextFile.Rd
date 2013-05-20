@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{TabularTextFile}
+\name{TabularTextFile}
 \docType{class}
 \alias{TabularTextFile}
 
 
- \title{The TabularTextFile class}
+\title{The TabularTextFile class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class TabularTextFile}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,33 +37,36 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 
 
 
-  A TabularTextFile is an object refering to a tabular text file
-  on a file system containing data in a tabular format.
-  Methods for reading all or a subset of the tabular data exist.
- }
+ A TabularTextFile is an object refering to a tabular text file
+ on a file system containing data in a tabular format.
+ Methods for reading all or a subset of the tabular data exist.
+}
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
+\usage{
+TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA,
+  commentChar="#", .verify=TRUE, verbose=FALSE)
+}
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}
-   \item{sep}{A \code{\link[base]{character}} specifying the symbol used to separate the
-     cell entries.  If more than one symbol is specified, it will try to
-     select the correct one by peeking into the file.}
-   \item{quote}{A \code{\link[base]{character}} specifying the quote symbol used, if any.}
-   \item{fill}{As in \code{\link[utils]{read.table}}.}
-   \item{skip}{As in \code{\link[utils]{read.table}}.}
-   \item{columnNames}{A \code{\link[base]{logical}} or a \code{\link[base]{character}} \code{\link[base]{vector}}. If \code{\link[base:logical]{TRUE}},
-      then column names are inferred from the file.  If a \code{\link[base]{character}}
-      \code{\link[base]{vector}}, then the column names are given by this argument.}
-   \item{commentChar}{A single \code{\link[base]{character}} specifying which symbol
-      should be used for comments, cf. \code{\link[utils]{read.table}}.}
-   \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
-      verified while the object is instantiated by the constructor.
-      The verbose argument is passed to the verifier function.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}
+  \item{sep}{A \code{\link[base]{character}} specifying the symbol used to separate the
+    cell entries.  If more than one symbol is specified, it will try to
+    select the correct one by peeking into the file.}
+  \item{quote}{A \code{\link[base]{character}} specifying the quote symbol used, if any.}
+  \item{fill}{As in \code{\link[utils]{read.table}}.}
+  \item{skip}{As in \code{\link[utils]{read.table}}.}
+  \item{columnNames}{A \code{\link[base]{logical}} or a \code{\link[base]{character}} \code{\link[base]{vector}}. If \code{\link[base:logical]{TRUE}},
+     then column names are inferred from the file.  If a \code{\link[base]{character}}
+     \code{\link[base]{vector}}, then the column names are given by this argument.}
+  \item{commentChar}{A single \code{\link[base]{character}} specifying which symbol
+     should be used for comments, cf. \code{\link[utils]{read.table}}.}
+  \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
+     verified while the object is instantiated by the constructor.
+     The verbose argument is passed to the verifier function.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
  \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
@@ -89,9 +92,9 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \examples{
+\examples{
 path <- system.file("exData/dataSetA,original", package="R.filesets")
 
 db <- TabularTextFile("fileA,20100112.dat", path=path)
@@ -106,9 +109,9 @@ df <- readDataFrame(db, colClasses=c("(x|y)"="integer", "char"="character"))
 print(df)
 }
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
- \seealso{
-   An object of this class is typically part of an \code{\link{TabularTextFileSet}}.
- }
+\seealso{
+  An object of this class is typically part of an \code{\link{TabularTextFileSet}}.
+}
 \keyword{classes}

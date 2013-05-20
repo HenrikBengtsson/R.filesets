@@ -6,16 +6,16 @@
 # \description{
 #  @classhierarchy
 #
-#  A TabularTextFile is an object refering to a tabular text file 
+#  A TabularTextFile is an object refering to a tabular text file
 #  on a file system containing data in a tabular format.
 #  Methods for reading all or a subset of the tabular data exist.
 # }
-# 
-# \usage{GenericTabularFile(..., .verify=TRUE, verbose=FALSE)}
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "GenericDataFile".}
-#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
+#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is
 #      verified while the object is instantiated by the constructor.
 #      The verbose argument is passed to the verifier function.}
 # }
@@ -23,11 +23,11 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # @author
 #
 # \seealso{
-#   An object of this class is typically part of an 
+#   An object of this class is typically part of an
 #   @see "GenericTabularFileSet".
 # }
 #*/###########################################################################
@@ -242,7 +242,7 @@ setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE);
 #
 # \arguments{
 #   \item{column}{An @integer specifying the column to read.}
-#   \item{drop}{If @TRUE, a @vector is returned, 
+#   \item{drop}{If @TRUE, a @vector is returned,
 #     otherwise a one-column @matrix.}
 #   \item{...}{Additional arguments passed to @seemethod "readColumns".}
 #   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
@@ -291,7 +291,7 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1L, dro
   # Coerce into a matrix?
   if (!drop) {
     data <- as.matrix(data);
-    colnames(data) <- getName(this); 
+    colnames(data) <- getName(this);
   } else {
     verbose && cat(verbose, "Dropping singleton dimensions");
   }
@@ -324,7 +324,7 @@ setMethodS3("[", "GenericTabularFile", function(this, i=NULL, j=NULL, drop=FALSE
       data <- data[1L,];
     }
   }
-  
+
   data;
 }, protected=TRUE)
 
@@ -370,7 +370,7 @@ setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
 # o Added setColumnNames() for GenericTabularFile, which utilizes
 #   setColumnNamesTranslator().
 # 2012-09-01
-# o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
+# o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column
 #   names just as ditto for GenericTabularFileSet does.
 # 2010-08-16
 # o Added some Rdoc comments.
@@ -395,14 +395,14 @@ setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
 # 2008-03-22
 # o Added {get|set}ColumnNameTranslator().
 # 2008-03-18
-# o Now any '...' arguments to getReadArguments() override the inferred 
+# o Now any '...' arguments to getReadArguments() override the inferred
 #   read arguments, e.g. na.strings="NA".
 # 2008-02-27
 # o Since 'affy' defines standardGeneric("colnames") and because S3 methods
 #   are not found by such S4 generic functions, we avoid that method name,
 #   and instead use getColumnNames().
 # 2007-09-16
-# o Removed all 'camelCaseNames' arguments.  Now column names are decided 
+# o Removed all 'camelCaseNames' arguments.  Now column names are decided
 #   by getColumnNames() and translateColumnNames(), which can be overridden.
 # 2007-09-14
 # o Extracted from AffymetrixTabularFile.

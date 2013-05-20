@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericTabularFile}
+\name{GenericTabularFile}
 \docType{class}
 \alias{GenericTabularFile}
 
 
- \title{The abstract GenericTabularFile class}
+\title{The abstract GenericTabularFile class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class GenericTabularFile}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,22 +35,24 @@ extends \emph{\link[R.filesets]{ColumnNamesInterface}}\cr
 
 
 
-  A TabularTextFile is an object refering to a tabular text file
-  on a file system containing data in a tabular format.
-  Methods for reading all or a subset of the tabular data exist.
- }
+ A TabularTextFile is an object refering to a tabular text file
+ on a file system containing data in a tabular format.
+ Methods for reading all or a subset of the tabular data exist.
+}
 
- \usage{GenericTabularFile(..., .verify=TRUE, verbose=FALSE)}
+\usage{
+GenericTabularFile(..., .verify=TRUE, verbose=FALSE)
+}
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{GenericDataFile}}.}
-   \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
-      verified while the object is instantiated by the constructor.
-      The verbose argument is passed to the verifier function.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{GenericDataFile}}.}
+  \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
+     verified while the object is instantiated by the constructor.
+     The verbose argument is passed to the verifier function.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:dim.GenericTabularFile]{dim}} \tab Gets the dimension of data table.\cr
  \tab \code{\link[R.filesets:extractMatrix.GenericTabularFile]{extractMatrix}} \tab Reads one of the columns.\cr
@@ -76,12 +78,12 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
- \seealso{
-   An object of this class is typically part of an
-   \code{\link{GenericTabularFileSet}}.
- }
+\seealso{
+  An object of this class is typically part of an
+  \code{\link{GenericTabularFileSet}}.
+}
 \keyword{classes}

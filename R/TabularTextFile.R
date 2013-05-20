@@ -6,16 +6,16 @@
 # \description{
 #  @classhierarchy
 #
-#  A TabularTextFile is an object refering to a tabular text file 
+#  A TabularTextFile is an object refering to a tabular text file
 #  on a file system containing data in a tabular format.
 #  Methods for reading all or a subset of the tabular data exist.
 # }
-# 
-# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "GenericTabularFile".}
-#   \item{sep}{A @character specifying the symbol used to separate the 
+#   \item{sep}{A @character specifying the symbol used to separate the
 #     cell entries.  If more than one symbol is specified, it will try to
 #     select the correct one by peeking into the file.}
 #   \item{quote}{A @character specifying the quote symbol used, if any.}
@@ -26,7 +26,7 @@
 #      @vector, then the column names are given by this argument.}
 #   \item{commentChar}{A single @character specifying which symbol
 #      should be used for comments, cf. @see "utils::read.table".}
-#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
+#   \item{.verify, verbose}{(Internal only) If @TRUE, the file is
 #      verified while the object is instantiated by the constructor.
 #      The verbose argument is passed to the verifier function.}
 # }
@@ -560,7 +560,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
         colClassPatterns <- colClassPatterns[-(pos[-1])];
         pos <- pos[1];
       }
-  
+
       # Insert defaults
       colClass <- colClassPatterns[pos];
       names <- names(colClassPatterns);
@@ -568,8 +568,8 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
         names <- insert(names[-pos], at=pos, values=rep("*", times=nbrOfColumns));
         idxs <- whichVector(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
-  
-        colClassPatterns <- insert(colClassPatterns[-pos], at=pos, 
+
+        colClassPatterns <- insert(colClassPatterns[-pos], at=pos,
                                    values=rep("*", times=nbrOfColumns));
         names(colClassPatterns) <- names;
         colClassPatterns[idxs] <- colClass;
@@ -581,12 +581,12 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 
     verbose && cat(verbose, "Pattern used to identify column classes:", level=-20);
     verbose && print(verbose, colClassPatterns, level=-20);
-  
+
     verbose && cat(verbose, "Generate column classes:");
     # Read everything by default
     colClasses <- defColClasses;
     names(colClasses) <- columns;
-  
+
     # Update column classes according to patterns
     for (kk in seq_along(colClassPatterns)) {
       pattern <- names(colClassPatterns)[kk];
@@ -597,7 +597,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
       }
     }
   }
-  
+
   verbose && cat(verbose, "Column classes:", level=-20);
   verbose && print(verbose, colClasses, level=-20);
 
@@ -712,7 +712,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
   # Argument 'debug':
   debug <- Arguments$getLogical(debug);
-  
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -734,7 +734,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   attributes$header <- hdr;
 
   # Get read arguments
-  args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ..., 
+  args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ...,
                                                verbose=less(verbose, 5));
 
   verbose && cat(verbose, "Arguments inferred from file header:");
@@ -751,7 +751,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
   if (!is.null(columns)) {
     verbose && enter(verbose, "Matching column names:");
-    verbose && printf(verbose, "Column classes (%d):\n", 
+    verbose && printf(verbose, "Column classes (%d):\n",
                                                 length(args$colClasses));
     verbose && cat(verbose, paste(args$colClasses, collapse=", "));
     columns[args$colClasses == "NULL"] <- NA;
@@ -861,7 +861,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
       on.exit({
         if (!is.null(conT)) close(conT);
       }, add=TRUE);
-      
+
       # Try to read the values as the correct type.
       valuesT <- read.table(file=conT, quote="", colClasses=colClass, na.strings=na.strings, blank.lines.skip=FALSE)[[1]];
 
@@ -961,7 +961,7 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(nco
 
 
 
-# AD HOC fix to speed up ll(), which calls dimension() on each object, 
+# AD HOC fix to speed up ll(), which calls dimension() on each object,
 # which in turn calls dim() and dim() is really slow for this class,
 # because it has to infer the number of rows by reading the complete
 # file. The fix is to return NA for the number of rows if the file size
@@ -1010,7 +1010,7 @@ setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
   nbrOfCommentRows <- length(hdr$comments);
   nbrOfRowsToSkip <- hdr$skip;
   hasColumnNames <- (length(hdr$columns) > 0L);
-  nbrOfNonDataRows <- nbrOfCommentRows + nbrOfRowsToSkip + 
+  nbrOfNonDataRows <- nbrOfCommentRows + nbrOfRowsToSkip +
                       as.integer(hasColumnNames);
 
   n <- nbrOfLines(this, fast=fast);
@@ -1046,7 +1046,7 @@ setMethodS3("nbrOfRows", "TabularTextFile", function(this, fast=FALSE, ...) {
 # @author
 #
 # \seealso{
-#    To count the number of data rows is the data table, 
+#    To count the number of data rows is the data table,
 #    use @seemethod "nbrOfRows".
 #   Internally, @see "R.utils::countLines" is used.
 #   @seeclass
@@ -1136,7 +1136,7 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 #   to getHeader().
 # o Now readDataFrame(..., debug=TRUE) returns also the read arguments.
 # 2012-12-20
-# o Renamed argument 'colClassPatterns' of getReadArguments() for 
+# o Renamed argument 'colClassPatterns' of getReadArguments() for
 #   TabularTextFile to 'colClasses'.  However, if the old name is
 #   still supported.
 # 2012-12-08
@@ -1155,14 +1155,14 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 # 2012-11-28
 # o Declaring '.fileHeader' and '.nbrOfLines' as 'cached' fields.
 # 2012-11-15
-# o Made it possible for TabularTextFile to ignore header comment 
+# o Made it possible for TabularTextFile to ignore header comment
 #   arguments when inferring column names and classes.
 # 2012-11-08
 # o Now getReadArguments() for TabularTextFile also includes column
 #   class patterns from getDefaultColumnClassPatterns().
 # o Added getDefaultColumnClass() and getDefaultColumnClassPatterns()
 #   to TabularTextFile.
-# o Now getDefaultColumnNames() for TabularTextFile falls back to 
+# o Now getDefaultColumnNames() for TabularTextFile falls back to
 #   header comment argument 'columnNames', if there are no column
 #   names in the actual data table.
 # o Now readRawHeader() for TabularTextFile also parses and returns
@@ -1176,7 +1176,7 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 # 2012-09-27
 # o ROBUSTNESS: Now getHeader() for TabularTextFile checks if the file
 #   has been modified before returned cached results.
-# o Added argument 'stringsAsFactors=FALSE' to getReadArguments() for 
+# o Added argument 'stringsAsFactors=FALSE' to getReadArguments() for
 #   TabularTextFile such that the default is to read strings as character
 #   rather than as factors.
 # 2011-09-26
@@ -1204,7 +1204,7 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 # 2008-07-23
 # o Now nbrOfLines() cache the results and only recount if the file has
 #   been modified since last time (or the file system does not provide
-#   information on last modification time).  It also uses the new 
+#   information on last modification time).  It also uses the new
 #   countLines() in R.utils.
 # 2008-07-22
 # o Added ad hoc dimension() to speed up ll(). It may return NA for the
@@ -1233,14 +1233,14 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 # 2008-03-22
 # o Added {get|set}ColumnNameTranslator().
 # 2008-03-18
-# o Now any '...' arguments to getReadArguments() override the inferred 
+# o Now any '...' arguments to getReadArguments() override the inferred
 #   read arguments, e.g. na.strings="NA".
 # 2008-02-27
 # o Since 'affy' defines standardGeneric("colnames") and because S3 methods
 #   are not found by such S4 generic functions, we avoid that method name,
 #   and instead use getColumnNames().
 # 2007-09-16
-# o Removed all 'camelCaseNames' arguments.  Now column names are decided 
+# o Removed all 'camelCaseNames' arguments.  Now column names are decided
 #   by getColumnNames() and translateColumnNames(), which can be overridden.
 # 2007-09-14
 # o Extracted from AffymetrixTabularFile.
