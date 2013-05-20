@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE)
+\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this),
+  .assertSameClass=TRUE, verbose=FALSE)
 }
 
 \arguments{

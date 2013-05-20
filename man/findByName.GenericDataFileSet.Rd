@@ -20,10 +20,12 @@
 
  \usage{
 ## Static method (use this):
-## GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+## GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL,
+##   firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
 
 ## Don't use the below:
-\method{findByName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+\method{findByName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE,
+  mustExist=FALSE, ..., verbose=FALSE)
 }
 
  \arguments{

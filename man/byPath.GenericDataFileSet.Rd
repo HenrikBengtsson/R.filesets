@@ -20,10 +20,12 @@
 
 \usage{
 ## Static method (use this):
-## GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+## GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0L,
+##   fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
 
 ## Don't use the below:
-\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0L,
+  fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
 }
 
 \arguments{

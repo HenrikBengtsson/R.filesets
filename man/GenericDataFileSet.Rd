@@ -35,7 +35,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  }
 
  \usage{
-GenericDataFileSet(files=NULL, tags="*", depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore"))
+GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
+  .onUnknownArgs=c("error", "warning", "ignore"))
 }
 
  \arguments{

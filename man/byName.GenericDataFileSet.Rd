@@ -20,7 +20,8 @@
 
  \usage{
 ## Static method (use this):
-## GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)
+## GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ...,
+##   verbose=FALSE)
 
 ## Don't use the below:
 \method{byName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)

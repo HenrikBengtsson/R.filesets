@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error"))
+\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"),
+  onDuplicates=c("ignore", "drop", "error"))
 }
 
 \arguments{

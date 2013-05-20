@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE, verbose=FALSE)
+\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE,
+  verbose=FALSE)
 }
 
 \arguments{

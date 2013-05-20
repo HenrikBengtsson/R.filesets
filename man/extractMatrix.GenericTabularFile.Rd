@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{extractMatrix}{GenericTabularFile}(this, column=1, drop=FALSE, ..., verbose=FALSE)
+\method{extractMatrix}{GenericTabularFile}(this, column=1L, drop=FALSE, ..., verbose=FALSE)
 }
 
 \arguments{

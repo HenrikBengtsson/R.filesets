@@ -36,7 +36,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  }
 
  \usage{
-GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet")
+GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE,
+  .setClass="GenericDataFileSet")
 }
 
  \arguments{

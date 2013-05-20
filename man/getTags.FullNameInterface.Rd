@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE, useCustomTags=TRUE)
+\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE,
+  useCustomTags=TRUE)
 }
 
 \arguments{

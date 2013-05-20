@@ -21,7 +21,8 @@
 }
 
 \usage{
-\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)
+\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL,
+  header=NULL, ..., verbose=FALSE)
 }
 
 \arguments{

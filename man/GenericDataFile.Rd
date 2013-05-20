@@ -38,7 +38,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  }
 
  \usage{
-GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore"))
+GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...,
+  .onUnknownArgs=c("error", "warning", "ignore"))
 }
 
  \arguments{
