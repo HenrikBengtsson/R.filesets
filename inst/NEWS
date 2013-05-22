@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 2.0.3 [2013-05-22]
+o Now internal digest2() try only applies the patch if the object has 
+  names attributes and if running on R v2.6.0 or before.  The update
+  does not at all affect the results of digest2().
+
+
 Version: 2.0.2 [2013-05-20]
 o CRAN POLICY: Now all Rd \usage{} lines are at most 90 characters long.
 o Bumped up package dependencies.

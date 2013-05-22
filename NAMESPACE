@@ -8,6 +8,7 @@ import("R.oo")
 import("R.utils")
 
 importFrom("digest", "digest")
+importFrom("R.cache", "getChecksum")
 
 importFrom("stats", "reorder") # generic function
 importFrom("utils", "head") # generic function
@@ -18,7 +19,7 @@ importFrom("utils", "tail") # generic function
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Object that must exported explicitly
-export(.conflicts.OK) 
+export(.conflicts.OK)
 
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
