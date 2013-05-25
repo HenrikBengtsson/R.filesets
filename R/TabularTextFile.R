@@ -824,9 +824,6 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   verbose && cat(verbose, "Number of rows read: ", nbrOfRowsRead);
   verbose && cat(verbose, "Number of columns read: ", ncol(data));
 
-  # Not needed anymore
-  rm(args);
-
   # Was data read by first trimming quotes?
   if (trimQuotes) {
     # (2) Re-read numeric columns one by one
@@ -875,7 +872,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
       data[[col]] <- valuesT;
 
       # Not needed anymore
-      rm(bfr, values, valuesT);
+      bfr <- values <- valuesT <- NULL;
       verbose && exit(verbose);
     } # for (kk ...)
     verbose && exit(verbose);

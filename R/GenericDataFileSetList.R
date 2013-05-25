@@ -9,7 +9,7 @@
 #  A GenericDataFileSetList object represents a list of
 #  @see "GenericDataFileSet"s.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -27,7 +27,7 @@
 # }
 #
 # @examples "../incl/GenericDataFileSetList.Rex"
-# 
+#
 # @author
 #*/###########################################################################
 setConstructorS3("GenericDataFileSetList", function(dsList=list(), tags="*", ..., allowDuplicates=TRUE, .setClass="GenericDataFileSet") {
@@ -228,12 +228,12 @@ setMethodS3("getFileListClass", "GenericDataFileSetList", function(this, ...) {
   classNames <- classNames[keep];
 
   if (length(classNames) == 0) {
-    throw("Failed to locate a file list class for this set list: ", 
+    throw("Failed to locate a file list class for this set list: ",
                                                       class(this)[1]);
   }
 
   className <- classNames[1];
-    
+
   clazz <- Class$forName(className);
   classNames <- c(getKnownSubclasses(clazz), className);
   clazz <- NULL;
@@ -247,7 +247,7 @@ setMethodS3("getFileListClass", "GenericDataFileSetList", function(this, ...) {
      }
   } # for (kk ...)
 
-  throw("Failed to locate a file list class for this set list: ", 
+  throw("Failed to locate a file list class for this set list: ",
                                                       class(this)[1]);
 }, protected=TRUE)
 
@@ -264,9 +264,9 @@ setMethodS3("getFullNames", "GenericDataFileSetList", function(this, ...) {
 
 
 setMethodS3("getNames", "GenericDataFileSetList", function(this, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   unionWithDuplicates <- function(x, y) {
     keep <- is.element(x, y);
     x <- x[keep];
@@ -340,7 +340,8 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
       }
       excl <- na.omit(files[files < 0]);
       files <- setdiff(incl, -excl);
-      rm(incl, excl);
+      # Not needed anymore
+      incl <- excl <- NULL;
     }
   }
 
@@ -361,7 +362,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   dsList <- getSets(this);
   setNames <- sapply(dsList, FUN=getFullName);
   dsList <- lapply(dsList, FUN=extract, files, ...);
-  names(dsList) <- setNames; 
+  names(dsList) <- setNames;
 
   # Drop empty data sets?
   if (drop) {
@@ -398,7 +399,7 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
       row.names <- names;
     }
   } else {
-    row.names <- Arguments$getCharacters(row.names, 
+    row.names <- Arguments$getCharacters(row.names,
                                          length=rep(length(names),2));
   }
 
@@ -420,7 +421,8 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
   # Get list of files
   dsList <- getSets(res);
   dfList <- lapply(dsList, FUN=getFiles);
-  rm(res, dsList);
+  # Not needed anymore
+  res <- dsList <- NULL;
 
   # Sanity check
   ns <- sapply(dfList, FUN=length);

@@ -8,7 +8,7 @@
 #
 #  A GenericDataFileSet object represents a set of @see "GenericDataFile"s.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -27,7 +27,7 @@
 # }
 #
 # @examples "../incl/GenericDataFileSet.Rex"
-# 
+#
 # @author
 #*/###########################################################################
 setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
@@ -408,7 +408,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
     pos <- match(order[!idx], names);
     if (any(is.na(pos))) {
       bad <- order[!idx][is.na(pos)];
-      throw("Argument 'order' contains unknown sample names: ", 
+      throw("Argument 'order' contains unknown sample names: ",
                                                  paste(bad, collapse=", "));
     }
     if (sum(idx) == 0) {
@@ -425,7 +425,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
   order <- Arguments$getIndices(order, max=length(this));
   if (any(duplicated(order))) {
     bad <- order[duplicated(order)];
-    throw("Argument 'order' contains duplicates: ", 
+    throw("Argument 'order' contains duplicates: ",
                                                  paste(bad, collapse=", "));
   }
 
@@ -448,7 +448,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #
 # \arguments{
 #  \item{by}{A @character string specifying the ordering scheme.}
-#  \item{caseSensitive}{If @TRUE, the ordering is case sensitive, 
+#  \item{caseSensitive}{If @TRUE, the ordering is case sensitive,
 #        otherwise not.}
 #  \item{...}{Not used.}
 # }
@@ -459,9 +459,9 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #
 # \details{
 #   The set is ordering by the fullnames.
-#   If \code{by="lexicographic"}, lexicographic ordering is used, 
+#   If \code{by="lexicographic"}, lexicographic ordering is used,
 #   sometimes also referred to as alphabetic ordering.
-#   If \code{by="mixedsort"}, mixedsort order is used, 
+#   If \code{by="mixedsort"}, mixedsort order is used,
 #   cf. @see "gtools::mixedsort".
 # }
 #
@@ -557,7 +557,7 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{patterns}{A @character @vector of length K of names and/or 
+#  \item{patterns}{A @character @vector of length K of names and/or
 #   regular expressions to be matched.}
 #  \item{...}{Not used.}
 # }
@@ -729,7 +729,7 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 # \seealso{
 #   @seeclass
 # }
-# 
+#
 # @keyword internal
 #*/###########################################################################
 setMethodS3("seq", "GenericDataFileSet", function(this, ...) {
@@ -903,7 +903,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
 #  \item{clone}{If @TRUE, each file is cloned before being appened.}
 #  \item{...}{Additional arguments passed to @see "base::append".}
 #  \item{.fileClass}{A @character string specifying the class that
-#    all files must inherit from.  
+#    all files must inherit from.
 #    If @NULL, @seemethod "getFileClass" is used.}
 #  \item{.assertSameClass}{If @TRUE, the files to be appended must inherit
 #    from the same class as the existing files (the first file).}
@@ -947,7 +947,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
       classNames <- sapply(files, FUN=function(x) class(x)[1L]);
       classNames <- classNames[!isValid];
       classNames <- unique(classNames);
-      throw(sprintf("Argument 'files' contains non-%s objects: %s", 
+      throw(sprintf("Argument 'files' contains non-%s objects: %s",
                                     className, hpaste(classNames)));
     }
 
@@ -978,7 +978,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
     # Clone file objects?
     if (clone) {
       verbose && enter(verbose, "Cloning files");
-      files <- base::lapply(files, FUN=function(file) clone(file));    
+      files <- base::lapply(files, FUN=function(file) clone(file));
       verbose && exit(verbose);
     }
 
@@ -1064,7 +1064,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #  \item{files}{An @integer or a @logical @vector indicating which data files
 #    to be extracted.  Negative indices are excluded.}
 #  \item{...}{Not used.}
-#  \item{onMissing}{A @character specifying the action if a requested file 
+#  \item{onMissing}{A @character specifying the action if a requested file
 #    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
 #    a @see "GenericDataFile" refering to an @NA pathname is used in place.
 #    If \code{"drop"}, the missing file is dropped.}
@@ -1102,7 +1102,8 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
       }
       excl <- na.omit(files[files < 0L]);
       files <- setdiff(incl, -excl);
-      rm(incl, excl);
+      # Not needed anymore
+      incl <- excl <- NULL;
     }
   }
 
@@ -1159,7 +1160,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
     }
   }
   res$files <- files;
-  rm(files);
+  files <- NULL; # Not needed anymore
 
   # Some cached values are incorrect now.
   clearCache(res);
@@ -1183,7 +1184,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 #
 # \arguments{
 #  \item{path}{The directory where to search for files.}
-#  \item{pattern}{The filename pattern for match files. 
+#  \item{pattern}{The filename pattern for match files.
 #     If @NULL, filename extensions corresponding to known subclasses
 #     of the abstract @see "GenericDataFile" class are search for.}
 #  \item{recursive}{If @TRUE, subdirectories are search recursively,
@@ -1197,7 +1198,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 # }
 #
 # \section{Reserved filenames}{
-#   Note that files with names starting with a period \code{.} are not 
+#   Note that files with names starting with a period \code{.} are not
 #   searched for.  Such files are considered "private" and have to be
 #   included explicitly, if wanted.
 # }
@@ -1244,7 +1245,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Scan for files
   verbose && enter(verbose, "Scanning directory for files");
-  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE, 
+  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE,
                                    all.files=FALSE, recursive=recursive);
   verbose && printf(verbose, "Found %d files/directories.\n", length(pathnames));
   if (length(pathnames) > 0L) {
@@ -1336,7 +1337,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 # \value{
 #   Returns a @see "GenericDataFileSet" consisting the new file copies.
 # }
-# 
+#
 # \details{
 #   Each file is copied safely, but if this method is interrupted, it
 #   may results in a data set consisting of fewer than the original
@@ -1345,7 +1346,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 #   first copy to a temporary directory, which is then renamed, cf. how
 #   individual files are safely copied.
 # }
-# 
+#
 # @author
 #
 # \seealso{
@@ -1405,7 +1406,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #  \item{name, tags}{The name and the tags of the file set to be located.}
 #  \item{subdirs}{A @character @vector of the subpath where the file
 #     set is located.}
-#  \item{paths}{A @character @vector of root paths where to look for 
+#  \item{paths}{A @character @vector of root paths where to look for
 #     the file set.}
 #  \item{firstOnly}{If @TRUE, only the first path found, if any, is returned,
 #     otherwise all found paths are returned.}
@@ -1419,7 +1420,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #   Returns a @character @vector of paths.
 #   If no file sets were found, @NULL is returned.
 # }
-# 
+#
 # @author
 #
 # \seealso{
@@ -1501,7 +1502,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
   });
   if (length(rootPaths) == 0L) {
     if (mustExist) {
-      throw("None of the root path directories exist: ", 
+      throw("None of the root path directories exist: ",
                                            paste(paths, collapse=", "));
     }
     verbose && exit(verbose);
@@ -1588,7 +1589,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
         } else {
           pathsKK <- file.path(dataSetPaths, dir);
         } # if (isSmart)
- 
+
         # In case there are NULLs
         pathsKK <- unlist(pathsKK, use.names=FALSE);
         # Keep only directories
@@ -1623,7 +1624,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
       }
     }
   } # if (length(dataSetPaths) > 0L)
-  
+
   if (length(paths) == 0L) {
     paths <- NULL;
 
@@ -1633,7 +1634,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
         subdirsStr <- paste(subdirs, collapse=", ");
         msg <- sprintf("%s (with subdirectory '%s')", msg, subdirsStr);
       }
-        msg <- sprintf("%s in search path (%s)", 
+        msg <- sprintf("%s in search path (%s)",
                                 msg, paste(rootPaths, collapse=", "));
 
       throw(msg);
@@ -1663,7 +1664,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 #  \item{name, tags}{The name and the tags of the file set to be located.}
 #  \item{subdirs}{A @character @vector of the subpath where the file
 #     set is located.}
-#  \item{paths}{A @character @vector of root paths where to look for 
+#  \item{paths}{A @character @vector of root paths where to look for
 #     the file set.}
 #  \item{...}{Not used.}
 #  \item{verbose}{...}
@@ -1673,7 +1674,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 #   Returns a @see "GenericDataFileSet".
 #   If not found, an exception is thrown.
 # }
-# 
+#
 # @author
 #
 # \seealso{
@@ -1705,12 +1706,12 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
     depth <- 0L;
   }
 
-  verbose && printf(verbose, "Subpath [%d]: %s\n", 
+  verbose && printf(verbose, "Subpath [%d]: %s\n",
                     depth, paste(subdirs, collapse="/"));
 
 
   suppressWarnings({
-    paths <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
+    paths <- findByName(static, name=name, tags=tags, subdirs=subdirs,
              paths=paths, firstOnly=FALSE, mustExist=TRUE, verbose=verbose);
   })
 
@@ -1743,7 +1744,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
   verbose && exit(verbose);
 
   res;
-}, static=TRUE) 
+}, static=TRUE)
 
 
 
@@ -1768,7 +1769,7 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
     pushState(verbose);
     on.exit(popState(verbose));
   }
- 
+
 
   # Default values
   notEqual <- FALSE;
@@ -1848,8 +1849,8 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 # }
 #
 # \details{
-#  By default, the full name of a file set is the name of the directory 
-#  containing all the files, e.g. the name of file set 
+#  By default, the full name of a file set is the name of the directory
+#  containing all the files, e.g. the name of file set
 #  \code{path/foo,c/to,a,b/*} is \code{to,a,b}.
 #  Argument \code{parent=1} specifies that the parent directory should be
 #  used, e.g. \code{foo,c}.
@@ -1948,7 +1949,7 @@ setMethodS3("appendFullNamesTranslatorByTabularTextFile", "GenericDataFileSet", 
 setMethodS3("appendFullNamesTranslatorByTabularTextFileSet", "GenericDataFileSet", function(this, fcn, ...) {
   files <- as.list(this, useNames=FALSE);
   sapply(files, FUN=appendFullNameTranslatorByTabularTextFileSet, fcn, ...);
-  invisible(this); 
+  invisible(this);
 }, protected=TRUE)
 
 
@@ -2010,7 +2011,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 #   for clearFullNamesTranslator().
 # 2012-11-29
 # o CLEANUP: Removed lapply() and sapply() for GenericDataSet because
-#   the corresponding functions in the 'base' package utilizes 
+#   the corresponding functions in the 'base' package utilizes
 #   as.list().
 # o Added argument 'useNames' to as.list() for GenericDataFileSet.
 # o Added argument 'useNames' to getFiles() for GenericDataFileSet.
@@ -2035,8 +2036,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # 2011-05-23
 # o Added argument '.fileClass' to appendFiles() for GenericDataFileSet.
 # 2011-05-16
-# o Added argument '.assertSameClass' to appendFiles() for 
-#   GenericDataFileSet, which if TRUE asserts that the files to be 
+# o Added argument '.assertSameClass' to appendFiles() for
+#   GenericDataFileSet, which if TRUE asserts that the files to be
 #   appended inherits from the same class as the existing files.
 #   Before this test was mandatory.
 # o ROBUSTNESS: Now appendFiles() for GenericDataFileSet asserts that all
@@ -2085,7 +2086,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
 # 2010-05-25
 # o Added appendFullNameTranslatorBy...() method for data frames and
-#   TabularTextFile:s. 
+#   TabularTextFile:s.
 # 2010-02-13
 # o Added argument '.onUnknownArgs' to GenericDataFileSet().
 # 2010-02-07
@@ -2109,12 +2110,12 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 #   GenericDataFileSet where missing files are returned as missing
 #   GenericDataFile:s.
 # o copyTo() of GenericDataFileSet quietly ignores missing files.
-# o Now a GenericDataFileSet may contain GenericDataFile:s refering to 
+# o Now a GenericDataFileSet may contain GenericDataFile:s refering to
 #   missing files.
 # o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet would
 #   return a *logical* instead of *character* value.
 # o BUG FIX: indexOf(ds, names) of GenericDataFileSet would return a
-#   *logical* instead of an *integer* vector of NA:s if none of the names 
+#   *logical* instead of an *integer* vector of NA:s if none of the names
 #   existed.
 # 2009-12-25
 # o Added Rd help for indexOf() of GenericDataFileSet.
@@ -2140,7 +2141,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # o Now findByName() of GenericDataFileSet follows Windows Shortcut links
 #   also for subdirectories.
 # 2009-05-19
-# o Now setFullNameTranslator() for GenericDataFileSet asserts that the 
+# o Now setFullNameTranslator() for GenericDataFileSet asserts that the
 #   fullname translator function accepts also argument 'set'.
 # 2009-05-04
 # o Now static fromFiles() of GenericDataFileSet supports empty data sets.
@@ -2149,9 +2150,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # 2009-02-26
 # o Now hasTags(..., tags) splits the 'tags' argument.
 # 2009-02-08
-# o Now argument 'files' in extract() of GenericDataFileSet can 
+# o Now argument 'files' in extract() of GenericDataFileSet can
 #   also be a vector of string.
-# o ALPHA: Added support for "smart" subdirectories in static findByName() 
+# o ALPHA: Added support for "smart" subdirectories in static findByName()
 #   of GenericDataFileSet.
 # 2008-07-21
 # o Now findByName() assert that the data set name is not empty.
@@ -2176,7 +2177,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # o Now argument 'fileClass' of fromFiles() defaults to getFileClass().
 # o Added static and protected getFileClass().
 # 2008-03-22
-# o Now getNames() of GenericDataFileSet passes '...' to getName() of 
+# o Now getNames() of GenericDataFileSet passes '...' to getName() of
 #   each file.
 # 2007-09-14
 # o Extracted from AffymetrixFileSet.
@@ -2231,7 +2232,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # o Added argument 'subset' to calcAvgCellSignals() & normalizeQuantile().
 # 2006-03-15
 # o Now nbrOfCells() returns the number of cells for the first file only.
-# o Now the fromFiles(static, ...) creates an object of the same class as 
+# o Now the fromFiles(static, ...) creates an object of the same class as
 #   the static object.
 # 2006-03-04
 # o Added mapping functions.

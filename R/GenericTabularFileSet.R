@@ -6,10 +6,10 @@
 # \description{
 #  @classhierarchy
 #
-#  An GenericTabularFileSet object represents a set of 
+#  An GenericTabularFileSet object represents a set of
 #  @see "GenericTabularFile"s.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,12 +19,12 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # @author
 #*/###########################################################################
 setConstructorS3("GenericTabularFileSet", function(...) {
   extend(GenericDataFileSet(...), "GenericTabularFileSet");
-}) 
+})
 
 
 
@@ -56,7 +56,8 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=
     }
 
     data[,kk] <- dataKK;
-    rm(dataKK);
+    # Not needed anymore
+    dataKK <- NULL;
   }
 
   # Drop singelton dimensions?
