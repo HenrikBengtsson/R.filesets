@@ -1,8 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 2.0.5 [2013-06-20]
+o Now isGzipped() for GenericDataFile ignores the case of the filename
+  extension when testing whether the file is gzipped or not.
+
+
 Version: 2.0.4 [2013-05-25]
-o Minor speedup by replacing all rm() calls with NULL assignments. 
+o Minor speedup by replacing all rm() calls with NULL assignments.
 
 
 Version: 2.0.3 [2013-05-22]
@@ -16,7 +21,7 @@ o Bumped up package dependencies.
 
 
 Version: 2.0.1 [2013-03-04]
-o DOCUMENTATION: Updated the help usage section for all static methods. 
+o DOCUMENTATION: Updated the help usage section for all static methods.
 o Bumped up package dependencies.
 
 
@@ -39,7 +44,7 @@ o Argument 'colClassPatterns' of readDataFrame() for TabularTextFile
 Version: 1.8.2 [2012-12-19]
 o Bumped up package dependencies.
 o Utilizing new startupMessage() of R.oo.
-o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an 
+o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an
   exception if use tries to pass an argument 'names'.
 
 
@@ -86,11 +91,11 @@ o BUG FIX: Now getReadArguments() for TabularTextFile drops arguments
 
 
 Version: 1.7.0 [2012-11-30]
-o Updated as.list() for GenericDataSet to return a *named* list of 
+o Updated as.list() for GenericDataSet to return a *named* list of
   GenericDataFile:s (previously it had no names).  The names are
   the (translated) full names of the GenericDataFile:s.
 o CLEANUP: Removed lapply() and sapply() for GenericDataSet because
-  the corresponding functions in the 'base' package utilizes 
+  the corresponding functions in the 'base' package utilizes
   as.list().
 
 
@@ -114,7 +119,7 @@ o No updates. Bumped the version for CRAN release.
 
 Version: 1.5.4 [2012-11-15]
 o BACKWARD COMPATIBILITY: Made it possible for TabularTextFile to ignore
-  header comment arguments when inferring column names and classes.  
+  header comment arguments when inferring column names and classes.
 
 
 Version: 1.5.3 [2012-11-13]
@@ -129,7 +134,7 @@ o CLEANUP: Deprecated (get|set)Label() for GenericDataFile and
 Version: 1.5.2 [2012-11-12]
 o CLEANUP: Now seq_along(x) instead of seq(along=x) everywhere.
   Similarly, seq(ds) where 'ds' is GenericDataFileSet is now
-  replaced by seq_along(ds).  Likewise, seq_len(x) replaces 
+  replaced by seq_along(ds).  Likewise, seq_len(x) replaces
   seq(length=x), and length(ds) replaces nbrOfFiles(ds).
 
 
@@ -138,9 +143,9 @@ o Now TabularTextFile() tries to infer whether the data section
   contains column names or not.  This is done by comparing to
   the optional 'columnNames' header argument.  If that is not
   available, it will (as before) assume there are column names.
-o Now readDataFrame() acknowledge header comment arguments 
+o Now readDataFrame() acknowledge header comment arguments
   'columnNames' and 'columnClasses' if specified in the file.
-o Now getDefaultColumnNames() for TabularTextFile falls back to 
+o Now getDefaultColumnNames() for TabularTextFile falls back to
   header comment argument 'columnNames', if there are no column
   names in the actual data table.
 o Now readRawHeader() for TabularTextFile also parses and returns
@@ -184,19 +189,19 @@ o CLEANUP: Forgot to drop Arguments$getFilename() below.
 
 Version: 1.3.1 [2012-10-16]
 o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
-  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it
   for you; missing documentation, a bug or just me?' on Oct 16, 2012.
 
 
 Version: 1.3.0 [2012-10-16]
-o CLEANUP: Moved Arguments$getFilename() from this package to 
+o CLEANUP: Moved Arguments$getFilename() from this package to
   R.utils v1.17.0.
 o ROBUSTNESS: Bumped up package dependencies.
 
 
 Version: 1.2.2 [2012-10-16]
 o DOCUMENTATION: Added Rd help for a few more methods.
-o CLEANUP: static fromFiles() for GenericDataFileSet is now defunct 
+o CLEANUP: static fromFiles() for GenericDataFileSet is now defunct
   in placefor byName(), which has been recommended since January 2010.
 
 
@@ -211,12 +216,12 @@ o ROBUSTNESS: Now getHeader() for TabularTextFile checks if the
 
 Version: 1.2.0 [2012-09-25]
 o Now R.filesets imports R.methodsS3, R.oo and R.utils.
-  This solves issues such as trim() being overridden by ditto 
+  This solves issues such as trim() being overridden by ditto
   from the IRanges package, iff loaded.
 
 
 Version: 1.1.6 [2012-09-01]
-o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column 
+o CONSISTENCY: Now extractMatrix() for GenericTabularFile adds column
   names just as ditto for GenericTabularFileSet does.
 
 
@@ -276,13 +281,13 @@ o ROBUSTNESS: Now appendFiles() for GenericDataFileSet asserts that all
   files to be appended are instances of the file class of this set as
   given by the static getFileClass().
 o ROBUSTNESS: Added argument '.assertSameClass' to appendFiles()
-  for GenericDataFileSet, which if TRUE asserts that the files to be 
+  for GenericDataFileSet, which if TRUE asserts that the files to be
   appended inherits from the same class as the existing files.
   Before this test was mandatory.
 
 
 Version: 1.0.0 [2011-04-06]
-o Added getChecksum() to GenericDataFileSet, which calculates the 
+o Added getChecksum() to GenericDataFileSet, which calculates the
   checksum of the object returned by the protected getChecksumData().
   Use with care, because what objects should be the basis of the
   checksum is not clear, e.g. should it be only the file system
@@ -324,7 +329,7 @@ Version: 0.9.4 [2011-02-24]
 o Added dropRootPathTags().
 o GENERALIZATION: Added support to findByName() for GenericDataFileSet
   such that root paths also can be specified by simple regular expression
-  (still via argument 'paths').  Currently it is only the last 
+  (still via argument 'paths').  Currently it is only the last
   subdirectory that can be expanded, e.g. foo/bar/data(,.*)/.
 
 
@@ -397,22 +402,22 @@ o Submitted to CRAN.  No changes since v0.7.6.
 
 
 Version: 0.7.6 [2010-02-13]
-o Added argument '.onUnknownArgs' to GenericDataFile() and 
+o Added argument '.onUnknownArgs' to GenericDataFile() and
   GenericDataFileSet().  As before, the default is to throw an
-  exception if there are unknown arguments.  However, in certain 
+  exception if there are unknown arguments.  However, in certain
   case it is useful to allow (and ignore) "stray" arguments.
 
 
 Version: 0.7.5 [2010-02-07]
 o BUG FIX: indexOf() of GenericDataFileSet and GenericDataFileSetList
-  did not handle names with regular expression symbols '+' and '*'. 
+  did not handle names with regular expression symbols '+' and '*'.
   Thanks to Randy Gobbel for the initial error report.
 
 
 Version: 0.7.4 [2010-01-31]
 o DOCUMENTATION: Added Rd help paged to more methods for classes
-  GenericDataFile and GenericDataFileSet. 
-o DEPRECATION: Deprecated static fromFiles() of GenericDataSet.  
+  GenericDataFile and GenericDataFileSet.
+o DEPRECATION: Deprecated static fromFiles() of GenericDataSet.
   Use byPath() instead.
 
 
@@ -424,20 +429,20 @@ o ROBUSTNESS: If argument 'files' is logical, then extract() of
 
 Version: 0.7.2 [2010-01-12]
 o Added some example data files under exData/.
-o BUG FIX: readColumns(..., column=<string>) on a TabularTextFile 
+o BUG FIX: readColumns(..., column=<string>) on a TabularTextFile
   would give "Error ... object 'columnNames' not found".
 
 
 Version: 0.7.1 [2010-01-02]
 o Now setExtensionPattern(..., pattern=NULL) of GenericDataFile works.
-o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern() 
+o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern()
   of GenericDataFile.  Before the default value was hardcoded
   inside this function.
 
 
 Version: 0.7.0 [2010-01-02]
 o Added protected as.data.frame() to GenericDataFileSetList.
-o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  
+o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.
   Made all methods aware of such missing files.
 o Now extract(ds, c(1,2,NA,4), onMissing="NA") returns a valid
   GenericDataFileSet where missing files are returned as missing
@@ -447,23 +452,23 @@ o Added na.rm=TRUE to all getTags() so that it returns NULL in case
 o copyTo() of GenericDataFileSet quietly ignores missing files.
 o Added Rd help for indexOf() of GenericDataFileSet.
 o ROBUSTNESS: Using new Arguments$getInstanceOf() were possible.
-o ROBUSTNESS: Now all index arguments are validated correctly 
+o ROBUSTNESS: Now all index arguments are validated correctly
   using the new 'max' argument of Arguments$getIndices().  Before
   the case where "max == 0" was not handled correctly.
-o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() 
+o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName()
   of GenericDataFileSet to be consistent with the documentation.
 o BUG FIX: Now GenericDataFile(pathname) throws an error if 'pathname'
   is referring to a directory.
-o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet 
+o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet
   would return a *logical* instead of *character* value.
 o BUG FIX: indexOf(ds, names) of GenericDataFileSet would return a
-  *logical* instead of an *integer* vector of NA:s if none of the 
+  *logical* instead of an *integer* vector of NA:s if none of the
   names existed.
 
 
 Version: 0.6.5 [2009-10-30]
-o ROBUSTIFICATION: Now translateFullName() of FullNameInterface 
-  and translateColumnNames() of GenericTabularFile throw an 
+o ROBUSTIFICATION: Now translateFullName() of FullNameInterface
+  and translateColumnNames() of GenericTabularFile throw an
   exception if some fullnames were translated into NA.  They
   also assert that no names were dropped or added in the process.
 o BUG FIX: After doing append() to a GenericDataFileSet, the
@@ -484,7 +489,7 @@ o Added appendFullNameTranslatorBylist() which makes it possible to do
 
 
 Version: 0.6.2 [2009-10-22]
-o Added support for having a sequence of fullname translator 
+o Added support for having a sequence of fullname translator
   functions.  These can be added using appendFullNameTranslator().
 o Added an example() to FullNameInterface.
 
@@ -496,22 +501,22 @@ o Added subsetting via [() to TabularTextFile.
 Version: 0.6.0 [2009-10-02]
 o Added the FullNameInterface, which is the interface class that
   defines what fullnames, names, tags etc are.
-o Now setFullName*s*Translator() for GenericDataFileSet dispatches 
-  on the 'by' argument.  If that is not possible, it call 
+o Now setFullName*s*Translator() for GenericDataFileSet dispatches
+  on the 'by' argument.  If that is not possible, it call
   setFullNameTranslator() for each file in the set (as before).
-o CLEAN UP: Renamed fromFiles() to byPath().  For backward 
-  compatibility the former calls the latter. 
+o CLEAN UP: Renamed fromFiles() to byPath().  For backward
+  compatibility the former calls the latter.
 o CLEAN UP: GenericDataFile and GenericDataFileSet implements
   the FullNameInterface, which mean less redundant code.
 
 
 Version: 0.5.3 [2009-08-12]
-o Now findByName() of GenericDataFileSet follows Windows Shortcut 
+o Now findByName() of GenericDataFileSet follows Windows Shortcut
   links also for subdirectories.
 
 
 Version: 0.5.2 [2009-06-08]
-o Analogously to the method for a GenericDataFile, the 
+o Analogously to the method for a GenericDataFile, the
   setFullNameTranslator() method for GenericDataFileSet now
   assumes that the fullname translator function accepts also
   argument 'set'.
@@ -520,8 +525,8 @@ o Added argument '.fileSetClass' to GenericDataFileSet().
 
 Version: 0.5.1 [2009-05-19]
 o A fullname translator function for a GenericDataFile should accept
-  any number of arguments.  The first argument will always be 
-  (an unnamed) argument containing the name (or names) to be 
+  any number of arguments.  The first argument will always be
+  (an unnamed) argument containing the name (or names) to be
   translated.  If the translator is for a GenericDataFile, an
   additional argument 'file' will also be passed.  This allows
   the translator function to for instance read the file header

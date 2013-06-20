@@ -66,10 +66,10 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   args <- list(...);
 
   # Ignore any argument called 'recursive'
-  keep <- which(regexpr("^recursive$", names(args)) == -1);
+  keep <- which(regexpr("^recursive$", names(args)) == -1L);
   args <- args[keep];
 
-  if (length(args) > 0) {
+  if (length(args) > 0L) {
     if (is.element(.onUnknownArgs, c("error", "warning"))) {
       argsStr <- paste(names(args), collapse=", ");
       msg <- sprintf("Unknown arguments: %s", argsStr);
@@ -431,7 +431,7 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
     }
   }
 
-  filename <- getFilename(this);
+  filename <- getFilename(this, ...);
   if (is.null(filename))
     return(as.character(NA));
   pattern <- getExtensionPattern(this);
@@ -552,7 +552,7 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
   pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$";
-  ext <- gsub(pattern, "\\2", getFilename(this));
+  ext <- gsub(pattern, "\\2", getFilename(this, ...));
   tolower(ext);
 })
 
@@ -833,7 +833,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
   prevModifiedOn <- this$.prevModifiedOn;
 
   # Unknown modification timestamp on file?
-  if (is.na(lastModifiedOn) || lastModifiedOn == 0) {
+  if (is.na(lastModifiedOn) || lastModifiedOn == 0L) {
     res <- unknown;
     attr(res, "lastModifiedOn") <- lastModifiedOn;
     attr(res, "prevModifiedOn") <- prevModifiedOn;
@@ -1309,19 +1309,19 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
   # Trim all lines
   checksum <- trim(checksum);
   # Drop empty lines
-  checksum <- checksum[nchar(checksum) > 0];
+  checksum <- checksum[nchar(checksum) > 0L];
   # Drop comments
-  checksum <- checksum[regexpr("^#", checksum) == -1];
+  checksum <- checksum[regexpr("^#", checksum) == -1L];
 #  verbose && exit(verbose);
 
   verbose && enter(verbose, "Validating checksum");
-  if (length(checksum) == 0)
+  if (length(checksum) == 0L)
     throw("File format error. No checksum found: ", outPathname);
-  if (length(checksum) > 1)
+  if (length(checksum) > 1L)
     throw("File format error. Too many possible checksums: ", outPathname);
 
   # A checksum should only consist of hexadecimal characters
-  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1) {
+  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1L) {
     throw("File format error. Invalid checksum ('", checksum, "'): ", outPathname);
   }
   verbose && exit(verbose);
@@ -1527,7 +1527,7 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
     throw("File is not gzip'ed: ", pathname);
   }
 
-  outPathname <- gsub("[.]gz$", "", pathname);
+  outPathname <- gsub("[.]gz$", "", pathname, ignore.case=TRUE);
   gunzip(pathname, destname=outPathname, ...);
 
   this$.pathname <- outPathname;
@@ -1538,7 +1538,7 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...);
-  (regexpr("[.]gz$", filename) != -1L);
+  (regexpr("[.]gz$", filename, ignore.case=TRUE) != -1L);
 }, protected=TRUE)
 
 
@@ -1561,7 +1561,7 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
     filename <- basename(pathname);
     filenames <- list.files(path=path, all.files=TRUE);
     res <- grep(filename, filenames, fixed=TRUE);
-    res <- (length(res) >= 1);
+    res <- (length(res) >= 1L);
     res;
   }
 
@@ -1605,6 +1605,9 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2013-06-20
+# o Now isGzipped() for GenericDataFile ignores the case of the filename
+#   extension when testing whether the file is gzipped or not.
 # 2013-05-22
 # o CLEANUP: Now getChecksum() for GenericDataFile calls
 #   digest::digest(..., file=TRUE) instead of digest2(..., file=TRUE),

@@ -1,9 +1,9 @@
 Package: R.filesets
-Version: 2.0.4
+Version: 2.0.5
 Depends: R (>= 2.6.0), R.oo (>= 1.13.0), R.utils (>= 1.23.2)
 Imports: stats, R.methodsS3 (>= 1.4.2), R.oo (>= 1.13.0), R.utils (>= 1.23.2), R.cache (>= 0.6.5), digest (>= 0.6.3)
 Suggests: gtools (>= 2.7.1)
-Date: 2013-05-25
+Date: 2013-06-20
 Title: Easy handling of and access to files organized in structured directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
