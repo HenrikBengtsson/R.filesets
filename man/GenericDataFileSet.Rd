@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericDataFileSet}
+\name{GenericDataFileSet}
 \docType{class}
 \alias{GenericDataFileSet}
 
 
- \title{The GenericDataFileSet class}
+\title{The GenericDataFileSet class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class GenericDataFileSet}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -31,27 +31,27 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
-  A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
- }
+ A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
+}
 
- \usage{
+\usage{
 GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
   .onUnknownArgs=c("error", "warning", "ignore"))
 }
 
- \arguments{
-   \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
-   \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be used for this file set.
-      The string \code{"*"} indicates that it should be replaced by the
-      tags part of the file set pathname.}
-   \item{depth}{An non-negative \code{\link[base]{integer}}.}
-   \item{...}{Not used.}
-   \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
-      if there are unknown arguments in \code{...}.}
- }
+\arguments{
+  \item{files}{A \code{\link[base]{list}} of \code{\link{GenericDataFile}}:s.}
+  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be used for this file set.
+     The string \code{"*"} indicates that it should be replaced by the
+     tags part of the file set pathname.}
+  \item{depth}{An non-negative \code{\link[base]{integer}}.}
+  \item{...}{Not used.}
+  \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+     if there are unknown arguments in \code{...}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:append.GenericDataFileSet]{append}} \tab Appends one data set to an existing one.\cr
  \tab \code{\link[R.filesets:appendFiles.GenericDataFileSet]{appendFiles}} \tab Appends a list of files to a data set.\cr
@@ -84,9 +84,9 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \examples{
+\examples{
 # Setup a file set
 path <- system.file(package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
@@ -135,5 +135,5 @@ print(getFiles(ds4))
 stopifnot(identical(is.na(idxs), unname(is.na(getPathnames(ds4)))))
 }
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 \keyword{classes}

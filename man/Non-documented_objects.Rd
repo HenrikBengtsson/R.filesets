@@ -276,7 +276,6 @@
 \alias{resetFullName.FullNameInterface}
 \alias{resetFullNames}
 \alias{resetFullNames.GenericDataFileSet}
-\alias{isGzipped}
 \alias{getOneFile}
 \alias{getOneFile.GenericDataFileSet}
 \alias{head.GenericTabularFile}

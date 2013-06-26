@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericDataFile}
+\name{GenericDataFile}
 \docType{class}
 \alias{GenericDataFile}
 
 
- \title{The abstract GenericDataFile class}
+\title{The abstract GenericDataFile class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class GenericDataFile}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -31,29 +31,29 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
-  A GenericDataFile is an object refering to a data file on a file system.
-  Note that this class is abstract and can not be instanciated, but
-  instead you have to use one of the subclasses or the generic
-  \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
- }
+ A GenericDataFile is an object refering to a data file on a file system.
+ Note that this class is abstract and can not be instanciated, but
+ instead you have to use one of the subclasses or the generic
+ \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
+}
 
- \usage{
+\usage{
 GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...,
   .onUnknownArgs=c("error", "warning", "ignore"))
 }
 
- \arguments{
-   \item{filename}{The filename of the file.}
-   \item{path}{An optional path to the file.}
-   \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file does
-     not exists, otherwise not.}
-   \item{...}{Not used.}
-   \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
-      if there are unknown arguments in \code{...}.}
- }
+\arguments{
+  \item{filename}{The filename of the file.}
+  \item{path}{An optional path to the file.}
+  \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file does
+    not exists, otherwise not.}
+  \item{...}{Not used.}
+  \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+     if there are unknown arguments in \code{...}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:compareChecksum.GenericDataFile]{compareChecksum}} \tab Compares the file checksum with the value of the checksum file.\cr
  \tab \code{\link[R.filesets:equals.GenericDataFile]{equals}} \tab Checks if a file equals another.\cr
@@ -78,23 +78,23 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \section{Filename convention}{
-   The filename of an \code{GenericDataFile} is structured as follows:
-   \itemize{
-    \item{filename}{: \code{"sample001,a,b,c.CEL"}
-       (this follows the \R convention, but not the Unix convention)}
-    \item{fullname}{: \code{"sample001,a,b,c"}}
-    \item{name}{: \code{"sample001"}}
-    \item{tags}{: \code{c("a", "b", "c")}}
-    \item{extension}{: \code{"CEL"}}
-   }
- }
+\section{Filename convention}{
+  The filename of an \code{GenericDataFile} is structured as follows:
+  \itemize{
+   \item{filename}{: \code{"sample001,a,b,c.CEL"}
+      (this follows the \R convention, but not the Unix convention)}
+   \item{fullname}{: \code{"sample001,a,b,c"}}
+   \item{name}{: \code{"sample001"}}
+   \item{tags}{: \code{c("a", "b", "c")}}
+   \item{extension}{: \code{"CEL"}}
+  }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
- \seealso{
-   An object of this class is typically part of an \code{\link{GenericDataFileSet}}.
- }
+\seealso{
+  An object of this class is typically part of an \code{\link{GenericDataFileSet}}.
+}
 \keyword{classes}

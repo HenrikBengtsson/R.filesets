@@ -6,35 +6,35 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{seq.GenericDataFileSet}
+\name{seq.GenericDataFileSet}
 \alias{seq.GenericDataFileSet}
 \alias{GenericDataFileSet.seq}
 \alias{seq,GenericDataFileSet-method}
 
- \title{Gets an integer vector of file indices}
+\title{Gets an integer vector of file indices}
 
- \description{
-   Gets an integer vector of file indices.
- }
+\description{
+  Gets an integer vector of file indices.
+}
 
- \usage{
+\usage{
 \method{seq}{GenericDataFileSet}(this, ...)
 }
 
- \arguments{
-  \item{...}{Not used.}
- }
+\arguments{
+ \item{...}{Not used.}
+}
 
- \value{
-   Returns an \code{\link[base]{integer}} \code{\link[base]{vector}} in [1,N] where N is the number of files,
-   or an empty vector if the set is empty.
- }
+\value{
+  Returns an \code{\link[base]{integer}} \code{\link[base]{vector}} in [1,N] where N is the number of files,
+  or an empty vector if the set is empty.
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
- \seealso{
-   For more information see \code{\link{GenericDataFileSet}}.
- }
+\seealso{
+  For more information see \code{\link{GenericDataFileSet}}.
+}
 
 
 \keyword{internal}

@@ -1,9 +1,9 @@
 Package: R.filesets
 ===================
 
-Version: 2.0.5 [2013-06-20]
-o Now isGzipped() for GenericDataFile ignores the case of the filename
-  extension when testing whether the file is gzipped or not.
+Version: 2.0.5 [2013-06-26]
+o Now isGzipped() ignores the case of the filename extension when
+  testing whether the file is gzipped or not.
 
 
 Version: 2.0.4 [2013-05-25]

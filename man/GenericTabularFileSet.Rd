@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericTabularFileSet}
+\name{GenericTabularFileSet}
 \docType{class}
 \alias{GenericTabularFileSet}
 
 
- \title{The GenericTabularFileSet class}
+\title{The GenericTabularFileSet class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class GenericTabularFileSet}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -33,20 +33,20 @@ extends \link[R.filesets]{GenericDataFileSet}\cr
 
 
 
-  An GenericTabularFileSet object represents a set of
-  \code{\link{GenericTabularFile}}s.
- }
+ An GenericTabularFileSet object represents a set of
+ \code{\link{GenericTabularFile}}s.
+}
 
- \usage{
+\usage{
 GenericTabularFileSet(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{GenericDataFileSet}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{GenericDataFileSet}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{extractMatrix} \tab  -\cr
 }
@@ -62,7 +62,7 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 \keyword{classes}

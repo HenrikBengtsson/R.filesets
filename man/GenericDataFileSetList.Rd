@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericDataFileSetList}
+\name{GenericDataFileSetList}
 \docType{class}
 \alias{GenericDataFileSetList}
 
 
- \title{The GenericDataFileSetList class}
+\title{The GenericDataFileSetList class}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class GenericDataFileSetList}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -31,27 +31,27 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
-  A GenericDataFileSetList object represents a list of
-  \code{\link{GenericDataFileSet}}s.
- }
+ A GenericDataFileSetList object represents a list of
+ \code{\link{GenericDataFileSet}}s.
+}
 
- \usage{
+\usage{
 GenericDataFileSetList(dsList=list(), tags="*", ..., allowDuplicates=TRUE,
   .setClass="GenericDataFileSet")
 }
 
- \arguments{
-   \item{dsList}{A single or a \code{\link[base]{list}} of \code{\link{GenericDataFileSet}}:s.}
-   \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
-   \item{...}{Not used.}
-   \item{allowDuplicates}{If \code{\link[base:logical]{FALSE}}, files with duplicated names are not
-     allowed and an exception is thrown, otherwise not.}
-   \item{.setClass}{A \code{\link[base]{character}} string specifying a name of the
-     class that each data set must be an instance of.}
- }
+\arguments{
+  \item{dsList}{A single or a \code{\link[base]{list}} of \code{\link{GenericDataFileSet}}:s.}
+  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
+  \item{...}{Not used.}
+  \item{allowDuplicates}{If \code{\link[base:logical]{FALSE}}, files with duplicated names are not
+    allowed and an exception is thrown, otherwise not.}
+  \item{.setClass}{A \code{\link[base]{character}} string specifying a name of the
+    class that each data set must be an instance of.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{as} \tab  -\cr
  \tab \code{as.GenericDataFileSetList} \tab  -\cr
@@ -74,9 +74,9 @@ appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslat
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \examples{
+\examples{
 # Setup a file set
 path1 <- system.file(package="R.filesets")
 ds1 <- GenericDataFileSet$byPath(path1)
@@ -94,5 +94,5 @@ print(df["DESCRIPTION","R.filesets"])
 
 }
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 \keyword{classes}

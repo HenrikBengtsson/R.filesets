@@ -508,10 +508,7 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 #*/###########################################################################
 setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...);
-
-  # Why not getFullName()? /HB 2010-02-01
   fullname <- getDefaultFullName(this, ...);
-
   # Drop <fullname> and a possible '.'.
   substring(filename, first=nchar(fullname)+2L);
 })
@@ -552,7 +549,8 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
   pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$";
-  ext <- gsub(pattern, "\\2", getFilename(this, ...));
+  filename <- getFilename(this, ...);
+  ext <- gsub(pattern, "\\2", filename);
   tolower(ext);
 })
 
@@ -1503,7 +1501,7 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   }
 
   pathname <- getPathname(this);
-  if (isGzipped(this)) {
+  if (isGzipped(pathname)) {
     throw("File is already gzip'ed: ", pathname);
   }
 
@@ -1523,7 +1521,7 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   }
 
   pathname <- getPathname(this);
-  if (!isGzipped(this)) {
+  if (!isGzipped(pathname)) {
     throw("File is not gzip'ed: ", pathname);
   }
 
@@ -1537,8 +1535,7 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
-  filename <- getFilename(this, ...);
-  (regexpr("[.]gz$", filename, ignore.case=TRUE) != -1L);
+  isGzipped(getPathname(this), ...);
 }, protected=TRUE)
 
 
