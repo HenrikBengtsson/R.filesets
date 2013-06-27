@@ -1505,8 +1505,8 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
     throw("File is already gzip'ed: ", pathname);
   }
 
-  outPathname <- sprintf("%s.gz", pathname);
-  gzip(pathname, destname=outPathname, ...);
+  outPathname <- gzip(pathname, ...);
+  temporary <- attr(outPathname, "temporary");
 
   this$.pathname <- outPathname;
 
@@ -1516,17 +1516,18 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
+ # Argument 'this':
   if (!isFile(this)) {
     throw("Cannot gunzip file. File does not exist: NA");
   }
-
   pathname <- getPathname(this);
   if (!isGzipped(pathname)) {
     throw("File is not gzip'ed: ", pathname);
   }
 
-  outPathname <- gsub("[.]gz$", "", pathname, ignore.case=TRUE);
-  gunzip(pathname, destname=outPathname, ...);
+  # Decompress
+  outPathname <- gunzip(pathname, ...);
+  temporary <- attr(outPathname, "temporary");
 
   this$.pathname <- outPathname;
 
