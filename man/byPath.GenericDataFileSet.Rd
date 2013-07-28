@@ -20,11 +20,11 @@
 
 \usage{
 ## Static method (use this):
-## GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0L,
-##   fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+## GenericDataFileSet$byPath(path=NULL, pattern=NULL, private=FALSE, recursive=FALSE,
+##   depth=0L, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
 
 ## Don't use the below:
-\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0L,
+\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, private=FALSE, recursive=FALSE, depth=0L,
   fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
 }
 
@@ -33,6 +33,8 @@
  \item{pattern}{The filename pattern for match files.
     If \code{\link[base]{NULL}}, filename extensions corresponding to known subclasses
     of the abstract \code{\link{GenericDataFile}} class are search for.}
+ \item{private}{If \code{\link[base:logical]{FALSE}}, files starting with a period are excluded,
+    otherwise not.}
  \item{recursive}{If \code{\link[base:logical]{TRUE}}, subdirectories are search recursively,
     otherwise not.}
  \item{...}{Optional arguments passed to the constructor of the

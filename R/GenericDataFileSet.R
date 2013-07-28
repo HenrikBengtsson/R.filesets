@@ -1187,6 +1187,8 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 #  \item{pattern}{The filename pattern for match files.
 #     If @NULL, filename extensions corresponding to known subclasses
 #     of the abstract @see "GenericDataFile" class are search for.}
+#  \item{private}{If @FALSE, files starting with a period are excluded,
+#     otherwise not.}
 #  \item{recursive}{If @TRUE, subdirectories are search recursively,
 #     otherwise not.}
 #  \item{...}{Optional arguments passed to the constructor of the
@@ -1209,7 +1211,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0L, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
+setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, private=FALSE, recursive=FALSE, depth=0L, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1220,6 +1222,9 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   if (!is.null(pattern)) {
     pattern <- Arguments$getRegularExpression(pattern);
   }
+
+  # Argument 'private':
+  private <- Arguments$getLogical(private);
 
   # Argument 'fileClass':
   clazz <- Class$forName(fileClass);
@@ -1246,7 +1251,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   # Scan for files
   verbose && enter(verbose, "Scanning directory for files");
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE,
-                                   all.files=FALSE, recursive=recursive);
+                                   all.files=private, recursive=recursive);
   verbose && printf(verbose, "Found %d files/directories.\n", length(pathnames));
   if (length(pathnames) > 0L) {
     # Keep only files
@@ -1994,6 +1999,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-07-28
+# o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
 # 2012-12-20
 # o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an exception
 #   if use tries to pass an argument 'names'.

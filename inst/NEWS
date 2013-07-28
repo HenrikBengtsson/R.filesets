@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 2.0.7 [2013-07-28]
+o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
+o Bumped up package dependences.
+
+
+Version: 2.0.6 [2013-07-20]
+o CLEANUP: Removed R.oo from Depends and bumped up package dependences.
+
+
 Version: 2.0.5 [2013-06-26]
 o Now isGzipped() ignores the case of the filename extension when
   testing whether the file is gzipped or not.
