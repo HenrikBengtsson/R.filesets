@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -26,7 +26,7 @@
 # @examples "../incl/FullNameInterface.Rex"
 #
 # @author
-#*/########################################################################### 
+#*/###########################################################################
 setConstructorS3("FullNameInterface", function(...) {
   extend(Interface(), "FullNameInterface");
 })
@@ -57,7 +57,7 @@ setConstructorS3("FullNameInterface", function(...) {
 # \details{
 #  The full name of a file is the filename excluding any
 #  extension (and period).
-#  For instance, the full name of \code{path/to/foo,a.2,b.ext} is 
+#  For instance, the full name of \code{path/to/foo,a.2,b.ext} is
 #  \code{foo,a.2,b}.
 # }
 #
@@ -108,7 +108,7 @@ setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TR
   # Translate?
   if (translate) {
     fullname <- translateFullName(this, fullname);
-  } 
+  }
 
   fullname;
 })
@@ -152,7 +152,7 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 
   # Keep anything before the first comma
   name <- gsub("[,].*$", "", name);
-  
+
   name;
 })
 
@@ -172,11 +172,11 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 # \arguments{
 #  \item{pattern}{An optional regular expression used to filter out tags.
 #     If @NULL, all tags are returned.}
-#  \item{collapse}{A @character string used to concatenate the tags. 
+#  \item{collapse}{A @character string used to concatenate the tags.
 #     If @NULL, the tags are not concatenated.}
 #  \item{...}{Additional arguments passed to @seemethod "getFullName".}
-#  \item{named}{If @TRUE, tags of format "<name>=<value>" will be parsed 
-#     as \emph{named} "<value>" tags, e.g. \code{"foo,n=23,bar,n=42"} is 
+#  \item{named}{If @TRUE, tags of format "<name>=<value>" will be parsed
+#     as \emph{named} "<value>" tags, e.g. \code{"foo,n=23,bar,n=42"} is
 #     parsed to \code{c("foo", "n"="23", "bar", "n"="42")}.
 #     Note that if \code{collapse} is @FALSE, the names will be dropped.
 #  }
@@ -223,7 +223,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   name <- gsub("[,].*$", "", fullname);
 
   # Keep anything after the name (and the separator).
-  tags <- substring(fullname, nchar(name)+2);  
+  tags <- substring(fullname, nchar(name)+2);
   tags <- unlist(strsplit(tags, split=","));
 
   if (useCustomTags) {
@@ -235,13 +235,13 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
       if (hasAsteriskTags) {
         pos <- which("*" == customTags);
         customTags <- customTags[-pos];
-        
+
         asteriskTags <- tags;
         if (length(asteriskTags) > 0) {
           if (length(customTags) == 0) {
             customTags <- asteriskTags;
           } else {
-            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags); 
+            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags);
           }
         }
       } # if (hasAsteriskTags)
@@ -270,7 +270,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   } else {
     tags <- unlist(strsplit(tags, split=","));
   }
- 
+
   if (length(tags) == 0)
     tags <- NULL;
 
@@ -289,8 +289,8 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 # }
 #
 # \usage{
-#  \method{hasTags}{FullNameInterface}(this, tags, ...)
-#  \method{hasTag}{FullNameInterface}(this, tag, ...)
+#  @usage hasTags,FullNameInterface
+#  @usage hasTag,FullNameInterface
 # }
 #
 # \arguments{
@@ -299,7 +299,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 # }
 #
 # \value{
-#   Returns @TRUE if \emph{all} tags are part of the fullname, otherwise 
+#   Returns @TRUE if \emph{all} tags are part of the fullname, otherwise
 #   @FALSE.
 # }
 #
@@ -361,7 +361,7 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
     tags <- trim(unlist(strsplit(tags, split=",")));
     tags <- tags[nchar(tags) > 0];
   }
-  
+
   this$.tags <- tags;
 
   invisible(this);
@@ -397,7 +397,7 @@ setMethodS3("setListOfFullNameTranslators", "FullNameInterface", function(this, 
   for (kk in seq_along(fnList)) {
     fcn <- fnList[[kk]];
     if (!is.function(fcn)) {
-      throw("Element #", kk, " of argument 'fnList' is not a function: ", 
+      throw("Element #", kk, " of argument 'fnList' is not a function: ",
                                                            class(fcn)[1]);
     }
   }
@@ -437,7 +437,7 @@ setMethodS3("translateFullName", "FullNameInterface", function(this, names, ...)
 
     # Sanity check
     if (any(is.na(names2))) {
-      throw("Failed to translate names. Some names were translated to NA:s ", 
+      throw("Failed to translate names. Some names were translated to NA:s ",
             paste(head(names[is.na(names2)]), collapse=", "));
     }
     if (length(names2) != length(names)) {
@@ -518,7 +518,7 @@ setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Arguments, typically a @character string, which are 
+#  \item{...}{Arguments, typically a @character string, which are
 #     passed to the fullname translator generator.
 #  }
 # }
@@ -554,7 +554,7 @@ setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{name}{The new name part of the fullname.  
+#  \item{name}{The new name part of the fullname.
 #    If @NULL, then the fullname is reset to the default.}
 #  \item{...}{Not used.}
 # }
@@ -604,7 +604,7 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 # o Added resetFullName() for FullNameInterface, which is just an alias.
 # 2012-11-07
 # o Now clearListOfFullNamesTranslators() utilizes
-#   setListOfFullNamesTranslators(). 
+#   setListOfFullNamesTranslators().
 # 2011-07-15
 # o Added argument 'named' to getTags() for FullNameInterface.
 # 2010-01-31
@@ -624,7 +624,7 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 # o Added an example() to FullNameInterface.
 # 2009-10-02
 # o Now setFullName(...) applies to any FullNameInterface.
-# o Now setFullNameTranslator(...) applies to any FullNameInterface and 
+# o Now setFullNameTranslator(...) applies to any FullNameInterface and
 #   dispatches on the 'translator' argument so that the generic function
 #   setFullNameTranslatorBy<class>() is called.
 # o Created.

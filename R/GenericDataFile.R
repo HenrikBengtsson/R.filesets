@@ -1470,9 +1470,9 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 # }
 #
 # \usage{
-#  \method{gzip}{GenericDataFile}(this, ...)
-#  \method{gunzip}{GenericDataFile}(this, ...)
-#  \method{isGzipped}{GenericDataFile}(this, ...)
+#  @usage gzip,GenericDataFile
+#  @usage gunzip,GenericDataFile
+#  @usage isGzipped,GenericDataFile
 # }
 #
 # \arguments{

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{FullNameInterface}
+\name{FullNameInterface}
 \docType{class}
 \alias{FullNameInterface}
 
 
- \title{The FullNameInterface class interface}
+\title{The FullNameInterface class interface}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class FullNameInterface}\cr
 
 \code{\link[R.oo]{Interface}}\cr
@@ -28,18 +28,18 @@ public abstract class \bold{FullNameInterface}\cr
 extends \link[R.oo]{Interface}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 FullNameInterface(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{appendFullNameTranslatorByTabularTextFile} \tab  -\cr
  \tab \code{appendFullNameTranslatorByTabularTextFileSet} \tab  -\cr
@@ -61,15 +61,15 @@ FullNameInterface(...)
 extend, print, uses
 
 
- }
+}
 
- \details{
-  The full name consists of a name followed by optional comma-separated tags.
-  For instance, the full name of \code{foo,a.2,b} has name \code{foo} with
-  tags \code{a.2} and \code{b}.
- }
+\details{
+ The full name consists of a name followed by optional comma-separated tags.
+ For instance, the full name of \code{foo,a.2,b} has name \code{foo} with
+ tags \code{a.2} and \code{b}.
+}
 
- \examples{
+\examples{
 # Setup a file set
 path <- system.file("R", package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
@@ -134,5 +134,5 @@ cat("Default fullnames (after resetting):\n")
 print(getFullNames(ds))
 }
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 \keyword{classes}

@@ -364,8 +364,8 @@ setMethodS3("getSubdirs", "GenericDataFileSet", function(this, collapse="/", ...
 # }
 #
 # \usage{
-#  \method{length}{GenericDataFileSet}(x)
-#  \method{nbrOfFiles}{GenericDataFileSet}(this, ...)
+#  @usage length,GenericDataFileSet
+#  @usage nbrOfFiles,GenericDataFileSet
 # }
 #
 # \value{
@@ -510,8 +510,8 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
 # }
 #
 # \usage{
-#  \method{getNames}{GenericDataFileSet}(this, ...)
-#  \method{getFullNames}{GenericDataFileSet}(this, ...)
+#  @usage getNames,GenericDataFileSet
+#  @usage getFullNames,GenericDataFileSet
 # }
 #
 # \arguments{
