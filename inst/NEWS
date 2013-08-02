@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.0.8 [2013-08-01]
+o Bumped up package dependences.
+
+
 Version: 2.0.7 [2013-07-28]
 o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
 o Bumped up package dependences.
