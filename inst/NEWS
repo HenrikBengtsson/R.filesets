@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.1.1 [2013-08-31]
+o Added [() and c() for GenericDataFileSet.
+
+
 Version: 2.1.0 [2013-08-01]
 o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
 o Bumped up package dependences.
@@ -54,7 +58,7 @@ Version: 1.8.2 [2012-12-19]
 o Bumped up package dependencies.
 o Utilizing new startupMessage() of R.oo.
 o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an
-  exception if use tries to pass an argument 'names'.
+  exception if user tries to pass an argument 'names'.
 
 
 Version: 1.8.1 [2012-12-09]

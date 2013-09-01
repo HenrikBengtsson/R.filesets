@@ -10,6 +10,10 @@
 \alias{append.GenericDataFileSet}
 \alias{GenericDataFileSet.append}
 \alias{append,GenericDataFileSet-method}
+\alias{GenericDataFileSet.c}
+\alias{c.GenericDataFileSet}
+\alias{c,GenericDataFileSet-method}
+
 
 \title{Appends one data set to an existing one}
 

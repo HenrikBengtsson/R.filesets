@@ -999,6 +999,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
 ###########################################################################/**
 # @RdocMethod append
+# @aliasmethod c
 #
 # @title "Appends one data set to an existing one"
 #
@@ -1051,6 +1052,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 
 ###########################################################################/**
 # @RdocMethod extract
+# @aliasmethod [
 #
 # @title "Extract a subset of the file set"
 #
@@ -1825,6 +1827,40 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# VECTOR-RELATED METHODS
+#
+# The below implementations, makes the listed "core" methods to work:
+
+# length():
+# * seq_along()
+#
+# length() + [():
+# * rev()
+# * sample()
+#
+# length() + [() + c():
+# * append()
+#
+# ...what else?
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("[", "GenericDataFileSet", function(x, i, ...) {
+  extract(x, i, ...);
+}, protected=TRUE)
+
+
+setMethodS3("c", "GenericDataFileSet", function(x, ...) {
+  files <- as.list(x);
+  args <- list(...);
+  args <- lapply(args, FUN=function(x) {
+    if (inherits(x, "GenericDataFileSet")) x <- as.list(x);
+    x;
+  });
+  args <- Reduce(c, args);
+  files <- c(files, args);
+  newInstance(x, files);
+}, protected=TRUE)
+
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1999,6 +2035,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-08-31
+# o Added [() and c() for GenericDataFileSet.
 # 2013-07-28
 # o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
 # 2012-12-20
