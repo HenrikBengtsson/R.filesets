@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.1.2 [2013-09-17]
+o Bumped up package dependences.
+
+
 Version: 2.1.1 [2013-08-31]
 o Added [() and c() for GenericDataFileSet.
 
