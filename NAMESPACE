@@ -3,9 +3,12 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.methodsS3", "throw")
+importFrom("R.methodsS3", "appendVarArgs")
+
 import("R.oo")
-# importFrom("R.utils", "cat")
+
 import("R.utils")
+# importFrom("R.utils", "cat")
 
 importFrom("digest", "digest")
 importFrom("R.cache", "getChecksum")

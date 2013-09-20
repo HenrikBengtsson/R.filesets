@@ -3,7 +3,7 @@ Version: 2.1.2
 Depends: R (>= 2.6.0), R.utils (>= 1.27.1)
 Imports: stats, R.methodsS3 (>= 1.5.1), R.oo (>= 1.15.1), R.cache (>= 0.8.1), digest (>= 0.6.3)
 Suggests: gtools (>= 3.0.0)
-Date: 2013-09-17
+Date: 2013-09-20
 Title: Easy handling of and access to files organized in structured directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
