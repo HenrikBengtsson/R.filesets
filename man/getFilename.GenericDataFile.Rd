@@ -10,6 +10,7 @@
 \alias{getFilename.GenericDataFile}
 \alias{GenericDataFile.getFilename}
 \alias{getFilename,GenericDataFile-method}
+\alias{getFilename}
 
 \title{Gets the filename of the file}
 

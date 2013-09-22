@@ -2,7 +2,7 @@
 # fromName() => byName()
 #
 # 2010-01-31
-# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath() 
+# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath()
 #   instead.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
@@ -27,13 +27,13 @@ setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
   if (is.null(label))
     label <- getName(this, ...);
   label;
-}, private=TRUE, deprecated=TRUE)
+}, private=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
   .Deprecated("setName");
   this$label <- label;
   invisible(this);
-}, private=TRUE, deprecated=TRUE)
+}, private=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
   .Deprecated("getFullName");
@@ -48,7 +48,7 @@ setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
   this$.alias <- alias;
   invisible(this);
 }, protected=TRUE, deprecated=TRUE)
- 
+
 
 
 ###########################################################################/**
@@ -181,6 +181,6 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 # o DEPRECATION: Added a warning message reporting that fromFiles() of
 #   GenericDataFileSet has been deprecated, if still called by someone.
 # 2010-01-31
-# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath() 
+# o Deprecated static fromFiles() of GenericDataFileSet.  Use byPath()
 #   instead.
 ############################################################################

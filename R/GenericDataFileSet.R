@@ -1052,6 +1052,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 
 ###########################################################################/**
 # @RdocMethod extract
+# @alias extract
 # @aliasmethod [
 #
 # @title "Extract a subset of the file set"

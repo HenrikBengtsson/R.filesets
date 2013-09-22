@@ -10,6 +10,7 @@
 \alias{extract.GenericDataFileSet}
 \alias{GenericDataFileSet.extract}
 \alias{extract,GenericDataFileSet-method}
+\alias{extract}
 \alias{GenericDataFileSet.[}
 \alias{[.GenericDataFileSet}
 \alias{[,GenericDataFileSet-method}

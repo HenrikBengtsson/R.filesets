@@ -10,6 +10,7 @@
 \alias{validate.GenericDataFile}
 \alias{GenericDataFile.validate}
 \alias{validate,GenericDataFile-method}
+\alias{validate}
 
 \title{Validates the content of a file}
 
@@ -36,5 +37,7 @@
 \seealso{
   For more information see \code{\link{GenericDataFile}}.
 }
+
+
 \keyword{internal}
 \keyword{methods}

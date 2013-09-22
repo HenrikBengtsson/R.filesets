@@ -346,6 +346,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFilename
+# @alias getFilename
 #
 # @title "Gets the filename of the file"
 #
@@ -380,7 +381,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
   if (is.null(res)) res <- as.character(NA);
   res <- basename(res);
   res;
-})
+}, createGeneric=FALSE)
 
 
 
@@ -585,11 +586,12 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
   res <- getPathname(this);
   isFile(res);
-})
+}, createGeneric=FALSE)
 
 
 ###########################################################################/**
 # @RdocMethod validate
+# @alias validate
 #
 # @title "Validates the content of a file"
 #
@@ -614,10 +616,12 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 # \seealso{
 #   @seeclass
 # }
+#
+# @keyword internal
 #*/###########################################################################
 setMethodS3("validate", "GenericDataFile", function(this, ...) {
   NA;
-})
+}, protected=TRUE)
 
 
 
@@ -1511,7 +1515,7 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
@@ -1532,12 +1536,12 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
   isGzipped(getPathname(this), ...);
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
