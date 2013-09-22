@@ -10,6 +10,7 @@
 \alias{getName.FullNameInterface}
 \alias{FullNameInterface.getName}
 \alias{getName,FullNameInterface-method}
+\alias{getName}
 
 \title{Gets the name}
 

@@ -117,6 +117,7 @@ setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TR
 
 ###########################################################################/**
 # @RdocMethod getName
+# @alias getName
 #
 # @title "Gets the name"
 #
@@ -154,7 +155,7 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
   name <- gsub("[,].*$", "", name);
 
   name;
-})
+}, createGeneric=FALSE)
 
 
 

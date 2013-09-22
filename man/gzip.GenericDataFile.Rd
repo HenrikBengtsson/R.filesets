@@ -18,6 +18,9 @@
 \alias{isGzipped.GenericDataFile}
 \alias{isGzipped,GenericDataFile-method}
 
+\alias{gzip}
+\alias{gunzip}
+\alias{isGzipped}
 
 \title{Compresses/uncompresses a file}
 

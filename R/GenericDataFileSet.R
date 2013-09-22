@@ -176,7 +176,7 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 
   # Then for this object
   NextMethod("clearCache");
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
@@ -196,7 +196,7 @@ setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
     clearCache(object);
 
   object;
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
@@ -271,6 +271,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 
 ###########################################################################/**
 # @RdocMethod getPath
+# @alias getPath
 #
 # @title "Gets the path (directory) of the file set"
 #
@@ -298,7 +299,7 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
   # Find a file with a non-missing pathname
   file <- getOneFile(this);
   getPath(file, ...);
-})
+}, createGeneric=FALSE)
 
 
 setMethodS3("getDepth", "GenericDataFileSet", function(this, default=0L, ...) {

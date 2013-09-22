@@ -281,6 +281,9 @@
 \alias{head.GenericTabularFile}
 \alias{tail.GenericTabularFile}
 \alias{[.GenericTabularFile}
+\alias{clone}
+\alias{clearCache}
+\alias{dimension}
 
 \description{
   This page contains aliases for all "non-documented" objects that

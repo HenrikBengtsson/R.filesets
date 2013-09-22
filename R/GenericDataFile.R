@@ -101,12 +101,13 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
   if (clear)
     clearCache(object);
   object;
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
 ###########################################################################/**
 # @RdocMethod equals
+# @alias equals
 #
 # @title "Checks if a file equals another"
 #
@@ -339,7 +340,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
   if (is.null(res)) res <- as.character(NA);
   res <- dirname(res);
   res;
-})
+}, createGeneric=FALSE)
 
 
 
@@ -558,6 +559,7 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod isFile
+# @alias isFile
 #
 # @title "Checks if this is an existing file"
 #
@@ -1463,6 +1465,9 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 # @RdocMethod gzip
 # @aliasmethod gunzip
 # @aliasmethod isGzipped
+# @alias gzip
+# @alias gunzip
+# @alias isGzipped
 #
 # @title "Compresses/uncompresses a file"
 #

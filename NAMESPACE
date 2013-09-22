@@ -5,14 +5,28 @@ importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.methodsS3", "throw")
 importFrom("R.methodsS3", "appendVarArgs")
 
-import("R.oo")
-## importFrom("R.oo", "setConstructorS3")
-## importFrom("R.oo", "extend")
-## importFrom("R.oo", "Object")
-## importFrom("R.oo", "Interface")
-## importFrom("R.oo", "Class")
-## importFrom("R.oo", "newInstance")
-## importFrom("R.oo", "")
+importFrom("R.oo", "Package")
+importFrom("R.oo", "getPosition")
+importFrom("R.oo", "startupMessage")
+importFrom("R.oo", "setConstructorS3")
+importFrom("R.oo", "extend")
+importFrom("R.oo", "uses")
+importFrom("R.oo", "Object")
+importFrom("R.oo", "Interface")
+importFrom("R.oo", "Class")
+importFrom("R.oo", "newInstance")
+importFrom("R.oo", "getStaticInstance")
+importFrom("R.oo", "getKnownSubclasses")
+importFrom("R.oo", "objectSize")
+importFrom("R.oo", "trim")
+importFrom("R.oo", "clearCache")
+importFrom("R.oo", "clone")
+importFrom("R.oo", "dimension")
+importFrom("R.oo", "equals")
+importFrom("R.oo", "getName")
+importFrom("R.oo", "getPath")
+# Until R.oo (>= 1.15.3) is available
+importFrom("R.oo", "uses.character")
 
 importFrom("R.utils", "Arguments")
 importFrom("R.utils", "pushState")
@@ -58,9 +72,16 @@ export(.conflicts.OK)
 # in their names.
 exportPattern("^[^\\.]")
 
+export("clone") # Re-export from 'R.oo'
+export("clearCache") # Re-export from 'R.oo'
+
+export("getName") # Re-export from 'R.oo'
+export("getPath") # Re-export from 'R.oo'
 export("getFilename") # Re-export from 'R.utils'
-#export("gzip") # Re-export from 'R.utils'
-#export("gunzip") # Re-export from 'R.utils'
+export("isFile") # Re-export from 'R.utils'
+export("isGzipped") # Re-export from 'R.utils'
+export("gzip") # Re-export from 'R.utils'
+export("gunzip") # Re-export from 'R.utils'
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

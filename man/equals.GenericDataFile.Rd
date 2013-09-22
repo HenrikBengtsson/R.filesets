@@ -10,6 +10,7 @@
 \alias{equals.GenericDataFile}
 \alias{GenericDataFile.equals}
 \alias{equals,GenericDataFile-method}
+\alias{equals}
 
 \title{Checks if a file equals another}
 

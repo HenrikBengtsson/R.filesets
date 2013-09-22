@@ -148,4 +148,4 @@ getOneFile
 getOneFile.GenericDataFileSet
 head.GenericTabularFile tail.GenericTabularFile
 [.GenericTabularFile
-
+clone clearCache dimension

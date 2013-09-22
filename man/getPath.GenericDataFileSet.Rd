@@ -10,6 +10,7 @@
 \alias{getPath.GenericDataFileSet}
 \alias{GenericDataFileSet.getPath}
 \alias{getPath,GenericDataFileSet-method}
+\alias{getPath}
 
 \title{Gets the path (directory) of the file set}
 
