@@ -4,6 +4,7 @@ Package: R.filesets
 Version: 2.2.1 [2013-09-28]
 o Now the 'R.filesets' Package object is also available when the
   package is only loaded (but not attached).
+o BUG FIX: Forgot to import cat() from 'R.utils'.
 
 
 Version: 2.2.0 [2013-09-23]
