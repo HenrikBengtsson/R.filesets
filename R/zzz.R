@@ -3,16 +3,20 @@
 .conflicts.OK <- TRUE
 
 
-## .First.lib <- function(libname, pkgname) {
-.onAttach <- function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
+  ns <- getNamespace(pkgname);
   pkg <- Package(pkgname);
-  assign(pkgname, pkg, pos=getPosition(pkg));
-  startupMessage(pkg);
+  assign(pkgname, pkg, envir=ns);
+}
+
+
+.onAttach <- function(libname, pkgname) {
+  startupMessage(get(pkgname, envir=getNamespace(pkgname)));
 }
 
 
 ############################################################################
-# HISTORY: 
+# HISTORY:
 # 2011-07-24
 # o Added a namespace to the package.
 ############################################################################

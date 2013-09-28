@@ -566,7 +566,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
       names <- names(colClassPatterns);
       if (length(colClassPatterns) > 1) {
         names <- insert(names[-pos], at=pos, values=rep("*", times=nbrOfColumns));
-        idxs <- whichVector(names == "*");
+        idxs <- which(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
 
         colClassPatterns <- insert(colClassPatterns[-pos], at=pos,
@@ -1118,6 +1118,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-09-23
+# o SPEEDUP/CLEANUP: Package no longer uses R.utils::whichVector(), which
+#   use to be 10x faster, but since R 2.11.0 which() is 3x times again.
 # 2013-01-17
 # o In addition to a fixed integer, argument 'skip' for readDataFrame()
 #   (default and for TabularTextFile) may also specify a regular
