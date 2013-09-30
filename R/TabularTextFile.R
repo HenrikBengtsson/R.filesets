@@ -653,7 +653,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 # @synopsis
 #
 # \arguments{
-#   \item{con}{(Internal) If a @connection, then it is used, otherwies
+#   \item{con}{(Internal) If a @connection, then it is used, otherwise
 #   a new file connection is temporarly opened and used.}
 #   \item{rows}{(Optional) An @integer @vector specifying which rows to
 #    be read.}
@@ -808,7 +808,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     verbose && str(verbose, which(toPatch));
     args0 <- args;
 
-    # (1) Read as to-be-patched columns as characters.
+    # (1) Read to-be-patched columns as characters.
     colClasses <- args$colClasses;
     colClasses[toPatch] <- "character";
     args$colClasses <- colClasses;
@@ -860,6 +860,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
       }, add=TRUE);
 
       # Try to read the values as the correct type.
+      # (Could scan(), which has less overhead, be used here? /HB 2013-09-30)
       valuesT <- read.table(file=conT, quote="", colClasses=colClass, na.strings=na.strings, blank.lines.skip=FALSE)[[1]];
 
       verbose && cat(verbose, "Parsed values:");
@@ -878,10 +879,11 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     verbose && exit(verbose);
 
     verbose && exit(verbose);
-  }
+  } # if (trimQuotes)
 
 
   # Extract subset of rows?
+  # TO DO: Move this up before above 'if (trimQuotes) { ... }'. /HB 2013-09-30
   if (fcnName == "read.table") {
     if (!is.null(rows)) {
       if (max(rows) > nbrOfRowsRead) {
@@ -1120,7 +1122,7 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 # HISTORY:
 # 2013-09-23
 # o SPEEDUP/CLEANUP: Package no longer uses R.utils::whichVector(), which
-#   use to be 10x faster, but since R 2.11.0 which() is 3x times again.
+#   use to be 10x faster, but since R 2.11.0 which() is 3x times faster.
 # 2013-01-17
 # o In addition to a fixed integer, argument 'skip' for readDataFrame()
 #   (default and for TabularTextFile) may also specify a regular
