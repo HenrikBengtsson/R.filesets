@@ -1,5 +1,4 @@
 digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
-  names <- names(object);
   digest::digest(object, ..., skip=skip, ascii=ascii);
 } # digest2()
 
