@@ -720,7 +720,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Reading ", class(this)[1]);
+  verbose && enter(verbose, "Reading ", class(this)[1L]);
 
 
   # Attributes to be added
@@ -781,9 +781,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  fcnName <- "read.table";
-#  fcnName <- "readTable";  ## BUGGY /HB 2008-06-17
-  verbose && enter(verbose, sprintf("Calling %s()", fcnName));
+  verbose && enter(verbose, "Calling read.table()");
 
 
   # SPECIAL CASE/WORKAROUND: read.table()/scan() will give an error
@@ -792,8 +790,8 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   # the quotes first. /HB 2011-07-13
 
   # Check if we need to trim quotes
-  trimQuotes <- (trimQuotes && nchar(args$quote) > 0);
-  trimQuotes <- (trimQuotes && length(args$colClasses) > 0);
+  trimQuotes <- (trimQuotes && nchar(args$quote) > 0L);
+  trimQuotes <- (trimQuotes && length(args$colClasses) > 0L);
   if (trimQuotes) {
     classesToPatch <- c("integer", "numeric", "double", "complex");
     toPatch <- is.element(args$colClasses, classesToPatch);
@@ -817,12 +815,24 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   verbose && cat(verbose, "Arguments used to read tabular file:");
   args <- c(list(con), args);
   verbose && print(verbose, args);
-  data <- do.call(fcnName, args=args);
+  data <- do.call(read.table, args=args);
   nbrOfRowsRead <- nrow(data);
   verbose && cat(verbose, "Raw data read by read.table():");
   verbose && str(verbose, data);
   verbose && cat(verbose, "Number of rows read: ", nbrOfRowsRead);
   verbose && cat(verbose, "Number of columns read: ", ncol(data));
+
+  # Extract subset of rows?
+  if (!is.null(rows)) {
+    if (max(rows) > nbrOfRowsRead) {
+      rows <- intersect(rows, 1:nbrOfRowsRead);
+      warning("Argument 'rows' was out of range [1,", nbrOfRowsRead,
+                                "]. Ignored rows beyond this range.");
+    }
+    data <- data[rows,,drop=FALSE];
+  } else {
+    rownames(data) <- NULL;
+  }
 
   # Was data read by first trimming quotes?
   if (trimQuotes) {
@@ -861,7 +871,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
 
       # Try to read the values as the correct type.
       # (Could scan(), which has less overhead, be used here? /HB 2013-09-30)
-      valuesT <- read.table(file=conT, quote="", colClasses=colClass, na.strings=na.strings, blank.lines.skip=FALSE)[[1]];
+      valuesT <- read.table(file=conT, quote="", colClasses=colClass, na.strings=na.strings, blank.lines.skip=FALSE)[[1L]];
 
       verbose && cat(verbose, "Parsed values:");
       verbose && str(verbose, valuesT);
@@ -882,25 +892,8 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   } # if (trimQuotes)
 
 
-  # Extract subset of rows?
-  # TO DO: Move this up before above 'if (trimQuotes) { ... }'. /HB 2013-09-30
-  if (fcnName == "read.table") {
-    if (!is.null(rows)) {
-      if (max(rows) > nbrOfRowsRead) {
-        rows <- intersect(rows, 1:nbrOfRowsRead);
-        warning("Argument 'rows' was out of range [1,", nbrOfRowsRead,
-                                  "]. Ignored rows beyond this range.");
-      }
-      data <- data[rows,,drop=FALSE];
-    } else {
-      rownames(data) <- NULL;
-    }
-  } else {
-    rownames(data) <- NULL;
-  }
-
   # Sanity check
-  if (length(columns) > 0) {
+  if (length(columns) > 0L) {
     if (ncol(data) != length(columns)) {
       throw("Number of read data columns does not match the number of column headers: ", ncol(data), " !=", length(columns));
     }
@@ -1120,6 +1113,9 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-09-30
+# o Now readDataFrame() for TabularTextFile subsets by row, if requested,
+#   before reparsing numerical columns that were quoted.
 # 2013-09-23
 # o SPEEDUP/CLEANUP: Package no longer uses R.utils::whichVector(), which
 #   use to be 10x faster, but since R 2.11.0 which() is 3x times faster.
