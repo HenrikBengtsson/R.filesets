@@ -1,6 +1,14 @@
 Package: R.filesets
 ===================
 
+Version: 2.2.2 [2013-09-30]
+o Now readDataFrame() for TabularTextFile subsets by row, if requested,
+  before reparsing numerical columns that were quoted.
+o ROBUSTNESS: Modernized the requirement to R (>= 2.15.0).
+o CLEANUP: Dropped obsolete autoload():s.
+o CLEANUP: Deprecated digest2() and deprecated -> defunct -> dropped.
+
+
 Version: 2.2.1 [2013-09-28]
 o Now the 'R.filesets' Package object is also available when the
   package is only loaded (but not attached).
