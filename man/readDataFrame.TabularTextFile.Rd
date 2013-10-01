@@ -23,7 +23,7 @@
 }
 
 \arguments{
-  \item{con}{(Internal) If a \code{\link[base:connections]{connection}}, then it is used, otherwies
+  \item{con}{(Internal) If a \code{\link[base:connections]{connection}}, then it is used, otherwise
   a new file connection is temporarly opened and used.}
   \item{rows}{(Optional) An \code{\link[base]{integer}} \code{\link[base]{vector}} specifying which rows to
    be read.}
