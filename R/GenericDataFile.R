@@ -1173,7 +1173,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
   }
 
   checksum;
-})
+}, createGeneric=FALSE)
 
 
 ###########################################################################/**

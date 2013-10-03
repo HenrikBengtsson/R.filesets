@@ -73,6 +73,8 @@ exportPattern("^[^\\.]")
 export("clone") # Re-export from 'R.oo'
 export("clearCache") # Re-export from 'R.oo'
 
+export("getChecksum") # Re-export from 'R.cache'
+
 export("getName") # Re-export from 'R.oo'
 export("getPath") # Re-export from 'R.oo'
 export("getFilename") # Re-export from 'R.utils'
