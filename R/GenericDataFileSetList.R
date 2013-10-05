@@ -128,7 +128,7 @@ setMethodS3("clone", "GenericDataFileSetList", function(this, ...) {
   }
   res$.dsList <- dsList;
   res;
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "GenericDataFileSetList", function(this, ..., collapse=",") {

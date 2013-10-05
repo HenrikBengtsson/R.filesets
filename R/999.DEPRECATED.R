@@ -4,8 +4,10 @@
 # @alias setColumnNameTranslator.GenericTabularFile
 # @alias getLabel.GenericDataFile
 # @alias setLabel.GenericDataFile
-# @alias getLabel.GenericDataFileSet
-# @alias setLabel.GenericDataFileSet
+# @alias getAlias.GenericDataFile
+# @alias setAlias.GenericDataFile
+# @alias getAlias.GenericDataFileSet
+# @alias setAlias.GenericDataFileSet
 # @alias getFileListV0.GenericDataFileSetList
 # @alias digest2
 #
@@ -32,11 +34,11 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("getColumnNameTranslator", "GenericTabularFile", function(...) {
   .Defunct("getColumnNamesTranslator");
-}, deprecated=TRUE)
+}, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(...) {
   .Defunct("setColumnNamesTranslator");
-}, deprecated=TRUE)
+}, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
   .Defunct("getName");
@@ -44,23 +46,23 @@ setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
 
 setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
   .Defunct("setName");
-}, protected=TRUE, deprecated=TRUE)
+}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
   .Defunct("setFullName");
-}, protected=TRUE, deprecated=TRUE)
+}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
   .Defunct("getFullName");
-}, protected=TRUE, deprecated=TRUE)
+}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
   .Defunct("setFullName");
-}, protected=TRUE, deprecated=TRUE)
+}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, dropMissing=TRUE, ...) {
   .Defunct("getFileList");
-}, deprecated=TRUE, protected=TRUE)
+}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,6 +76,8 @@ digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-10-05
+# o CLEANUP: Now no generic functions are created for defunct methods.
 # 2013-09-30
 # o Deprecated digest2().
 # o Defuncted (get|set)(Alias|Label)() [deprecated 2012-11-12].

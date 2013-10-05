@@ -14,8 +14,10 @@
 \alias{setColumnNameTranslator.GenericTabularFile}
 \alias{getLabel.GenericDataFile}
 \alias{setLabel.GenericDataFile}
-\alias{getLabel.GenericDataFileSet}
-\alias{setLabel.GenericDataFileSet}
+\alias{getAlias.GenericDataFile}
+\alias{setAlias.GenericDataFile}
+\alias{getAlias.GenericDataFileSet}
+\alias{setAlias.GenericDataFileSet}
 \alias{getFileListV0.GenericDataFileSetList}
 \alias{digest2}
 

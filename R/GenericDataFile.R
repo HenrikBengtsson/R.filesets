@@ -101,7 +101,7 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
   if (clear)
     clearCache(object);
   object;
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 
@@ -340,7 +340,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
   if (is.null(res)) res <- as.character(NA);
   res <- dirname(res);
   res;
-}, createGeneric=FALSE)
+})
 
 
 
@@ -382,7 +382,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
   if (is.null(res)) res <- as.character(NA);
   res <- basename(res);
   res;
-}, createGeneric=FALSE)
+})
 
 
 
@@ -419,18 +419,10 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
-  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'aliased' is deprecated.
+  # TO BE REMOVED. /HB 2013-10-15
   args <- list(...);
   if (is.element("aliased", names(args))) {
-    .Deprecated(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
-    aliased <- args[["aliased"]];
-    if (aliased) {
-      alias <- getAlias(this);
-      if (!is.null(alias)) {
-        fullname <- alias;
-        return(fullname);
-      }
-    }
+    .Defunct(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
   }
 
   filename <- getFilename(this, ...);
@@ -588,7 +580,7 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
   res <- getPathname(this);
   isFile(res);
-}, createGeneric=FALSE)
+})
 
 
 ###########################################################################/**
@@ -1173,7 +1165,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
   }
 
   checksum;
-}, createGeneric=FALSE)
+})
 
 
 ###########################################################################/**
@@ -1520,7 +1512,7 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 
@@ -1541,12 +1533,12 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
   isGzipped(getPathname(this), ...);
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 

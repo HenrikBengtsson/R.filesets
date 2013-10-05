@@ -155,7 +155,7 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
   name <- gsub("[,].*$", "", name);
 
   name;
-}, createGeneric=FALSE)
+})
 
 
 

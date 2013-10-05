@@ -99,7 +99,6 @@
 \alias{fromFile}
 \alias{fullname}
 \alias{fullname.default}
-\alias{getAlias}
 \alias{getAsteriskTags}
 \alias{getAsteriskTags.GenericDataFileSetList}
 \alias{getAttribute}
@@ -108,7 +107,6 @@
 \alias{getAttributes.GenericDataFile}
 \alias{getChecksum}
 \alias{getChecksumObjects}
-\alias{getColumnNameTranslator}
 \alias{getColumnNames}
 \alias{getColumnNamesTranslator}
 \alias{getColumnNamesTranslator.ColumnNamesInterface}
@@ -134,7 +132,6 @@
 \alias{getFileList.GenericDataFileSetList}
 \alias{getFileListClass}
 \alias{getFileListClass.GenericDataFileSetList}
-\alias{getFileListV0}
 \alias{getFileSize}
 \alias{getFileSize.GenericDataFileSet}
 \alias{getFileType}
@@ -210,8 +207,6 @@
 \alias{resetFullName.FullNameInterface}
 \alias{resetFullNames}
 \alias{resetFullNames.GenericDataFileSet}
-\alias{setAlias}
-\alias{setAlias.GenericDataFile}
 \alias{setAttribute}
 \alias{setAttribute.GenericDataFile}
 \alias{setAttributes}
@@ -220,7 +215,6 @@
 \alias{setAttributesBy.GenericDataFile}
 \alias{setAttributesByTags}
 \alias{setAttributesByTags.GenericDataFile}
-\alias{setColumnNameTranslator}
 \alias{setColumnNames}
 \alias{setColumnNamesTranslator}
 \alias{setColumnNamesTranslator.ColumnNamesInterface}
@@ -235,7 +229,6 @@
 \alias{setFullNameTranslator.FullNameInterface}
 \alias{setFullNamesTranslator}
 \alias{setFullNamesTranslator.GenericDataFileSet}
-\alias{setLabel}
 \alias{setListOfColumnNamesTranslators}
 \alias{setListOfColumnNamesTranslators.ColumnNamesInterface}
 \alias{setListOfFullNameTranslators}

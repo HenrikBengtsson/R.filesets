@@ -77,12 +77,10 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
   setTags(this, tags);
 
-  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'alias'.
+  # TO BE REMOVED. /HB 2013-10-15
   args <- list(...);
   if (is.element("alias", names(args))) {
-    .Deprecated(msg="Argument 'alias' of GenericDataFileSet() is deprecated.  Use fullname translators instead.");
-    alias <- args[["alias"]];
-    if (!is.null(alias)) setAlias(this, alias);
+    .Defunct(msg="Argument 'alias' of GenericDataFileSet() is deprecated.  Use fullname translators instead.");
   }
 
   this;
@@ -176,7 +174,7 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 
   # Then for this object
   NextMethod("clearCache");
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 
@@ -196,7 +194,7 @@ setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
     clearCache(object);
 
   object;
-}, protected=TRUE, createGeneric=FALSE)
+}, protected=TRUE)
 
 
 
@@ -299,7 +297,7 @@ setMethodS3("getPath", "GenericDataFileSet", function(this, ...) {
   # Find a file with a non-missing pathname
   file <- getOneFile(this);
   getPath(file, ...);
-}, createGeneric=FALSE)
+})
 
 
 setMethodS3("getDepth", "GenericDataFileSet", function(this, default=0L, ...) {
@@ -2037,6 +2035,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-10-05
+# o CLEANUP: Now GenericDataFileSet() gives an error informing that
+#   argument 'alias' is defunct.
 # 2013-08-31
 # o Added [() and c() for GenericDataFileSet.
 # 2013-07-28

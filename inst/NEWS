@@ -1,7 +1,10 @@
 Package: R.filesets
 ===================
 
-Version: 2.2.3 [2013-10-03]
+Version: 2.2.3 [2013-10-05]
+o CLEANUP: Now GenericDataFileSet() gives an error informing that
+  argument 'alias' is defunct.
+o CLEANUP: Now no generic functions are created for defunct methods.
 o BUG FIX: Package now re-exports getChecksum() from R.cache instead
   of creating its own.  This solves the problem of the default
   getChecksum() of R.cache not being found.
