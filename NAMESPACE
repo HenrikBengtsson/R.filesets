@@ -2,61 +2,64 @@
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
-importFrom("R.methodsS3", "throw")
-importFrom("R.methodsS3", "appendVarArgs")
-
-importFrom("R.oo", "Package")
-importFrom("R.oo", "getPosition")
-importFrom("R.oo", "startupMessage")
 importFrom("R.oo", "setConstructorS3")
 importFrom("R.oo", "extend")
 importFrom("R.oo", "uses")
-importFrom("R.oo", "Object")
-importFrom("R.oo", "Interface")
-importFrom("R.oo", "Class")
-importFrom("R.oo", "newInstance")
-importFrom("R.oo", "getStaticInstance")
-importFrom("R.oo", "getKnownSubclasses")
-importFrom("R.oo", "objectSize")
-importFrom("R.oo", "trim")
-importFrom("R.oo", "clearCache")
+
+## Importing generics
+importFrom("R.cache", "getChecksum")
+importFrom("R.oo", "clearCache") ## Multi-sources: R.oo, R.cache
 importFrom("R.oo", "clone")
 importFrom("R.oo", "dimension")
 importFrom("R.oo", "equals")
 importFrom("R.oo", "getName")
 importFrom("R.oo", "getPath")
-if (packageVersion("R.oo") < "1.15.3") {
-  importFrom("R.oo", "uses.character")
-}
-
-importFrom("R.utils", "Arguments")
-importFrom("R.utils", "pushState")
-importFrom("R.utils", "popState")
-importFrom("R.utils", "less")
-importFrom("R.utils", "enter")
-importFrom("R.utils", "exit")
-importFrom("R.utils", "cat")
-importFrom("R.utils", "printf")
-importFrom("R.utils", "hpaste")
-importFrom("R.utils", "insert")
-importFrom("R.utils", "mergeByCommonTails")
-importFrom("R.utils", "isFile")
-importFrom("R.utils", "isDirectory")
-importFrom("R.utils", "getAbsolutePath")
-importFrom("R.utils", "getRelativePath")
 importFrom("R.utils", "getFilename")
-importFrom("R.utils", "getParent")
+importFrom("R.utils", "getLabel")
+importFrom("R.utils", "gunzip")
+importFrom("R.utils", "gzip")
+importFrom("R.utils", "isFile")
+importFrom("R.utils", "isGzipped")
+importFrom("R.utils", "setLabel")
+importFrom("stats", "reorder")
+
+## Importing functions
+importFrom("digest", "digest")
+importFrom("R.methodsS3", "throw")
+importFrom("R.oo", "getKnownSubclasses")
+importFrom("R.oo", "getStaticInstance")
+importFrom("R.oo", "Interface")
+importFrom("R.oo", "newInstance")
+importFrom("R.oo", "Object")
+importFrom("R.oo", "objectSize")
+importFrom("R.oo", "Package")
+importFrom("R.oo", "startupMessage")
+importFrom("R.oo", "trim")
+importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
 importFrom("R.utils", "copyFile")
 importFrom("R.utils", "countLines")
-importFrom("R.utils", "isGzipped")
-importFrom("R.utils", "gzip")
-importFrom("R.utils", "gunzip")
+importFrom("R.utils", "enter")
+importFrom("R.utils", "exit")
 importFrom("R.utils", "GenericSummary")
+importFrom("R.utils", "getAbsolutePath")
+importFrom("R.utils", "getParent")
+importFrom("R.utils", "getRelativePath")
+importFrom("R.utils", "hpaste")
+importFrom("R.utils", "inherits") ## Multi-sources: R.utils, base
+importFrom("R.utils", "insert")
+importFrom("R.utils", "isDirectory")
+importFrom("R.utils", "less")
+importFrom("R.utils", "mergeByCommonTails")
+importFrom("R.utils", "popState")
+importFrom("R.utils", "printf")
+importFrom("R.utils", "pushState")
+importFrom("stats", "na.omit")
 
-importFrom("digest", "digest")
-importFrom("R.cache", "getChecksum")
+## Manually imported
+importFrom("R.oo", "Class")
+importFrom("R.utils", "Arguments")
 
-importFrom("stats", "reorder") # generic function
+## Needed in order for corresponding S3method():s below to work
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
 

@@ -1155,7 +1155,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
     if (isFile(this)) {
       verbose && enter(verbose, "Calculating checksum");
       pathname <- getPathname(this);
-      checksum <- digest::digest(pathname, file=TRUE);
+      checksum <- digest(pathname, file=TRUE);
       verbose && exit(verbose);
     } else {
       naValue <- as.character(NA);

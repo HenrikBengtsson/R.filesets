@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 2.2.4 [2013-10-07]
+o ROBUSTNESS: The overriding of append() to become a generic
+  function does now call base::append() in the default, instead
+  of copy the latter.  All this will eventually be removed,
+  when proper support for c, [, [[ etc. has been added everywhere.
+o CLEANUP: Now explicitly importing only what is needed in NAMESPACE.
+o Bumped up package dependences.
+
+
 Version: 2.2.3 [2013-10-05]
 o CLEANUP: Now GenericDataFileSet() gives an error informing that
   argument 'alias' is defunct.

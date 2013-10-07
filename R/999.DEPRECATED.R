@@ -70,7 +70,7 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
   .Deprecated("digest::digest");
-  digest::digest(object, ..., skip=skip, ascii=ascii);
+  digest(object, ..., skip=skip, ascii=ascii);
 } # digest2()
 
 
