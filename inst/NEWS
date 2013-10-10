@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.2.5 [2013-10-09]
+o ROBUSTNESS: Added system tests validating getChecksum() on
+  GenericDataFile:s and GenericDataFileSet:s.
+
+
 Version: 2.2.4 [2013-10-07]
 o ROBUSTNESS: The overriding of append() to become a generic
   function does now call base::append() in the default, instead

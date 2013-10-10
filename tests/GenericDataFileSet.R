@@ -16,6 +16,9 @@ print(getPath(ds))
 cat("Fullname of data set:\n")
 print(getFullName(ds))
 
+cat("Checksum of data set:\n")
+print(getChecksum(ds))
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Data files
@@ -32,6 +35,10 @@ stopifnot(all.equal(unname(filenames), basename(pathnames)))
 cat("Extensions:\n")
 exts <- sapply(ds, FUN=getExtension)
 print(exts)
+
+cat("Checksums:\n")
+uids <- sapply(ds, FUN=getChecksum)
+print(uids)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
