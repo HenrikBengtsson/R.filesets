@@ -6,6 +6,12 @@ importFrom("R.oo", "setConstructorS3")
 importFrom("R.oo", "extend")
 importFrom("R.oo", "uses")
 
+## Importing Class:es
+importFrom("R.oo", "Object")
+importFrom("R.oo", "Interface")
+importFrom("R.oo", "Package")
+importFrom("R.utils", "GenericSummary")
+
 ## Importing generics
 importFrom("R.cache", "getChecksum")
 importFrom("R.oo", "clearCache") ## Multi-sources: R.oo, R.cache
@@ -28,11 +34,8 @@ importFrom("digest", "digest")
 importFrom("R.methodsS3", "throw")
 importFrom("R.oo", "getKnownSubclasses")
 importFrom("R.oo", "getStaticInstance")
-importFrom("R.oo", "Interface")
 importFrom("R.oo", "newInstance")
-importFrom("R.oo", "Object")
 importFrom("R.oo", "objectSize")
-importFrom("R.oo", "Package")
 importFrom("R.oo", "startupMessage")
 importFrom("R.oo", "trim")
 importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
@@ -40,12 +43,10 @@ importFrom("R.utils", "copyFile")
 importFrom("R.utils", "countLines")
 importFrom("R.utils", "enter")
 importFrom("R.utils", "exit")
-importFrom("R.utils", "GenericSummary")
 importFrom("R.utils", "getAbsolutePath")
 importFrom("R.utils", "getParent")
 importFrom("R.utils", "getRelativePath")
 importFrom("R.utils", "hpaste")
-importFrom("R.utils", "inherits") ## Multi-sources: R.utils, base
 importFrom("R.utils", "insert")
 importFrom("R.utils", "isDirectory")
 importFrom("R.utils", "less")
@@ -55,21 +56,23 @@ importFrom("R.utils", "printf")
 importFrom("R.utils", "pushState")
 importFrom("stats", "na.omit")
 
-## Manually imported
-importFrom("R.oo", "Class")
-importFrom("R.utils", "Arguments")
 
 ## Needed in order for corresponding S3method():s below to work
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
 
+## Manually imported
+importFrom("R.oo", "Class")
+importFrom("R.utils", "Arguments")
+
+if (packageVersion("R.utils") < "1.27.5") {
+  importFrom("R.utils", "cat.default")
+}
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Object that must exported explicitly
-export(.conflicts.OK)
-
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
 exportPattern("^[^\\.]")

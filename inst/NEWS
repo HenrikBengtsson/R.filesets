@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.0 [2013-10-16]
+o Minor cleanups.
+o Bumped up package dependences.
+
+
 Version: 2.2.5 [2013-10-09]
 o ROBUSTNESS: Added system tests validating getChecksum() on
   GenericDataFile:s and GenericDataFileSet:s.
@@ -25,7 +30,7 @@ o BUG FIX: Package now re-exports getChecksum() from R.cache instead
 
 
 Version: 2.2.2 [2013-09-30]
-o Now readDataFrame() for TabularTextFile subsets by row, if requested,
+o SPEEDUP: Now readDataFrame() for TabularTextFile subsets by row, 
   before reparsing numerical columns that were quoted.
 o ROBUSTNESS: Modernized the requirement to R (>= 2.15.0).
 o CLEANUP: Dropped obsolete autoload():s.
