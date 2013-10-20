@@ -50,10 +50,6 @@ o CLEANUP: Package no longer attaches 'R.utils' - only imports it.
 o CLEANUP: Package no longer utilizes import(), only importFrom():s.
 o ROBUSTNESS: Added package system tests.
 o ROBUSTNESS: Forgot to import R.methodsS3::appendVarArgs().
-o BUG FIX/WORKAROUND: For now, package attaches the 'R.oo' package.
-  This is needed due to what appears to be a bug in how R.oo
-  finalizes Object:s assuming R.oo is/can be attached.  Until that
-  is resolved, we make sure R.oo is attached.
 o ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
   This is needed due to what appears to be a bug in how R.oo
   finalizes Object:s assuming R.oo is/can be attached.  Until that
