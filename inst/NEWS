@@ -3,7 +3,7 @@ Package: R.filesets
 
 Version: 2.3.0 [2013-10-16]
 o Minor cleanups.
-o Bumped up package dependences.
+o Bumped up package dependencies.
 
 
 Version: 2.2.5 [2013-10-09]
@@ -17,7 +17,7 @@ o ROBUSTNESS: The overriding of append() to become a generic
   of copy the latter.  All this will eventually be removed,
   when proper support for c, [, [[ etc. has been added everywhere.
 o CLEANUP: Now explicitly importing only what is needed in NAMESPACE.
-o Bumped up package dependences.
+o Bumped up package dependencies.
 
 
 Version: 2.2.3 [2013-10-05]
@@ -54,7 +54,7 @@ o ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
   This is needed due to what appears to be a bug in how R.oo
   finalizes Object:s assuming R.oo is/can be attached.  Until that
   is resolved, we make sure R.oo is attached.
-o Bumped up package dependences.
+o Bumped up package dependencies.
 
 
 Version: 2.1.1 [2013-08-31]
@@ -63,11 +63,11 @@ o Added [() and c() for GenericDataFileSet.
 
 Version: 2.1.0 [2013-08-01]
 o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
-o Bumped up package dependences.
+o Bumped up package dependencies.
 
 
 Version: 2.0.6 [2013-07-20]
-o CLEANUP: Removed R.oo from Depends and bumped up package dependences.
+o CLEANUP: Removed R.oo from Depends and bumped up package dependencies.
 
 
 Version: 2.0.5 [2013-06-26]
@@ -271,7 +271,7 @@ o ROBUSTNESS: Bumped up package dependencies.
 Version: 1.2.2 [2012-10-16]
 o DOCUMENTATION: Added Rd help for a few more methods.
 o CLEANUP: static fromFiles() for GenericDataFileSet is now defunct
-  in placefor byName(), which has been recommended since January 2010.
+  in place for byName(), which has been recommended since January 2010.
 
 
 Version: 1.2.1 [2012-09-27]
@@ -366,7 +366,7 @@ o Added getChecksum() to GenericDataFileSet, which calculates the
 
 Version: 0.9.9 [2011-04-04]
 o BUG FIX: equals() for GenericDataFile would consider two files not
-  to be equal only if their checksums was equal, and vice versa.
+  to be equal only if their checksums was equal, and vice verse.
   Also, when creating the message string explaining why they differ
   an error would have been thrown.
 
@@ -505,7 +505,7 @@ o BUG FIX: readColumns(..., column=<string>) on a TabularTextFile
 Version: 0.7.1 [2010-01-02]
 o Now setExtensionPattern(..., pattern=NULL) of GenericDataFile works.
 o Added argument 'default="\\.([^.]+)$"' to getExtensionPattern()
-  of GenericDataFile.  Before the default value was hardcoded
+  of GenericDataFile.  Before the default value was hard coded
   inside this function.
 
 
