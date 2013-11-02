@@ -53,6 +53,7 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{\link[R.filesets:anyNA.GenericDataFileSet]{anyNA}} \tab Checks whether any of the pathnames are missing.\cr
  \tab \code{\link[R.filesets:append.GenericDataFileSet]{append}} \tab Appends one data set to an existing one.\cr
  \tab \code{\link[R.filesets:appendFiles.GenericDataFileSet]{appendFiles}} \tab Appends a list of files to a data set.\cr
  \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
@@ -70,6 +71,8 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \tab \code{getOneFile} \tab  -\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
+ \tab \code{gunzip} \tab  -\cr
+ \tab \code{\link[R.filesets:gzip.GenericDataFileSet]{gzip}} \tab Compresses/uncompresses a set of files.\cr
  \tab \code{hasFile} \tab  -\cr
  \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
  \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr

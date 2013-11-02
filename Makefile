@@ -49,7 +49,7 @@ R_OUTDIR := _R-$(R_VERSION_FULL)
 ## R_BUILD_OPTS := 
 ## R_BUILD_OPTS := $(R_BUILD_OPTS) --no-build-vignettes
 R_CHECK_OUTDIR := $(R_OUTDIR)/$(PKG_NAME).Rcheck
-_R_CHECK_CRAN_INCOMING_ = $(shell $(R_SCRIPT) -e "cat(Sys.getenv('_R_CHECK_CRAN_INCOMING_', 'TRUE'))")
+_R_CHECK_CRAN_INCOMING_ = $(shell $(R_SCRIPT) -e "cat(Sys.getenv('_R_CHECK_CRAN_INCOMING_', 'FALSE'))")
 _R_CHECK_XREFS_REPOSITORIES_ = $(shell if $(_R_CHECK_CRAN_INCOMING_) = "TRUE"; then echo ""; else echo "invalidURL"; fi)
 R_CHECK_FULL = $(shell $(R_SCRIPT) -e "cat(Sys.getenv('R_CHECK_FULL', ''))")
 R_CHECK_OPTS = --as-cran --timings
@@ -124,6 +124,9 @@ deps: DESCRIPTION
 setup:	update deps
 	$(R_SCRIPT) -e "source('http://aroma-project.org/hbLite.R'); hbLite('R.oo')"
 
+
+ns:
+	$(R_SCRIPT) -e "library('$(PKG_NAME)'); source('X:/devtools/NAMESPACE.R'); writeNamespaceSection('$(PKG_NAME)'); writeNamespaceImports('$(PKG_NAME)');"
 
 # Build source tarball
 ../$(R_OUTDIR)/$(PKG_TARBALL): $(PKG_FILES)

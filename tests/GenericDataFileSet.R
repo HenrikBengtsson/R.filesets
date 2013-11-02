@@ -44,6 +44,10 @@ print(uids)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Subsetting
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+df0 <- getFile(ds, 2L)
+df1 <- ds[[2L]]
+stopifnot(identical(getPathname(df0), getPathname(df1)))
+
 n <- length(ds)
 ds2 <- extract(ds, 1:n)
 print(ds2)

@@ -266,6 +266,44 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 })
 
 
+###########################################################################/**
+# @RdocMethod anyNA
+#
+# @title "Checks whether any of the pathnames are missing"
+#
+# \description{
+#   @get "title".
+#   Note that this only tests the \emph{pathnames} of files,
+#   but it does not test whether the files exists or not.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("anyNA", "GenericDataFileSet", function(x, ...) {
+  # To please R CMD check
+  ds <- x;
+  for (ii in seq_along(ds)) {
+    df <- getFile(ds, ii);
+    pathname <- getPathname(df);
+    if (is.na(pathname)) return(TRUE);
+  }
+  FALSE;
+})
+
 
 ###########################################################################/**
 # @RdocMethod getPath
@@ -773,6 +811,7 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFile
+# @aliasmethod [[
 #
 # @title "Get a particular file of the file set"
 #
@@ -1826,6 +1865,54 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 }, protected=TRUE)
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# COMPRESSION
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+###########################################################################/**
+# @RdocMethod gzip
+# @aliasmethod gunzip
+#
+# @title "Compresses/uncompresses a set of files"
+#
+# \description{
+#   @get "title" using gzip compression.
+#   When compressing (uncompressing), each of the @see GenericDataFile
+#   of the file set are compressed (uncompressed).
+# }
+#
+# \usage{
+#  @usage gzip,GenericDataFileSet
+#  @usage gunzip,GenericDataFileSet
+# }
+#
+# \arguments{
+#  \item{...}{Arguments passed to \code{gzip()/gunzip()} on each
+#    of the GenericDataFile entries.}
+# }
+#
+# \value{
+#   Returns (invisibly) itself.
+# }
+#
+# @author
+#
+# \seealso{
+#   Internally @see "R.utils::gzip" and @see "R.utils::gunzip" are used.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("gunzip", "GenericDataFileSet", function(this, ...) {
+  files <- sapply(this, FUN=gunzip, ...);
+  invisible(this);
+})
+
+
+setMethodS3("gzip", "GenericDataFileSet", function(this, ...) {
+  files <- sapply(this, FUN=gzip, ...);
+  invisible(this);
+})
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # VECTOR-RELATED METHODS
@@ -1842,10 +1929,21 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 # length() + [() + c():
 # * append()
 #
+# as.list() + length():
+# * lapply(), sapply()
+#
 # ...what else?
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("[", "GenericDataFileSet", function(x, i, ...) {
   extract(x, i, ...);
+}, protected=TRUE)
+
+setMethodS3("[[", "GenericDataFileSet", function(x, i, ...) {
+  if (is.numeric(i)) {
+    getFile(x, i, ...);
+  } else {
+    NextMethod("[[");
+  }
 }, protected=TRUE)
 
 
@@ -2035,6 +2133,12 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-11-01
+# o Added "[["(x, i) for GenericDataFileSet, which gets a GenericDataFile
+#   by index 'i' in [1,length(x)].
+# o Added gzip()/gunzip() for GenericDataFileSet.
+# o Added anyNA() to GenericDataFileSet to test whether any of the
+#   pathnames are NA.
 # 2013-10-05
 # o CLEANUP: Now GenericDataFileSet() gives an error informing that
 #   argument 'alias' is defunct.

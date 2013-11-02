@@ -10,6 +10,10 @@
 \alias{getFile.GenericDataFileSet}
 \alias{GenericDataFileSet.getFile}
 \alias{getFile,GenericDataFileSet-method}
+\alias{GenericDataFileSet.[[}
+\alias{[[.GenericDataFileSet}
+\alias{[[,GenericDataFileSet-method}
+
 
 \title{Get a particular file of the file set}
 

@@ -1,6 +1,16 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.1 [2013-11-01]
+o Added "[["(x, i) for GenericDataFileSet, which gets a
+  GenericDataFile by index 'i' in [1,length(x)].  When
+  'i' is non-numeric, the next "[["(x, i) method in the
+  class hiearchy is used, e.g. the one for Object:s.
+o Added gzip()/gunzip() for GenericDataFileSet.
+o Added anyNA() to GenericDataFileSet to test whether any of
+  the pathnames are NA, or not.
+
+
 Version: 2.3.0 [2013-10-16]
 o Minor cleanups.
 o Bumped up package dependencies.
@@ -30,7 +40,7 @@ o BUG FIX: Package now re-exports getChecksum() from R.cache instead
 
 
 Version: 2.2.2 [2013-09-30]
-o SPEEDUP: Now readDataFrame() for TabularTextFile subsets by row, 
+o SPEEDUP: Now readDataFrame() for TabularTextFile subsets by row,
   before reparsing numerical columns that were quoted.
 o ROBUSTNESS: Modernized the requirement to R (>= 2.15.0).
 o CLEANUP: Dropped obsolete autoload():s.
