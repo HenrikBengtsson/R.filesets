@@ -1310,10 +1310,16 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     # Build list of GenericDataFile objects
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Defining ", length(pathnames), " files");
+    # NOTE: Argument 'recursive' to fromFile() below should really have
+    #       been named 'subclasses', because it indicates whether also
+    #       subclasses of class(dfStatic) should be considered or not.
+    #       Looking for compatible subclasses is very slow, which is why
+    #       should avoid doing it unless really necessary. /HB 2013-11-11
+    subclasses <- recursive;
     files <- list();
     for (kk in seq_along(pathnames)) {
       if (as.logical(verbose)) cat(kk, ", ", sep="");
-      df <- fromFile(dfStatic, pathnames[kk], recursive=recursive, .checkArgs=FALSE, verbose=less(verbose));
+      df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
       if (kk == 1) {
         # Update the static class instance.  The reason for this is
@@ -1322,6 +1328,8 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
         # Note that 'df' might be of a subclass of 'dfStatic'.
         clazz <- Class$forName(class(df)[1L]);
         dfStatic <- getStaticInstance(clazz);
+        # SPEEDUP: Now we don't need to scan for subclasses anymore.
+        subclasses <- FALSE;
       }
     }
     if (as.logical(verbose)) cat("\n");
@@ -2133,6 +2141,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-11-11
+# o SPEEDUP: GenericDataFileSet$byPath(..., recursive=TRUE) would be very
+#   slow setting up the individual files, especially for large data sets.
+#   Now it's only slow for the first file.
 # 2013-11-01
 # o Added "[["(x, i) for GenericDataFileSet, which gets a GenericDataFile
 #   by index 'i' in [1,length(x)].
