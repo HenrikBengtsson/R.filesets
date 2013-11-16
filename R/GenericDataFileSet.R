@@ -268,6 +268,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 
 ###########################################################################/**
 # @RdocMethod anyNA
+# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
 #
 # @title "Checks whether any of the pathnames are missing"
 #
