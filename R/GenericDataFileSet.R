@@ -1108,11 +1108,15 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #  \item{onMissing}{A @character specifying the action if a requested file
 #    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
 #    a @see "GenericDataFile" refering to an @NA pathname is used in place.
-#    If \code{"drop"}, the missing file is dropped.}
+#    If \code{"drop"}, the missing file is dropped.
+#    If \code{"dropall"}, an empty data set is return if one or more
+#    missing files are requested.
+#  }
 # }
 #
 # \value{
-#   Returns an @see "GenericDataFileSet" (or a subclass) object.
+#   Returns a @see "GenericDataFileSet" with zero of more
+#   @see "GenericDataFile":s.
 # }
 #
 # @author
@@ -1121,7 +1125,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error")) {
+setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissing=c("NA", "error", "drop", "dropall"), onDuplicates=c("ignore", "drop", "error")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1157,16 +1161,30 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
   if (onMissing == "error") {
     disallow <- c("NA", "NaN");
-  } else if (is.element(onMissing, c("NA", "drop"))) {
+  } else if (is.element(onMissing, c("NA", "drop", "dropall"))) {
     disallow <- c("NaN");
   }
   files <- Arguments$getIndices(files, max=nbrOfFiles, disallow=disallow);
   missing <- which(is.na(files));
 
-  # Drop non-existing files?
-  if (length(missing) > 0L && onMissing == "drop") {
-    files <- files[is.finite(files)];
-    missing <- 0L;
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Handle missing files
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (length(missing) > 0L) {
+    # Error with missing files?
+    if (onMissing == "error") {
+      throw("Detected missing files, which is not allowed (onMissing='error'): ", length(missing));
+    }
+
+    # Drop non-existing files?
+    if (onMissing == "drop") {
+      files <- files[is.finite(files)];
+      missing <- integer(0L);
+    } else if (onMissing == "dropall") {
+      files <- files[c()];
+      missing <- integer(0L);
+    }
   }
 
   # Check for duplicates?
@@ -1188,18 +1206,25 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   res <- clone(this);
   files <- this$files[files];
 
-  # Any missing files?
+  # Should missing files be returned?
   if (length(missing) > 0L) {
-    className <- class(this$files[[1L]])[1L];
+    className <- NULL;
+    if (length(this$files) > 0L) {
+      # TODO: Drop this? /HB 2013-11-15
+      className <- class(this$files[[1L]])[1L];
+    }
     if (is.null(className)) {
       className <- getFileClass(this);
     }
+
+    # Allocate a "missing" file of the correct class
     clazz <- Class$forName(className);
-    naValue <- newInstance(clazz, NA, mustExist=FALSE);
+    naValue <- newInstance(clazz, NA_character_, mustExist=FALSE);
     for (idx in missing) {
       files[[idx]] <- naValue;
     }
   }
+
   res$files <- files;
   files <- NULL; # Not needed anymore
 
@@ -1207,7 +1232,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   clearCache(res);
 
   res;
-})
+}) # extract()
 
 
 
@@ -2141,6 +2166,11 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2013-11-15
+# o Now extract() for GenericDataFileSet also handles when the data set to
+#   be extracted is empty, e.g. extract(GenericDataFileSet(), NA_integer_).
+#   Also, added support for argument onMissing="dropall", which drops all
+#   files if one or more missing files where requested.
 # 2013-11-11
 # o SPEEDUP: GenericDataFileSet$byPath(..., recursive=TRUE) would be very
 #   slow setting up the individual files, especially for large data sets.

@@ -1,6 +1,14 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.3 [2013-11-15]
+o Now extract() for GenericDataFileSet also handles when the data set to
+  be extracted is empty, e.g. extract(GenericDataFileSet(), NA_integer_).
+  Also, added support for argument onMissing="dropall", which drops all
+  files if one or more missing files where requested.
+  Added package system tests for these case.
+
+
 Version: 2.3.2 [2013-11-11]
 o SPEEDUP: GenericDataFileSet$byPath(..., recursive=TRUE) would be very
   slow setting up the individual files, especially for large data sets.

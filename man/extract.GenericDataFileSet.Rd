@@ -23,7 +23,7 @@
 }
 
 \usage{
-\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"),
+\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop", "dropall"),
   onDuplicates=c("ignore", "drop", "error"))
 }
 
@@ -34,11 +34,15 @@
  \item{onMissing}{A \code{\link[base]{character}} specifying the action if a requested file
    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
    a \code{\link{GenericDataFile}} refering to an \code{\link[base]{NA}} pathname is used in place.
-   If \code{"drop"}, the missing file is dropped.}
+   If \code{"drop"}, the missing file is dropped.
+   If \code{"dropall"}, an empty data set is return if one or more
+   missing files are requested.
+ }
 }
 
 \value{
-  Returns an \code{\link{GenericDataFileSet}} (or a subclass) object.
+  Returns a \code{\link{GenericDataFileSet}} with zero of more
+  \code{\link{GenericDataFile}}:s.
 }
 
 \author{Henrik Bengtsson}
