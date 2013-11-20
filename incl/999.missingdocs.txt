@@ -138,3 +138,9 @@ updateFullName.GenericDataFileSet updateFullNames
 updateFullNames.GenericDataFileSet validateChecksum verify
 verify.GenericTabularFile verify.TabularTextFile writeChecksum
 writeColumnsToFiles
+as.character.ChecksumFile create create.ChecksumFile
+getChecksumFile getChecksumFile.GenericDataFile
+getChecksumFile.default getChecksumFileSet
+getChecksumFileSet.GenericDataFileSet getMainFile
+getMainFile.ChecksumFile isOld isOld.ChecksumFile
+validate.ChecksumFileSet

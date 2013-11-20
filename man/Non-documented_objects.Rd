@@ -261,6 +261,19 @@
 \alias{verify.TabularTextFile}
 \alias{writeChecksum}
 \alias{writeColumnsToFiles}
+\alias{as.character.ChecksumFile}
+\alias{create}
+\alias{create.ChecksumFile}
+\alias{getChecksumFile}
+\alias{getChecksumFile.GenericDataFile}
+\alias{getChecksumFile.default}
+\alias{getChecksumFileSet}
+\alias{getChecksumFileSet.GenericDataFileSet}
+\alias{getMainFile}
+\alias{getMainFile.ChecksumFile}
+\alias{isOld}
+\alias{isOld.ChecksumFile}
+\alias{validate.ChecksumFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

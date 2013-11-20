@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{GenericDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
+\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public static class \bold{GenericDataFileSet}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr
@@ -62,6 +62,7 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
+ \tab \code{getChecksumFileSet} \tab  -\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
  \tab \code{getFileClass} \tab  -\cr
