@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{GenericDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
+\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{RdsFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public static class \bold{GenericDataFileSet}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr

@@ -22,7 +22,7 @@
 \code{~~+--}\emph{\code{FullNameInterface}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[R.filesets]{ChecksumFile}}, \link[R.filesets]{ChecksumFileSet}, \emph{\link[R.filesets]{GenericDataFile}}, \link[R.filesets]{GenericDataFileSet}, \link[R.filesets]{GenericDataFileSetList}, \emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{GenericTabularFileSet}, \emph{\link[R.filesets]{TabularTextFile}}, \link[R.filesets]{TabularTextFileSet}\cr
+\emph{\link[R.filesets]{ChecksumFile}}, \link[R.filesets]{ChecksumFileSet}, \emph{\link[R.filesets]{GenericDataFile}}, \link[R.filesets]{GenericDataFileSet}, \link[R.filesets]{GenericDataFileSetList}, \emph{\link[R.filesets]{GenericTabularFile}}, \link[R.filesets]{GenericTabularFileSet}, \emph{\link[R.filesets]{RdsFile}}, \link[R.filesets]{RdsFileSet}, \emph{\link[R.filesets]{TabularTextFile}}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public abstract class \bold{FullNameInterface}\cr
 extends \link[R.oo]{Interface}\cr
