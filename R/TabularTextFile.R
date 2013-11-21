@@ -84,11 +84,8 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
 
 setMethodS3("as.character", "TabularTextFile", function(x, ...) {
-  # To please R CMD check
   this <- x;
-
   s <- NextMethod("as.character");
-  class <- class(s);
   colnames <- getColumnNames(this);
   if (length(colnames) > 0L) {
     columns <- paste("'", colnames, "'", sep="");
@@ -97,8 +94,6 @@ setMethodS3("as.character", "TabularTextFile", function(x, ...) {
     s <- c(s, sprintf("Columns [NA]: <not reading column names>"));
   }
   s <- c(s, sprintf("Number of text lines: %d", nbrOfLines(this, fast=TRUE)));
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

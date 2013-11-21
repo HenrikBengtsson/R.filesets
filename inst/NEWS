@@ -1,8 +1,9 @@
 Package: R.filesets
 ===================
 
-Version: 2.3.5 [2013-11-20]
+Version: 2.3.5 [2013-11-21]
 o Added RdsFile and RdsFileSet objects for handling *.rds file sets.
+o CLEANUP: There's no longer a need to reset class for GenericSummary.
 
 
 Version: 2.3.4 [2013-11-19]

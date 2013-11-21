@@ -43,14 +43,9 @@ setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE
 
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
-  # To please R CMD check
   this <- x;
-
   s <- NextMethod("as.character");
-  class <- class(s);
   s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)));
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

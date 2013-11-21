@@ -260,8 +260,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   s <- c(s, sprintf("RAM: %.2f MB", objectSize(this)/1024^2));
 
-  class(s) <- "GenericSummary";
-  s;
+  GenericSummary(s);
 }, protected=TRUE)
 
 
