@@ -338,3 +338,4 @@ S3method("setCommentChar", "TabularTextFile")
 
 # TabularTextFileSet
 S3method("readDataFrame", "TabularTextFileSet")
+
