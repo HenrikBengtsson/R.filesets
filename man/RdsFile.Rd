@@ -51,6 +51,7 @@ RdsFile(...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{loadObject} \tab  -\cr
+ \tab \code{loadRDS} \tab  -\cr
 }
 
 
