@@ -27,6 +27,7 @@
 
 \value{
   Returns an \code{\link[base]{integer}}.
+  If the number of columns cannot be inferred, \code{\link{NA}} is returned.
 }
 \author{Henrik Bengtsson}
 

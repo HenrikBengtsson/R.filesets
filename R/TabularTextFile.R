@@ -299,7 +299,6 @@ setMethodS3("getDefaultColumnClassPatterns", "TabularTextFile", function(this, .
 }, protected=TRUE)
 
 
-
 ###########################################################################/**
 # @RdocMethod getHeader
 #
@@ -313,6 +312,8 @@ setMethodS3("getDefaultColumnClassPatterns", "TabularTextFile", function(this, .
 #
 # \arguments{
 #   \item{...}{Passed to internal @seemethod "readRawHeader".}
+#   \item{header}{A @logical specifying whether there are column
+#    headers or not.}
 #   \item{force}{If @TRUE, an already retrieved header will be ignored.}
 # }
 #
@@ -328,11 +329,11 @@ setMethodS3("getDefaultColumnClassPatterns", "TabularTextFile", function(this, .
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("getHeader", "TabularTextFile", function(this, ..., force=FALSE) {
+setMethodS3("getHeader", "TabularTextFile", function(this, ..., header=TRUE, force=FALSE) {
   hdr <- this$.fileHeader;
   if (force || is.null(hdr) || hasBeenModified(this)) {
     hdr <- readRawHeader(this, ...);
-    if (hasColumnHeader(this)) {
+    if (header && hasColumnHeader(this)) {
       hdr$columns <- hdr$topRows[[1]];
     }
     this$.fileHeader <- hdr;
@@ -572,7 +573,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
         colClassPatterns <- rep(colClass, times=nbrOfColumns);
         names(colClassPatterns) <- sprintf("^%s$", columns);
       }
-    }
+    } # if (length(pos) > 0)
 
     verbose && cat(verbose, "Pattern used to identify column classes:", level=-20);
     verbose && print(verbose, colClassPatterns, level=-20);
@@ -590,8 +591,12 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
         colClass <- colClassPatterns[kk];
         colClasses[idxs] <- colClass;
       }
-    }
-  }
+    } # for (kk ...)
+  } else {
+    # If column names cannot be inferred, use the default
+    nbrOfColumns <- length(fileHeader$topRows[[1]]);
+    colClasses <- rep(colClasses["*"], times=nbrOfColumns);
+  } # if (!is.null(columns) && hasColClassPatterns)
 
   verbose && cat(verbose, "Column classes:", level=-20);
   verbose && print(verbose, colClasses, level=-20);
@@ -1108,6 +1113,10 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-12-18
+# o BUG FIX: Now getReadArguments() for TabularTextFile returns a
+#   'colClasses' vector of the correct length also in the case when
+#   there are no column names.
 # 2013-09-30
 # o Now readDataFrame() for TabularTextFile subsets by row, if requested,
 #   before reparsing numerical columns that were quoted.

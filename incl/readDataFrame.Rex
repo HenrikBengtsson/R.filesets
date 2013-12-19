@@ -28,3 +28,18 @@ print(df)
 # Skip until the first data row
 df <- readDataFrame(pathname, skip="^x")
 print(df)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Example: Tab-delimited file without column header
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+path <- system.file("exData/dataSetB", package="R.filesets")
+pathname <- file.path(path, "fileF,noHeader.dat")
+
+# Incorrectly assuming column header
+df <- readDataFrame(pathname)
+print(df)
+
+# No column header
+df <- readDataFrame(pathname, header=FALSE)
+print(df)

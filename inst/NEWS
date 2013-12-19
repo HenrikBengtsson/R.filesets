@@ -1,6 +1,19 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.7 [2013-12-18]
+o Now readDataFrame(..., header=FALSE) works as expected for tabular
+  text files without headers.
+o Added nbrOfColumns() for GenericTabularFile, which, if the number
+  of columns cannot be inferred from the column names, will fall back
+  to read the first row of data and use that as the number of columns.
+o Now nbrOfColumns() for ColumnNamesInterface returns NA if column names
+  cannot be inferred and hence not be counted.
+o BUG FIX: Now getReadArguments() for TabularTextFile returns a
+  'colClasses' vector of the correct length also in the case when
+  there are no column names.
+
+
 Version: 2.3.6 [2013-11-27]
 o Added a generic loadRDS() available for plain files and RdsFile:s.
 

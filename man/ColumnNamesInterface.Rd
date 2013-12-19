@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{ColumnNamesInterface}
+\name{ColumnNamesInterface}
 \docType{class}
 \alias{ColumnNamesInterface}
 
 
- \title{The ColumnNamesInterface class interface}
+\title{The ColumnNamesInterface class interface}
 
- \description{
-  Package:  R.filesets \cr
+\description{
+ Package:  R.filesets \cr
 \bold{Class ColumnNamesInterface}\cr
 
 \code{\link[R.oo]{Interface}}\cr
@@ -28,18 +28,18 @@ public abstract class \bold{ColumnNamesInterface}\cr
 extends \link[R.oo]{Interface}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 ColumnNamesInterface(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{clearColumnNamesTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:getColumnNames.ColumnNamesInterface]{getColumnNames}} \tab Gets the column names.\cr
@@ -53,7 +53,7 @@ ColumnNamesInterface(...)
 extend, print, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 \keyword{classes}

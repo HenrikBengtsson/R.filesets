@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,7 +18,7 @@
 # }
 #
 # @author
-#*/########################################################################### 
+#*/###########################################################################
 setConstructorS3("ColumnNamesInterface", function(...) {
   extend(Interface(), "ColumnNamesInterface");
 })
@@ -42,6 +42,7 @@ setConstructorS3("ColumnNamesInterface", function(...) {
 #
 # \value{
 #   Returns an @integer.
+#   If the number of columns cannot be inferred, @see NA is returned.
 # }
 # @author
 #
@@ -54,7 +55,9 @@ setConstructorS3("ColumnNamesInterface", function(...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("nbrOfColumns", "ColumnNamesInterface", function(this, ...) {
-  length(getColumnNames(this));
+  columns <- getColumnNames(this);
+  if (is.null(columns)) return(NA_integer_);
+  length(columns);
 })
 
 
@@ -101,7 +104,7 @@ setMethodS3("getDefaultColumnNames", "ColumnNamesInterface", abstract=TRUE, prot
 # @synopsis
 #
 # \arguments{
-#  \item{translate}{If @TRUE and a names translator is set, the 
+#  \item{translate}{If @TRUE and a names translator is set, the
 #     column names are translated before returned.}
 #  \item{...}{Not used.}
 # }
@@ -123,7 +126,7 @@ setMethodS3("getColumnNames", "ColumnNamesInterface", function(this, ..., transl
   # Translate?
   if (translate) {
     names <- translateColumnNames(this, names);
-  } 
+  }
 
   names;
 })
@@ -155,7 +158,7 @@ setMethodS3("setListOfColumnNamesTranslators", "ColumnNamesInterface", function(
   for (kk in seq_along(fnList)) {
     fcn <- fnList[[kk]];
     if (!is.function(fcn)) {
-      throw("Element #", kk, " of argument 'fnList' is not a function: ", 
+      throw("Element #", kk, " of argument 'fnList' is not a function: ",
                                                            class(fcn)[1]);
     }
   }
@@ -195,7 +198,7 @@ setMethodS3("translateColumnNames", "ColumnNamesInterface", function(this, names
 
     # Sanity check
     if (any(is.na(names2))) {
-      throw("Failed to translate names. Some names were translated to NA:s ", 
+      throw("Failed to translate names. Some names were translated to NA:s ",
             paste(head(names[is.na(names2)]), collapse=", "));
     }
     if (length(names2) != length(names)) {
@@ -307,7 +310,7 @@ setMethodS3("setColumnNamesTranslator", "ColumnNamesInterface", function(this, .
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Arguments, typically a @character string, which are 
+#  \item{...}{Arguments, typically a @character string, which are
 #     passed to the names translator generator.
 #  }
 # }
@@ -338,6 +341,9 @@ setMethodS3("updateColumnNames", "ColumnNamesInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-12-18
+# o Now nbrOfColumns() for ColumnNamesInterface returns NA if column names
+#   cannot be inferred and hence not be counted.
 # 2012-11-07
 # o Now clearListOfColumnNamesTranslators() utilizes
 #   setListOfColumnNamesTranslators().

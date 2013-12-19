@@ -77,7 +77,7 @@ TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNa
 
 
  \bold{Methods inherited from GenericTabularFile}:\cr
-[, as.character, dim, extractMatrix, head, nbrOfRows, readColumns, readDataFrame, tail, writeColumnsToFiles
+[, as.character, dim, extractMatrix, head, nbrOfColumns, nbrOfRows, readColumns, readDataFrame, tail, writeColumnsToFiles
 
  \bold{Methods inherited from ColumnNamesInterface}:\cr
 appendColumnNamesTranslator, appendColumnNamesTranslatorByNULL, appendColumnNamesTranslatorBycharacter, appendColumnNamesTranslatorByfunction, appendColumnNamesTranslatorBylist, clearColumnNamesTranslator, clearListOfColumnNamesTranslators, getColumnNames, getColumnNamesTranslator, getDefaultColumnNames, getListOfColumnNamesTranslators, nbrOfColumns, setColumnNames, setColumnNamesTranslator, setListOfColumnNamesTranslators, updateColumnNames

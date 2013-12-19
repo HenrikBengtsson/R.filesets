@@ -10,6 +10,7 @@
 \alias{nbrOfRows.GenericTabularFile}
 \alias{GenericTabularFile.nbrOfRows}
 \alias{nbrOfRows,GenericTabularFile-method}
+\alias{nbrOfColumns.GenericTabularFile}
 
 \title{Gets the number of data rows}
 

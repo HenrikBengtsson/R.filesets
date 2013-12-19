@@ -18,11 +18,13 @@
 }
 
 \usage{
-\method{getHeader}{TabularTextFile}(this, ..., force=FALSE)
+\method{getHeader}{TabularTextFile}(this, ..., header=TRUE, force=FALSE)
 }
 
 \arguments{
   \item{...}{Passed to internal \code{\link[R.filesets:readRawHeader.TabularTextFile]{*readRawHeader}()}.}
+  \item{header}{A \code{\link[base]{logical}} specifying whether there are column
+   headers or not.}
   \item{force}{If \code{\link[base:logical]{TRUE}}, an already retrieved header will be ignored.}
 }
 
