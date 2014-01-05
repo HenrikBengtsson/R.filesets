@@ -1,5 +1,6 @@
 library("R.filesets")
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,7 +82,7 @@ stopifnot(length(ds7) == 0L)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special cases
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsEmpty <- newInstance(ds)
+dsEmpty <- R.oo::newInstance(ds)
 stopifnot(length(dsEmpty) == 0L)
 
 dsEmpty <- ds[c()]
