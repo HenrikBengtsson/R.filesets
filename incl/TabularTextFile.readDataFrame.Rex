@@ -13,5 +13,5 @@ print(data)
 
 # Translate column names on the fly
 db <- setColumnNamesTranslator(db, function(names, ...) toupper(names))
-data2 <- readDataFrame(db, colClasses=c("(X|Y)"="integer", "CHAR"="character"))
-print(data2)
+data <- readDataFrame(db, colClasses=c("(X|Y)"="integer", "CHAR"="character"))
+print(data)

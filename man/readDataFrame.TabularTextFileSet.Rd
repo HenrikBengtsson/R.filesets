@@ -70,6 +70,14 @@ print(colClasses)
 
 data <- readDataFrame(ds, colClasses=colClasses)
 print(data)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Translate column names on the fly
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+lapply(ds, FUN=setColumnNamesTranslator, function(names, ...) toupper(names))
+data <- readDataFrame(ds, colClasses=c("(X|Y)"="integer", "CHAR"="character"))
+print(data)
 }
 
 \author{Henrik Bengtsson}
