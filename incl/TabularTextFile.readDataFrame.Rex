@@ -4,9 +4,14 @@ db <- TabularTextFile("fileA,20100112.dat", path=path)
 print(db)
 
 # Read all data
-df <- readDataFrame(db)
-print(df)
+data <- readDataFrame(db)
+print(data)
 
 # Read columns 'x', 'y', and 'char'
-df <- readDataFrame(db, colClasses=c("(x|y)"="integer", "char"="character"))
-print(df)
+data <- readDataFrame(db, colClasses=c("(x|y)"="integer", "char"="character"))
+print(data)
+
+# Translate column names on the fly
+db <- setColumnNamesTranslator(db, function(names, ...) toupper(names))
+data2 <- readDataFrame(db, colClasses=c("(X|Y)"="integer", "CHAR"="character"))
+print(data2)
