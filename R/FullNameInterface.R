@@ -382,7 +382,7 @@ setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) 
 
 setMethodS3("resetFullName", "FullNameInterface", function(this, ...) {
   clearFullNameTranslator(this, ...);
-})
+}, protected=TRUE)
 
 
 setMethodS3("getListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
@@ -495,7 +495,7 @@ setMethodS3("appendFullNameTranslator", "FullNameInterface", function(this, by, 
   updateFullName(this);
 
   invisible(res);
-}, protected=TRUE)
+})
 
 
 setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {

@@ -41,15 +41,13 @@ FullNameInterface(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{appendFullNameTranslatorByTabularTextFile} \tab  -\cr
- \tab \code{appendFullNameTranslatorByTabularTextFileSet} \tab  -\cr
+ \tab \code{appendFullNameTranslator} \tab  -\cr
  \tab \code{clearFullNameTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:getFullName.FullNameInterface]{getFullName}} \tab Gets the full name.\cr
  \tab \code{\link[R.filesets:getName.FullNameInterface]{getName}} \tab Gets the name.\cr
  \tab \code{\link[R.filesets:getTags.FullNameInterface]{getTags}} \tab Gets the tags.\cr
  \tab \code{hasTag} \tab  -\cr
  \tab \code{\link[R.filesets:hasTags.FullNameInterface]{hasTags}} \tab Checks whether the fullname contains a given set of tag(s).\cr
- \tab \code{resetFullName} \tab  -\cr
  \tab \code{\link[R.filesets:setFullName.FullNameInterface]{setFullName}} \tab Sets the full name.\cr
  \tab \code{setFullNameTranslator} \tab  -\cr
  \tab \code{\link[R.filesets:setName.FullNameInterface]{setName}} \tab Sets the name part of the fullname.\cr
