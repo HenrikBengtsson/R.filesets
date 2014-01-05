@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE)
+\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=FALSE)
 }
 
 \arguments{

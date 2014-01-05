@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.9 [2014-01-05]
+o CLEANUP: copyTo() and renameTo() for GenericDataFile had verbose
+  output enabled by default.
+
+
 Version: 2.3.8 [2014-01-04]
 o Added duplicated(), anyDuplicated() and unique() for GenericDataSet,
   which all compare GenericDataFile:s using the equals() method.

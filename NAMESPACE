@@ -93,6 +93,11 @@ export("gzip") # Re-export from 'R.utils'
 export("gunzip") # Re-export from 'R.utils'
 export("loadObject") # Re-export from 'R.utils'
 
+# Only needed when/if R.oo is not attached, which will
+# happen when it is moved from Depends to Imports.
+# /HB 2014-01-02
+export("equals") # Re-export from 'equals'
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DECLARE

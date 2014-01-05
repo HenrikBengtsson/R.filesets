@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE)
+\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=FALSE)
 }
 
 \arguments{

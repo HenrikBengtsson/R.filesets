@@ -986,7 +986,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE) {
+setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1059,7 +1059,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE) {
+setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1603,6 +1603,9 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2014-01-05
+# o CLEANUP: copyTo() and renameTo() flr GenericDataFile had verbose
+#   output enabled by default.
 # 2013-06-20
 # o Now isGzipped() for GenericDataFile ignores the case of the filename
 #   extension when testing whether the file is gzipped or not.
