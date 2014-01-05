@@ -274,6 +274,10 @@
 \alias{isOld}
 \alias{isOld.ChecksumFile}
 \alias{validate.ChecksumFileSet}
+\alias{findDuplicated.GenericDataFileSet}
+\alias{duplicated.GenericDataFileSet}
+\alias{anyDuplicated.GenericDataFileSet}
+\alias{unique.GenericDataFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -20,11 +20,6 @@ dsTail <- ds[-(1:2)]
 ds2 <- c(dsHead, dsTail)
 stopifnot(all.equal(ds2, ds))
 
-# Comparing: ==, !=, duplicated(), unique()
-# FIXME
-
-# Ordering: <=, >=, <, >, order(), sort(), rank()
-# FIXME
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,6 +28,17 @@ stopifnot(all.equal(ds2, ds))
 # Double-bracket subsetting
 dfA <- ds[[1]]
 dfB <- ds[[2]]
+
+# equals()
+stopifnot(equals(dfA, dfA))
+stopifnot(equals(dfB, dfB))
+stopifnot(!equals(dfA, dfB))
+
+# Comparing: ==, !=
+# FIXME
+
+# Ordering: <=, >=, <, >, order(), sort(), rank()
+# FIXME
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -48,3 +54,18 @@ stopifnot(all.equal(dsC, dsA))
 
 dsD <- c(ds, ds[c(1,3)])
 stopifnot(all.equal(dsD, dsA))
+
+# Comparing: duplicated()
+dups <- duplicated(dsA)
+print(dups)
+hasDups <- anyDuplicated(dsA)
+print(hasDups)
+stopifnot(identical(any(dups), hasDups))
+
+dsT <- dsA[!dups]
+stopifnot(!anyDuplicated(dsT))
+stopifnot(equals(dsT, ds))
+
+# Comparing: unique()
+dsU <- unique(dsA)
+stopifnot(equals(dsU, dsT))

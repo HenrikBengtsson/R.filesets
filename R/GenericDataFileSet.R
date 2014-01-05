@@ -1991,6 +1991,50 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
 }, protected=TRUE)
 
 
+setMethodS3("findDuplicated", "GenericDataFileSet", function(x, ..., fromLast=FALSE, any=FALSE) {
+  # Local functions
+  isDuplicated <- function(file, files, ...) {
+    if (length(files) == 0L) return(FALSE);
+    for (ii in seq_along(files)) {
+      if (equals(file, files[[ii]], ...)) return(TRUE);
+    }
+    FALSE;
+  } # isDuplicated()
+
+  files <- as.list(x);
+  dups <- logical(length(files));
+  if (length(dups) <= 1L) return(dups);
+
+  if (!fromLast) files <- rev(files);
+
+  for (ii in seq_along(files)) {
+    file <- files[[1L]];
+    files <- files[-1L];
+    isDup <- isDuplicated(file, files, ...);
+    dups[[ii]] <- isDup;
+    if (any) break;
+  }
+
+  if (!fromLast) dups <- rev(dups);
+  dups;
+}, protected=TRUE) # findDuplicated()
+
+
+setMethodS3("duplicated", "GenericDataFileSet", function(x, ...) {
+  findDuplicated(x, ...)
+})
+
+setMethodS3("anyDuplicated", "GenericDataFileSet", function(x, ...) {
+  any(findDuplicated(x, ..., fromLast=TRUE, firstOnly=TRUE))
+})
+
+setMethodS3("unique", "GenericDataFileSet", function(x, ...) {
+  dups <- duplicated(x, ...);
+  # Drop duplicates?
+  if (any(dups)) x <- x[!dups];
+  x;
+})
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # FULLNAME TRANSLATORS
@@ -2165,6 +2209,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 ############################################################################
 # HISTORY:
 # 2014-01-04
+# o Added duplicated(), anyDuplicated() and unique() for GenericDataSet,
+#   which compare GenericDataFile:s based on the equals() method.
 # o Now c() for GenericDataFileSet also works to append GenericDataFile:s.
 # 2013-11-15
 # o Now extract() for GenericDataFileSet also handles when the data set to

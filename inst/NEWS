@@ -2,6 +2,8 @@ Package: R.filesets
 ===================
 
 Version: 2.3.8 [2014-01-04]
+o Added duplicated(), anyDuplicated() and unique() for GenericDataSet,
+  which all compare GenericDataFile:s using the equals() method.
 o Now c() for GenericDataFileSet also works to append GenericDataFile:s.
   Added package system test for common use cases of c().
 
