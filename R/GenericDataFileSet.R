@@ -1421,9 +1421,6 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 #   Each file is copied safely, but if this method is interrupted, it
 #   may results in a data set consisting of fewer than the original
 #   data set.
-#   FUTURE: In order to minimize the risk for this, we may consider to
-#   first copy to a temporary directory, which is then renamed, cf. how
-#   individual files are safely copied.
 # }
 #
 # @author
@@ -1985,6 +1982,7 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
   args <- list(...);
   args <- lapply(args, FUN=function(x) {
     if (inherits(x, "GenericDataFileSet")) x <- as.list(x);
+    if (inherits(x, "GenericDataFile")) x <- list(x);
     x;
   });
   args <- Reduce(c, args);
@@ -2166,6 +2164,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-01-04
+# o Now c() for GenericDataFileSet also works to append GenericDataFile:s.
 # 2013-11-15
 # o Now extract() for GenericDataFileSet also handles when the data set to
 #   be extracted is empty, e.g. extract(GenericDataFileSet(), NA_integer_).

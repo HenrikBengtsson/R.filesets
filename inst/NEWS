@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.8 [2014-01-04]
+o Now c() for GenericDataFileSet also works to append GenericDataFile:s.
+  Added package system test for common use cases of c().
+
+
 Version: 2.3.7 [2013-12-18]
 o Now readDataFrame(..., header=FALSE) works as expected for tabular
   text files without headers.
