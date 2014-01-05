@@ -275,6 +275,7 @@
 \alias{isOld.ChecksumFile}
 \alias{validate.ChecksumFileSet}
 \alias{findDuplicated.GenericDataFileSet}
+\alias{findDuplicated}
 \alias{duplicated.GenericDataFileSet}
 \alias{anyDuplicated.GenericDataFileSet}
 \alias{unique.GenericDataFileSet}
