@@ -64,18 +64,20 @@ setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, drop
   .Defunct("getFileList");
 }, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
 
+digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
+  .Defunct("digest::digest");
+} # digest2()
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
-  .Deprecated("digest::digest");
-  digest(object, ..., skip=skip, ascii=ascii);
-} # digest2()
 
 
 ############################################################################
 # HISTORY:
+# 2014-01-05
+# o Defunct digest2().
 # 2013-10-05
 # o CLEANUP: Now no generic functions are created for defunct methods.
 # 2013-09-30
