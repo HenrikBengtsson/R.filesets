@@ -149,3 +149,4 @@ duplicated.GenericDataFileSet
 anyDuplicated.GenericDataFileSet
 unique.GenericDataFileSet
 linkTo
+is.na.GenericDataFile

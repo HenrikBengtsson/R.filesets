@@ -308,7 +308,6 @@ setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...
 
 
 
-
 ###########################################################################/**
 # @RdocMethod getPath
 #
@@ -580,6 +579,13 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
   res <- getPathname(this);
   isFile(res);
 })
+
+
+setMethodS3("is.na", "GenericDataFile", function(x) {
+  pathname <- getPathname(x);
+  is.na(pathname);
+}, appendVarArgs=FALSE) # is.na()
+
 
 
 ###########################################################################/**
@@ -1626,6 +1632,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2014-01-07
+# o Added is.na() for GenericDataFile.
 # 2014-01-06
 # o Added linkTo() for GenericDataFile.
 # o CLEANUP: Made copyTo() a light-weight wrapper around copyFile(),

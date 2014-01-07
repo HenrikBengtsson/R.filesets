@@ -61,7 +61,6 @@ importFrom("stats", "na.omit")
 
 
 ## Needed in order for corresponding S3method():s below to work
-importFrom("stats", "na.omit") # generic function
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
 

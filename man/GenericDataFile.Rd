@@ -65,6 +65,7 @@ GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...,
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFile]{getPath}} \tab Gets the path (directory) of the file.\cr
  \tab \code{\link[R.filesets:getPathname.GenericDataFile]{getPathname}} \tab Gets the pathname of the file.\cr
+ \tab \code{is.na} \tab  -\cr
  \tab \code{\link[R.filesets:isFile.GenericDataFile]{isFile}} \tab Checks if this is an existing file.\cr
  \tab \code{\link[R.filesets:validateChecksum.GenericDataFile]{validateChecksum}} \tab Asserts that the file checksum matches the one of the checksum file.\cr
  \tab \code{\link[R.filesets:writeChecksum.GenericDataFile]{writeChecksum}} \tab Write the file checksum to a checksum file.\cr

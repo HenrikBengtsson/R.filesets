@@ -78,6 +78,7 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \tab \code{\link[R.filesets:gzip.GenericDataFileSet]{gzip}} \tab Compresses/uncompresses a set of files.\cr
  \tab \code{hasFile} \tab  -\cr
  \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
+ \tab \code{is.na} \tab  -\cr
  \tab \code{na.omit} \tab  -\cr
  \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
  \tab \code{unique} \tab  -\cr

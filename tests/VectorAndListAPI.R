@@ -18,7 +18,7 @@ dsTail <- ds[-(1:2)]
 
 # Combining: c()
 ds2 <- c(dsHead, dsTail)
-stopifnot(all.equal(ds2, ds))
+stopifnot(equals(ds2, ds))
 
 
 
@@ -47,13 +47,13 @@ stopifnot(!equals(dfA, dfB))
 dsA <- extract(ds, c(seq_along(ds), 1, 3))
 
 dsB <- c(ds, ds[[1]], ds[[3]])
-stopifnot(all.equal(dsB, dsA))
+stopifnot(equals(dsB, dsA))
 
 dsC <- c(ds, list(ds[[1]], ds[[3]]))
-stopifnot(all.equal(dsC, dsA))
+stopifnot(equals(dsC, dsA))
 
 dsD <- c(ds, ds[c(1,3)])
-stopifnot(all.equal(dsD, dsA))
+stopifnot(equals(dsD, dsA))
 
 # Comparing: duplicated()
 dups <- duplicated(dsA)

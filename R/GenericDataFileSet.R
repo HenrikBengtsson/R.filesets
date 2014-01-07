@@ -265,46 +265,6 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 })
 
 
-###########################################################################/**
-# @RdocMethod anyNA
-# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
-#
-# @title "Checks whether any of the pathnames are missing"
-#
-# \description{
-#   @get "title".
-#   Note that this only tests the \emph{pathnames} of files,
-#   but it does not test whether the files exists or not.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "na.omit" for dropping missing items.
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("anyNA", "GenericDataFileSet", function(x, ...) {
-  # To please R CMD check
-  ds <- x;
-  for (ii in seq_along(ds)) {
-    df <- getFile(ds, ii);
-    pathname <- getPathname(df);
-    if (is.na(pathname)) return(TRUE);
-  }
-  FALSE;
-})
-
 
 ###########################################################################/**
 # @RdocMethod getPath
@@ -1093,7 +1053,6 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @RdocMethod extract
 # @alias extract
 # @aliasmethod [
-# @alias na.omit.GenericDataFileSet
 #
 # @title "Extract a subset of the file set"
 #
@@ -1124,7 +1083,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "anyNA" for testing whether there are missing items or not.
+#   @seemethod "na.omit" for dropping missing files from a fileset.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1237,6 +1196,51 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   res;
 }) # extract()
 
+
+
+###########################################################################/**
+# @RdocMethod anyNA
+# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
+# @alias is.na.GenericDataFileSet
+# @alias na.omit.GenericDataFileSet
+#
+# @title "Checks whether any of the pathnames are missing"
+#
+# \description{
+#   @get "title".
+#   Note that this only tests the \emph{pathnames} of files,
+#   but it does not test whether the files exists or not.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "na.omit" for dropping missing items.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("anyNA", "GenericDataFileSet", function(x, ...) {
+  files <- getFiles(x);
+  for (df in files) {
+    if (is.na(df)) return(TRUE);
+  }
+  FALSE;
+}) # anyNA()
+
+setMethodS3("is.na", "GenericDataFileSet", function(x) {
+  files <- getFiles(x);
+  unlist(lapply(files, FUN=is.na));
+}, appendVarArgs=FALSE) # is.na()
 
 setMethodS3("na.omit", "GenericDataFileSet", function(object, ...) {
   extract(object, files=seq_along(object), onMissing="drop", ...);
@@ -2217,6 +2221,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-01-07
+# o Added is.na() and na.omit() for GenericDataFileSet.
 # 2014-01-04
 # o Added duplicated(), anyDuplicated() and unique() for GenericDataSet,
 #   which compare GenericDataFile:s based on the equals() method.

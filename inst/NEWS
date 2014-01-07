@@ -2,7 +2,8 @@ Package: R.filesets
 ===================
 
 Version: 2.3.10 [2014-01-07]
-o Added na.omit() for GenericDataFileSet.
+o Added is.na() for GenericDataFile and GenericDataFileSet and
+  na.omit() for the latter, which already supports anyNA().
 o Added linkTo() for GenericDataFile, which create a symbolic link at
   a given destination pathname analogously to how copyTo() creates a
   file copy at a given destination pathname.
