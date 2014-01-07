@@ -61,6 +61,7 @@ importFrom("stats", "na.omit")
 
 
 ## Needed in order for corresponding S3method():s below to work
+importFrom("stats", "na.omit") # generic function
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
 
@@ -277,6 +278,7 @@ S3method("gzip", "GenericDataFileSet")
 S3method("hasFile", "GenericDataFileSet")
 S3method("indexOf", "GenericDataFileSet")
 S3method("length", "GenericDataFileSet")
+S3method("na.omit", "GenericDataFileSet")
 S3method("nbrOfFiles", "GenericDataFileSet")
 S3method("reorder", "GenericDataFileSet")
 S3method("resetFullNames", "GenericDataFileSet")

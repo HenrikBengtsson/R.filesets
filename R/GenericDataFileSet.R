@@ -290,6 +290,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
 # @author
 #
 # \seealso{
+#   @seemethod "na.omit" for dropping missing items.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1092,6 +1093,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @RdocMethod extract
 # @alias extract
 # @aliasmethod [
+# @alias na.omit.GenericDataFileSet
 #
 # @title "Extract a subset of the file set"
 #
@@ -1122,6 +1124,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @author
 #
 # \seealso{
+#   @seemethod "anyNA" for testing whether there are missing items or not.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1233,6 +1236,11 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
   res;
 }) # extract()
+
+
+setMethodS3("na.omit", "GenericDataFileSet", function(object, ...) {
+  extract(object, files=seq_along(object), onMissing="drop", ...);
+}) # na.omit()
 
 
 

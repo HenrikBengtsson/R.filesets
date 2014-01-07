@@ -15,6 +15,7 @@
 \alias{[.GenericDataFileSet}
 \alias{[,GenericDataFileSet-method}
 
+\alias{na.omit.GenericDataFileSet}
 
 \title{Extract a subset of the file set}
 
@@ -48,6 +49,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
+  \code{\link[R.filesets:anyNA.GenericDataFileSet]{*anyNA}()} for testing whether there are missing items or not.
   For more information see \code{\link{GenericDataFileSet}}.
 }
 \keyword{internal}
