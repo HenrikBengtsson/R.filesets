@@ -279,6 +279,7 @@
 \alias{duplicated.GenericDataFileSet}
 \alias{anyDuplicated.GenericDataFileSet}
 \alias{unique.GenericDataFileSet}
+\alias{linkTo}
 
 \description{
   This page contains aliases for all "non-documented" objects that

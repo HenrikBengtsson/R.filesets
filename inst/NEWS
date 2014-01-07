@@ -1,7 +1,14 @@
 Package: R.filesets
 ===================
 
-Version: 2.3.9 [2014-01-05]
+Version: 2.3.10 [2014-01-06]
+o Added linkTo() for GenericDataFile, which create a symbolic link at
+  a given destination pathname analogously to how copyTo() creates a
+  file copy at a given destination pathname.
+
+
+Version: 2.3.9 [2014-01-06]
+o copyTo() for GenericDataFile passes '...' to R.utils::copyFile().
 o CLEANUP: copyTo() and renameTo() for GenericDataFile had verbose
   output enabled by default.
 o CLEANUP: digest2() is now defunct.

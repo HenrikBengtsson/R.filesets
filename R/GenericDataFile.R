@@ -658,6 +658,11 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   if (is.null(pathname)) {
     fileSize <- as.double(NA);
   } else {
+    # Use R.utils::file.info2()
+    ns <- getNamespace("R.utils");
+    if (getNamespaceVersion(ns) >= "1.29.0") {
+      file.info <- get("file.info2", mode="function", envir=ns, inherits=FALSE);
+    }
     fileSize <- file.info(pathname)$size;
   }
 
@@ -952,78 +957,95 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 #
 # \arguments{
 #  \item{filename, path}{The filename and the path for the destination file.
-#   The default is to use the same filename as the source file.
-#   The destination pathname must not be the same as the source file,
-#   otherwise an exception is thrown.}
-#  \item{overwrite}{If @TRUE, existing files are overwritten, otherwise not.
-#   If @FALSE and the file already exists, an exception is thrown.}
-#  \item{...}{Not used.}
-#  \item{recursive}{If TRUE, ...}
-#  \item{verbose}{...}
+#   The default is to use the same filename as the source file.}
+#  \item{...}{Additional arguments passed to @see "R.utils::copyFile".}
 # }
 #
 # \value{
 #   Returns a @see "GenericDataFile" (of the same class as the source file)
-#   refering to the new filname.
-#   If the source and destination pathnames are identical, an exception
-#   is thrown.
+#   refering to the new file copy.
 # }
 #
 # \details{
 #   In order to minimize the risk for corrupt copies, the
-#   @see "R.utils::copyFile" method of \pkg{R.utils} is used.
-#   That method first copies the file to a temporary file, which is then
-#   renamed.  This minimizes the risk of incomplete files.
-#   It also asserts that the file sizes of the source file and the copy
-#   are identical.
+#   @see "R.utils::copyFile" method of \pkg{R.utils} is used, which
+#   provides several protection against user, system and file errors.
 # }
 #
 # @author
 #
 # \seealso{
-#   @seemethod "renameTo".
+#   To link to a @see "GenericDataFile", see @seemethod "linkTo".
+#   To rename a @see "GenericDataFile", see @seemethod "renameTo".
 #   Internally @see "R.utils::copyFile" is used.
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=FALSE) {
+setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
   pathname <- Arguments$getWritablePathname(filename, path=path);
 
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  # Assert that we're not trying to copy to itself
-  if (identical(pathname, getPathname(this)))
-    throw("Cannot copy file. Source and destination are identical: ", pathname);
-
-  # Assert that file is not overwritten by mistake.
-  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=!overwrite);
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Fail-safe copying
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Copying file");
-  copyFile(getPathname(this), pathname, overwrite=overwrite,
-                                                 verbose=less(verbose, 10));
-  verbose && exit(verbose);
+  copyFile(getPathname(this), pathname, ...);
 
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create object of the same class.
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   res <- newInstance(this, pathname);
 
   res;
-}, protected=TRUE)
+}, protected=TRUE) # copyTo()
+
+
+
+###########################################################################/**
+# @RdocMethod linkTo
+# @alias linkFrom
+#
+# @title "Creates a symbolic file link"
+#
+# \description{
+#   @get "title" to a @see "GenericDataFile" at/from a given
+#   destination pathname.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{filename, path}{The filename and the path for the link.
+#   The default is to use the same filename as the source file.}
+#  \item{...}{Additional arguments passed to @see "R.utils::createLink".}
+# }
+#
+# \value{
+#   Returns a @see "GenericDataFile" (of the same class as the source file)
+#   refering to the file via the link.
+# }
+#
+# @author
+#
+# \seealso{
+#   To copy a @see "GenericDataFile", see @seemethod "copyTo".
+#   Internally @see "R.utils::copyFile" is used.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'filename' and 'path':
+  pathname <- Arguments$getWritablePathname(filename, path=path);
+
+  # Fail-safe copying
+  createLink(target=getPathname(this), link=pathname, ...);
+
+  # Create object of the same class.
+  res <- newInstance(this, pathname);
+
+  res;
+}, protected=TRUE) # linkTo()
 
 
 
@@ -1092,6 +1114,7 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
   verbose && cat(verbose, "Destination: ", pathname);
 
   verbose && enter(verbose, "Renaming file");
+  ## FIXME: Should we use R.utils::renameFile() instead? /HB 2014-01-06
   res <- file.rename(srcPathname, pathname);
   if (!res) {
     throw("Failed to rename file: ", srcPathname, " -> ", pathname);
@@ -1603,6 +1626,11 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2014-01-06
+# o Added linkTo() for GenericDataFile.
+# o CLEANUP: Made copyTo() a light-weight wrapper around copyFile(),
+#   which takes care of all the validation.
+# o copyTo() for GenericDataFile passes '...' to R.utils::copyFile().
 # 2014-01-05
 # o CLEANUP: copyTo() and renameTo() flr GenericDataFile had verbose
 #   output enabled by default.

@@ -1409,7 +1409,8 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 #
 # \arguments{
 #  \item{path}{The destination directory.  If missing, it is created.}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to \code{copyTo()} used to copy
+#   the individual @see "GenericDataFile":s in the set.}
 #  \item{verbose}{...}
 # }
 #

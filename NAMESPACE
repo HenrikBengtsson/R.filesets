@@ -40,6 +40,7 @@ importFrom("R.oo", "startupMessage")
 importFrom("R.oo", "trim")
 importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
 importFrom("R.utils", "copyFile")
+importFrom("R.utils", "createLink")
 importFrom("R.utils", "countLines")
 importFrom("R.utils", "enter")
 importFrom("R.utils", "exit")
@@ -69,6 +70,8 @@ importFrom("R.utils", "Arguments")
 
 if (packageVersion("R.utils") < "1.27.5") {
   importFrom("R.utils", "cat.default")
+} else if (packageVersion("R.utils") >= "1.29.0") {
+  importFrom("R.utils", "file.info2")
 }
 
 
