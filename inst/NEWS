@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.11 [2014-01-09]
+o Now renameTo() passes '...' to R.utils::renameFile() making it 
+  possible to also overwrite existing files.
+
+
 Version: 2.3.10 [2014-01-07]
 o Added is.na() for GenericDataFile and GenericDataFileSet and
   na.omit() for the latter, which already supports anyNA().

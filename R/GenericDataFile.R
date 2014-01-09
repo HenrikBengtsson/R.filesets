@@ -1071,7 +1071,7 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
 #   The default is to use the same filename as the source file.
 #   The destination pathname must not be the same as the source file,
 #   otherwise an exception is thrown.}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to @see "R.utils::renameFile".}
 #  \item{verbose}{...}
 # }
 #
@@ -1082,8 +1082,8 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
 # @author
 #
 # \seealso{
+#   Internally @see "R.utils::renameFile".
 #   @seemethod "copyTo".
-#   @see "base::file.rename".
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1121,7 +1121,7 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 
   verbose && enter(verbose, "Renaming file");
   ## FIXME: Should we use R.utils::renameFile() instead? /HB 2014-01-06
-  res <- file.rename(srcPathname, pathname);
+  res <- renameFile(srcPathname, pathname, ...);
   if (!res) {
     throw("Failed to rename file: ", srcPathname, " -> ", pathname);
   }
