@@ -838,7 +838,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     if (is.null(default)) return(NULL);
     if (!is.object(default) && is.na(default)) {
       className <- getFileClass(this);
-      clazz <- Class$forName(className);
+      clazz <- Class$forName(className, envir=parent.frame());
       default <- newInstance(clazz);
     } else if (is.numeric(default)) {
       default <- getFile(this, default);
@@ -1180,7 +1180,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
     }
 
     # Allocate a "missing" file of the correct class
-    clazz <- Class$forName(className);
+    clazz <- Class$forName(className, envir=parent.frame());
     naValue <- newInstance(clazz, NA_character_, mustExist=FALSE);
     for (idx in missing) {
       files[[idx]] <- naValue;
@@ -1305,7 +1305,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   private <- Arguments$getLogical(private);
 
   # Argument 'fileClass':
-  clazz <- Class$forName(fileClass);
+  clazz <- Class$forName(fileClass, envir=parent.frame());
   dfStatic <- getStaticInstance(clazz);
   dfStatic <- Arguments$getInstanceOf(dfStatic, getFileClass(static));
 
@@ -1358,12 +1358,12 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
       if (as.logical(verbose)) cat(kk, ", ", sep="");
       df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
-      if (kk == 1) {
+      if (kk == 1L) {
         # Update the static class instance.  The reason for this is
         # that if the second file cannot be instanciated with the same
         # class as the first one, then the files are incompatible.
         # Note that 'df' might be of a subclass of 'dfStatic'.
-        clazz <- Class$forName(class(df)[1L]);
+        clazz <- Class$forName(class(df)[1L], envir=parent.frame());
         dfStatic <- getStaticInstance(clazz);
         # SPEEDUP: Now we don't need to scan for subclasses anymore.
         subclasses <- FALSE;

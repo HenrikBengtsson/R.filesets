@@ -924,7 +924,8 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (recursive) {
     # Get all known subclasses (bottom up)
-    clazz <- Class$forName(class(static)[1]);
+    className <- class(static)[1L];
+    clazz <- Class$forName(className, envir=parent.frame());
     knownSubclasses <- getKnownSubclasses(clazz);
     knownSubclasses <- rev(knownSubclasses);
     for (className in knownSubclasses) {

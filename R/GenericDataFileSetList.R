@@ -135,7 +135,7 @@ setMethodS3("getAsteriskTags", "GenericDataFileSetList", function(this, ..., col
   # Get the tags of each data set
   dsList <- getSets(this);
   tags <- sapply(dsList, getTags, collapse=",");
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nchar(tags) > 0L];
   tags <- paste(tags, collapse=collapse);
   tags;
 }, protected=TRUE)
@@ -146,7 +146,7 @@ setMethodS3("setTags", "GenericDataFileSetList", function(this, tags=NULL, ...) 
   if (!is.null(tags)) {
     tags <- Arguments$getCharacters(tags);
     tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0];
+    tags <- tags[nchar(tags) > 0L];
   }
 
   this$.tags <- tags;
@@ -172,7 +172,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSetList", function(this, colla
   # Get the tags
   tags <- this$.tags;
   tags[tags == "*"] <- getAsteriskTags(this, collapse=",");
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nchar(tags) > 0L];
 
   fullname <- paste(c(name, tags), collapse=",");
 
@@ -200,7 +200,7 @@ setMethodS3("getSets", "GenericDataFileSetList", function(this, idxs=NULL, ...) 
 })
 
 setMethodS3("getSet", "GenericDataFileSetList", function(this, idx, ...) {
-  if (length(idx) != 1)
+  if (length(idx) != 1L)
     throw("Argument 'idx' must be a single index.");
   res <- this$.dsList;
   n <- length(res);
@@ -227,20 +227,20 @@ setMethodS3("getFileListClass", "GenericDataFileSetList", function(this, ...) {
   keep <- sapply(classNames, FUN=exists, mode="function");
   classNames <- classNames[keep];
 
-  if (length(classNames) == 0) {
+  if (length(classNames) == 0L) {
     throw("Failed to locate a file list class for this set list: ",
-                                                      class(this)[1]);
+                                                      class(this)[1L]);
   }
 
-  className <- classNames[1];
+  className <- classNames[1L];
 
-  clazz <- Class$forName(className);
+  clazz <- Class$forName(className, envir=parent.frame());
   classNames <- c(getKnownSubclasses(clazz), className);
   clazz <- NULL;
   for (kk in seq_along(classNames)) {
      className <- classNames[kk];
      tryCatch({
-       clazz <- Class$forName(className);
+       clazz <- Class$forName(className, envir=parent.frame());
      }, error = function(ex) {});
      if (!is.null(clazz)) {
        return(className);
@@ -334,11 +334,11 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
 
     # Exclude indices?
     if (any(files < 0, na.rm=TRUE)) {
-      incl <- files[files > 0];
-      if (length(incl) == 0) {
+      incl <- files[files > 0L];
+      if (length(incl) == 0L) {
         incl <- seq_along(this);
       }
-      excl <- na.omit(files[files < 0]);
+      excl <- na.omit(files[files < 0L]);
       files <- setdiff(incl, -excl);
       # Not needed anymore
       incl <- excl <- NULL;
@@ -350,7 +350,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   if (!allowDuplicates) {
     dups <- files[duplicated(files)];
     n <- length(dups);
-    if (n > 0) {
+    if (n > 0L) {
       throw(sprintf("Argument 'files' contains %s duplicates, which is not allowed (allowDuplicates=FALSE): %s", n, hpaste(dups)));
     }
   }
@@ -367,7 +367,7 @@ setMethodS3("extract", "GenericDataFileSetList", function(this, files, ..., drop
   # Drop empty data sets?
   if (drop) {
     ns <- sapply(dsList, nbrOfFiles);
-    dsList <- dsList[ns > 0];
+    dsList <- dsList[ns > 0L];
   }
 
   res <- clone(this);
@@ -400,7 +400,7 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
     }
   } else {
     row.names <- Arguments$getCharacters(row.names,
-                                         length=rep(length(names),2));
+                           length=rep(length(names), times=2L));
   }
 
   # Argument 'onDuplicates':
@@ -426,7 +426,7 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
 
   # Sanity check
   ns <- sapply(dfList, FUN=length);
-  if (length(unique(ns)) != 1) {
+  if (length(unique(ns)) != 1L) {
     throw("Internal error. Cannot extract data frame. Non-balanced data sets.");
   }
 
@@ -439,7 +439,7 @@ setMethodS3("as.data.frame", "GenericDataFileSetList", function(x, row.names=NUL
 
 setMethodS3("getFileList", "GenericDataFileSetList", function(this, ..., dropMissing=TRUE) {
   dsList <- extract(this, ..., onDuplicated="error");
-  dfList <- lapply(dsList, FUN=getFile, 1);
+  dfList <- lapply(dsList, FUN=getFile, 1L);
 
   if (dropMissing) {
     keep <- sapply(dfList, FUN=isFile);
@@ -448,7 +448,7 @@ setMethodS3("getFileList", "GenericDataFileSetList", function(this, ..., dropMis
 
   # Coerce to a file list
   className <- getFileListClass(this);
-  clazz <- Class$forName(className);
+  clazz <- Class$forName(className, envir=parent.frame());
   dfList <- newInstance(clazz, dfList);
 
   dfList;
