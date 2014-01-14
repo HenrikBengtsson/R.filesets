@@ -1471,7 +1471,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
   }
 
   # Return new instance
-  res <- byPath(this, path=path, ...);
+  res <- byPath(this, path=path);
 
   verbose && exit(verbose);
 
@@ -2221,6 +2221,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-01-13
+# o copyTo() for GenericDataFileSet no longer passes '...' to byPath().
 # 2014-01-07
 # o Added is.na() and na.omit() for GenericDataFileSet.
 # 2014-01-04
