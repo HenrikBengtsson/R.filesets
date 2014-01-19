@@ -69,9 +69,7 @@ importFrom("utils", "tail") # generic function
 importFrom("R.oo", "Class")
 importFrom("R.utils", "Arguments")
 
-if (packageVersion("R.utils") < "1.27.5") {
-  importFrom("R.utils", "cat.default")
-} else if (packageVersion("R.utils") >= "1.29.0") {
+if (packageVersion("R.utils") >= "1.29.0") {
   importFrom("R.utils", "file.info2")
 }
 
