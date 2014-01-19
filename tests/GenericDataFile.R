@@ -45,12 +45,14 @@ stopifnot(isFile(df))
 path <- tempdir()
 dfL <- linkTo(df, path=path)
 print(dfL)
+isWindowsShortcut <- (.Platform$OS.type == "windows") && (getPathname(dfL) == getPathname(df))
+
 # Sanity checks
 stopifnot(getChecksum(dfL) == getChecksum(df))
-stopifnot(getPathname(dfL) != getPathname(df))
+stopifnot(isWindowsShortcut || (getPathname(dfL) != getPathname(df)))
 
 # Copy file (via link)
-if (packageVersion("R.utils") > "1.29.0") {
+if (!isWindowsShortcut && packageVersion("R.utils") > "1.29.0") {
   dfLC <- copyTo(dfL, path=file.path(path, "foo"))
   # Sanity checks
   stopifnot(getChecksum(dfLC) == getChecksum(df))
@@ -64,10 +66,10 @@ if (packageVersion("R.utils") > "1.29.0") {
 }
 
 # Cleanup
-file.remove(getPathname(dfL))
+if (!isWindowsShortcut) file.remove(getPathname(dfL))
 
 # Sanity checks
-stopifnot(!isFile(dfL))
+stopifnot(isWindowsShortcut || !isFile(dfL))
 stopifnot(isFile(df))
 
 
