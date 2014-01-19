@@ -13,20 +13,29 @@ print(df)
 path <- tempdir()
 dfC <- copyTo(df, path=path)
 
+# Sanity check
+stopifnot(getPathname(dfC) != getPathname(df))
+
 # Try to copy it without overwriting nor skipping
-ok <- tryCatch({
+fail <- tryCatch({
   copyTo(df, path=path, overwrite=FALSE, skip=FALSE)
   FALSE
 }, error = function(ex) { TRUE })
-stopifnot(ok)
+stopifnot(fail)
 
 # Copy it again by overwriting exiting output
 dfC <- copyTo(df, path=path, overwrite=TRUE)
 print(dfC)
+# Sanity checks
 stopifnot(getChecksum(dfC) == getChecksum(df))
+stopifnot(getPathname(dfC) != getPathname(df))
 
 # Cleanup
 file.remove(getPathname(dfC))
+
+# Sanity checks
+stopifnot(!isFile(dfC))
+stopifnot(isFile(df))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,17 +45,29 @@ file.remove(getPathname(dfC))
 path <- tempdir()
 dfL <- linkTo(df, path=path)
 print(dfL)
+# Sanity checks
 stopifnot(getChecksum(dfL) == getChecksum(df))
+stopifnot(getPathname(dfL) != getPathname(df))
 
 # Copy file (via link)
 if (packageVersion("R.utils") > "1.29.0") {
   dfLC <- copyTo(dfL, path=file.path(path, "foo"))
+  # Sanity checks
   stopifnot(getChecksum(dfLC) == getChecksum(df))
+  stopifnot(getPathname(dfLC) != getPathname(df))
   # Cleanup
   file.remove(getPathname(dfLC))
+  # Sanity checks
+  stopifnot(!isFile(dfLC))
+  stopifnot(isFile(dfL))
+  stopifnot(isFile(df))
 }
-
 
 # Cleanup
 file.remove(getPathname(dfL))
+
+# Sanity checks
+stopifnot(!isFile(dfL))
+stopifnot(isFile(df))
+
 
