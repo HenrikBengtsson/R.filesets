@@ -664,12 +664,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   if (is.null(pathname)) {
     fileSize <- as.double(NA);
   } else {
-    # Use R.utils::file.info2()
-    ns <- getNamespace("R.utils");
-    if (getNamespaceVersion(ns) >= "1.29.0") {
-      file.info <- get("file.info2", mode="function", envir=ns, inherits=FALSE);
-    }
-    fileSize <- file.info(pathname)$size;
+    fileSize <- file.info2(pathname)$size;
   }
 
   if (what == "numeric")

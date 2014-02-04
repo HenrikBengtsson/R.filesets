@@ -26,7 +26,7 @@
   The default is to use the same filename as the source file.
   The destination pathname must not be the same as the source file,
   otherwise an exception is thrown.}
- \item{...}{Not used.}
+ \item{...}{Additional arguments passed to \code{\link[R.utils]{renameFile}}.}
  \item{verbose}{...}
 }
 
@@ -37,8 +37,8 @@
 \author{Henrik Bengtsson}
 
 \seealso{
+  Internally \code{\link[R.utils]{renameFile}}.
   \code{\link[R.filesets:copyTo.GenericDataFile]{*copyTo}()}.
-  \code{\link[base]{file.rename}}().
   For more information see \code{\link{GenericDataFile}}.
 }
 \keyword{internal}

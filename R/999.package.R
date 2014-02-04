@@ -8,14 +8,9 @@
 #   You should expect the API to be changing over time.
 # }
 #
-# \section{Requirements}{
-#   This package requires external package.
-# }
-#
-# \section{Installation and updates}{
-#
-#   To install this package, see instructions at
-#   \url{http://www.braju.com/R/}.
+# \section{Installation}{
+#   To install this package, call
+#   \code{install.packages("R.filesets")}.
 # }
 #
 # \section{To get started}{

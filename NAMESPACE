@@ -44,6 +44,7 @@ importFrom("R.utils", "createLink")
 importFrom("R.utils", "countLines")
 importFrom("R.utils", "enter")
 importFrom("R.utils", "exit")
+importFrom("R.utils", "file.info2")
 importFrom("R.utils", "getAbsolutePath")
 importFrom("R.utils", "getParent")
 importFrom("R.utils", "getRelativePath")
@@ -69,9 +70,6 @@ importFrom("utils", "tail") # generic function
 importFrom("R.oo", "Class")
 importFrom("R.utils", "Arguments")
 
-if (packageVersion("R.utils") >= "1.29.0") {
-  importFrom("R.utils", "file.info2")
-}
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
