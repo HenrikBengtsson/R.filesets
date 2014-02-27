@@ -2,3 +2,4 @@
 ^incl
 ^NAMESPACE,.*.txt$
 ^inst/doc/[.].*[.]rsp$
+^nohup
