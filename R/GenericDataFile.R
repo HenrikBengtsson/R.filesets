@@ -662,7 +662,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 
   pathname <- this$.pathname;
   if (is.null(pathname)) {
-    fileSize <- as.double(NA);
+    fileSize <- NA_real_;
   } else {
     fileSize <- file.info2(pathname)$size;
   }

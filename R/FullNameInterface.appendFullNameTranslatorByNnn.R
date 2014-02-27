@@ -14,12 +14,12 @@ setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(
   }
 
   # Sanity check
-  names <- c("foo bar");
-  namesT <- fcn(names, file=this);
+  name <- c("foo bar");
+  nameT <- fcn(name, file=this);
 
   # More sanity checks
-  if (length(namesT) != 1) {
-    throw("Argument 'fcn' specifies a translator function that does not return exactly one string if given one string: ", length(namesT));
+  if (length(nameT) != 1L) {
+    throw("Argument 'fcn' specifies a translator function that does not return exactly one string if given one string: ", length(nameT));
   }
 
   fnList <- getListOfFullNameTranslators(this);
