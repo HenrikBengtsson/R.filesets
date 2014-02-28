@@ -1025,11 +1025,17 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 #   refering to the file via the link.
 # }
 #
+# \section{Required privileges on Windows}{
+#   In order for this method to succeed on Windows,
+#   the client/R session must run with sufficient privileges.
+#   See @see "R.utils::createLink" for more details.
+# }
+#
 # @author
 #
 # \seealso{
 #   To copy a @see "GenericDataFile", see @seemethod "copyTo".
-#   Internally @see "R.utils::copyFile" is used.
+#   Internally @see "R.utils::createLink" is used.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1040,7 +1046,7 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Argument 'filename' and 'path':
   pathname <- Arguments$getWritablePathname(filename, path=path);
 
-  # Fail-safe copying
+  # Create link
   createLink(target=getPathname(this), link=pathname, ...);
 
   # Create object of the same class.
@@ -1628,6 +1634,9 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2014-02-28
+# o DOCUMENTATION: Added an Rd section on privileges required on Windows
+#   for linkTo() to work.
 # 2014-01-07
 # o Added is.na() for GenericDataFile.
 # 2014-01-06

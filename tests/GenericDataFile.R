@@ -43,16 +43,53 @@ stopifnot(isFile(df))
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Link to it in a temporary directory
 path <- tempdir()
-dfL <- linkTo(df, path=path)
-print(dfL)
-isWindowsShortcut <- (.Platform$OS.type == "windows") && (getPathname(dfL) == getPathname(df))
 
-# Sanity checks
-stopifnot(getChecksum(dfL) == getChecksum(df))
-stopifnot(isWindowsShortcut || (getPathname(dfL) != getPathname(df)))
+# On Windows, necessary privileges are required.  If not
+# available, generate a warning and not an error.
+if (.Platform$OS.type == "windows") {
+  dfL <- NULL
+  tryCatch({
+    dfL <- linkTo(df, path=path)
+  }, error = function(ex) {
+    print(ex)
+    cat("The above exception was caught but ignored for this package system test\n")
+  })
 
-# Copy file (via link)
-if (!isWindowsShortcut && packageVersion("R.utils") > "1.29.0") {
+  if (!is.null(dfL)) {
+    print(dfL)
+
+    # Sanity checks
+    stopifnot(getChecksum(dfL) == getChecksum(df))
+
+    # Copy file (via link) - unless a Windows Shortcut link
+    isWindowsShortcut <- (getPathname(dfL) == getPathname(df))
+    if (!isWindowsShortcut) {
+      dfLC <- copyTo(dfL, path=file.path(path, "foo"))
+      # Sanity checks
+      stopifnot(getChecksum(dfLC) == getChecksum(df))
+      stopifnot(getPathname(dfLC) != getPathname(df))
+      # Cleanup
+      file.remove(getPathname(dfLC))
+      # Sanity checks
+      stopifnot(!isFile(dfLC))
+      stopifnot(isFile(dfL))
+      stopifnot(isFile(df))
+      # Cleanup
+      file.remove(getPathname(dfL))
+    } else {
+      # Done with the Windows Shortcut link
+      dfL <- NULL
+    }
+  }
+} else {
+  dfL <- linkTo(df, path=path)
+  print(dfL)
+
+  # Sanity checks
+  stopifnot(getChecksum(dfL) == getChecksum(df))
+  stopifnot(getPathname(dfL) != getPathname(df))
+
+  # Copy file (via link)
   dfLC <- copyTo(dfL, path=file.path(path, "foo"))
   # Sanity checks
   stopifnot(getChecksum(dfLC) == getChecksum(df))
@@ -63,13 +100,14 @@ if (!isWindowsShortcut && packageVersion("R.utils") > "1.29.0") {
   stopifnot(!isFile(dfLC))
   stopifnot(isFile(dfL))
   stopifnot(isFile(df))
-}
 
-# Cleanup
-if (!isWindowsShortcut) file.remove(getPathname(dfL))
+  # Cleanup
+  file.remove(getPathname(dfL))
+} # if (.Platform$OS.type == "windows")
 
 # Sanity checks
-stopifnot(isWindowsShortcut || !isFile(dfL))
+stopifnot(!isFile(dfL))
 stopifnot(isFile(df))
+
 
 

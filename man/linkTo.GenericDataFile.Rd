@@ -34,11 +34,17 @@
   refering to the file via the link.
 }
 
+\section{Required privileges on Windows}{
+  In order for this method to succeed on Windows,
+  the client/R session must run with sufficient privileges.
+  See \code{\link[R.utils]{createLink}} for more details.
+}
+
 \author{Henrik Bengtsson}
 
 \seealso{
   To copy a \code{\link{GenericDataFile}}, see \code{\link[R.filesets:copyTo.GenericDataFile]{*copyTo}()}.
-  Internally \code{\link[R.utils]{copyFile}} is used.
+  Internally \code{\link[R.utils]{createLink}} is used.
   For more information see \code{\link{GenericDataFile}}.
 }
 \keyword{internal}

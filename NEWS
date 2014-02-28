@@ -1,6 +1,14 @@
 Package: R.filesets
 ===================
 
+Version: 2.4.1 [2014-02-28]
+o FIX / DOCUMENTATION: The system test for GenericDataFile would fail 
+  with linkTo() on Windows systems without necessary privileges.  Made
+  the test less conservative.  Also, added an Rd section on privileges 
+  required on Windows for linkTo() to work.  Thanks to Brian Ripley 
+  for reporting on this.
+
+
 Version: 2.4.0 [2014-02-26]
 o No updates. Bumped the version for CRAN release.
 
