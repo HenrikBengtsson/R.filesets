@@ -59,6 +59,7 @@ importFrom("R.utils", "printf")
 importFrom("R.utils", "pushState")
 importFrom("R.utils", "renameFile")
 importFrom("R.utils", "saveObject")
+importFrom("R.utils", "writeRaw")
 importFrom("stats", "na.omit")
 
 
