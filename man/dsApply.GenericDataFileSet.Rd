@@ -11,6 +11,11 @@
 \alias{dsApply.GenericDataFileSet}
 \alias{GenericDataFileSet.dsApply}
 \alias{dsApply,GenericDataFileSet-method}
+\alias{GenericDataFileSet.dsApplyInPairs}
+\alias{dsApplyInPairs.GenericDataFileSet}
+\alias{dsApplyInPairs,GenericDataFileSet-method}
+
+\alias{dsApplyInPairs}
 
 \title{Applies a function to each file in the file set}
 
@@ -25,6 +30,7 @@
 }
 
 \arguments{
+ \item{ds, ds1, ds2}{\code{\link{GenericDataFileSet:s}}.}
  \item{IDXS}{A (named) \code{\link[base]{list}}, where each element contains a \code{\link[base]{vector}} data set indices,
    or an \code{\link[base]{integer}} \code{\link[base]{vector}} of individual elements.}
  \item{DROP}{If \code{\link[base:logical]{FALSE}}, the first argument passed to \code{FUN} is always a \code{\link[base]{list}} of files.

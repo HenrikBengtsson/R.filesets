@@ -1,6 +1,8 @@
 ###########################################################################/**
 # @set class=GenericDataFileSet
 # @RdocMethod dsApply
+# @aliasmethod dsApplyInPairs
+# @alias dsApplyInPairs
 #
 # @title "Applies a function to each file in the file set"
 #
@@ -11,6 +13,7 @@
 # @synopsis
 #
 # \arguments{
+#  \item{ds, ds1, ds2}{@see "GenericDataFileSet:s".}
 #  \item{IDXS}{A (named) @list, where each element contains a @vector data set indices,
 #    or an @integer @vector of individual elements.}
 #  \item{DROP}{If @FALSE, the first argument passed to \code{FUN} is always a @list of files.
@@ -380,6 +383,31 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
 
 
+setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'ds1' & 'ds2':
+  ds2 <- Arguments$getInstanceOf(ds2, class(ds1)[1L])
+  stopifnot(length(ds2) == length(ds1))
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # dsApply() in pairs
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  dsP <- c(ds1, ds2)
+  idxs <- matrix(seq_along(dsP), nrow=2L, byrow=TRUE)
+  IDXS <- as.list(as.data.frame(idxs))
+  names <- getNames(dsP)
+  names(IDXS) <- sapply(IDXS, FUN=function(idxs) {
+    sprintf("Pair (%s,%s)", names[idxs[1]], names[idxs[2]])
+  })
+  idxs <- names <- ds1 <- ds2 <- NULL  # Not needed anymore
+
+  dsApply(dsP, IDXS=IDXS, ...)
+}, protected=TRUE) # dsApplyInPairs()
+
+
+
 setMethodS3(".getBatchJobRegistryId", "default", function(class, label=NULL, version=NULL, ..., verbose=FALSE) {
   # Argument 'class':
   class <- Arguments$getCharacters(class);
@@ -498,6 +526,7 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 ############################################################################
 # HISTORY:
 # 2014-03-30
+# o Added dsApplyInPairs().
 # o Now dsApply(..., .parallel="BatchJobs") also returns the results.
 # o Moved to the R.filesets package (from aroma.seq).
 # 2014-01-24
