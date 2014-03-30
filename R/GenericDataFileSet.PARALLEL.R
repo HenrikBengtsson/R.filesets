@@ -47,7 +47,8 @@
 setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
   # To please R CMD check (because BatchJobs is just "suggested")
   getJobNr <- batchMap <- showStatus <- findNotSubmitted <-
-      findNotRunning <- submitJobs <- findNotTerminated <- NULL;
+      findNotRunning <- submitJobs <- findNotTerminated <-
+      loadResults <- NULL;
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -310,6 +311,14 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
     verbose && print(verbose, showStatus(reg));
 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # (iv) Retrieve results
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    verbose && enter(verbose, "Retrieve results");
+    res <- loadResults(reg, simplify=FALSE, missing.ok=TRUE);
+    names(res) <- names(sets);
+    verbose && exit(verbose);
+
     verbose && exit(verbose);
   } # if (parallel == "BatchJobs")
 
@@ -487,6 +496,7 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 ############################################################################
 # HISTORY:
 # 2014-03-30
+# o Now dsApply(..., .parallel="BatchJobs") also returns the results.
 # o Moved to the R.filesets package (from aroma.seq).
 # 2014-01-24
 # o Now argument 'IDXS' can also be an index vector, which is then
