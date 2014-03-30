@@ -47,8 +47,8 @@
   Returns a named \code{\link[base]{list}}.
 }
 
-\examples{
-isPackageInstalled <- R.utils::isPackageInstalled
+\examples{\dontrun{
+ isPackageInstalled <- R.utils::isPackageInstalled
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
@@ -80,7 +80,8 @@ if (isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
   print(res3)
   stopifnot(identical(res3, res1))
 }
-}
+
+}}
 
 \seealso{
   The \pkg{BiocParallel} and \pkg{BatchJobs} packages is utilized

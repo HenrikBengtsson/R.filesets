@@ -33,7 +33,9 @@
 #   Returns a named @list.
 # }
 #
-# @examples "../incl/GenericDataFileSet.dsApply.Rex"
+# \examples{\dontrun{
+#  @include "../incl/GenericDataFileSet.dsApply.Rex"
+# }}
 #
 # \seealso{
 #   The \pkg{BiocParallel} and \pkg{BatchJobs} packages is utilized

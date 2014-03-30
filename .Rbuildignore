@@ -3,3 +3,4 @@
 ^NAMESPACE,.*.txt$
 ^inst/doc/[.].*[.]rsp$
 ^nohup
+^.batchJobsRegistries
