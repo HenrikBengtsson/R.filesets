@@ -13,7 +13,7 @@
 # @synopsis
 #
 # \arguments{
-#  \item{ds, ds1, ds2}{@see "GenericDataFileSet:s".}
+#  \item{ds, ds1, ds2}{@see "GenericDataFileSet":s.}
 #  \item{IDXS}{A (named) @list, where each element contains a @vector data set indices,
 #    or an @integer @vector of individual elements.}
 #  \item{DROP}{If @FALSE, the first argument passed to \code{FUN} is always a @list of files.
