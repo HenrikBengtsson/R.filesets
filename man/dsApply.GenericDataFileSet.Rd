@@ -19,7 +19,7 @@
 }
 
 \usage{
-\method{dsApply}{GenericDataFileSet}(ds, IDXS=NULL, DROP=is.null(IDXS), FUN, ..., args=list(), skip=FALSE,
+\method{dsApply}{GenericDataFileSet}(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE,
   verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"),
   .control=list(dW = 1))
 }
@@ -30,6 +30,7 @@
  \item{DROP}{If \code{\link[base:logical]{FALSE}}, the first argument passed to \code{FUN} is always a \code{\link[base]{list}} of files.
    If \code{\link[base:logical]{TRUE}}, an single-index element is passed to \code{FUN} as a file instead of
    as a \code{\link[base]{list}} containing a single file.}
+ \item{AS}{(optional) A \code{\link[base]{function}} coercing the first set/group object passed.}
  \item{FUN}{A \code{\link[base]{function}}.}
  \item{...}{Arguments passed to \code{FUN}.}
  \item{args}{(optional) A \code{\link[base]{list}} of additional arguments

@@ -16,6 +16,7 @@
 #  \item{DROP}{If @FALSE, the first argument passed to \code{FUN} is always a @list of files.
 #    If @TRUE, an single-index element is passed to \code{FUN} as a file instead of
 #    as a @list containing a single file.}
+#  \item{AS}{(optional) A @function coercing the first set/group object passed.}
 #  \item{FUN}{A @function.}
 #  \item{...}{Arguments passed to \code{FUN}.}
 #  \item{args}{(optional) A @list of additional arguments
@@ -43,7 +44,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
+setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
   # To please R CMD check (because BatchJobs is just "suggested")
   getJobNr <- batchMap <- showStatus <- findNotSubmitted <-
       findNotRunning <- submitJobs <- findNotTerminated <- NULL;
@@ -136,9 +137,15 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
     sets <- vector("list", length=length(IDXS));
     for (gg in seq_along(IDXS)) {
       idxs <- IDXS[[gg]];
-      set <- as.list(ds[idxs]);
-      name <- names(IDXS)[gg];
-      if (!is.null(name)) names(set)[1L] <- name;
+      set <- ds[idxs];
+      # FIXME/BACKWARD COMPATIBLE? /HB 2014-03-30
+      if (is.function(AS)) {
+        set <- AS(set);
+        if (identical(AS, as.list)) {
+          name <- names(IDXS)[gg];
+          if (!is.null(name)) names(set)[1L] <- name;
+        }
+      }
       sets[[gg]] <- set;
     } # for (gg ...)
   }
@@ -149,6 +156,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   verbose && str(verbose, head(sets));
   IDXS <- NULL; # Not needed anymore
 
+  # FIXME/AD HOC/BACKWARD COMPATIBLE /HB 2014-03-30
   # Set attribute 'groupName' for each element.  This is used to pass
   # the group name to FUN().
   for (gg in seq_along(sets)) {
