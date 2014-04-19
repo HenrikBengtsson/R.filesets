@@ -194,7 +194,6 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       argsGG <- c(list(set), allArgs);
       verbose && cat(verbose, "Call arguments:");
       verbose && str(verbose, argsGG);
-      argsGG$verbose <- less(verbose, 1);
       resGG <- do.call(FUN, args=argsGG);
       verbose && str(verbose, resGG);
 
@@ -525,6 +524,9 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2014-04-19
+# o dsApply(..., .parallel="none") would lower the verbose threshold
+#   before applying the function.
 # 2014-03-30
 # o Added dsApplyInPairs().
 # o Now dsApply(..., .parallel="BatchJobs") also returns the results.
