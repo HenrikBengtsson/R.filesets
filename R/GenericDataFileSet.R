@@ -240,8 +240,7 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
   I <- length(this);
   res <- rep(NA, times=I);
   for (ii in seq_len(I)) {
-    df <- getFile(this, ii);
-    res[ii] <- validate(df, ...);
+    res[ii] <- validate(this[[ii]], ...);
   }
 
   # Summarize across all files
@@ -841,7 +840,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
       clazz <- Class$forName(className, envir=parent.frame());
       default <- newInstance(clazz);
     } else if (is.numeric(default)) {
-      default <- getFile(this, default);
+      default <- this[[default]];
     }
     default <- Arguments$getInstanceOf(default, "GenericDataFile");
     default;
@@ -1463,7 +1462,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 
   for (kk in seq_len(nbrOfFiles)) {
     verbose && enter(verbose, sprintf("File %d of %d", kk, nbrOfFiles));
-    cf <- getFile(this, kk);
+    cf <- this[[kk]];
     if (isFile(cf)) {
       cfCopy <- copyTo(cf, path=path, ..., verbose=less(verbose));
     }
@@ -1889,8 +1888,8 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
 
   for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("File #%d of %d", kk, nbrOfFiles));
-    df1 <- getFile(this, kk);
-    df2 <- getFile(other, kk);
+    df1 <- this[[kk]];
+    df2 <- other[[kk]];
     eqls <- equals(df1, df2, ...);
     if (!eqls) {
       verbose && cat(verbose, "Not equal");

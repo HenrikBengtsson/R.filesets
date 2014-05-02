@@ -46,7 +46,7 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=
   data <- NULL;
   for (kk in seq_len(nbrOfFiles)) {
     file <- files[kk];
-    dataFile <- getFile(this, file);
+    dataFile <- this[[file]];
     dataKK <- extractMatrix(dataFile, ...);
 
     if (is.null(data)) {

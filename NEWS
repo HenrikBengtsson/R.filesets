@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.2 [2014-05-02]
+o CLEANUP: Now using ds[[idx]] instead of getFile(ds, idx) where possible.
+
+
 Version: 2.5.1 [2014-04-19]
 o dsApply(..., .parallel="none") would lower the verbose threshold
   before applying the function resulting is less verbose output
