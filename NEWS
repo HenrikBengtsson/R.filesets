@@ -1,8 +1,10 @@
 Package: R.filesets
 ===================
 
-Version: 2.5.3 [2014-05-28]
-o Added 'Recommends' field to DESCRIPTION.
+Version: 2.5.3 [2014-06-07]
+o Added 'SuggestsNote' field to DESCRIPTION with list of packages
+  that are recommended for the most common use cases.
+o Bumped package dependencies.
 
 
 Version: 2.5.2 [2014-05-02]
