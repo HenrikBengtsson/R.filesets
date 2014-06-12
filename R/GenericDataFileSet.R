@@ -556,6 +556,8 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 # \arguments{
 #  \item{patterns}{A @character @vector of length K of names and/or
 #   regular expressions to be matched.}
+#  \item{by}{A @character @vector specifying how and in what order the
+#   name matching is done.}
 #  \item{...}{Not used.}
 # }
 #
@@ -579,7 +581,7 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., onMissing=c("NA", "error")) {
+setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, by=c("exact", "regexp", "fixed"), ..., onMissing=c("NA", "error")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -589,13 +591,18 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
     throw("Unknown argument 'names' to indexOf() for GenericDataFileSet.");
   }
 
+  # Argument 'by':
+  by <- match.arg(by, several.ok=TRUE);
+
   # Argument 'onMissing':
   onMissing <- match.arg(onMissing);
 
+
   names <- getNames(this);
 
-  # Return all indices
+  # Nothing to search for?
   if (is.null(patterns)) {
+    # Return all indices
     res <- seq_along(names);
     names(res) <- names;
     return(res);
@@ -603,12 +610,11 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   fullnames <- getFullNames(this);
 
-  naValue <- as.integer(NA);
-
   patterns0 <- patterns;
   res <- lapply(patterns, FUN=function(pattern) {
-    # First try matching a regular expression, then a fixed string.
     pattern0 <- pattern;
+
+    # Search among fullnames or the names?
     hasTags <- (regexpr(",", pattern, fixed=TRUE) != -1L);
     if (hasTags) {
       searchStrings <- fullnames;
@@ -616,36 +622,39 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
       searchStrings <- names;
     }
 
-    # - - - - - - - - - - - -
-    # 1. Regular expression
-    # - - - - - - - - - - - -
-    # Assert that the regular expression has a "head" and a "tail".
-    pattern <- sprintf("^%s$", pattern);
-    pattern <- gsub("\\^\\^", "^", pattern);
-    pattern <- gsub("\\$\\$", "$", pattern);
+    for (how in by) {
+      if (how == "regexp") {
+        # Regular expression:
+        # Assert that the regular expression has a "head" and a "tail".
+        pattern <- sprintf("^%s$", pattern);
+        pattern <- gsub("\\^\\^", "^", pattern);
+        pattern <- gsub("\\$\\$", "$", pattern);
 
-    # Escape '+', and '*', if needed
-    lastPattern <- "";
-    while (pattern != lastPattern) {
-      lastPattern <- pattern;
-      pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
-    }
+        # Escape '+', and '*', if needed
+        lastPattern <- "";
+        while (pattern != lastPattern) {
+          lastPattern <- pattern;
+          pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
+        }
 
-    # Match
-    idxs <- grep(pattern, searchStrings, fixed=FALSE);
+        # Match
+        idxs <- grep(pattern, searchStrings, fixed=FALSE);
+      } else if (how == "fixed") {
+        # Fixed string:
+        pattern <- pattern0;
+        idxs <- grep(pattern, searchStrings, fixed=TRUE);
+      } else if (how == "exact") {
+        # Fixed string:
+        pattern <- pattern0;
+        idxs <- which(pattern == searchStrings);
+      }
 
-    # - - - - - - - - - - - -
-    # 2. Fixed string?
-    # - - - - - - - - - - - -
-    if (length(idxs) == 0L) {
-      pattern <- pattern0;
-      idxs <- grep(pattern, searchStrings, fixed=TRUE);
-    }
+      # Done?
+      if (length(idxs) > 0L) break;
+    } # for (how ...)
 
-    # Nothing matched?
-    if (length(idxs) == 0L) {
-      idxs <- naValue;
-    }
+    # Nothing found?
+    if (length(idxs) == 0L) idxs <- NA_integer_;
 
     # Note that 'idxs' may return more than one match
     idxs;
@@ -2100,8 +2109,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=ge
   # Get the path of this file set
   path <- getPath(this);
   if (is.null(path) || is.na(path)) {
-    naValue <- as.character(NA);
-    return(naValue);
+    return(NA_character_);
   }
 
   if (!is.null(parent)) {
@@ -2220,6 +2228,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-06-11
+# o Now indexOf() first searched by exact names, then as before, i.e.
+#   by regular expression and fixed pattern matching.
+# o Added argument 'by' to indexOf() for GenericDataFileSet|List.
 # 2014-01-13
 # o copyTo() for GenericDataFileSet no longer passes '...' to byPath().
 # 2014-01-07

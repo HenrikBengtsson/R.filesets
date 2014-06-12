@@ -1,6 +1,15 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.4 [2014-06-11]
+o Now indexOf() first searched by exact names, then as before, i.e.
+  by regular expression and fixed pattern matching.  Added package
+  system tests that contains particularly complicated cases for this.
+  This was triggered by a rare but real use case causing an error
+  in aroma.affymetrix.  Thanks Benilton Carvalho for report on this.
+o Added argument 'by' to indexOf() for GenericDataFileSet|List.
+
+
 Version: 2.5.3 [2014-06-07]
 o Added 'SuggestsNote' field to DESCRIPTION with list of packages
   that are recommended for the most common use cases.

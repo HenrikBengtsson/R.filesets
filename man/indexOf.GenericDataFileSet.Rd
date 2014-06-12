@@ -18,12 +18,15 @@
 }
 
 \usage{
-\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, ..., onMissing=c("NA", "error"))
+\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, by=c("exact", "regexp", "fixed"), ...,
+  onMissing=c("NA", "error"))
 }
 
 \arguments{
  \item{patterns}{A \code{\link[base]{character}} \code{\link[base]{vector}} of length K of names and/or
   regular expressions to be matched.}
+ \item{by}{A \code{\link[base]{character}} \code{\link[base]{vector}} specifying how and in what order the
+  name matching is done.}
  \item{...}{Not used.}
 }
 

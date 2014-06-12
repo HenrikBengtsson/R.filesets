@@ -90,3 +90,48 @@ stopifnot(length(dsEmpty) == 0L)
 
 dsExpanded <- dsEmpty[rep(NA_integer_, times=5L)]
 stopifnot(length(dsExpanded) == 5L)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Dataset A
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+path <- system.file("exData/dataSetA,original", package="R.filesets")
+ds <- GenericDataFileSet$byPath(path, pattern="[.]dat$")
+print(ds)
+names <- getNames(ds)
+print(names)
+
+
+# Exact matching
+for (name in names) {
+  idxs <- indexOf(ds, name, by="exact")
+  cat(sprintf("%s: %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == which(name == names)))
+}
+
+# Fixed regular expression matching
+for (name in names) {
+  idxs <- indexOf(ds, name, by="fixed")
+  cat(sprintf("%s: %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == grep(name, names)))
+}
+
+# Regular expression matching
+for (name in names) {
+  idxs <- indexOf(ds, name, by="regexp")
+  pattern <- sprintf("^%s$", name)
+  cat(sprintf("%s: %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == grep(pattern, names)))
+}
+
+# First regular expression matching, then fixed
+for (name in names) {
+  idxs <- indexOf(ds, name, by=c("regexp", "fixed"))
+  cat(sprintf("%s: %s\n", name, paste(idxs, collapse=", ")))
+}
+
+# First exact, then regular expression matching, then fixed
+for (name in names) {
+  idxs <- indexOf(ds, name, by=c("exact", "regexp", "fixed"))
+  cat(sprintf("%s: %s\n", name, paste(idxs, collapse=", ")))
+}
