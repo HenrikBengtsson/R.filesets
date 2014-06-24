@@ -5,8 +5,8 @@ Version: 2.5.4 [2014-06-11]
 o Now indexOf() first searched by exact names, then as before, i.e.
   by regular expression and fixed pattern matching.  Added package
   system tests that contains particularly complicated cases for this.
-  This was triggered by a rare but real use case causing an error
-  in aroma.affymetrix.  Thanks Benilton Carvalho for report on this.
+  This was triggered by a rare but real use case causing an error in
+  aroma.affymetrix.  Thanks Benilton Carvalho for reporting on this.
 o Added argument 'by' to indexOf() for GenericDataFileSet|List.
 
 
