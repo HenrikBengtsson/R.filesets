@@ -344,7 +344,7 @@ setMethodS3("getHeader", "TabularTextFile", function(this, ..., header=TRUE, for
 
 
 
-setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=this$skip, ..., verbose=FALSE) {
+setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=this$skip, sep=this$sep, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -448,8 +448,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
 
 
   # Infer column separator from the first line after the header comments?
-  sep <- this$sep;
-  if (length(sep) > 1) {
+  if (length(sep) > 1L) {
     verbose && enter(verbose, "Identifying the separator that returns most columns");
     verbose && cat(verbose, "Line:");
     verbose && print(verbose, line);
@@ -1166,6 +1165,8 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2014-08-02
+# o Added argument 'sep' to readRawHeader().
 # 2014-01-24
 # o Now readColumns() for TabularTextFile handles also header-less files.
 # 2013-12-18

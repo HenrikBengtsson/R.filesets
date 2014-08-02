@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.5 [2014-08-02]
+o BUG FIX: Argument 'sep' for readDataFrame() would only work for
+  ',' and '\t'; now it works for any separator.
+o Bumped package dependencies.
+
+
 Version: 2.5.4 [2014-06-11]
 o Now indexOf() first searched by exact names, then as before, i.e.
   by regular expression and fixed pattern matching.  Added package
