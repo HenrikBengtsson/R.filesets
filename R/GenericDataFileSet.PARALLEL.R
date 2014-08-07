@@ -174,7 +174,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
   # The additional set of arguments passed in each function call
   vargs <- c(vargs, args);
-  allArgs <- c(vargs, skip=skip, verbose=verbose);
+  allArgs <- c(vargs, list(skip=skip, verbose=verbose));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,7 +193,9 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       verbose && print(verbose, set);
       argsGG <- c(list(set), allArgs);
       verbose && cat(verbose, "Call arguments:");
-      verbose && str(verbose, argsGG);
+      argsT <- argsGG; argsT$verbose <- as.character(argsT$verbose);
+      verbose && str(verbose, argsT);
+      argsT <- NULL; # Not needed anymore
       resGG <- do.call(FUN, args=argsGG);
       verbose && str(verbose, resGG);
 
@@ -367,7 +369,9 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
     verbose && enter(verbose, "Calling bplapply()");
     args <- c(list(sets, FUN=FUN), allArgs, BPPARAM=bpParam);
     verbose && cat(verbose, "Arguments passed to bplapply():");
-    verbose && str(verbose, args);
+    argsT <- args; argsT$verbose <- as.character(argsT$verbose);
+    verbose && str(verbose, argsT);
+    argsT <- NULL; # Not needed anymore
     res <- do.call(BiocParallel::bplapply, args);
     names(res) <- names(sets);
     verbose && exit(verbose);
@@ -524,6 +528,9 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2014-08-07
+# o BUG FIX: dsApply() for GenericDataFileSet would coerce argument
+#   'verbose' to logical before applying the function.
 # 2014-04-19
 # o dsApply(..., .parallel="none") would lower the verbose threshold
 #   before applying the function.

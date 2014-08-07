@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.6 [2014-08-07]
+o BUG FIX: dsApply() for GenericDataFileSet would coerce argument
+  'verbose' to logical before applying the function.
+
+
 Version: 2.5.5 [2014-08-02]
 o BUG FIX: Argument 'sep' for readDataFrame() would only work for
   ',' and '\t'; now it works for any separator.
