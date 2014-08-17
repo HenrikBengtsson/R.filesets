@@ -1363,7 +1363,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     subclasses <- recursive;
     files <- list();
     for (kk in seq_along(pathnames)) {
-      if (as.logical(verbose)) cat(kk, ", ", sep="");
+      if (as.logical(verbose)) printf(verbose, "%d, ", kk);
       df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
       if (kk == 1L) {
@@ -1377,7 +1377,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
         subclasses <- FALSE;
       }
     }
-    if (as.logical(verbose)) cat("\n");
+    if (as.logical(verbose)) printf(verbose, "\n");
     verbose && exit(verbose);
   } else {
     files <- list();
@@ -2228,6 +2228,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-08-17
+# o BUG FIX: byPath() for GenericDataFileSet would output verbose message
+#   enumerating files loaded to stdout instead of stderr.
 # 2014-06-11
 # o Now indexOf() first searched by exact names, then as before, i.e.
 #   by regular expression and fixed pattern matching.
