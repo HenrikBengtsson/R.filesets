@@ -1363,7 +1363,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     subclasses <- recursive;
     files <- list();
     for (kk in seq_along(pathnames)) {
-      if (as.logical(verbose)) printf(verbose, "%d, ", kk);
+      if (as.logical(verbose)) writeRaw(verbose, kk, ", ");
       df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
       if (kk == 1L) {
@@ -1377,7 +1377,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
         subclasses <- FALSE;
       }
     }
-    if (as.logical(verbose)) printf(verbose, "\n");
+    if (as.logical(verbose)) writeRaw(verbose, "\n");
     verbose && exit(verbose);
   } else {
     files <- list();
