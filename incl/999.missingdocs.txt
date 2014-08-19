@@ -151,3 +151,4 @@ unique.GenericDataFileSet
 linkTo
 is.na.GenericDataFile
 dsApply
+readChecksums readChecksums.ChecksumFileSet

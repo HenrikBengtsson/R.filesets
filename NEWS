@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.8 [2014-08-19]
+o Added readChecksums() for ChecksumFileSet.
+
+
 Version: 2.5.7 [2014-08-17]
 o BUG FIX: byPath() for GenericDataFileSet would output verbose message
   enumerating files loaded to stdout instead of stderr.

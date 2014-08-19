@@ -47,6 +47,7 @@ ChecksumFileSet(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{readChecksums} \tab  -\cr
  \tab \code{validate} \tab  -\cr
 }
 

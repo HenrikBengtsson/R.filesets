@@ -42,9 +42,15 @@ setMethodS3("validate", "ChecksumFileSet", function(this, ...) {
 })
 
 
+setMethodS3("readChecksums", "ChecksumFileSet", function(ds, ...) {
+  sapply(ds, FUN=readChecksum, ...)
+})
+
 
 ############################################################################
 # HISTORY:
+# 2014-08-19
+# o Added readChecksums() for ChecksumFileSet.
 # 2013-11-19
 # o Added ChecksumFile.
 # o Created.
