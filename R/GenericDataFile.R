@@ -1537,11 +1537,15 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   }
 
   outPathname <- gzip(pathname, ...);
-  temporary <- attr(outPathname, "temporary");
+
+  # Attributes that may be of interest
+  ## temporary <- attr(outPathname, "temporary");
+  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes");
 
   this$.pathname <- outPathname;
 
-  invisible(pathname);
+  # Return the output file
+  invisible(outPathname);
 }, protected=TRUE)
 
 
@@ -1558,11 +1562,14 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
   # Decompress
   outPathname <- gunzip(pathname, ...);
-  temporary <- attr(outPathname, "temporary");
+
+  # Attributes that may be of interest
+  ## temporary <- attr(outPathname, "temporary");
+  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes");
 
   this$.pathname <- outPathname;
 
-  invisible(pathname);
+  invisible(outPathname);
 }, protected=TRUE)
 
 
@@ -1634,6 +1641,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2014-08-26
+# o Now gzip()/gunzip() for GenericDataFile returns the output pathname.
 # 2014-02-28
 # o DOCUMENTATION: Added an Rd section on privileges required on Windows
 #   for linkTo() to work.
