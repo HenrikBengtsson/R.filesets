@@ -50,10 +50,13 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
-  # To please R CMD check (because BatchJobs is just "suggested")
+  # To please R CMD check, because
+  # (i) BatchJobs is just "suggested"
   getJobNr <- batchMap <- showStatus <- findNotSubmitted <-
       findNotRunning <- submitJobs <- findNotTerminated <-
-      loadResults <- NULL;
+      loadResults <- loadConfig <- NULL;
+  # (ii) BiocParallel is just "suggested"
+  BatchJobsParam <- register <- NULL;
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -450,7 +453,7 @@ setMethodS3(".getBatchJobRegistryId", "GenericDataFileSet", function(object, ...
 
 setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
   .useBatchJobs();
-  # To please R CMD check.
+  # To please R CMD check (already loaded above)
   require("BatchJobs");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
