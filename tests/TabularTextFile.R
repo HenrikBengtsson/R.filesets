@@ -74,3 +74,18 @@ str(data)
 # Sanity check
 stopifnot(ncol(data) == nbrOfColumns(db) - 1L)
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# File #5 - with and without newline for the last line
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+df1 <- TabularTextFile("fileG,EOL.txt", path=pathB)
+print(df1)
+data1 <- readDataFrame(df1)
+
+df2 <- TabularTextFile("fileG,noEOL.txt", path=pathB)
+print(df2)
+data2 <- readDataFrame(df2)
+
+# Sanity checks
+stopifnot(identical(data2, data1))
+
