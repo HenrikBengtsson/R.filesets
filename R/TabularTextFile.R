@@ -509,6 +509,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
 
 
 setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClasses=c("*"=NA, getDefaultColumnClassPatterns(this)), defColClass="NULL", stringsAsFactors=FALSE, skip=this$skip, ..., verbose=FALSE) {
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -602,7 +603,15 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   } else {
     # If column names cannot be inferred, use the default
     nbrOfColumns <- length(fileHeader$topRows[[1]]);
-    colClasses <- rep(colClasses["*"], times=nbrOfColumns);
+    # Where argument 'colClasses' explicitly specified?
+    if (!missing(colClasses) && !is.null(colClasses)) {
+      # Sanity check
+      if (length(colClasses) != nbrOfColumns) {
+        throw(sprintf("The number of elements in argument 'colClasses' does not match the number of column in the file: %d != %d", length(colClasses),  nbrOfColumns));
+      }
+    } else {
+      colClasses <- rep(colClasses["*"], times=nbrOfColumns);
+    }
   } # if (!is.null(columns) && hasColClassPatterns)
 
   verbose && cat(verbose, "Column classes:", level=-20);
@@ -966,11 +975,14 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(nco
   verbose && cat(verbose, "Column names': ", hpaste(columnNames));
   # Setup column classes, iff missing
   if (is.null(colClasses)) {
-
     if (is.null(columnNames)) {
       colClasses[-columns] <- "NULL";
     } else {
       colClasses <- rep("character", times=length(columnNames));
+      names(colClasses) <- sprintf("^%s$", columnNames);
+    }
+  } else {
+    if (is.null(names(colClasses))) {
       names(colClasses) <- sprintf("^%s$", columnNames);
     }
   }
@@ -1174,6 +1186,11 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2014-08-25
+# o Now readColumns(..., colClasses) adds regexpr names to 'colClasses',
+#   iff missing.
+# o BUG FIX: readDataFrame() would ignore argument 'colClasses'
+#   iff it had no names.
 # 2014-08-23
 # o BUG FIX: Using commentChar=NULL for TabularTextFile:s failed.
 # 2014-08-02

@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.10 [2014-08-25]
+o BUG FIX: readDataFrame() would ignore argument 'colClasses'
+  iff it had no names.  Added package system test for this case.
+
+
 Version: 2.5.9 [2014-08-23]
 o BUG FIX: Using commentChar=NULL for TabularTextFile:s failed.
 
