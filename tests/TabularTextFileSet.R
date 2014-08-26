@@ -53,3 +53,20 @@ lapply(ds, FUN=setColumnNamesTranslator, function(names, ...) toupper(names))
 data <- readDataFrame(ds, colClasses=c("(X|Y)"="integer", "CHAR"="character"))
 print(data)
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ADVANCED: Translation of fullnames
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+fnts <- TabularTextFileSet$byPath(getPath(ds), pattern=",fullnames[.]txt$")
+appendFullNamesTranslator(ds, as.list(fnts))
+
+cat("Default fullnames:\n")
+print(head(getFullNames(ds, translate=FALSE)))
+cat("Translated fullnames:\n")
+print(head(getFullNames(ds)))
+
+cat("Default fullnames:\n")
+print(getFullNames(ds, translate=FALSE))
+cat("Translated fullnames:\n")
+print(getFullNames(ds))

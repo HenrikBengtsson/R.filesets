@@ -116,7 +116,7 @@ setMethodS3("appendFullNameTranslatorByTabularTextFile", "FullNameInterface", fu
     throw("Argument 'df' is not a TabularTextFile: ", class(df)[1]);
   }
 
-  df <- readDataFrame(df, colClasses="character");
+  df <- readDataFrame(df, defColClass="character");
 
   appendFullNameTranslator(this, df, ...);
 }, protected=TRUE)
