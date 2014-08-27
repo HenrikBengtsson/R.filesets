@@ -1966,20 +1966,6 @@ setMethodS3("gzip", "GenericDataFileSet", function(this, ...) {
 })
 
 
-setMethodS3("tar", "GenericDataFileSet", function(this, filename=NULL, path=".", ...) {
-  if (is.null(filename)) {
-    fullname <- getFullName(this)
-    filename <- sprintf("%s.tar", fullname)
-  }
-
-  # Argument 'filename' & 'path':
-  tarfile <- Arguments$getWritablePathname(filename, path=path);
-
-  pathnames <- getPathnames(this)
-  res <- tar(tarfile, files=pathnames, ...)
-  invisible(this)
-})
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # VECTOR-RELATED METHODS
