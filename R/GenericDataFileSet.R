@@ -445,13 +445,14 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #
 # \arguments{
 #  \item{by}{A @character string specifying the ordering scheme.}
+#  \item{decreasing}{If @TRUE the sorting is done in a decreasing manner.}
 #  \item{caseSensitive}{If @TRUE, the ordering is case sensitive,
 #        otherwise not.}
 #  \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns returns itself (invisibly) with the set ordered accordingly.
+#   Returns returns itself with the set ordered accordingly.
 # }
 #
 # \details{
@@ -468,23 +469,28 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...) {
+setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
   # Argument 'by':
   by <- match.arg(by);
+
+  # Argument 'decreasing':
+  decreasing <- Arguments$getLogical(decreasing);
 
   # Argument 'caseSensitive':
   caseSensitive <- Arguments$getLogical(caseSensitive);
 
-  # Get the fullnames
-  fullnames <- getFullNames(this);
-  if (!caseSensitive) {
-    fullnames <- tolower(fullnames);
-  }
-
   if (by == "lexicographic") {
-    order <- order(fullnames);
+    fullnames <- getFullNames(this);
+    if (!caseSensitive) fullnames <- tolower(fullnames);
+    order <- order(fullnames, decreasing=decreasing, ...);
   } else if (by == "mixedsort") {
+    fullnames <- getFullNames(this);
+    if (!caseSensitive) fullnames <- tolower(fullnames);
     order <- gtools::mixedorder(fullnames);
+    if (decreasing) order <- rev(order);
+  } else if (by == "filesize") {
+    sizes <- sapply(this, FUN=getFileSize);
+    order <- order(sizes, decreasing=decreasing, ...);
   }
 
   # Sanity check
@@ -492,7 +498,8 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
   stopifnot(length(unique(order)) == length(order));
 
   this$files <- this$files[order];
-  invisible(this);
+
+  this;
 })
 
 
@@ -2238,6 +2245,9 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 ############################################################################
 # HISTORY:
 # 2014-08-26
+# o Added support for sortBy(..., by="filesize") and
+#   sortBy(..., decreasing=TRUE) for GenericDataFileSet.  Also, sortBy()
+#   is no longer returning invisibly.
 # o Added rep() for GenericDataFileSet.
 # 2014-08-17
 # o BUG FIX: byPath() for GenericDataFileSet would output verbose message

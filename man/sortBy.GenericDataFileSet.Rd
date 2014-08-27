@@ -18,18 +18,20 @@
 }
 
 \usage{
-\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...)
+\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort", "filesize"), decreasing=FALSE,
+  caseSensitive=FALSE, ...)
 }
 
 \arguments{
  \item{by}{A \code{\link[base]{character}} string specifying the ordering scheme.}
+ \item{decreasing}{If \code{\link[base:logical]{TRUE}} the sorting is done in a decreasing manner.}
  \item{caseSensitive}{If \code{\link[base:logical]{TRUE}}, the ordering is case sensitive,
        otherwise not.}
  \item{...}{Not used.}
 }
 
 \value{
-  Returns returns itself (invisibly) with the set ordered accordingly.
+  Returns returns itself with the set ordered accordingly.
 }
 
 \details{
