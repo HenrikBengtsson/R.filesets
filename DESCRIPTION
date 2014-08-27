@@ -1,5 +1,5 @@
 Package: R.filesets
-Version: 2.5.11
+Version: 2.6.0
 Depends: R (>= 2.15.0), R.oo (>= 1.18.0)
 Imports: stats, R.methodsS3 (>= 1.6.1), R.utils (>= 1.32.4), R.cache (>= 0.10.0), digest (>= 0.6.4)
 Suggests: gtools (>= 3.4.1), BatchJobs (>= 1.2), BiocParallel (>= 0.4.1)
