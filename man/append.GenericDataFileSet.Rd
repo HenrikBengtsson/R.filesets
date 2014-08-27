@@ -14,6 +14,10 @@
 \alias{c.GenericDataFileSet}
 \alias{c,GenericDataFileSet-method}
 
+\alias{GenericDataFileSet.rep}
+\alias{rep.GenericDataFileSet}
+\alias{rep,GenericDataFileSet-method}
+
 
 \title{Appends one data set to an existing one}
 

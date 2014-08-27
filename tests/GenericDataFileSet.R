@@ -78,6 +78,23 @@ stopifnot(equals(ds6, ds5))
 ds7 <- ds[c(1,2,NA_integer_), onMissing="dropall"]
 stopifnot(length(ds7) == 0L)
 
+ds8 <- rep(ds, each=2L)
+stopifnot(length(ds8) == 2*length(ds))
+stopifnot(equals(ds8, ds[rep(seq_along(ds), each=2L)]))
+
+ds9 <- rep(ds8, times=3L)
+stopifnot(length(ds9) == 3*length(ds8))
+stopifnot(equals(ds9, ds8[rep(seq_along(ds8), times=3L)]))
+
+ds10 <- rep(ds9, length.out=1/2*length(ds9))
+stopifnot(length(ds10) == 1/2*length(ds9))
+stopifnot(equals(ds10, ds9[rep(seq_along(ds9), length.out=1/2*length(ds9))]))
+
+ds11 <- rep(ds10, length.out=2*length(ds10))
+stopifnot(length(ds11) == 2*length(ds10))
+stopifnot(equals(ds11, ds10[rep(seq_along(ds10), length.out=2*length(ds10))]))
+
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special cases

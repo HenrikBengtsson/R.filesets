@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.5.11 [2014-08-26]
+o Added rep() for GenericDataFileSet.
+
+
 Version: 2.5.10 [2014-08-25]
 o BUG FIX: readDataFrame() would ignore argument 'colClasses'
   iff it had no names.  Added package system test for this case.

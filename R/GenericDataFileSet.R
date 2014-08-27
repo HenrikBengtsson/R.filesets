@@ -1007,6 +1007,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 ###########################################################################/**
 # @RdocMethod append
 # @aliasmethod c
+# @aliasmethod rep
 #
 # @title "Appends one data set to an existing one"
 #
@@ -1965,6 +1966,21 @@ setMethodS3("gzip", "GenericDataFileSet", function(this, ...) {
 })
 
 
+setMethodS3("tar", "GenericDataFileSet", function(this, filename=NULL, path=".", ...) {
+  if (is.null(filename)) {
+    fullname <- getFullName(this)
+    filename <- sprintf("%s.tar", fullname)
+  }
+
+  # Argument 'filename' & 'path':
+  tarfile <- Arguments$getWritablePathname(filename, path=path);
+
+  pathnames <- getPathnames(this)
+  res <- tar(tarfile, files=pathnames, ...)
+  invisible(this)
+})
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # VECTOR-RELATED METHODS
 #
@@ -2009,6 +2025,13 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
   args <- Reduce(c, args);
   files <- c(files, args);
   newInstance(x, files);
+}, protected=TRUE)
+
+
+setMethodS3("rep", "GenericDataFileSet", function(x, ...) {
+  idxs <- seq_along(x)
+  idxs <- rep(idxs, ...)
+  x[idxs]
 }, protected=TRUE)
 
 
@@ -2228,6 +2251,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-08-26
+# o Added rep() for GenericDataFileSet.
 # 2014-08-17
 # o BUG FIX: byPath() for GenericDataFileSet would output verbose message
 #   enumerating files loaded to stdout instead of stderr.
