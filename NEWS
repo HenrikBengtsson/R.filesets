@@ -1,6 +1,12 @@
 Package: R.filesets
 ===================
 
+Version: 2.6.1 [2014-12-27]
+o ROBUSTNESS: Added test for reading subset of a large tabular file.
+o BUG FIX: as.character() for ChecksumFile gave an error when
+  the checksum files was missing.
+
+
 Version: 2.6.0 [2014-08-26]
 o Added support for sortBy(..., by="filesize") and
   sortBy(..., decreasing=TRUE) for GenericDataFileSet.
