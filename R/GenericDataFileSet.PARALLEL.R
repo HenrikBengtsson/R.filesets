@@ -340,8 +340,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
     # WORKAROUND: Make sure 'methods' package is *attached*, not
     # just loaded. /HB 2013-11-09
-    pkgName <- "methods";
-    require(pkgName, character.only=TRUE) || throw("Package not attached: ", pkgName);
+    .require <- require   # To please R CMD check
+    .require("methods") || throw("Package not attached: methods")
 
     # Attach "suggested" BiocParallel package
     .useBiocParallel();
@@ -453,8 +453,9 @@ setMethodS3(".getBatchJobRegistryId", "GenericDataFileSet", function(object, ...
 
 setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
   .useBatchJobs();
+
   # To please R CMD check (already loaded above)
-  require("BatchJobs");
+  requireNamespace("BatchJobs");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -531,6 +532,8 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2015-01-05
+# o CLEANUP: Using requireNamespace() instead of require() internally.
 # 2014-08-07
 # o BUG FIX: dsApply() for GenericDataFileSet would coerce argument
 #   'verbose' to logical before applying the function.

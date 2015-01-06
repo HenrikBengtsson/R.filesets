@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+Version: 2.6.2 [2015-01-05]
+o CLEANUP: Using requireNamespace() instead of require() internally.
+
+
 Version: 2.6.1 [2014-12-27]
 o ROBUSTNESS: Added test for reading subset of a large tabular file.
 o BUG FIX: as.character() for ChecksumFile gave an error when
