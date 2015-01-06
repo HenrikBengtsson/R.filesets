@@ -5,7 +5,7 @@ Imports: stats, R.methodsS3 (>= 1.6.1), R.utils (>= 1.34.0), R.cache (>= 0.10.0)
 Suggests: gtools (>= 3.4.1), BatchJobs (>= 1.5), BiocParallel (>= 0.4.1)
 SuggestsNote: Recommended: gtools
 Date: 2015-01-05
-Title: Easy handling of and access to files organized in structured directories
+Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
 Author: Henrik Bengtsson [aut, cre, cph]
