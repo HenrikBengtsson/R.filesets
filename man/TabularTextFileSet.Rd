@@ -49,7 +49,7 @@ TabularTextFileSet(...)
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.filesets:readDataFrame.TabularTextFileSet]{readDataFrame}} \tab Reads the tabular data from all files as data frames.\cr
+ \tab \code{readDataFrame} \tab  -\cr
 }
 
 

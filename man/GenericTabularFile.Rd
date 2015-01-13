@@ -54,15 +54,15 @@ GenericTabularFile(..., .verify=TRUE, verbose=FALSE)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.filesets:dim.GenericTabularFile]{dim}} \tab Gets the dimension of data table.\cr
- \tab \code{\link[R.filesets:extractMatrix.GenericTabularFile]{extractMatrix}} \tab Reads one of the columns.\cr
+ \tab \code{dim} \tab  -\cr
+ \tab \code{extractMatrix} \tab  -\cr
  \tab \code{head} \tab  -\cr
  \tab \code{nbrOfColumns} \tab  -\cr
- \tab \code{\link[R.filesets:nbrOfRows.GenericTabularFile]{nbrOfRows}} \tab Gets the number of data rows.\cr
- \tab \code{\link[R.filesets:readColumns.GenericTabularFile]{readColumns}} \tab Reads a subset of the columns as a data frame.\cr
- \tab \code{\link[R.filesets:readDataFrame.GenericTabularFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
+ \tab \code{nbrOfRows} \tab  -\cr
+ \tab \code{readColumns} \tab  -\cr
+ \tab \code{readDataFrame} \tab  -\cr
  \tab \code{tail} \tab  -\cr
- \tab \code{\link[R.filesets:writeColumnsToFiles.GenericTabularFile]{writeColumnsToFiles}} \tab Read each column from a data file and exports it to a separate file.\cr
+ \tab \code{writeColumnsToFiles} \tab  -\cr
 }
 
 

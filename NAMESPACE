@@ -26,6 +26,7 @@ importFrom("R.utils", "gunzip")
 importFrom("R.utils", "gzip")
 importFrom("R.utils", "isFile")
 importFrom("R.utils", "isGzipped")
+importFrom("R.utils", "loadToEnv")
 importFrom("R.utils", "setLabel")
 importFrom("stats", "reorder")
 
