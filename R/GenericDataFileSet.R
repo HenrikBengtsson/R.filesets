@@ -678,7 +678,7 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, by=c(
   # Not allowing missing values?
   if (onMissing == "error" && any(is.na(res))) {
     names <- names(res)[is.na(res)];
-    throw("Some names where not match: ", paste(names, collapse=", "));
+    throw("One or more files where not found: ", paste(sQuote(names), collapse=", "));
   }
 
   res;
@@ -798,7 +798,8 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{idx}{An @integer index specifying the file to be returned.}
+#   \item{idx}{A @numeric index or a @character string specifying the
+#    file to be returned.}
 #   \item{...}{Not used.}
 # }
 #
@@ -810,19 +811,31 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 #
 # \seealso{
 #   @seeclass
+#   If argument \code{idx} is a @character, then internally
+#   @seemethod "indexOf" is used to identify what to return.
 # }
 #
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
 setMethodS3("getFile", "GenericDataFileSet", function(this, idx, ...) {
+  # Argument 'idx':
   if (length(idx) != 1L) {
-    throw("Argument 'idx' must be a single index.");
+    throw("Argument 'idx' must be a scalar.")
   }
-  res <- this$files;
-  n <- length(res);
-  idx <- Arguments$getIndex(idx, max=n);
-  res[[idx]];
+
+  res <- this$files
+
+  if (is.numeric(idx)) {
+    n <- length(res)
+    idx <- Arguments$getIndex(idx, max=n)
+  } else if (is.character(idx)) {
+    idx <- indexOf(this, idx, by="exact", onMissing="error", ...)
+  } else {
+    throw("Argument 'idx' must be either a numeric index or a character string: ", mode(idx))
+  }
+
+  res[[idx]]
 })
 
 
@@ -1999,10 +2012,10 @@ setMethodS3("[", "GenericDataFileSet", function(x, i, ...) {
 }, protected=TRUE)
 
 setMethodS3("[[", "GenericDataFileSet", function(x, i, ...) {
-  if (is.numeric(i)) {
-    getFile(x, i, ...);
+  if (is.numeric(i) || is.character(i)) {
+    getFile(x, i, ...)
   } else {
-    NextMethod("[[");
+    NextMethod("[[")
   }
 }, protected=TRUE)
 

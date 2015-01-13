@@ -2,6 +2,11 @@ Package: R.filesets
 ===================
 
 Version: 2.7.0.x [2015-01-12]
+o Now `[[` for GenericDataFileSet returns a GenericDataFile not only
+  if a numeric index is given but also if a character string is given.
+o Now argument 'idx' for getFile() for GenericDataFileSet can also
+  be a character string, in which case the file returned is identified
+  using indexOf(..., pattern=idx, by="exact", onMissing="error").
 o Added RDataFile and RDataFileSet classes for *.RData files.
 o Package now requires R (>= 3.0.0) and BioC (>= 2.13), which were
   released April 2013 and are in fact old and it's recommended to
