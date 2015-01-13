@@ -2,10 +2,10 @@ Package: R.filesets
 ===================
 
 Version: 2.7.0.x [2015-01-12]
+o Added RDataFile and RDataFileSet classes for *.RData files.
 o Package now requires R (>= 3.0.0) and BioC (>= 2.13), which were
   released April 2013 and are in fact old and it's recommended to
   use a more recent version of R.
-o Now byPath() for RdsFileSet recognizes more RDS filename extensions.
 
 
 Version: 2.6.2 [2015-01-05]

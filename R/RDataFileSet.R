@@ -1,13 +1,13 @@
 ###########################################################################/**
-# @RdocClass RdsFileSet
-# @alias byPath.RdsFileSet
+# @RdocClass RDataFileSet
+# @alias byPath.RDataFileSet
 #
-# @title "The RdsFileSet class"
+# @title "The RDataFileSet class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RdsFileSet object represents a set of @see "RdsFile":s.
+#  An RDataFileSet object represents a set of @see "RDataFile":s.
 # }
 #
 # @synopsis
@@ -22,19 +22,18 @@
 #
 # @author
 #*/###########################################################################
-setConstructorS3("RdsFileSet", function(...) {
-  extend(GenericDataFileSet(...), "RdsFileSet");
+setConstructorS3("RDataFileSet", function(...) {
+  extend(GenericDataFileSet(...), "RDataFileSet")
 })
 
 
-setMethodS3("byPath", "RdsFileSet", function(static, ..., pattern="[.]rds$") {
-  NextMethod("byPath", pattern=pattern);
+setMethodS3("byPath", "RDataFileSet", function(static, ..., pattern="[.](RData|Rdata|rdata)$") {
+  NextMethod("byPath", pattern=pattern)
 })
-
 
 
 ###########################################################################
 # HISTORY:
-# 2013-11-20
+# 2015-01-12
 # o Created.
 ############################################################################
