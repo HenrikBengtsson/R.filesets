@@ -10,7 +10,7 @@ o Now argument 'idx' for getFile() for GenericDataFileSet can also
 o Added RDataFile and RDataFileSet classes for *.RData files.
 o Package now requires R (>= 3.1.0) which was released March 2014 and
   are in fact old; it's recommended to use a more recent version of R.
-o ROBUSTNESS: Package test coverage is 47%.
+o ROBUSTNESS: Package test coverage is 51%.
 
 
 Version: 2.6.2 [2015-01-05]
