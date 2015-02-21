@@ -120,6 +120,7 @@ S3method("readChecksum", "ChecksumFile")
 S3method("validate", "ChecksumFile")
 
 # ChecksumFileSet
+S3method("readChecksums", "ChecksumFileSet")
 S3method("validate", "ChecksumFileSet")
 
 # ColumnNamesInterface
@@ -210,8 +211,10 @@ S3method("getPathname", "GenericDataFile")
 S3method("gunzip", "GenericDataFile")
 S3method("gzip", "GenericDataFile")
 S3method("hasBeenModified", "GenericDataFile")
+S3method("is.na", "GenericDataFile")
 S3method("isFile", "GenericDataFile")
 S3method("isGzipped", "GenericDataFile")
+S3method("linkTo", "GenericDataFile")
 S3method("readChecksum", "GenericDataFile")
 S3method("renameTo", "GenericDataFile")
 S3method("renameToUpperCaseExt", "GenericDataFile")
@@ -275,10 +278,12 @@ S3method("gunzip", "GenericDataFileSet")
 S3method("gzip", "GenericDataFileSet")
 S3method("hasFile", "GenericDataFileSet")
 S3method("indexOf", "GenericDataFileSet")
+S3method("is.na", "GenericDataFileSet")
 S3method("length", "GenericDataFileSet")
 S3method("na.omit", "GenericDataFileSet")
 S3method("nbrOfFiles", "GenericDataFileSet")
 S3method("reorder", "GenericDataFileSet")
+S3method("rep", "GenericDataFileSet")
 S3method("resetFullNames", "GenericDataFileSet")
 S3method("seq", "GenericDataFileSet")
 ##S3method("setAlias", "GenericDataFileSet")
@@ -335,6 +340,12 @@ S3method("writeColumnsToFiles", "GenericTabularFile")
 
 # GenericTabularFileSet
 S3method("extractMatrix", "GenericTabularFileSet")
+
+# RDataFile
+S3method("loadObject", "RDataFile")
+
+# RDataFileSet
+S3method("byPath", "RDataFileSet")
 
 # RdsFile
 S3method("loadObject", "RdsFile")
