@@ -1,12 +1,16 @@
 library("R.filesets")
 
+message("*** GenericDataFileSet")
+
+# Example files
+path <- system.file("exData", "dataSetA,original", package="R.filesets")
+print(path)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-path <- system.file(package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
-
+print(ds)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Data set

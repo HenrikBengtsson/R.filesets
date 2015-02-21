@@ -1,6 +1,8 @@
 library("R.filesets")
 library("R.utils")  # writeDataFrame()
 
+message("*** A huge TabularTextFile")
+
 # Generate a large data frame
 set.seed(42)
 n <- 1e5

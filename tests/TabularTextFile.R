@@ -1,7 +1,9 @@
 library("R.filesets")
 
-pathA <- system.file("exData/dataSetA,original", package="R.filesets")
-pathB <- system.file("exData/dataSetB", package="R.filesets")
+message("*** TabularTextFile")
+
+pathA <- system.file("exData", "dataSetA,original", package="R.filesets")
+pathB <- system.file("exData", "dataSetB", package="R.filesets")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # File #1 - regular tab-delimited file
