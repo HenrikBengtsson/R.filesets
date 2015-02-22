@@ -1,6 +1,5 @@
 # R package: R.filesets
 
-Bla bla yada yada
 
 ## Installation
 Package is available on [CRAN](http://cran.r-project.org/package=R.filesets).  Install in R as:
