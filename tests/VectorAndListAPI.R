@@ -2,11 +2,15 @@ library("R.filesets")
 
 # Tests adapted from the IRanges package and http://www.bioconductor.org/help/course-materials/2012/SeattleFeb2012/GenomicRanges_slides.pdf
 
+# Example files
+path <- system.file("exData", "dataSetA,original", package="R.filesets")
+print(path)
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-path <- system.file(package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
+print(ds)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -26,8 +30,8 @@ stopifnot(equals(ds2, ds))
 # List operations on data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Double-bracket subsetting
-dfA <- ds[[1]]
-dfB <- ds[[2]]
+dfA <- ds[["1.2(a)"]]
+dfB <- ds[["fileD,3cols"]]
 
 # equals()
 stopifnot(equals(dfA, dfA))
@@ -45,6 +49,7 @@ stopifnot(!equals(dfA, dfB))
 # Vector and list operations on data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dsA <- extract(ds, c(seq_along(ds), 1, 3))
+stopifnot(length(dsA) == length(ds) + 2L)
 
 dsB <- c(ds, ds[[1]], ds[[3]])
 stopifnot(equals(dsB, dsA))
@@ -55,7 +60,7 @@ stopifnot(equals(dsC, dsA))
 dsD <- c(ds, ds[c(1,3)])
 stopifnot(equals(dsD, dsA))
 
-# Comparing: duplicated()
+# Comparing: duplicated(), where duplication test is based on equals()
 dups <- duplicated(dsA)
 print(dups)
 hasDups <- anyDuplicated(dsA)
@@ -64,7 +69,6 @@ stopifnot(identical(any(dups), hasDups))
 
 dsT <- dsA[!dups]
 stopifnot(!anyDuplicated(dsT))
-stopifnot(equals(dsT, ds))
 
 # Comparing: unique()
 dsU <- unique(dsA)

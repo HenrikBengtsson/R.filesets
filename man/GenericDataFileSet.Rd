@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{GenericDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{RdsFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
+\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{RDataFileSet}, \link[R.filesets]{RdsFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public static class \bold{GenericDataFileSet}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr
@@ -54,35 +54,35 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{anyDuplicated} \tab  -\cr
- \tab \code{\link[R.filesets:anyNA.GenericDataFileSet]{anyNA}} \tab Checks whether any of the pathnames are missing.\cr
- \tab \code{\link[R.filesets:append.GenericDataFileSet]{append}} \tab Appends one data set to an existing one.\cr
- \tab \code{\link[R.filesets:appendFiles.GenericDataFileSet]{appendFiles}} \tab Appends a list of files to a data set.\cr
- \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
- \tab \code{\link[R.filesets:byName.GenericDataFileSet]{byName}} \tab Locates and sets up a file set by its name.\cr
- \tab \code{\link[R.filesets:byPath.GenericDataFileSet]{byPath}} \tab Defines a GenericDataFileSet by searching for files in a directory.\cr
+ \tab \code{anyNA} \tab  -\cr
+ \tab \code{append} \tab  -\cr
+ \tab \code{appendFiles} \tab  -\cr
+ \tab \code{as.list} \tab  -\cr
+ \tab \code{byName} \tab  -\cr
+ \tab \code{byPath} \tab  -\cr
  \tab \code{duplicated} \tab  -\cr
  \tab \code{equals} \tab  -\cr
- \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
- \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
+ \tab \code{extract} \tab  -\cr
+ \tab \code{getChecksum} \tab  -\cr
  \tab \code{getChecksumFileSet} \tab  -\cr
- \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
- \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
+ \tab \code{getDefaultFullName} \tab  -\cr
+ \tab \code{getFile} \tab  -\cr
  \tab \code{getFileClass} \tab  -\cr
  \tab \code{getFileSize} \tab  -\cr
  \tab \code{getFullNames} \tab  -\cr
- \tab \code{\link[R.filesets:getNames.GenericDataFileSet]{getNames}} \tab Gets the names (or fullnames) of the files in the file set.\cr
+ \tab \code{getNames} \tab  -\cr
  \tab \code{getOneFile} \tab  -\cr
- \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
- \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
+ \tab \code{getPath} \tab  -\cr
+ \tab \code{getPathnames} \tab  -\cr
  \tab \code{gunzip} \tab  -\cr
- \tab \code{\link[R.filesets:gzip.GenericDataFileSet]{gzip}} \tab Compresses/uncompresses a set of files.\cr
+ \tab \code{gzip} \tab  -\cr
  \tab \code{hasFile} \tab  -\cr
- \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
+ \tab \code{indexOf} \tab  -\cr
  \tab \code{is.na} \tab  -\cr
  \tab \code{na.omit} \tab  -\cr
- \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
+ \tab \code{sortBy} \tab  -\cr
  \tab \code{unique} \tab  -\cr
- \tab \code{\link[R.filesets:validate.GenericDataFileSet]{validate}} \tab Validates all files in the data set.\cr
+ \tab \code{validate} \tab  -\cr
 }
 
 

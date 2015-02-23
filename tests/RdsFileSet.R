@@ -1,5 +1,7 @@
 library("R.filesets")
 
+message("*** RdsFileSet")
+
 x <- list(a=1, b=2)
 y <- letters[1:10]
 

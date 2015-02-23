@@ -1,8 +1,10 @@
 library("R.filesets")
 
+message("*** TabularTextFileSet")
+
 # Setup a file set consisting of all *.dat tab-delimited files
 # in a particular directory
-pathA <- system.file("exData/dataSetA,original", package="R.filesets")
+pathA <- system.file("exData", "dataSetA,original", package="R.filesets")
 ds <- TabularTextFileSet$byPath(pathA, pattern="[.]dat$")
 print(ds)
 

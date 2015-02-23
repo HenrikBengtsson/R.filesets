@@ -1,14 +1,23 @@
 library("R.filesets")
 
-# Setting up a file
-path <- system.file(package="R.filesets")
+message("*** GenericDataFile")
+
+# Example files
+path <- system.file("exData", "dataSetA,original", package="R.filesets")
+print(path)
+
+# Setting up a file set
 ds <- GenericDataFileSet$byPath(path)
+print(ds)
+
 df <- ds[[1L]]
 print(df)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # copyTo()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("*** copyTo() on GenericDataFile")
+
 # Copy it to a temporary directory
 path <- tempdir()
 dfC <- copyTo(df, path=path)
@@ -41,6 +50,8 @@ stopifnot(isFile(df))
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # linkTo()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("*** linkTo() on GenericDataFile")
+
 # Link to it in a temporary directory
 path <- tempdir()
 
@@ -64,7 +75,7 @@ if (.Platform$OS.type == "windows") {
     # Copy file (via link) - unless a Windows Shortcut link
     isWindowsShortcut <- (getPathname(dfL) == getPathname(df))
     if (!isWindowsShortcut) {
-      dfLC <- copyTo(dfL, path=file.path(path, "foo"))
+      dfLC <- copyTo(dfL, path=file.path(path, "foo"), validate=FALSE)
       # Sanity checks
       stopifnot(getChecksum(dfLC) == getChecksum(df))
       stopifnot(getPathname(dfLC) != getPathname(df))

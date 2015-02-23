@@ -26,7 +26,8 @@
 }
 
 \arguments{
-  \item{idx}{An \code{\link[base]{integer}} index specifying the file to be returned.}
+  \item{idx}{A \code{\link[base]{numeric}} index or a \code{\link[base]{character}} string specifying the
+   file to be returned.}
   \item{...}{Not used.}
 }
 
@@ -38,6 +39,8 @@
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.
+  If argument \code{idx} is a \code{\link[base]{character}}, then internally
+  \code{\link[R.filesets:indexOf.GenericDataFileSet]{*indexOf}()} is used to identify what to return.
 }
 
 

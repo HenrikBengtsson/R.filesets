@@ -68,11 +68,11 @@ TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNa
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
- \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
- \tab \code{\link[R.filesets:nbrOfRows.TabularTextFile]{nbrOfRows}} \tab Counts the number of data rows.\cr
- \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
- \tab \code{\link[R.filesets:readLines.TabularTextFile]{readLines}} \tab Reads the lines of the data file as strings.\cr
+ \tab \code{getHeader} \tab  -\cr
+ \tab \code{nbrOfLines} \tab  -\cr
+ \tab \code{nbrOfRows} \tab  -\cr
+ \tab \code{readDataFrame} \tab  -\cr
+ \tab \code{readLines} \tab  -\cr
 }
 
 

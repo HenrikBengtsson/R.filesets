@@ -28,9 +28,14 @@ setConstructorS3("ChecksumFile", function(...) {
 
 
 setMethodS3("as.character", "ChecksumFile", function(x, ...) {
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("Checksum on record: %s", readChecksum(x)));
-  s;
+  s <- NextMethod("as.character")
+  if (isFile(x)) {
+    checksum <- readChecksum(x)
+  } else {
+    checksum <- "NA (checksum file missing)"
+  }
+  s <- c(s, sprintf("Checksum on record: %s", checksum))
+  s
 }, protected=TRUE)
 
 

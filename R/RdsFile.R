@@ -1,7 +1,6 @@
 ###########################################################################/**
 # @RdocClass RdsFile
 # @alias loadObject.RdsFile
-# @alias loadObject
 #
 # @title "The RdsFile class"
 #

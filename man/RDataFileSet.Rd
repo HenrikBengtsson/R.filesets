@@ -1,61 +1,59 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RdsFile.R
+%  RDataFileSet.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{RdsFile}
+\name{RDataFileSet}
 \docType{class}
-\alias{RdsFile}
+\alias{RDataFileSet}
 
-\alias{loadObject.RdsFile}
+\alias{byPath.RDataFileSet}
 
-\title{The RdsFile class}
+\title{The RDataFileSet class}
 
 \description{
  Package:  R.filesets \cr
-\bold{Class RdsFile}\cr
+\bold{Class RDataFileSet}\cr
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFile}}\cr
+\code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFileSet}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\emph{\code{RdsFile}}\cr
+\code{~~~~~~~~~~~~+--}\code{RDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public abstract static class \bold{RdsFile}\cr
-extends \emph{\link[R.filesets]{GenericDataFile}}\cr
+public static class \bold{RDataFileSet}\cr
+extends \link[R.filesets]{GenericDataFileSet}\cr
 
 
 
- An RdsFile represents a binary file containing an R object
- saved using the \code{\link[base]{saveRDS}}() function.
+ An RDataFileSet object represents a set of \code{\link{RDataFile}}:s.
 }
 
 \usage{
-RdsFile(...)
+RDataFileSet(...)
 }
 
 \arguments{
-  \item{...}{Arguments passed to \code{\link{GenericDataFile}}.}
+  \item{...}{Arguments passed to \code{\link{GenericDataFileSet}}.}
 }
 
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{loadObject} \tab  -\cr
- \tab \code{loadRDS} \tab  -\cr
+ \tab \code{byPath} \tab  -\cr
 }
 
 
- \bold{Methods inherited from GenericDataFile}:\cr
-as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getChecksumFile, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFileSize, getFileType, getFilename, getFilenameExtension, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, is.na, isFile, isGzipped, linkTo, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum
+ \bold{Methods inherited from GenericDataFileSet}:\cr
+[, [[, anyDuplicated, anyNA, append, appendFiles, appendFullNamesTranslator, appendFullNamesTranslatorByNULL, appendFullNamesTranslatorByTabularTextFile, appendFullNamesTranslatorByTabularTextFileSet, appendFullNamesTranslatorBydata.frame, appendFullNamesTranslatorByfunction, appendFullNamesTranslatorBylist, as.character, as.list, byName, byPath, c, clearCache, clearFullNamesTranslator, clone, copyTo, dsApply, dsApplyInPairs, duplicated, equals, extract, findByName, findDuplicated, getChecksum, getChecksumFileSet, getChecksumObjects, getDefaultFullName, getFile, getFileClass, getFileSize, getFiles, getFullNames, getNames, getOneFile, getPath, getPathnames, getSubdirs, gunzip, gzip, hasFile, indexOf, is.na, na.omit, nbrOfFiles, rep, resetFullNames, seq, setFullNamesTranslator, sortBy, unique, update2, updateFullName, updateFullNames, validate
 
  \bold{Methods inherited from FullNameInterface}:\cr
 appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
@@ -67,8 +65,4 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 }
 
 \author{Henrik Bengtsson}
-
-\seealso{
-  An object of this class is typically part of an \code{\link{RdsFileSet}}.
-}
 \keyword{classes}
