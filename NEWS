@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 2.7.0.x [2015-02-21]
+Version: 2.7.0 [2015-02-23]
 o Now `[[` for GenericDataFileSet returns a GenericDataFile not only
   if a numeric index is given but also if a character string is given.
 o Now argument 'idx' for getFile() for GenericDataFileSet can also
