@@ -1,5 +1,5 @@
 Package: R.filesets
-Version: 2.7.0
+Version: 2.7.0-9000
 Depends: R (>= 3.0.3), R.oo (>= 1.18.0)
 Imports: stats, R.methodsS3 (>= 1.7.0), R.utils (>= 1.34.0), R.cache (>= 0.10.0), digest (>= 0.6.8)
 Suggests: gtools (>= 3.4.1), BatchJobs (>= 1.5), BiocParallel (>= 0.4.1)
@@ -12,6 +12,7 @@ Author: Henrik Bengtsson [aut, cre, cph]
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Description: A file set refers to a set of files located in one or more directories on the file system.  This package provides classes and methods to locate, setup, subset, navigate and iterate such sets.  The API is designed such that these classes can be extended via inheritance to provide a richer API for special file formats.  Moreover, a specific name format is defined such that filenames and directories can be considered to have full names which consists of a name followed by comma-separated tags.  This adds additional flexibility to identify file sets and individual files.  NOTE: This package's API should be considered to be in an beta stage.  Its main purpose is currently to support the aroma.* packages, where it is one of the main core components; if you decide to build on top of this package, please contact the author first.
 License: LGPL (>= 2.1)
-URL: http://www.aroma-project.org/
+URL: https://github.com/HenrikBengtsson/R.filesets, http://www.aroma-project.org/
+BugReports: https://github.com/HenrikBengtsson/R.filesets/issues
 LazyLoad: TRUE
 biocViews: Infrastructure, DataImport, DataRepresentation
