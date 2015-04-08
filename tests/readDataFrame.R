@@ -12,7 +12,6 @@ pathname <- pathnames[1]
 data <- readDataFrame(pathname)
 print(data)
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Reading gzip'ed file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -27,4 +26,12 @@ stopifnot(identical(dataZ, data))
 
 ## Cleanup
 file.remove(pathnameZ)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Reading multiple files and stack them
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+pathnames <- rep(pathname, times=3L)
+data <- readDataFrame(pathnames)
+print(data)
 
