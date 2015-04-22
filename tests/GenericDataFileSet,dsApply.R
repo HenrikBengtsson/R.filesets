@@ -26,17 +26,18 @@ res2 <- dsApply(ds, FUN=getFileSize, .parallel="none")
 str(res2)
 ## FIXME: dsApply() returns "short" names whereas lapply() "full" names
 stopifnot(all.equal(res2, res1, check.attributes=FALSE))
+res1 <- res2 ## FIXME: Workaround trick
 
 # Alt 3. (via BatchJobs)
 if (fullTest && isPackageInstalled("BatchJobs")) {
   res3 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
   print(res3)
-  stopifnot(all.equal(res3, res1, check.attributes=FALSE))
+  stopifnot(all.equal(res3, res1))
 }
 
 # Alt 4. (via BiocParallel + BatchJobs)
 if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
   res4 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
   print(res4)
-  stopifnot(all.equal(res4, res1, check.attributes=FALSE))
+  stopifnot(all.equal(res4, res1))
 }
