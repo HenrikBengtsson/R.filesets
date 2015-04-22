@@ -3,7 +3,6 @@ Version: 2.7.0-9000
 Depends:
   R (>= 3.1.1),
   R.oo (>= 1.18.0)
-DependsNote: BioC (>= 3.0)
 Imports:
   stats,
   R.methodsS3 (>= 1.7.0),
@@ -14,7 +13,9 @@ Suggests:
   gtools (>= 3.4.2),
   BatchJobs (>= 1.6),
   BiocParallel (>= 1.0.3)
-SuggestsNote: Recommended: gtools
+SuggestsNote:
+  BioC (>= 3.0),
+  Recommended: gtools
 Date: 2015-04-22
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
