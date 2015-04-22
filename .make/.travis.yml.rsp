@@ -144,7 +144,7 @@ rversion <- c(
   "3.3.0" = "devel _R_CHECK_FULL_=TRUE"
 )
 for (v in names(rversion))
-  if (support_R(v)) cat(sprintf("    -RVERSION=%s\n", rversion[v]))
+  if (support_R(v)) cat(sprintf("    - RVERSION=%s\n", rversion[v]))
 %>
 
 
