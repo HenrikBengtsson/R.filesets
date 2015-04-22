@@ -3,6 +3,7 @@ Version: 2.7.0-9000
 Depends:
   R (>= 3.1.1),
   R.oo (>= 1.18.0)
+DependsNote: BioC (>= 3.0)
 Imports:
   stats,
   R.methodsS3 (>= 1.7.0),
