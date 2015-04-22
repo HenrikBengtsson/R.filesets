@@ -12,7 +12,8 @@
 # @synopsis
 #
 # \arguments{
-#   \item{files}{A @list of @see "GenericDataFile":s.}
+#   \item{files}{A @list of @see "GenericDataFile":s or
+#      a @see "GenericDataFileSet".}
 #   \item{tags}{A @character @vector of tags to be used for this file set.
 #      The string \code{"*"} indicates that it should be replaced by the
 #      tags part of the file set pathname.}
@@ -36,7 +37,8 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'files':
   if (is.null(files)) {
-  } else if (is.list(files)) {
+  } else if (inherits(files, "GenericDataFileSet") || is.list(files)) {
+    if (!is.list(files)) files <- as.list(files)
     reqFileClass <- GenericDataFileSet$getFileClass();
     base::lapply(files, FUN=function(df) {
       Arguments$getInstanceOf(df, reqFileClass)
@@ -67,10 +69,12 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
     }
   }
 
+  files <- as.list(files)
+
 
   this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
     "cached:.fileSize" = NULL,
-    files = as.list(files),
+    files = files,
     .depth = depth,
     .tags = NULL
   );

@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.7.0-9000 [2015-04-22]
+o Now GenericDataFileSet also accepts other sets as input in addition
+  to a list of files.
+
+
 Version: 2.7.0 [2015-02-23]
 o Now `[[` for GenericDataFileSet returns a GenericDataFile not only
   if a numeric index is given but also if a character string is given.

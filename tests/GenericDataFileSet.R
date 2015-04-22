@@ -114,6 +114,24 @@ stopifnot(length(dsExpanded) == 5L)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Constructing data sets
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+files <- as.list(ds)
+ds2 <- GenericDataFileSet(files)
+print(ds2)
+stopifnot(equals(ds2, ds))
+
+ds3 <- GenericDataFileSet(ds)
+print(ds3)
+stopifnot(equals(ds3, ds))
+
+ds4 <- GenericDataFileSet(c(ds,ds))
+print(ds4)
+stopifnot(equals(ds4, c(ds,ds)))
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Dataset A
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 path <- system.file("exData/dataSetA,original", package="R.filesets")
@@ -173,3 +191,4 @@ for (name in names) {
   idxs <- indexOf(ds, name)
   cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
 }
+
