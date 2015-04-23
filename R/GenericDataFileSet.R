@@ -158,8 +158,14 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   s <- c(s, paste("Path (to the first file): ", path, sep=""));
 
   # File size
-  fileSizeB <- sprintf("%.2f MB", getFileSize(this, "numeric")/1024^2);
-  s <- c(s, sprintf("Total file size: %s", fileSizeB));
+  fileSize <- getFileSize(this, "units");
+  if (!is.na(fileSize)) {
+    fileSizeB <- sprintf("%.0f bytes", getFileSize(this, "numeric"));
+    if (fileSizeB != fileSize) {
+      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+    }
+  }
+  s <- c(s, sprintf("Total file size: %s", fileSize));
 
   # RAM
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
@@ -256,7 +262,10 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
 
 
 
-setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE) {
+setMethodS3("getFileSize", "GenericDataFileSet", function(this, what=c("numeric", "units"), sep="", ..., force=FALSE) {
+  # Argument 'what':
+  what <- match.arg(what);
+
   fileSize <- this$.fileSize;
   if (force || is.null(fileSize)) {
     files <- getFiles(this);
@@ -264,6 +273,24 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE
     fileSize <- sum(fileSizes, na.rm=TRUE);
     this$.fileSize <-  fileSize;
   }
+
+  if (what == "numeric")
+    return(fileSize);
+
+  if (is.na(fileSize))
+    return(fileSize);
+
+  units <- c("bytes", "kB", "MB", "GB", "TB");
+  scale <- 1;
+  for (kk in seq_along(units)) {
+    unit <- units[kk];
+    if (fileSize < 1000)
+      break;
+    fileSize <- fileSize/1024;
+  }
+  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
+  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
+
   fileSize;
 })
 

@@ -2,6 +2,8 @@ Package: R.filesets
 ===================
 
 Version: 2.7.0-9000 [2015-04-22]
+o Now GenericDataFileSet reports total file size both in human
+  readable units and in bytes, just as GenericDataFile.
 o Now GenericDataFileSet also accepts other sets as input in addition
   to a list of files.
 o Package now requires R (>= 3.1.1) released July 2014. The allows us
