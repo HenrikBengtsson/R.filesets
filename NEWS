@@ -1,6 +1,10 @@
 Package: R.filesets
 ===================
 
+o ROBUSTNESS: Now nchar(..., type="chars") is used internally for
+  all file and directory names (including tags).
+ 
+
 Version: 2.7.0 [2015-02-23]
 o Now `[[` for GenericDataFileSet returns a GenericDataFile not only
   if a numeric index is given but also if a character string is given.

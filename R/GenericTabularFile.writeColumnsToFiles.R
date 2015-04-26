@@ -48,7 +48,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   writeHeaderComments0 <- function(con, hdr, commentPrefix="# ", ...) {
-    hdr <- c(list(nbrOfHeaderRows=length(hdr)+1, hdr));    
+    hdr <- c(list(nbrOfHeaderRows=length(hdr)+1, hdr));
     hdrStr <- unlist(hdr);
     hdrStr <- paste(names(hdrStr), hdrStr, sep="\t");
     hdrStr <- paste(commentPrefix, hdrStr, sep="");
@@ -72,7 +72,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
     tags <- Arguments$getCharacters(tags);
     tags <- unlist(strsplit(tags, split=","));
     tags <- trim(tags);
-    tags <- tags[nchar(tags) > 0];
+    tags <- tags[nchar(tags, type="chars") > 0L];
   }
 
   # Argument 'filenameFmt':
@@ -96,7 +96,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   hdrColumnName <- columnName;
@@ -108,7 +108,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   columnNames <- getColumnNames(this);
   verbose && printf(verbose, "Column names [%d]:\n", length(columnNames));
   verbose && print(verbose, columnNames);
-  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract and export each column
@@ -118,9 +118,9 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   colClasses <- "character";
   for (cc in seq_along(columnNames)) {
     columnName <- columnNames[cc];
-    verbose && enter(verbose, sprintf("Column #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Column #%d ('%s') of %d",
                                        cc, columnName, length(columnNames)));
-  
+
     fullname <- paste(c(columnName, tags), collapse=",");
     filename <- sprintf(filenameFmt, fullname);
     filename <- escapeFilename(filename);
@@ -158,17 +158,17 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
       if (!res) {
         throw("Failed to rename temporary file: ", pathnameT, " -> ", pathname);
       }
-      verbose && exit(verbose);       
+      verbose && exit(verbose);
     } else {
       verbose && cat(verbose, "Column already extracted");
     }
-  
+
     pathnames <- c(pathnames, pathname);
 
     verbose && exit(verbose);
   } # for (cc ...)
 
-  invisible(pathnames);  
+  invisible(pathnames);
 })
 
 
@@ -184,7 +184,7 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
 # 2009-04-17
 # o Added Rdoc comments.
 # 2008-05-21
-# o BUG FIX: Argument 'verbose' was never passed to Arguments$getVerbose(). 
+# o BUG FIX: Argument 'verbose' was never passed to Arguments$getVerbose().
 # 2008-05-05
 # o Now some non-valid filename characters are escaped.
 # o Added internal escapeFilename().

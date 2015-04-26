@@ -242,7 +242,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   pathname <- getPathname(this, absolute=FALSE);
   if (!is.null(pathname)) {
     pathnameA <- getPathname(this, absolute=TRUE);
-    if (nchar(pathnameA) < nchar(pathname)) {
+    if (nchar(pathnameA, type="chars") < nchar(pathname, type="chars")) {
       pathname <- pathnameA;
     }
   }
@@ -502,7 +502,7 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...);
   fullname <- getDefaultFullName(this, ...);
   # Drop <fullname> and a possible '.'.
-  substring(filename, first=nchar(fullname)+2L);
+  substring(filename, first=nchar(fullname, type="chars") + 2L);
 })
 
 
