@@ -240,7 +240,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   # Pathname
   pathname <- getPathname(this, absolute=FALSE);
-  if (!is.null(pathname)) {
+  if (!is.null(pathname) && !is.na(pathname)) {
     pathnameA <- getPathname(this, absolute=TRUE);
     if (nchar(pathnameA, type="chars") < nchar(pathname, type="chars")) {
       pathname <- pathnameA;

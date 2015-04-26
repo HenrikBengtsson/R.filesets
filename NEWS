@@ -3,6 +3,9 @@ Package: R.filesets
 
 o ROBUSTNESS: Now nchar(..., type="chars") is used internally for
   all file and directory names (including tags).
+o BUG FIX: as.character() for GenericDataFile with a missing (NA)
+  pathname on recent R-devel (>= 2015-04-23) related to an update
+  on how nchar() handles missing values
  
 
 Version: 2.7.0 [2015-02-23]
