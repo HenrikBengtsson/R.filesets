@@ -1,12 +1,14 @@
 Package: R.filesets
 ===================
 
+Version: 2.7.1 [2015-04-27]
 o ROBUSTNESS: Now nchar(..., type="chars") is used internally for
   all file and directory names (including tags).
 o BUG FIX: as.character() for GenericDataFile with a missing (NA)
   pathname on recent R-devel (>= 2015-04-23) related to an update
   on how nchar() handles missing values
- 
+o Bumped package dependencies.
+
 
 Version: 2.7.0 [2015-02-23]
 o Now `[[` for GenericDataFileSet returns a GenericDataFile not only
@@ -15,8 +17,9 @@ o Now argument 'idx' for getFile() for GenericDataFileSet can also
   be a character string, in which case the file returned is identified
   using indexOf(..., pattern=idx, by="exact", onMissing="error").
 o Added RDataFile and RDataFileSet classes for *.RData files.
-o Package now requires R (>= 3.0.3) which was released March 2014 and
-  are in fact old; it's recommended to use a more recent version of R.
+o Package requires R (>= 3.0.3) released March 2014. This allows us
+  to use BioC (>= 2.14) (April 2014).  These are in fact old; it's
+  recommended to use a more recent version of R.
 o ROBUSTNESS: Package test coverage is 51%.
 
 
