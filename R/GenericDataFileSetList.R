@@ -135,7 +135,7 @@ setMethodS3("getAsteriskTags", "GenericDataFileSetList", function(this, ..., col
   # Get the tags of each data set
   dsList <- getSets(this);
   tags <- sapply(dsList, getTags, collapse=",");
-  tags <- tags[nchar(tags) > 0L];
+  tags <- tags[nchar(tags, type="chars") > 0L];
   tags <- paste(tags, collapse=collapse);
   tags;
 }, protected=TRUE)
@@ -146,7 +146,7 @@ setMethodS3("setTags", "GenericDataFileSetList", function(this, tags=NULL, ...) 
   if (!is.null(tags)) {
     tags <- Arguments$getCharacters(tags);
     tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0L];
+    tags <- tags[nchar(tags, type="chars") > 0L];
   }
 
   this$.tags <- tags;
@@ -172,7 +172,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSetList", function(this, colla
   # Get the tags
   tags <- this$.tags;
   tags[tags == "*"] <- getAsteriskTags(this, collapse=",");
-  tags <- tags[nchar(tags) > 0L];
+  tags <- tags[nchar(tags, type="chars") > 0L];
 
   fullname <- paste(c(name, tags), collapse=",");
 
