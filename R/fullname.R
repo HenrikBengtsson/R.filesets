@@ -6,7 +6,7 @@ setMethodS3("fullname", "default", function(name, tags=NULL, ..., collapse=TRUE)
   parts <- strsplit(parts, split=",", fixed=TRUE);
   parts <- unlist(parts, use.names=FALSE);
 
-  parts <- parts[nchar(parts) > 0];
+  parts <- parts[nchar(parts, type="chars") > 0L];
 
   if (collapse) {
     parts <- paste(parts, collapse=",");
@@ -35,7 +35,7 @@ setMethodS3("tags", "default", function(..., collapse=FALSE) {
   tags <- parts[-1];
 
   if (collapse) {
-    tags <- paste(tags, collapse=","); 
+    tags <- paste(tags, collapse=",");
   }
   tags;
 })
@@ -64,4 +64,4 @@ setMethodS3("dropTags", "default", function(..., drop=NULL, collapse=FALSE) {
 #   and examples much cleaner.  They are also great for illustrating
 #   the definition of fullnames, names and tags.
 # o Created.
-############################################################################  
+############################################################################

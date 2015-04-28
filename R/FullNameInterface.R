@@ -224,7 +224,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   name <- gsub("[,].*$", "", fullname);
 
   # Keep anything after the name (and the separator).
-  tags <- substring(fullname, nchar(name)+2);
+  tags <- substring(fullname, nchar(name, type="chars") + 2L);
   tags <- unlist(strsplit(tags, split=","));
 
   if (useCustomTags) {
@@ -360,7 +360,7 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
   if (!is.null(tags)) {
     tags <- Arguments$getCharacters(tags);
     tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0];
+    tags <- tags[nchar(tags, type="chars") > 0L];
   }
 
   this$.tags <- tags;

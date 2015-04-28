@@ -14,7 +14,7 @@
 #   \item{...}{@character @vector of tags.}
 #   \item{na.rm}{If @TRUE, empty ("missing") tags are dropped.}
 #   \item{collapse}{A @character string specifying how the tags should
-#     be concatenated into a single string. 
+#     be concatenated into a single string.
 #     If @NULL, they are not concattenated.}
 # }
 #
@@ -28,7 +28,7 @@
 # \seealso{
 #   For more information see \code{\link[R.utils]{Arguments}}.
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getTags", "Arguments", function(static, ..., na.rm=TRUE, collapse=",") {
   # Generate tags
   tags <- paste(..., sep=",", collapse=",");
@@ -43,7 +43,7 @@ setMethodS3("getTags", "Arguments", function(static, ..., na.rm=TRUE, collapse="
   }
 
   # Drop empty tags
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nchar(tags, type="chars") > 0L];
 
   # Nothing to do?
   if (length(tags) == 0) {
