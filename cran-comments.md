@@ -1,9 +1,7 @@
 # CRAN submission R.filesets 2.7.1
 on 2015-04-27
 
-Changes related to R/CRAN updates:
-
-* Addresses recent R-devel update to nchar().
+Hotfixes due to recent R devel updates to nchar().
 
 
 ## Notes not sent to CRAN
