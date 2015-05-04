@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 2.7.1-9000 [2015-05-04]
+o BUG FIX: Now getReadArguments() for TabularTextFile let duplicated
+  named 'colClasses' entries override earlier ones, e.g.
+  colClasses=c("*"=NA, "*"="NULL", a="integer") is effectively the
+  same as colClasses=c("*"="NULL", a="integer").  Added package test.
+
+
 Version: 2.7.1 [2015-04-27]
 o ROBUSTNESS: Now nchar(..., type="chars") is used internally for
   all file and directory names (including tags).
