@@ -1048,7 +1048,7 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path, mustExist=!skip)
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!skip)
 
   # Create link
   createLink(target=getPathname(this), link=pathname, skip=skip, overwrite=overwrite, ...)
