@@ -2,7 +2,7 @@ Package: R.filesets
 ===================
 
 Version: 2.7.1-9000 [2015-05-04]
-o BUG FIX: Now getReadArguments() for TabularTextFile let duplicated
+o BUG FIX: Now getReadArguments() for TabularTextFile lets duplicated
   named 'colClasses' entries override earlier ones, e.g.
   colClasses=c("*"=NA, "*"="NULL", a="integer") is effectively the
   same as colClasses=c("*"="NULL", a="integer").  Added package test.
