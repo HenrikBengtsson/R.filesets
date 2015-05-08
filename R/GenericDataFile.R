@@ -1017,6 +1017,10 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 # \arguments{
 #  \item{filename, path}{The filename and the path for the link.
 #   The default is to use the same filename as the source file.}
+#   \item{skip}{If @TRUE and a file with the same name as argument
+#     \code{link} already exists, then the nothing is done.}
+#   \item{overwrite}{If @TRUE, an existing link file is overwritten,
+#     otherwise not.}
 #  \item{...}{Additional arguments passed to @see "R.utils::createLink".}
 # }
 #
@@ -1039,20 +1043,20 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, ...) {
+setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(this), path=NULL, skip=!overwrite, overwrite=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path);
+  pathname <- Arguments$getWritablePathname(filename, path=path, mustExist=!skip)
 
   # Create link
-  createLink(target=getPathname(this), link=pathname, ...);
+  createLink(target=getPathname(this), link=pathname, skip=skip, overwrite=overwrite, ...)
 
   # Create object of the same class.
-  res <- newInstance(this, pathname);
+  res <- newInstance(this, pathname)
 
-  res;
+  res
 }, protected=TRUE) # linkTo()
 
 
