@@ -20,12 +20,17 @@
 }
 
 \usage{
-\method{linkTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ...)
+\method{linkTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, skip=!overwrite, overwrite=FALSE,
+  ...)
 }
 
 \arguments{
  \item{filename, path}{The filename and the path for the link.
   The default is to use the same filename as the source file.}
+  \item{skip}{If \code{\link[base:logical]{TRUE}} and a file with the same name as argument
+    \code{link} already exists, then the nothing is done.}
+  \item{overwrite}{If \code{\link[base:logical]{TRUE}}, an existing link file is overwritten,
+    otherwise not.}
  \item{...}{Additional arguments passed to \code{\link[R.utils]{createLink}}.}
 }
 
