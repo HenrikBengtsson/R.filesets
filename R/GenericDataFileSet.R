@@ -170,6 +170,9 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   # RAM
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
 
+  # Check fullnames translation
+  getFullNames(this, onRemapping="warning")
+
   GenericSummary(s);
 }, protected=TRUE)
 
@@ -537,6 +540,7 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
 ###########################################################################/**
 # @RdocMethod getNames
 # @aliasmethod getFullNames
+# @aliasmethod names
 #
 # @title "Gets the names (or fullnames) of the files in the file set"
 #
@@ -552,6 +556,8 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
 # \arguments{
 #  \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})
 #    of each file.}
+#  \item{onRemapping}{Action to take if the fullnames before and after
+#    translation do not map consistently to the same file indices.}
 # }
 #
 # \value{
@@ -572,14 +578,57 @@ setMethodS3("getNames", "GenericDataFileSet", function(this, ...) {
   unname(res);
 })
 
-setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
-  files <- as.list(this, useNames=FALSE);
-  res <- unlist(lapply(files, FUN=getFullName, ...));
-  unname(res);
+setMethodS3("getFullNames", "GenericDataFileSet", function(this, ..., onRemapping=c("ignore", "warning", "error")) {
+  ## Argument 'onRemapping':
+  onRemapping <- match.arg(onRemapping)
+
+  files <- as.list(this, useNames=TRUE, translate=FALSE)
+  names <- unlist(lapply(files, FUN=getFullName, ...), use.names=FALSE)
+
+  ## Assert bijective mapping after translation?
+  if (onRemapping != "ignore" && length(names) > 1L) {
+    names0 <- names(files)
+    idxs0 <- match(unique(names0), names0)
+    idxs <- match(unique(names), names)
+    if (!identical(idxs, idxs0)) {
+      signal <- if (onRemapping == "warning") warning else throw;
+
+      msg <- sprintf("%s %s: Invalid full-names translation detected. One or more of the full-names translator functions need to be corrected.", class(this)[1], sQuote(getFullName(this)))
+
+      missing <- setdiff(idxs0, idxs)
+      if (length(missing) > 0L) {
+        map <- sprintf("%s->%s used to maps to #%d", sQuote(names0[missing]), sQuote(names[missing]), missing)
+        msg <- sprintf("%s After translation, some names no longer map to an index (%s).", msg, hpaste(map, collapse="; "))
+      }
+
+      ## NB: Can this even happen?
+      extra <- setdiff(idxs, idxs0)
+      if (length(extra) > 0L) {
+        map <- sprintf("%s->%s now to maps to #%d", sQuote(names0[extra]), sQuote(names[extra]), extra)
+        msg <- sprintf("%s After translation, some names map to previously unknown indices (%s).", msg, hpaste(map, collapse="; "))
+      }
+
+      ## Otherwise...
+      if (length(missing) == 0L && length(extra) == 0L) {
+        neq <- (idxs != idxs0)
+        names <- names[neq]
+        idxs <- idxs[neq]
+        names0 <- names0[neq]
+        idxs0 <- idxs0[neq]
+        map <- sprintf("%s->#%d", names, idxs)
+        map0 <- sprintf("%s->#%d", names0, idxs0)
+        msg <- sprintf("%s The translated names has a different mapping than the non-translated ones: (%s) != (%s).", msg, hpaste(map, collapse="; "), hpaste(map0, collapse="; "))
+      }
+
+      signal(msg)
+    } # if (!identical(idxs, idxs0))
+  } ## if (validate)
+
+  names
 })
 
-setMethodS3("names", "GenericDataFileSet", function(this, ...) {
-  getFullNames(this, ...)
+setMethodS3("names", "GenericDataFileSet", function(x, ...) {
+  getFullNames(x, ...)
 }, protected=TRUE)
 
 
@@ -2292,6 +2341,10 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2015-05-13
+# o Added getFullNames(..., onRemapping=...) to GenericDataFileSet to
+#   warn/err on full-name translations that generates inconsistent
+#   fullname-to-index maps before and after.
 # 2015-05-12
 # o Added names() for GenericDataFileSet.  Currently returns full names.
 # 2014-08-26
