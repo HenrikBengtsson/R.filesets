@@ -45,8 +45,10 @@ before_install:
 
 install:
 
- - $RENV install_bioc BiocParallel
+ - $RENV install_r gtools
+
  - $RENV install_r digest R.cache R.methodsS3 R.oo R.utils
+ - $RENV install_bioc BiocParallel
  - $RENV install_r BatchJobs gtools
 
 script:

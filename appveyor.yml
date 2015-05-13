@@ -28,8 +28,10 @@ install:
 
 build_script:
 
- - travis-tool.sh install_bioc BiocParallel
+ - travis-tool.sh install_r gtools
+
  - travis-tool.sh install_r digest R.cache R.methodsS3 R.oo R.utils
+ - travis-tool.sh install_bioc BiocParallel
  - travis-tool.sh install_r BatchJobs gtools
 
 test_script:
