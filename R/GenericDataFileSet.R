@@ -578,6 +578,10 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
   unname(res);
 })
 
+setMethodS3("names", "GenericDataFileSet", function(this, ...) {
+  getFullNames(this, ...)
+}, protected=TRUE)
+
 
 
 ###########################################################################/**
@@ -2288,6 +2292,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2015-05-12
+# o Added names() for GenericDataFileSet.  Currently returns full names.
 # 2014-08-26
 # o Added support for sortBy(..., by="filesize") and
 #   sortBy(..., decreasing=TRUE) for GenericDataFileSet.  Also, sortBy()
