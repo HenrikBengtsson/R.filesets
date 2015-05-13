@@ -27,7 +27,7 @@
 
 \usage{
  \method{getNames}{GenericDataFileSet}(this, ...)
- \method{getFullNames}{GenericDataFileSet}(this, ..., onRemapping=c("ignore", "warning", "error"))
+ \method{getFullNames}{GenericDataFileSet}(this, ..., onRemapping=getOption("R.filesets::onRemapping", "ignore"))
 }
 
 \arguments{

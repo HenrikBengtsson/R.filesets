@@ -578,9 +578,9 @@ setMethodS3("getNames", "GenericDataFileSet", function(this, ...) {
   unname(res);
 })
 
-setMethodS3("getFullNames", "GenericDataFileSet", function(this, ..., onRemapping=c("ignore", "warning", "error")) {
+setMethodS3("getFullNames", "GenericDataFileSet", function(this, ..., onRemapping=getOption("R.filesets::onRemapping", "ignore")) {
   ## Argument 'onRemapping':
-  onRemapping <- match.arg(onRemapping)
+  onRemapping <- match.arg(onRemapping, choices=c("ignore", "warning", "error"))
 
   files <- as.list(this, useNames=TRUE, translate=FALSE)
   names <- unlist(lapply(files, FUN=getFullName, ...), use.names=FALSE)
