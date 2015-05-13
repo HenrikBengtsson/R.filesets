@@ -77,13 +77,13 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   # Argument 'IDXS':
   if (is.null(IDXS)) {
     IDXS <- seq_along(ds);
-    names(IDXS) <- getNames(ds);
+    names(IDXS) <- getFullNames(ds);
     IDXS <- as.list(IDXS);
   } else if (is.numeric(IDXS)) {
     max <- length(ds);
     IDXS <- Arguments$getIndices(IDXS, max=max);
     if (is.null(names(IDXS))) {
-      names(IDXS) <- getNames(ds);
+      names(IDXS) <- getFullNames(ds);
       IDXS <- as.list(IDXS);
     }
   } else if (is.list(IDXS)) {
@@ -404,7 +404,7 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
   dsP <- c(ds1, ds2)
   idxs <- matrix(seq_along(dsP), nrow=2L, byrow=TRUE)
   IDXS <- as.list(as.data.frame(idxs))
-  names <- getNames(dsP)
+  names <- getFullNames(dsP)
   names(IDXS) <- sapply(IDXS, FUN=function(idxs) {
     sprintf("Pair (%s,%s)", names[idxs[1]], names[idxs[2]])
   })

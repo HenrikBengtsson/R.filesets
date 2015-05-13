@@ -1,7 +1,9 @@
 Package: R.filesets
 ===================
 
-Version: 2.7.1-9000 [2015-05-04]
+Version: 2.7.1-9000 [2015-05-11]
+o CONSISTENCY: Analogously to lapply(), dsApply() returns a list
+  with names corresponds to the full names of the data set.
 o BUG FIX: Now getReadArguments() for TabularTextFile lets duplicated
   named 'colClasses' entries override earlier ones, e.g.
   colClasses=c("*"=NA, "*"="NULL", a="integer") is effectively the
