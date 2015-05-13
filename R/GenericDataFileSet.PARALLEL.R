@@ -14,8 +14,9 @@
 #
 # \arguments{
 #  \item{ds, ds1, ds2}{@see "GenericDataFileSet":s.}
-#  \item{IDXS}{A (named) @list, where each element contains a @vector data set indices,
-#    or an @integer @vector of individual elements.}
+#  \item{IDXS}{A (named) @list, where each element contains a @vector data
+#    set indices, or an @integer @vector of individual elements.
+#    If @NULL, then ... with names as of the data set.}
 #  \item{DROP}{If @FALSE, the first argument passed to \code{FUN} is always a @list of files.
 #    If @TRUE, an single-index element is passed to \code{FUN} as a file instead of
 #    as a @list containing a single file.}
@@ -33,7 +34,7 @@
 # }
 #
 # \value{
-#   Returns a named @list.
+#   Returns a named @list where the names are those of argument \code{IDXS}.
 # }
 #
 # \examples{\dontrun{
