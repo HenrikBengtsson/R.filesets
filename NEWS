@@ -7,7 +7,6 @@ o ROBUSTNESS: Added getFullNames(..., onRemapping) to GenericDataFileSet
   fullname-to-index maps before and after.
 o CONSISTENCY: Analogously to lapply(), dsApply() returns a list
   with names corresponds to the full names of the data set.
-o BUG FIX: Now getReadArguments() for TabularTextFile lets duplicated
 o BUG FIX: linkTo(..., skip=TRUE) would give error "No permission to
   modify existing file: ..." also in the case when the proper link
   already exists and there is no need to create a new one.
