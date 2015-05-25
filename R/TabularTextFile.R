@@ -554,9 +554,19 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     defColClasses <- rep(defColClass, times=nbrOfColumns);
     defColClassPatterns <- defColClasses;
 
-    # Default columns?
     colClassPatterns <- colClasses;
     names <- names(colClassPatterns);
+    colClasses <- NULL ## Not needed anymore
+
+    # If the same column class name is specified more than ones, then
+    # let the latter override the former
+    dups <- rev(duplicated(rev(names)))
+    if (any(dups)) {
+      colClassPatterns <- colClassPatterns[!dups]
+      names <- names(colClassPatterns)
+    }
+
+    # Default columns?
     pos <- which(names == "*");
     if (length(pos) > 0) {
       # Exclude extra '*':s
@@ -600,6 +610,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
         colClasses[idxs] <- colClass;
       }
     } # for (kk ...)
+    colClassPatterns <- NULL ## Not needed anymore
   } else {
     # If column names cannot be inferred, use the default
     nbrOfColumns <- length(fileHeader$topRows[[1]]);
@@ -1186,6 +1197,11 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2015-05-04
+# o BUG FIX: Now getReadArguments() for TabularTextFile let duplicated
+#   named 'colClasses' entries override earlier ones, e.g.
+#   colClasses=c("*"=NA, "*"="NULL", a="integer") is effectively the
+#   same as colClasses=c("*"="NULL", a="integer").
 # 2014-08-25
 # o Now readColumns(..., colClasses) adds regexpr names to 'colClasses',
 #   iff missing.

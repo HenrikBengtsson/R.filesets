@@ -14,6 +14,10 @@
 \alias{getFullNames.GenericDataFileSet}
 \alias{getFullNames,GenericDataFileSet-method}
 
+\alias{GenericDataFileSet.names}
+\alias{names.GenericDataFileSet}
+\alias{names,GenericDataFileSet-method}
+
 
 \title{Gets the names (or fullnames) of the files in the file set}
 
@@ -23,12 +27,14 @@
 
 \usage{
  \method{getNames}{GenericDataFileSet}(this, ...)
- \method{getFullNames}{GenericDataFileSet}(this, ...)
+ \method{getFullNames}{GenericDataFileSet}(this, ..., onRemapping=getOption("R.filesets::onRemapping", "ignore"))
 }
 
 \arguments{
  \item{...}{Arguments passed to \code{getName()} (\code{getFullName()})
    of each file.}
+ \item{onRemapping}{Action to take if the fullnames before and after
+   translation do not map consistently to the same file indices.}
 }
 
 \value{
