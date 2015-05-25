@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 2.7.1-9000 [2015-05-13]
+Version: 2.7.2 [2015-05-24]
 o ROBUSTNESS: Added getFullNames(..., onRemapping) to GenericDataFileSet
   to warn/err on full-name translations that generates inconsistent
   fullname-to-index maps before and after.
