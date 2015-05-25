@@ -1,5 +1,5 @@
 Package: R.filesets
-Version: 2.7.1-9000
+Version: 2.7.2
 Depends:
   R (>= 3.0.3),
   R.oo (>= 1.19.0)
@@ -16,7 +16,7 @@ Suggests:
 SuggestsNote:
   BioC (>= 2.14),
   Recommended: gtools
-Date: 2015-05-13
+Date: 2015-05-25
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
