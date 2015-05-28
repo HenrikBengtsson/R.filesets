@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.7.2-9000 [2015-05-28]
+o Now commentChar="" and commentChar=FALSE also disables searching for
+  comment characters (just as commentChar=NULL) for TabularTextFile.
+
+
 Version: 2.7.2 [2015-05-24]
 o ROBUSTNESS: Added getFullNames(..., onRemapping) to GenericDataFileSet
   to warn/err on full-name translations that generates inconsistent
