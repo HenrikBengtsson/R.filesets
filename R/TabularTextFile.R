@@ -55,7 +55,9 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
   }
 
   # Argument 'commentChar':
-  if (!is.null(commentChar)) {
+  if (identical(commentChar, "") || identical(commentChar, FALSE)) {
+    commentChar <- NULL
+  } else if (!is.null(commentChar)) {
     commentChar <- Arguments$getCharacter(commentChar, nchar=c(1,1));
   }
 
