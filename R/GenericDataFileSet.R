@@ -597,14 +597,14 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ..., onRemappin
 
       missing <- setdiff(idxs0, idxs)
       if (length(missing) > 0L) {
-        map <- sprintf("%s->%s used to maps to #%d", sQuote(names0[missing]), sQuote(names[missing]), missing)
+        map <- sprintf("%s->%s used to map to #%d", sQuote(names0[missing]), sQuote(names[missing]), missing)
         msg <- sprintf("%s After translation, some names no longer map to an index (%s).", msg, hpaste(map, collapse="; "))
       }
 
       ## NB: Can this even happen?
       extra <- setdiff(idxs, idxs0)
       if (length(extra) > 0L) {
-        map <- sprintf("%s->%s now to maps to #%d", sQuote(names0[extra]), sQuote(names[extra]), extra)
+        map <- sprintf("%s->%s now maps to #%d", sQuote(names0[extra]), sQuote(names[extra]), extra)
         msg <- sprintf("%s After translation, some names map to previously unknown indices (%s).", msg, hpaste(map, collapse="; "))
       }
 
