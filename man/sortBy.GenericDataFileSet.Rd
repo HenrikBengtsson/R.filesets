@@ -18,8 +18,8 @@
 }
 
 \usage{
-\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort", "filesize"), decreasing=FALSE,
-  caseSensitive=FALSE, ...)
+\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort", "mixeddecimal", "mixedroman",
+  "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...)
 }
 
 \arguments{
@@ -38,8 +38,10 @@
   The set is ordering by the fullnames.
   If \code{by="lexicographic"}, lexicographic ordering is used,
   sometimes also referred to as alphabetic ordering.
-  If \code{by="mixedsort"}, mixedsort order is used,
-  cf. \code{\link[gtools]{mixedsort}}.
+  If \code{by="mixeddecimal"}, mixedsort ordering acknowledging
+  decimal numbers is used, cf. \code{\link[gtools]{mixedsort}}.
+  If \code{by="mixedroman"}, mixedsort ordering acknowledging
+  roman numerals is used, cf. \code{\link[gtools]{mixedsort}}.
 }
 
 \author{Henrik Bengtsson}

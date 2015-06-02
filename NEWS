@@ -1,7 +1,8 @@
 Package: R.filesets
 ===================
 
-Version: 2.7.2-9000 [2015-05-28]
+Version: 2.7.2-9000 [2015-06-01]
+o Added support for sortBy(..., by="mixedroman") for GenericDataFileSet.
 o Now commentChar="" and commentChar=FALSE also disables searching for
   comment characters (just as commentChar=NULL) for TabularTextFile.
 
