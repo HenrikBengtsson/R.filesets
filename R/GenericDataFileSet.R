@@ -508,7 +508,7 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "mixeddecimal", "mixedroman", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
   # Argument 'by':
   by <- match.arg(by);
-  if (by == "mixedsort") by <- "mixed-decimal"
+  if (by == "mixedsort") by <- "mixeddecimal"
 
   # Argument 'decreasing':
   decreasing <- Arguments$getLogical(decreasing);
