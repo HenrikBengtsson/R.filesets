@@ -67,6 +67,12 @@ importFrom("stats", "na.omit")
 ## Needed in order for corresponding S3method():s below to work
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
+importFrom("utils", "packageDescription")
+importFrom("utils", "str")
+importFrom("utils", "capture.output")
+importFrom("utils", "file_test")
+importFrom("utils", "read.table")
+importFrom("utils", "write.table")
 
 ## Manually imported
 importFrom("R.oo", "Class")
