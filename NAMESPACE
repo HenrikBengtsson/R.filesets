@@ -68,6 +68,7 @@ importFrom("stats", "na.omit")
 importFrom("utils", "head") # generic function
 importFrom("utils", "tail") # generic function
 importFrom("utils", "packageDescription")
+importFrom("utils", "packageVersion")
 importFrom("utils", "str")
 importFrom("utils", "capture.output")
 importFrom("utils", "file_test")
