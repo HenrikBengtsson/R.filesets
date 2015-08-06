@@ -506,6 +506,20 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 # }
 #*/###########################################################################
 setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "mixeddecimal", "mixedroman", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
+  ## Local functions
+  mixedorder <- function(x, numeric.type="numeric", ...) {
+    if (packageVersion("gtools") >= "3.5.0") {
+      gtools::mixedorder(x, numeric.type=numeric.type, ...)
+    } else {
+      if (numeric.type == "decimal") {
+        gtools::mixedorder(x, ...)
+      } else {
+        throw(sprintf("gtools::mixedorder(..., numeric.type='%s') requires gtools (>= 3.5.0)", numeric.type))
+      }
+    }
+  } # mixedorder()
+
+
   # Argument 'by':
   by <- match.arg(by);
   if (by == "mixedsort") by <- "mixeddecimal"
@@ -523,12 +537,12 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
   } else if (by == "mixeddecimal") {
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
-    order <- gtools::mixedorder(fullnames, numeric.type="decimal");
+    order <- mixedorder(fullnames, numeric.type="decimal");
     if (decreasing) order <- rev(order);
   } else if (by == "mixedroman") {
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
-    order <- gtools::mixedorder(fullnames, numeric.type="roman", roman.case="both");
+    order <- mixedorder(fullnames, numeric.type="roman", roman.case="both");
     if (decreasing) order <- rev(order);
   } else if (by == "filesize") {
     sizes <- sapply(this, FUN=getFileSize);
