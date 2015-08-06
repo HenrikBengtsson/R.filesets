@@ -1,11 +1,15 @@
 Package: R.filesets
 ===================
 
-Version: 2.7.2-9000 [2015-06-01]
+Version: 2.7.2-9000 [2015-08-06]
 o Added support for sortBy(..., by="mixedroman") for GenericDataFileSet.
 o Now commentChar="" and commentChar=FALSE also disables searching for
   comment characters (just as commentChar=NULL) for TabularTextFile.
 o Explicit import of 'utils' functions.
+o BUG FIX: readDataFrame() for TabularTextFile with column-names
+  translators set, could give an error "Number of read data columns
+  does not match the number of column headers: ...". This was due to
+  an update in utils::read.table() as of R v3.2.1 svn rev 68831.
 
 
 Version: 2.7.2 [2015-05-24]
