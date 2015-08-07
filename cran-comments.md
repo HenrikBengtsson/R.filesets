@@ -1,7 +1,7 @@
 # CRAN submission R.filesets 2.8.0
 on 2015-08-06
 
-This release address two R/CRAN related issues:
+This release addresses two R/CRAN related issues:
 
 * Explicit import of 'utils' functions.
 * readDataFrame() adjusted to updates in utils::read.table() as of svn rev 68831.
