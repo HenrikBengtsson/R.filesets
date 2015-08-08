@@ -493,8 +493,10 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #   The set is ordering by the fullnames.
 #   If \code{by="lexicographic"}, lexicographic ordering is used,
 #   sometimes also referred to as alphabetic ordering.
-#   If \code{by="mixedsort"}, mixedsort order is used,
-#   cf. @see "gtools::mixedsort".
+#   If \code{by="mixeddecimal"}, mixedsort ordering acknowledging
+#   decimal numbers is used, cf. @see "gtools::mixedsort".
+#   If \code{by="mixedroman"}, mixedsort ordering acknowledging
+#   roman numerals is used, cf. @see "gtools::mixedsort".
 # }
 #
 # @author
@@ -503,9 +505,24 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
+setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "mixeddecimal", "mixedroman", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
+  ## Local functions
+  mixedorder <- function(x, numeric.type="numeric", ...) {
+    if (packageVersion("gtools") >= "3.5.0") {
+      gtools::mixedorder(x, numeric.type=numeric.type, ...)
+    } else {
+      if (numeric.type == "decimal") {
+        gtools::mixedorder(x, ...)
+      } else {
+        throw(sprintf("gtools::mixedorder(..., numeric.type='%s') requires gtools (>= 3.5.0)", numeric.type))
+      }
+    }
+  } # mixedorder()
+
+
   # Argument 'by':
   by <- match.arg(by);
+  if (by == "mixedsort") by <- "mixeddecimal"
 
   # Argument 'decreasing':
   decreasing <- Arguments$getLogical(decreasing);
@@ -517,10 +534,15 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
     order <- order(fullnames, decreasing=decreasing, ...);
-  } else if (by == "mixedsort") {
+  } else if (by == "mixeddecimal") {
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
-    order <- gtools::mixedorder(fullnames);
+    order <- mixedorder(fullnames, numeric.type="decimal");
+    if (decreasing) order <- rev(order);
+  } else if (by == "mixedroman") {
+    fullnames <- getFullNames(this);
+    if (!caseSensitive) fullnames <- tolower(fullnames);
+    order <- mixedorder(fullnames, numeric.type="roman", roman.case="both");
     if (decreasing) order <- rev(order);
   } else if (by == "filesize") {
     sizes <- sapply(this, FUN=getFileSize);
@@ -597,14 +619,14 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ..., onRemappin
 
       missing <- setdiff(idxs0, idxs)
       if (length(missing) > 0L) {
-        map <- sprintf("%s->%s used to maps to #%d", sQuote(names0[missing]), sQuote(names[missing]), missing)
+        map <- sprintf("%s->%s used to map to #%d", sQuote(names0[missing]), sQuote(names[missing]), missing)
         msg <- sprintf("%s After translation, some names no longer map to an index (%s).", msg, hpaste(map, collapse="; "))
       }
 
       ## NB: Can this even happen?
       extra <- setdiff(idxs, idxs0)
       if (length(extra) > 0L) {
-        map <- sprintf("%s->%s now to maps to #%d", sQuote(names0[extra]), sQuote(names[extra]), extra)
+        map <- sprintf("%s->%s now maps to #%d", sQuote(names0[extra]), sQuote(names[extra]), extra)
         msg <- sprintf("%s After translation, some names map to previously unknown indices (%s).", msg, hpaste(map, collapse="; "))
       }
 
@@ -2341,6 +2363,8 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2015-06-01
+# o Added support for sortBy(..., by="mixedroman").
 # 2015-05-13
 # o Added getFullNames(..., onRemapping=...) to GenericDataFileSet to
 #   warn/err on full-name translations that generates inconsistent

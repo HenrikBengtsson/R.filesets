@@ -1,6 +1,18 @@
 Package: R.filesets
 ===================
 
+Version: 2.8.0 [2015-08-06]
+o Added support for sortBy(..., by="mixedroman") for GenericDataFileSet.
+o Now commentChar="" and commentChar=FALSE also disables searching for
+  comment characters (just as commentChar=NULL) for TabularTextFile.
+o Explicit import of 'utils' functions.
+o Package requires R (>= 3.1.0) released March 2014.
+o BUG FIX: readDataFrame() for TabularTextFile with column-names
+  translators set, could give an error "Number of read data columns
+  does not match the number of column headers: ...". This was due to
+  an update in utils::read.table() as of R v3.2.1 svn rev 68831.
+
+
 Version: 2.7.2 [2015-05-24]
 o ROBUSTNESS: Added getFullNames(..., onRemapping) to GenericDataFileSet
   to warn/err on full-name translations that generates inconsistent
@@ -32,7 +44,7 @@ o Now argument 'idx' for getFile() for GenericDataFileSet can also
   be a character string, in which case the file returned is identified
   using indexOf(..., pattern=idx, by="exact", onMissing="error").
 o Added RDataFile and RDataFileSet classes for *.RData files.
-o Package requires R (>= 3.0.3) released March 2014. This allows us
+o Package requires R (>= 3.1.0) released March 2014. This allows us
   to use BioC (>= 2.14) (April 2014).  These are in fact old; it's
   recommended to use a more recent version of R.
 o ROBUSTNESS: Package test coverage is 51%.

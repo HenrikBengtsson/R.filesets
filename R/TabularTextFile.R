@@ -55,7 +55,9 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
   }
 
   # Argument 'commentChar':
-  if (!is.null(commentChar)) {
+  if (identical(commentChar, "") || identical(commentChar, FALSE)) {
+    commentChar <- NULL
+  } else if (!is.null(commentChar)) {
     commentChar <- Arguments$getCharacter(commentChar, nchar=c(1,1));
   }
 
@@ -841,6 +843,12 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   }
 
   verbose && cat(verbose, "Arguments used to read tabular file:");
+  ## Since R v3.2.1 rev 68837, read.table() now utilized (fixed)
+  ## named 'colClasses' similar to readDataFrame().  For now, make
+  ## sure to pass non-named 'colClasses' to read.table().
+  ## FIX ME: Should we rewrite readDataFrame() to better utilize
+  ## that read.table() now also looks at fixed names? /HB 2015-08-06
+  args$colClasses <- unname(args$colClasses);
   args <- c(list(con), args);
   verbose && print(verbose, args);
   data <- do.call(read.table, args=args);
@@ -923,7 +931,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   # Sanity check
   if (length(columns) > 0L) {
     if (ncol(data) != length(columns)) {
-      throw("Number of read data columns does not match the number of column headers: ", ncol(data), " !=", length(columns));
+      throw("Number of read data columns does not match the number of column headers: ", ncol(data), " != ", length(columns));
     }
     colnames(data) <- columns;
   }
