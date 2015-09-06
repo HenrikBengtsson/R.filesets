@@ -42,15 +42,15 @@
 # }}
 #
 # \seealso{
-#   The \pkg{BiocParallel} and \pkg{BatchJobs} packages is utilized
-#   for parallel/distributed processing, depending on settings.
+#   The \pkg{future}, \pkg{BiocParallel} and \pkg{BatchJobs} packages
+#   are utilized for parallel/distributed processing, depending on settings.
 # }
 #
 # @author "HB"
 #
 # @keyword internal
 #*/###########################################################################
-setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
+setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
   # To please R CMD check, because
   # (i) BatchJobs is just "suggested"
   getJobNr <- batchMap <- showStatus <- findNotSubmitted <-
@@ -215,7 +215,51 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Alt 2: BatchJobs processing
+  # Alt 2: Evaluation using futures
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (parallel == "future") {
+    verbose && enter(verbose, "Processing using futures");
+
+    # Allocate result list
+    futures <- listenv(length=length(sets))
+    names(futures) <- names(sets)
+
+    for (gg in seq_along(sets)) {
+      name <- names(sets)[gg]
+      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", gg, name, length(sets)))
+      set <- sets[[gg]]
+      verbose && print(verbose, set)
+      argsGG <- c(list(set), allArgs)
+      verbose && cat(verbose, "Call arguments:")
+      argsT <- argsGG; argsT$verbose <- as.character(argsT$verbose)
+      verbose && str(verbose, argsT)
+      argsT <- NULL; # Not needed anymore
+
+      futureGG <- future({
+        do.call(FUN, args=argsGG)
+      })
+      verbose && str(verbose, futureGG)
+
+      # Record
+      futures[[gg]] <- futureGG
+
+      # Not needed anymore
+      idxs <- set <- argsGG <- futureGG <- NULL
+
+      verbose && exit(verbose)
+    } # for (gg ...)
+
+    ## Resolve the value of all futures
+    res <- lapply(futures, FUN=value)
+
+    ## Not needed anymore
+    rm(list="futures")
+    verbose && exit(verbose)
+  } # if (parallel == "future")
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Alt 3: BatchJobs processing
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (parallel == "BatchJobs") {
     verbose && enter(verbose, "Processing using BatchJobs");
@@ -334,7 +378,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Alt 3: BiocParallel w/ BatchJobs processing
+  # Alt 4: BiocParallel w/ BatchJobs processing
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (parallel == "BiocParallel::BatchJobs") {
     verbose && enter(verbose, "Processing using BiocParallel");
@@ -533,6 +577,8 @@ setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2015-09-05
+# o Add support for dsApply(..., .parallel="future").
 # 2015-01-05
 # o CLEANUP: Using requireNamespace() instead of require() internally.
 # 2014-08-07

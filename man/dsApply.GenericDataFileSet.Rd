@@ -25,7 +25,7 @@
 
 \usage{
 \method{dsApply}{GenericDataFileSet}(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE,
-  verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"),
+  verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"),
   .control=list(dW = 1))
 }
 

@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.8.0-9000 [2015-09-05]
+o Add support for dsApply(..., .parallel="future"), which utilizes
+  the future package.
+
+
 Version: 2.8.0 [2015-08-06]
 o Added support for sortBy(..., by="mixedroman") for GenericDataFileSet.
 o Now commentChar="" and commentChar=FALSE also disables searching for

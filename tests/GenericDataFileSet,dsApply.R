@@ -28,16 +28,28 @@ str(res2)
 stopifnot(all.equal(res2, res1, check.attributes=FALSE))
 res1 <- res2 ## FIXME: Workaround trick
 
-# Alt 3. (via BatchJobs)
-if (fullTest && isPackageInstalled("BatchJobs")) {
-  res3 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
-  print(res3)
-  stopifnot(all.equal(res3, res1))
-}
+# Alt 3a. (via eager futures)
+future::plan(future::eager)
+res3a <- dsApply(ds, FUN=getFileSize, .parallel="future")
+str(res3a)
+stopifnot(all.equal(res3a, res1, check.attributes=FALSE))
 
-# Alt 4. (via BiocParallel + BatchJobs)
-if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
-  res4 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
+# Alt 3b. (via lazy futures)
+future::plan(future::lazy)
+res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
+str(res3b)
+stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
+
+# Alt 4. (via BatchJobs)
+if (fullTest && isPackageInstalled("BatchJobs")) {
+  res4 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
   print(res4)
   stopifnot(all.equal(res4, res1))
+}
+
+# Alt 5. (via BiocParallel + BatchJobs)
+if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
+  res5 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
+  print(res5)
+  stopifnot(all.equal(res5, res1))
 }
