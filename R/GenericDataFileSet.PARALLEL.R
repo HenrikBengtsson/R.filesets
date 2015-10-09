@@ -221,8 +221,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
     verbose && enter(verbose, "Processing using futures");
 
     # Allocate result list
-    futures <- listenv(length=length(sets))
-    names(futures) <- names(sets)
+    futures <- listenv()
 
     for (gg in seq_along(sets)) {
       name <- names(sets)[gg]
@@ -235,9 +234,23 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       verbose && str(verbose, argsT)
       argsT <- NULL; # Not needed anymore
 
+      ## WORKAROUND: globals::globalsOf() drops any objects 'g'
+      ## identified for which environment(g) is the namespace
+      ## of a package.  This unfortunately also all function 'FUN'
+      ## that are implement by another package, e.g. getFileSize().
+      ## /HB 2015-10-09
+      FUN_noenv <- FUN
+      environment(FUN_noenv) <- environment()
+
       futureGG <- future({
-        do.call(FUN, args=argsGG)
+        ## WORKAROUND: Dummy, to trigger that package is attached
+        try(dummy <- FUN, silent=TRUE)
+        do.call(FUN_noenv, args=argsGG)
       })
+
+      # No needed anymore
+      rm(list=c("FUN_noenv"))
+
       verbose && str(verbose, futureGG)
 
       # Record
@@ -248,6 +261,11 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
       verbose && exit(verbose)
     } # for (gg ...)
+
+    ## No longer needed
+    rm(list=c("FUN", "argsGG"))
+
+    names(futures) <- names(sets)
 
     ## Resolve the value of all futures
     res <- lapply(futures, FUN=value)

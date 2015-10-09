@@ -22,6 +22,7 @@ message("**** lapply()")
 res1 <- lapply(ds, FUN=getFileSize)
 str(res1)
 
+
 # Alt 2. (via an internal loop)
 message("**** dsApply(..., .parallel='none')")
 res2 <- dsApply(ds, FUN=getFileSize, .parallel="none")
@@ -29,6 +30,7 @@ str(res2)
 ## FIXME: dsApply() returns "short" names whereas lapply() "full" names
 stopifnot(all.equal(res2, res1, check.attributes=FALSE))
 res1 <- res2 ## FIXME: Workaround trick
+
 
 # Alt 3a. (via eager futures)
 message("**** dsApply(..., .parallel='future') with plan(eager)")
@@ -44,7 +46,25 @@ res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 
-# Alt 4. (via BatchJobs)
+# Alt 3c. (via batchjobs futures)
+message("**** dsApply(..., .parallel='future') with plan(multicore)")
+future::plan("multicore")
+res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
+str(res3b)
+stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
+
+
+# Alt 4. (via multicore futures)
+if (fullTest && isPackageInstalled("async")) {
+  message("**** dsApply(..., .parallel='future') with plan(async::batchjobs)")
+  future::plan(async::batchjobs, backend="local")
+  res4 <- dsApply(ds, FUN=getFileSize, .parallel="future")
+  str(res4)
+  stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
+}
+
+
+# Alt 5. (via BatchJobs)
 if (fullTest && isPackageInstalled("BatchJobs")) {
   message("**** dsApply(..., .parallel='BatchJobs')")
   res4 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
@@ -52,7 +72,8 @@ if (fullTest && isPackageInstalled("BatchJobs")) {
   stopifnot(all.equal(res4, res1))
 }
 
-# Alt 5. (via BiocParallel + BatchJobs)
+
+# Alt 6. (via BiocParallel + BatchJobs)
 if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
   message("**** dsApply(..., .parallel='BiocParallel::BatchJobs')")
   res5 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
