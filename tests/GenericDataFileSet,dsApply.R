@@ -57,10 +57,12 @@ stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 # Alt 4. (via multicore futures)
 if (fullTest && isPackageInstalled("async")) {
   message("**** dsApply(..., .parallel='future') with plan(async::batchjobs)")
-  future::plan(async::batchjobs, backend="local")
+  ns <- getNamespace("async")
+  batchjobs <- get("batchjobs", envir=ns)
+  future::plan(batchjobs, backend="local")
   res4 <- dsApply(ds, FUN=getFileSize, .parallel="future")
   str(res4)
-  stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
+  stopifnot(all.equal(res4, res1, check.attributes=FALSE))
 }
 
 
