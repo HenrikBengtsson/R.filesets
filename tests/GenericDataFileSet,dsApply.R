@@ -2,6 +2,8 @@ library("R.filesets")
 isPackageInstalled <- R.utils::isPackageInstalled
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
+options("R.filesets/parallel"=NULL)
+
 message("*** dsApply() on GenericDataFile")
 
 # Example files
@@ -49,6 +51,7 @@ stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 # Alt 3c. (via batchjobs futures)
 message("**** dsApply(..., .parallel='future') with plan(multicore)")
 future::plan("multicore")
+if (packageVersion("future") <= "0.8.1") library("future")
 res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
@@ -56,7 +59,7 @@ stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 
 # Alt 4. (via multicore futures)
 if (fullTest && isPackageInstalled("async")) {
-  message("**** dsApply(..., .parallel='future') with plan(async::batchjobs)")
+  message("**** dsApply(..., .parallel='future') with plan(async::batchjobs, backend='local')")
   ns <- getNamespace("async")
   batchjobs <- get("batchjobs", envir=ns)
   future::plan(batchjobs, backend="local")
