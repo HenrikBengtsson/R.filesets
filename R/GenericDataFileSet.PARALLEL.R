@@ -113,8 +113,10 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   skip <- Arguments$getLogical(skip);
 
   # Argument '.parallel':
-  parallel <- getOption("R.filesets/parallel", .parallel);
-  parallel <- match.arg(parallel, choices=eval(formals(dsApply.GenericDataFileSet)$.parallel));
+  if (missing(.parallel)) {
+    .parallel <- getOption("R.filesets/parallel", "none")
+  }
+  parallel <- match.arg(.parallel)
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

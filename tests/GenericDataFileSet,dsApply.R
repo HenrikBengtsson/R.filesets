@@ -2,8 +2,6 @@ library("R.filesets")
 isPackageInstalled <- R.utils::isPackageInstalled
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
-options("R.filesets/parallel"=NULL)
-
 message("*** dsApply() on GenericDataFile")
 
 # Example files
