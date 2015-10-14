@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 2.8.0-9000 [2015-09-05]
+Version: 2.8.0-9000 [2015-10-14]
 o Add support for dsApply(..., .parallel="future"), which utilizes
   the future package.
 

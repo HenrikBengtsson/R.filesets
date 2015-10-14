@@ -5,7 +5,7 @@ Depends:
   R.oo (>= 1.19.0)
 Imports:
   digest (>= 0.6.8),
-  future (>= 0.8.1),
+  future (>= 0.8.2),
   listenv (>= 0.4.0),
   R.methodsS3 (>= 1.7.0),
   R.utils (>= 2.1.0),
@@ -18,7 +18,7 @@ Suggests:
 SuggestsNote:
   BioC (>= 2.14),
   Recommended: gtools
-Date: 2015-10-09
+Date: 2015-10-14
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
