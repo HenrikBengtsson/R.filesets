@@ -91,8 +91,8 @@ if (isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
 }}
 
 \seealso{
-  The \pkg{BiocParallel} and \pkg{BatchJobs} packages is utilized
-  for parallel/distributed processing, depending on settings.
+  The \pkg{future}, \pkg{BiocParallel} and \pkg{BatchJobs} packages
+  are utilized for parallel/distributed processing, depending on settings.
 }
 
 \author{Henrik Bengtsson}

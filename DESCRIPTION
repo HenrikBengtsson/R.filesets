@@ -1,7 +1,7 @@
 Package: R.filesets
-Version: 2.8.0-9000
+Version: 2.9.0
 Depends:
-  R (>= 3.1.0),
+  R (>= 3.1.1),
   R.oo (>= 1.19.0)
 Imports:
   digest (>= 0.6.8),
@@ -13,7 +13,7 @@ Imports:
   stats
 Suggests:
   BatchJobs (>= 1.6),
-  BiocParallel (>= 0.6.1),
+  BiocParallel (>= 1.0.3),
   gtools (>= 3.5.0)
 SuggestsNote:
   BioC (>= 2.14),

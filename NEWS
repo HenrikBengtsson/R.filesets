@@ -1,10 +1,12 @@
 Package: R.filesets
 ===================
 
-Version: 2.8.0-9000 [2015-10-20]
+Version: 2.9.0 [2015-10-20]
 o Add support for dsApply(..., .parallel="future"), which utilizes
   the future package.
 o CLEANUP: Defunct methods dropped.
+o Package now requires R (>= 3.1.1) released July 2014. This allows
+  us to use BioC (>= 3.0) (October 2014).
 
 
 Version: 2.8.0 [2015-08-06]
