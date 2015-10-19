@@ -10,29 +10,16 @@
 \alias{Deprecated and defunct objects}
 \title{Deprecated and defunct objects}
 
-\alias{getColumnNameTranslator.GenericTabularFile}
-\alias{setColumnNameTranslator.GenericTabularFile}
-\alias{getLabel.GenericDataFile}
-\alias{setLabel.GenericDataFile}
-\alias{getAlias.GenericDataFile}
-\alias{setAlias.GenericDataFile}
-\alias{getAlias.GenericDataFileSet}
-\alias{setAlias.GenericDataFileSet}
-\alias{getFileListV0.GenericDataFileSetList}
-\alias{digest2}
 
 \description{
  The following objects are \emph{defunct}:
  \itemize{
-  \item getAlias(), setAlias()
-  \item getLabel(), setLabel()
-  \item getColumnNameTranslator(), setColumnNameTranslator()
-  \item getFileListV0()
+  \item None
  }
 
  The following objects are \emph{deprecated}:
  \itemize{
-  \item digest2()
+  \item None
  }
 }
 

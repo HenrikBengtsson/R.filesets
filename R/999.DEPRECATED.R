@@ -1,28 +1,15 @@
 ###########################################################################/**
 # @RdocDocumentation "Deprecated and defunct objects"
-# @alias getColumnNameTranslator.GenericTabularFile
-# @alias setColumnNameTranslator.GenericTabularFile
-# @alias getLabel.GenericDataFile
-# @alias setLabel.GenericDataFile
-# @alias getAlias.GenericDataFile
-# @alias setAlias.GenericDataFile
-# @alias getAlias.GenericDataFileSet
-# @alias setAlias.GenericDataFileSet
-# @alias getFileListV0.GenericDataFileSetList
-# @alias digest2
 #
 # \description{
 #  The following objects are \emph{defunct}:
 #  \itemize{
-#   \item getAlias(), setAlias()
-#   \item getLabel(), setLabel()
-#   \item getColumnNameTranslator(), setColumnNameTranslator()
-#   \item getFileListV0()
+#   \item None
 #  }
 #
 #  The following objects are \emph{deprecated}:
 #  \itemize{
-#   \item digest2()
+#   \item None
 #  }
 # }
 #
@@ -32,41 +19,6 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getColumnNameTranslator", "GenericTabularFile", function(...) {
-  .Defunct("getColumnNamesTranslator");
-}, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(...) {
-  .Defunct("setColumnNamesTranslator");
-}, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
-  .Defunct("getName");
-}, private=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
-  .Defunct("setName");
-}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
-  .Defunct("setFullName");
-}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
-  .Defunct("getFullName");
-}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
-  .Defunct("setFullName");
-}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-setMethodS3("getFileListV0", "GenericDataFileSetList", function(this, name, dropMissing=TRUE, ...) {
-  .Defunct("getFileList");
-}, protected=TRUE, deprecated=TRUE, createGeneric=FALSE)
-
-digest2 <- function(object, ..., skip="auto", ascii=FALSE) {
-  .Defunct("digest::digest");
-} # digest2()
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
