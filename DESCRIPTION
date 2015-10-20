@@ -16,7 +16,7 @@ Suggests:
   BiocParallel (>= 1.0.3),
   gtools (>= 3.5.0)
 SuggestsNote:
-  BioC (>= 2.14),
+  BioC (>= 3.0),
   Recommended: gtools
 Date: 2015-10-20
 Title: Easy Handling of and Access to Files Organized in Structured Directories
