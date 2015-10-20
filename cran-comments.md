@@ -8,7 +8,7 @@ Thanks in advance
 The package has been verified using `R CMD check --as-cran` on:
 
 * Platform x86_64-pc-linux-gnu (64-bit):
-  - R version 3.1.0 (2014-04-10)
+  - R version 3.1.1 (2014-07-10)
   - R version 3.1.3 (2015-03-09)
   - R version 3.2.0 (2015-04-16)
   - R version 3.2.2 (2015-08-14)
