@@ -1,22 +1,24 @@
 Package: R.filesets
-Version: 2.8.0
+Version: 2.9.0
 Depends:
-  R (>= 3.1.0),
+  R (>= 3.1.1),
   R.oo (>= 1.19.0)
 Imports:
-  stats,
+  digest (>= 0.6.8),
+  future (>= 0.8.2),
+  listenv (>= 0.4.0),
   R.methodsS3 (>= 1.7.0),
   R.utils (>= 2.1.0),
   R.cache (>= 0.10.0),
-  digest (>= 0.6.8)
+  stats
 Suggests:
-  gtools (>= 3.5.0),
   BatchJobs (>= 1.6),
-  BiocParallel (>= 0.6.1)
+  BiocParallel (>= 1.0.3),
+  gtools (>= 3.5.0)
 SuggestsNote:
-  BioC (>= 2.14),
+  BioC (>= 3.0),
   Recommended: gtools
-Date: 2015-08-06
+Date: 2015-10-20
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

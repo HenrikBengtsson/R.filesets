@@ -25,7 +25,7 @@
 
 \usage{
 \method{dsApply}{GenericDataFileSet}(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE,
-  verbose=FALSE, .parallel=c("none", "BatchJobs", "BiocParallel::BatchJobs"),
+  verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"),
   .control=list(dW = 1))
 }
 
@@ -91,8 +91,8 @@ if (isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
 }}
 
 \seealso{
-  The \pkg{BiocParallel} and \pkg{BatchJobs} packages is utilized
-  for parallel/distributed processing, depending on settings.
+  The \pkg{future}, \pkg{BiocParallel} and \pkg{BatchJobs} packages
+  are utilized for parallel/distributed processing, depending on settings.
 }
 
 \author{Henrik Bengtsson}
