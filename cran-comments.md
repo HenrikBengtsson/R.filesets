@@ -25,7 +25,7 @@ The package has been verified using `R CMD check --as-cran` on:
 It has also verified using the <http://win-builder.r-project.org/> service.
 
 Moreover, the updates cause no issues for any of the following
-1 reverse dependency on CRAN, which have been tested with
+6 reverse dependency on CRAN, which have been tested with
 `R CMD check --as-cran`: ACNE 0.8.0, MPAgenomics 1.1.2,
 aroma.affymetrix 2.13.2, aroma.cn 1.6.0, aroma.core 2.13.1
 and calmate 0.12.0.
