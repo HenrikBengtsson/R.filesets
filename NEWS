@@ -1,6 +1,11 @@
 Package: R.filesets
 ===================
 
+Version: 2.9.0-9000 [2015-12-13]
+o The default pathname for GenericDataFile() is now NA_character_.
+  It used to be NULL.
+
+
 Version: 2.9.0 [2015-10-20]
 o Add support for dsApply(..., .parallel="future"), which utilizes
   the future package.

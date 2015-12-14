@@ -46,20 +46,22 @@
 #   An object of this class is typically part of an @see "GenericDataFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFile", function(filename=NA_character_, path=NULL, mustExist=!is.na(filename), ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!is.null(filename)) {
-    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist);
-    if (!is.na(pathname)) {
-      # Assert that it is not pointing to a directory
-      if (isDirectory(pathname)) {
-        throw("The specified pathname is a directory: ", pathname);
-      }
-    }
-  } else {
-    pathname <- NULL;
+  ## Backward "compatibility": Informative error message if NULL is used,
+  ## which was the previous default. /HB 2015-12-13
+  if (is.null(filename)) {
+    throw("Argument 'filename' must be a single character string: NULL")
+  } else if (length(filename) != 1L) {
+    throw("Argument 'filename' must be a single character string: ", length(filename))
+  }
+
+  pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist);
+  # Assert that it is not pointing to a directory
+  if (isDirectory(pathname)) {
+    throw("The specified pathname is a directory: ", pathname)
   }
 
   # Arguments '...':
@@ -1645,6 +1647,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2015-12-13
+# o Now argument 'filename' must be a single string - not NULL.
 # 2014-08-26
 # o Now gzip()/gunzip() for GenericDataFile returns the output pathname.
 # 2014-02-28
