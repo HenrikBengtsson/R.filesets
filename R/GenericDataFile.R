@@ -46,22 +46,27 @@
 #   An object of this class is typically part of an @see "GenericDataFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("GenericDataFile", function(filename=NA_character_, path=NULL, mustExist=!is.na(filename), ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=!is.na(filename), ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## Backward "compatibility": Informative error message if NULL is used,
-  ## which was the previous default. /HB 2015-12-13
   if (is.null(filename)) {
-    throw("Argument 'filename' must be a single character string: NULL")
+    ## Developers mode: Test default NA_character_ early on. /HB 2015-12-23
+    filename <- getOption("R.filesets/GenericDataFile/args/filename", NULL)
+    ## FIXME: In a future release, make NULL an invalid value. /HB 2015-12-23
+    ## throw("Argument 'filename' must be a single character string: NULL")
   } else if (length(filename) != 1L) {
     throw("Argument 'filename' must be a single character string: ", length(filename))
   }
 
-  pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist);
-  # Assert that it is not pointing to a directory
-  if (isDirectory(pathname)) {
-    throw("The specified pathname is a directory: ", pathname)
+  if (!is.null(filename)) {
+    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist)
+    # Assert that it is not pointing to a directory
+    if (isDirectory(pathname)) {
+      throw("The specified pathname is a directory: ", pathname)
+    }
+  } else {
+    pathname <- NULL
   }
 
   # Arguments '...':
@@ -241,8 +246,8 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   s <- c(s, sprintf("Full name: %s", getFullName(this)));
 
   # Pathname
-  pathname <- getPathname(this, absolute=FALSE);
-  if (!is.null(pathname) && !is.na(pathname)) {
+  pathname <- getPathname(this, absolute=FALSE, NULLasNA=TRUE)
+  if (!is.na(pathname)) {
     pathnameA <- getPathname(this, absolute=TRUE);
     if (nchar(pathnameA, type="chars") < nchar(pathname, type="chars")) {
       pathname <- pathnameA;
@@ -297,15 +302,21 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...) {
-  pathname <- this$.pathname;
-  if (!is.null(pathname)) {
+  ## Secret argument. /HB 2015-12-23
+  args <- list(...)
+  NULLasNA <- isTRUE(args$NULLasNA)
+
+  pathname <- this$.pathname
+  if (is.null(pathname)) {
+    if (NULLasNA) pathname <- NA_character_
+  } else {
     if (absolute) {
-      pathname <- getAbsolutePath(pathname);
+      pathname <- getAbsolutePath(pathname)
     } else {
-      pathname <- getRelativePath(pathname);
+      pathname <- getRelativePath(pathname)
     }
   }
-  pathname;
+  pathname
 })
 
 
@@ -336,10 +347,8 @@ setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...
 # }
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this, ...);
-  if (is.null(res)) res <- as.character(NA);
-  res <- dirname(res);
-  res;
+  pathname <- getPathname(this, ..., NULLasNA=TRUE)
+  dirname(pathname)
 })
 
 
@@ -378,10 +387,8 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this, ...);
-  if (is.null(res)) res <- as.character(NA);
-  res <- basename(res);
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  basename(pathname)
 })
 
 
@@ -578,15 +585,15 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this);
-  isFile(res);
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  isFile(pathname)
 })
 
 
 setMethodS3("is.na", "GenericDataFile", function(x) {
-  pathname <- getPathname(x);
-  is.na(pathname);
-}, appendVarArgs=FALSE) # is.na()
+  pathname <- getPathname(x, NULLasNA=TRUE)
+  is.na(pathname)
+}, appendVarArgs=FALSE)
 
 
 
@@ -662,12 +669,8 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   # Argument 'what':
   what <- match.arg(what);
 
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    fileSize <- NA_real_;
-  } else {
-    fileSize <- file.info2(pathname)$size;
-  }
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  fileSize <- file.info2(pathname)$size
 
   if (what == "numeric")
     return(fileSize);
@@ -717,13 +720,8 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 # }
 #*/###########################################################################
 setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["ctime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$ctime
 }, protected=TRUE)
 
 
@@ -754,13 +752,8 @@ setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["mtime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$mtime
 }, protected=TRUE)
 
 
@@ -792,13 +785,8 @@ setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["atime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$atime
 }, protected=TRUE)
 
 
@@ -990,15 +978,16 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path);
+  pathname <- Arguments$getWritablePathname(filename, path=path)
 
   # Fail-safe copying
-  copyFile(getPathname(this), pathname, ...);
+  pathnameS <- getPathname(this, NULLasNA=TRUE)
+  copyFile(pathnameS, pathname, ...)
 
   # Create object of the same class.
-  res <- newInstance(this, pathname);
+  res <- newInstance(this, pathname)
 
-  res;
+  res
 }, protected=TRUE) # copyTo()
 
 
@@ -1053,7 +1042,8 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!skip)
 
   # Create link
-  createLink(target=getPathname(this), link=pathname, skip=skip, overwrite=overwrite, ...)
+  pathnameS <- getPathname(this, NULLasNA=TRUE)
+  createLink(target=pathnameS, link=pathname, skip=skip, overwrite=overwrite, ...)
 
   # Create object of the same class.
   res <- newInstance(this, pathname)
@@ -1115,13 +1105,12 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
   }
 
   # Nothing to do?
-  if (identical(pathname, getPathname(this)))
+  srcPathname <- getPathname(this, NULLasNA=TRUE)
+  if (identical(pathname, srcPathname))
     return(this);
 
   # Assert that file is not overwritten by mistake.
   pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
-
-  srcPathname <- getPathname(this);
 
   verbose && enter(verbose, "Renaming ", class(this)[1], " pathname");
   verbose && cat(verbose, "Source: ", srcPathname);
@@ -1580,7 +1569,8 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
-  isGzipped(getPathname(this), ...);
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  isGzipped(pathname, ...);
 }, protected=TRUE)
 
 
@@ -1647,6 +1637,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2015-12-23
+# o Now is.na() for GenericDataFile returns TRUE also if pathname is NULL.
 # 2015-12-13
 # o Now argument 'filename' must be a single string - not NULL.
 # 2014-08-26

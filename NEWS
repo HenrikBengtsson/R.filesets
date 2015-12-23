@@ -1,9 +1,10 @@
 Package: R.filesets
 ===================
 
-Version: 2.9.0-9000 [2015-12-13]
-o The default pathname for GenericDataFile() is now NA_character_.
-  It used to be NULL.
+Version: 2.9.0-9000 [2015-12-23]
+o Preparing to make the default pathname for GenericDataFile() to
+  become NA_character_.  It is currently NULL, but the goal is to
+  enforce length(pathname) to be one.
 
 
 Version: 2.9.0 [2015-10-20]
