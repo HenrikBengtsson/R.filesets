@@ -1,10 +1,12 @@
 Package: R.filesets
 ===================
 
-Version: 2.9.0-9000 [2015-12-23]
+Version: 2.9.0-9000 [2015-12-30]
 o Preparing to make the default pathname for GenericDataFile() to
   become NA_character_.  It is currently NULL, but the goal is to
   enforce length(pathname) to be one.
+o BUG FIX: getOneFile() on a GenericDataFileSet with a single
+  missing file would give an error.
 
 
 Version: 2.9.0 [2015-10-20]

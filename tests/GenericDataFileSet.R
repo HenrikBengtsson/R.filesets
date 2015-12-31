@@ -9,11 +9,24 @@ ds <- GenericDataFileSet()
 print(ds)
 
 ## Extract non-existing file
-dsT <- extract(ds, "foo")
+dsT <- extract(ds, "foo", onMissing="NA")
 print(dsT)
 
 dsT <- ds["foo"]
 print(dsT)
+
+## New instance of non-existing file
+## FIXME: We should support this in the future, cf. NULL
+## dsT <- GenericDataFile(NA_character_)
+## dsT <- newInstance(ds, NA_character_)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Set with non-existing file
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+files <- list(GenericDataFile())
+ds <- GenericDataFileSet(files)
+print(ds)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

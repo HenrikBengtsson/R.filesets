@@ -1003,7 +1003,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     file <- files[[ii]];
     pathname <- getPathname(file);
     # Found?
-    if (!is.na(pathname)) {
+    if (!is.null(pathname) && !is.na(pathname)) {
       return(file);
     }
   } # for (ii ...)
