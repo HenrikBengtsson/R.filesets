@@ -2,13 +2,24 @@ library("R.filesets")
 
 message("*** GenericDataFileSet")
 
-# Example files
-path <- system.file("exData", "dataSetA,original", package="R.filesets")
-print(path)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Empty set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ds <- GenericDataFileSet()
+print(ds)
+
+## Extract non-existing file
+dsT <- extract(ds, "foo")
+print(dsT)
+
+dsT <- ds["foo"]
+print(dsT)
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+path <- system.file("exData", "dataSetA,original", package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
 print(ds)
 
