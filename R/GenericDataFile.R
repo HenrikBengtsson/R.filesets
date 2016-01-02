@@ -1167,13 +1167,17 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
   checksum <- this$.checksum;
   if (force || is.null(checksum) || hasBeenModified(this)) {
     if (isFile(this)) {
-      verbose && enter(verbose, "Calculating checksum");
-      pathname <- getPathname(this);
-      checksum <- digest(pathname, file=TRUE);
-      verbose && exit(verbose);
+      if (hasChecksumFile(this)) {
+        dfZ <- getChecksumFile(this)
+        readChecksum(dfZ)
+      } else {
+        verbose && enter(verbose, "Calculating checksum");
+        pathname <- getPathname(this);
+        checksum <- digest(pathname, file=TRUE);
+        verbose && exit(verbose);
+      }
     } else {
-      naValue <- as.character(NA);
-      checksum <- naValue;
+      checksum <- NA_character_
     }
     this$.checksum <- checksum;
   }
