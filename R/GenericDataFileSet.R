@@ -962,7 +962,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     if (!is.object(default) && is.na(default)) {
       className <- getFileClass(this);
       clazz <- Class$forName(className, envir=parent.frame());
-      default <- newInstance(clazz);
+      default <- newInstance(clazz, NA_character_);
     } else if (is.numeric(default)) {
       default <- this[[default]];
     }
