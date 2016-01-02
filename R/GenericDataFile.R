@@ -1135,6 +1135,11 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 # @synopsis
 #
 # \arguments{
+#  \item{write}{If @TRUE or @NA and a checksum file does not exists, then
+#    a checksum file is created, iff possible.  If @NA and the file could
+#    not be created, then it falls back to @FALSE, but if @TRUE an error
+#    is thrown.  If @FALSE and no checksum file exists, the checksum is
+#    calculated on the fly.}
 #  \item{force}{If @FALSE, the file exists and has not be modified since,
 #    then the cached checksum is returned.}
 #  \item{verbose}{...}
@@ -1155,7 +1160,7 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, verbose=FALSE) {
+setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FALSE, verbose=FALSE, ...) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -1167,9 +1172,19 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
   checksum <- this$.checksum;
   if (force || is.null(checksum) || hasBeenModified(this)) {
     if (isFile(this)) {
-      if (hasChecksumFile(this)) {
-        dfZ <- getChecksumFile(this)
-        readChecksum(dfZ)
+      dfZ <- NULL
+      if (is.na(write)) {
+        dfZ <- tryCatch({
+          getChecksumFile(this, force=force)
+        }, error=function(ex) { NULL })
+      } else if (write) {
+        dfZ <- getChecksumFile(this, force=force)
+      } else if (hasChecksumFile(this)) {
+        dfZ <- getChecksumFile(this, force=force)
+      }
+
+      if (isFile(dfZ)) {
+        checksum <- readChecksum(dfZ)
       } else {
         verbose && enter(verbose, "Calculating checksum");
         pathname <- getPathname(this);
@@ -1275,38 +1290,12 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
     throw("Cannot read stored checksum. File does not exist: NA");
   }
 
-  verbose && enter(verbose, "Reading checksum");
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-  verbose && cat(verbose, "Pathname: ", outPathname);
-  outPathname <- Arguments$getReadablePathname(outPathname, mustExist=TRUE);
-
-  checksum <- readLines(outPathname, warn=FALSE);
-
-#  verbose && enter(verbose, "Trimming");
-  # Trim all lines
-  checksum <- trim(checksum);
-  # Drop empty lines
-  checksum <- checksum[nchar(checksum) > 0L];
-  # Drop comments
-  checksum <- checksum[regexpr("^#", checksum) == -1L];
-#  verbose && exit(verbose);
-
-  verbose && enter(verbose, "Validating checksum");
-  if (length(checksum) == 0L)
-    throw("File format error. No checksum found: ", outPathname);
-  if (length(checksum) > 1L)
-    throw("File format error. Too many possible checksums: ", outPathname);
-
-  # A checksum should only consist of hexadecimal characters
-  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1L) {
-    throw("File format error. Invalid checksum ('", checksum, "'): ", outPathname);
+  if (!hasChecksumFile(this)) {
+    throw("Cannot read stored checksum. No checksum file available: ", getPathname(this))
   }
-  verbose && exit(verbose);
 
-  verbose && exit(verbose);
-
-  checksum;
+  dfZ <- getChecksumFile(this)
+  readChecksum(dfZ)
 }, protected=TRUE)
 
 
@@ -1343,37 +1332,17 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("compareChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot compare checksum. File does not exist: NA");
+  } else if (!hasChecksumFile(this)) {
+    return(FALSE)
   }
 
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-
-  verbose && enter(verbose, "Comparing checksum");
-  verbose && cat(verbose, "Pathname: ", outPathname);
-
-  checksum <- getChecksum(this, verbose=less(verbose));
-  if (isFile(outPathname)) {
-    checksum2 <- readLines(outPathname, warn=FALSE);
-  } else {
-    naValue <- as.character(NA);
-    checksum2 <- naValue;
-  }
-  res <- identical(checksum, checksum2);
-
-  verbose && cat(verbose, res);
-  verbose && exit(verbose);
-
-  res;
+  tryCatch({
+    validateChecksum(this, ...)
+    TRUE
+  }, error=function(ex) FALSE)
 })
 
 
@@ -1390,7 +1359,6 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1408,27 +1376,16 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("validateChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot validate checksum. File does not exist: NA");
+  } else if (!hasChecksumFile(this)) {
+    throw("Cannot validate checksum. No checksum file available: ", getPathname(this))
   }
 
-  verbose && enter(verbose, "Validating checksum");
-  pathname <- getPathname(this);
-  res <- compareChecksum(this, ..., verbose=less(verbose));
-  if (!res) {
-    throw("The calculated checksum and the checksum store on file do not match: ", pathname);
-  }
-  verbose && exit(verbose);
-
-  invisible(res);
+  dfZ <- getChecksumFile(this)
+  res <- validate(dfZ)
+  invisible(res)
 })
 
 

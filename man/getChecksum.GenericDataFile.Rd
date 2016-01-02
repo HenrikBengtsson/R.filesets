@@ -18,10 +18,15 @@
 }
 
 \usage{
-\method{getChecksum}{GenericDataFile}(this, ..., force=FALSE, verbose=FALSE)
+\method{getChecksum}{GenericDataFile}(this, write=NA, force=FALSE, verbose=FALSE, ...)
 }
 
 \arguments{
+ \item{write}{If \code{\link[base:logical]{TRUE}} or \code{\link[base]{NA}} and a checksum file does not exists, then
+   a checksum file is created, iff possible.  If \code{\link[base]{NA}} and the file could
+   not be created, then it falls back to \code{\link[base:logical]{FALSE}}, but if \code{\link[base:logical]{TRUE}} an error
+   is thrown.  If \code{\link[base:logical]{FALSE}} and no checksum file exists, the checksum is
+   calculated on the fly.}
  \item{force}{If \code{\link[base:logical]{FALSE}}, the file exists and has not be modified since,
    then the cached checksum is returned.}
  \item{verbose}{...}
