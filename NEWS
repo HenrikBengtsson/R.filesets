@@ -1,7 +1,9 @@
 Package: R.filesets
 ===================
 
-Version: 2.9.0-9000 [2015-12-30]
+Version: 2.9.0-9000 [2016-01-01]
+o Now file sizes are reported using IEC binary prefixes, i.e.
+  bytes, KiB, MiB, GiB, TiB, ..., YiB.
 o Preparing to make the default pathname for GenericDataFile() to
   become NA_character_.  It is currently NULL, but the goal is to
   enforce length(pathname) to be one.

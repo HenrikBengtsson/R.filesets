@@ -678,18 +678,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   if (is.na(fileSize))
     return(fileSize);
 
-  units <- c("bytes", "kB", "MB", "GB", "TB");
-  scale <- 1;
-  for (kk in seq_along(units)) {
-    unit <- units[kk];
-    if (fileSize < 1000)
-      break;
-    fileSize <- fileSize/1024;
-  }
-  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
-  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
-
-  fileSize;
+  .asIEC(fileSize)
 })
 
 
