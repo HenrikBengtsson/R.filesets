@@ -5,7 +5,10 @@
     size <- size / 1024
   }
 
-  fmt <- sprintf("%%.%df %s", digits, unit)
+  if (unit == "bytes") {
+    fmt <- sprintf("%%.0f %s", unit)
+  } else {
+    fmt <- sprintf("%%.%df %s", digits, unit)
+  }
   sprintf(fmt, size)
 } # .asIEC()
-
