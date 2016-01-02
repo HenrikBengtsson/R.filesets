@@ -1218,45 +1218,9 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  if (!isFile(this)) {
-    throw("Cannot write checksum to file. File does not exist: NA");
-  }
-
-
-  verbose && enter(verbose, "Writing checksum");
-
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-
-  verbose && cat(verbose, "Pathname: ", outPathname);
-
-  # Skip existing checksum file?
-  if (skip && isFile(outPathname)) {
-    verbose && cat(verbose, "Found existing checksum file");
-    # Validating
-    verbose && enter(verbose, "Reading existing checksum file");
-    checksum <- readChecksum(this, verbose=less(verbose));
-    verbose && cat(verbose, "Checksum (read): ", checksum);
-    verbose && exit(verbose);
-  } else {
-    verbose && enter(verbose, "Getting checksum");
-    checksum <- getChecksum(this, verbose=less(verbose));
-    verbose && cat(verbose, "Checksum (generated): ", checksum);
-    cat(checksum, file=outPathname);
-    verbose && exit(verbose);
-  }
-
-  verbose && exit(verbose);
-
-  invisible(outPathname);
+setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) {
+  dfZ <- getChecksumFile(this, force=!skip, ...)
+  invisible(getPathname(dfZ))
 })
 
 
