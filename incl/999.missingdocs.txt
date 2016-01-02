@@ -1,3 +1,4 @@
+hasChecksumFile.GenericDataFile
 GenericDataFileList [.GenericTabularFile append
 append.default appendColumnNamesTranslator
 appendColumnNamesTranslator.ColumnNamesInterface

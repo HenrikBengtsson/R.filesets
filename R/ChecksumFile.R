@@ -247,6 +247,11 @@ setMethodS3("create", "ChecksumFile", function(static, file, ..., force=TRUE, ve
 
 
 
+setMethodS3("hasChecksumFile", "default", function(...) {
+  isFile(getChecksumFile(..., onMissing="NA"))
+})
+
+
 setMethodS3("getChecksumFile", "GenericDataFile", function(this, ...) {
   pathname <- getPathname(this);
   getChecksumFile(pathname, ...);
@@ -326,6 +331,8 @@ setMethodS3("getChecksumFile", "default", function(pathname, onMissing=c("write"
 
 ############################################################################
 # HISTORY:
+# 2016-01-01
+# o Added hasChecksumFile().
 # 2013-11-19
 # o Added ChecksumFile.
 # o Created.

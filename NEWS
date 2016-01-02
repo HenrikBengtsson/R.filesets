@@ -7,6 +7,7 @@ o Now file sizes are reported using IEC binary prefixes, i.e.
 o Preparing to make the default pathname for GenericDataFile() to
   become NA_character_.  It is currently NULL, but the goal is to
   enforce length(pathname) to be one.
+o Added hasChecksumFile() for GenericDataFile.
 o BUG FIX: getOneFile() on a GenericDataFileSet with a single
   missing file would give an error.
 
