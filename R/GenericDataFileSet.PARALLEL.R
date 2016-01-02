@@ -236,23 +236,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       verbose && str(verbose, argsT)
       argsT <- NULL; # Not needed anymore
 
-      ## WORKAROUND: globals::globalsOf() drops any objects 'g'
-      ## identified for which environment(g) is the namespace
-      ## of a package.  This unfortunately also all function 'FUN'
-      ## that are implement by another package, e.g. getFileSize().
-      ## /HB 2015-10-09
-      FUN_noenv <- FUN
-      environment(FUN_noenv) <- environment()
-
-      futureGG <- future({
-        ## WORKAROUND: Dummy, to trigger that package is attached
-        try(dummy <- FUN, silent=TRUE)
-        do.call(FUN_noenv, args=argsGG)
-      })
-
-      # No needed anymore
-      rm(list=c("FUN_noenv"))
-
+      futureGG <- future(do.call(FUN, args=argsGG))
       verbose && str(verbose, futureGG)
 
       # Record
