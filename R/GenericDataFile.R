@@ -165,15 +165,15 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
   # Default values
   notEqual <- FALSE;
   attr(notEqual, "thisFile") <- getPathname(this);
-  attr(notEqual, "otherFile") <- getPathname(other);
-  msg <- NULL;
-
   if (!inherits(other, "GenericDataFile")) {
     msg <- sprintf("The 'other' is not a GenericDataFile: %s",
                                                  class(other)[1]);
     attr(notEqual, "reason") <- msg;
     return(notEqual);
   }
+
+  attr(notEqual, "otherFile") <- getPathname(other);
+  msg <- NULL;
 
   if (identical(getPathname(this), getPathname(other)))
     return(TRUE);
