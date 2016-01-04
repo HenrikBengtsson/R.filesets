@@ -15,8 +15,16 @@ print(ds)
 # Read column 'y' and a subset of the rows from each of the
 # tab-delimited files and combine into a matrix
 rows <- c(3:5, 8, 2)
-data <- extractMatrix(ds, column="y", colClass="integer", rows=rows)
+data <- extractMatrix(ds, column="y", colClass="integer", rows=rows, drop=TRUE)
 print(data)
+
+data30 <- extractMatrix(ds[1:3], column="y", colClass="integer", rows=rows)
+print(data30)
+
+data3 <- extractMatrix(ds, files=1:3, column="y", colClass="integer", rows=rows)
+print(data3)
+
+stopifnot(all.equal(data3, data30))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,7 +52,7 @@ names(colClasses) <- colNames
 cat("Column class patterns:\n")
 print(colClasses)
 
-data <- readDataFrame(ds, colClasses=colClasses)
+data <- readDataFrame(ds, colClasses=colClasses, verbose=TRUE)
 print(data)
 
 
