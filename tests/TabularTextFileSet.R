@@ -18,23 +18,15 @@ rows <- c(3:5, 8, 2)
 data <- extractMatrix(ds, column="y", colClass="integer", rows=rows, drop=TRUE)
 print(data)
 
-data30 <- extractMatrix(ds[1:3], column="y", colClass="integer", rows=rows)
-print(data30)
-
-data3 <- extractMatrix(ds, files=1:3, column="y", colClass="integer", rows=rows)
-print(data3)
-
-stopifnot(all.equal(data3, data30))
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Read data frames from each of the files
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataList <- lapply(ds, readDataFrame)
+dataList <- lapply(ds, FUN=readDataFrame)
 print(dataList)
 
 rows <- c(3:5, 8, 2)
-dataList <- lapply(ds, readDataFrame, rows=rows)
+dataList <- lapply(ds, FUN=readDataFrame, rows=rows)
 print(dataList)
 
 
