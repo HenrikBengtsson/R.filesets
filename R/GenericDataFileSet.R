@@ -1312,7 +1312,6 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 # @RdocMethod anyNA
 # @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
 # @alias is.na.GenericDataFileSet
-# @alias na.omit.GenericDataFileSet
 #
 # @title "Checks whether any of the pathnames are missing"
 #
@@ -1351,11 +1350,6 @@ setMethodS3("is.na", "GenericDataFileSet", function(x) {
   files <- getFiles(x);
   unlist(lapply(files, FUN=is.na));
 }, appendVarArgs=FALSE) # is.na()
-
-setMethodS3("na.omit", "GenericDataFileSet", function(object, ...) {
-  extract(object, files=seq_along(object), onMissing="drop", ...);
-}) # na.omit()
-
 
 
 

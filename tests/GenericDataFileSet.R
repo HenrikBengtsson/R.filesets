@@ -28,7 +28,7 @@ print(is.na(dsT))
 print(anyNA(dsT))
 dsF <- na.omit(dsT)
 print(dsF)
-stopifnot(length(dsF) == 1)
+stopifnot(length(dsF) == 0)
 
 ## New instance of non-existing file
 ## FIXME: We should support this in the future, cf. NULL
@@ -48,8 +48,7 @@ print(is.na(ds))
 print(anyNA(ds))
 dsF <- na.omit(ds)
 print(dsF)
-## FIXME: Issue #19
-##stopifnot(length(dsF) == 0)
+stopifnot(length(dsF) == 0)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

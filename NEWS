@@ -11,6 +11,8 @@ o Added hasChecksumFile() for GenericDataFile.
 o hasBeenModified() for GenericDataFile gained argument 'update'.
 o Package requires R (>= 3.1.2) released October 2014, because
   of its dependency on the listenv package.
+o CLEANUP: Removed na.omit() for GenericDataFileSet; the default
+  one in the stats package works equally well.
 o ROBUSTNESS: Increased test coverage from 51% to 62%.
 o BUG FIX: Arguments$getTags() failed to drop missing values.
 o BUG FIX: equals(df, other) for GenericDataFile would give an error

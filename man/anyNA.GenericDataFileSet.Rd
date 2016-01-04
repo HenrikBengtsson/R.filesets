@@ -12,7 +12,6 @@
 \alias{anyNA,GenericDataFileSet-method}
 \alias{anyNA}  %% To be removed when depending on R (>= 3.1.0)
 \alias{is.na.GenericDataFileSet}
-\alias{na.omit.GenericDataFileSet}
 
 \title{Checks whether any of the pathnames are missing}
 
