@@ -115,5 +115,25 @@ print(fn)
 stopifnot(all(fn == parts))
 
 
+message("- Arguments$getTags()")
+library("R.utils")
+ts <- Arguments$getTags(NULL)
+stopifnot(length(ts) == 0, is.null(ts))
+
+ts <- Arguments$getTags(character(0L))
+stopifnot(length(ts) == 0, is.null(ts))
+
+ts <- Arguments$getTags(NA_character_)
+stopifnot(length(ts) == 0, is.null(ts))
+
+ts <- Arguments$getTags(tags)
+print(ts)
+stopifnot(all.equal(ts, paste(tags, collapse=",")))
+
+ts <- Arguments$getTags(tags, collapse=NULL)
+print(ts)
+stopifnot(all.equal(ts, tags))
+
+
 message("*** fullname and friends ... DONE")
 
