@@ -1193,7 +1193,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "stats::na.omit" for dropping missing files from a fileset.
+#   @see "stats::na.omit" for dropping missing files from a fileset.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1333,7 +1333,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 # @author
 #
 # \seealso{
-#   @seemethod "stats::na.omit" for dropping missing items.
+#   @see "stats::na.omit" for dropping missing items.
 #   @seeclass
 # }
 #*/###########################################################################

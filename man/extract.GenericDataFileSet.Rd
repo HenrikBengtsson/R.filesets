@@ -48,7 +48,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  \code{\link[R.filesets:stats::na.omit.GenericDataFileSet]{*stats::na.omit}()} for dropping missing files from a fileset.
+  \code{\link[stats]{na.omit}} for dropping missing files from a fileset.
   For more information see \code{\link{GenericDataFileSet}}.
 }
 \keyword{internal}
