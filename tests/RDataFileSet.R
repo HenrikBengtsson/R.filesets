@@ -17,6 +17,9 @@ print(ds)
 x2 <- loadObject(ds[["x"]])
 stopifnot(identical(x2, x))
 
+res <- loadObject(ds[["x"]], drop=FALSE)
+stopifnot(identical(res$x, x))
+
 y2 <- loadObject(ds[["y"]])
 stopifnot(identical(y2, y))
 
