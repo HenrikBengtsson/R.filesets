@@ -10,7 +10,9 @@ print(ds)
 
 ## Missingness
 print(is.na(ds))
+stopifnot(!any(is.na(ds)))
 print(anyNA(ds))
+stopifnot(!anyNA(ds))
 dsF <- na.omit(ds)
 print(dsF)
 stopifnot(length(dsF) == 0)
@@ -19,13 +21,14 @@ stopifnot(nbrOfFiles(dsF) == length(dsF))
 ## Extract non-existing file
 dsT <- extract(ds, "foo", onMissing="NA")
 print(dsT)
-
 dsT <- ds["foo"]
 print(dsT)
 
 ## Missingness
 print(is.na(dsT))
+stopifnot(any(is.na(dsT)))
 print(anyNA(dsT))
+stopifnot(anyNA(dsT))
 dsF <- na.omit(dsT)
 print(dsF)
 stopifnot(length(dsF) == 0)

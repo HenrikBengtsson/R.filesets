@@ -10,7 +10,6 @@
 \alias{anyNA.GenericDataFileSet}
 \alias{GenericDataFileSet.anyNA}
 \alias{anyNA,GenericDataFileSet-method}
-\alias{anyNA}  %% To be removed when depending on R (>= 3.1.0)
 \alias{is.na.GenericDataFileSet}
 
 \title{Checks whether any of the pathnames are missing}
@@ -36,7 +35,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  \code{\link[R.filesets:na.omit.GenericDataFileSet]{*na.omit}()} for dropping missing items.
+  \code{\link[R.filesets:stats::na.omit.GenericDataFileSet]{*stats::na.omit}()} for dropping missing items.
   For more information see \code{\link{GenericDataFileSet}}.
 }
 \keyword{internal}

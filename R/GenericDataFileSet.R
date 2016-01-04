@@ -1193,7 +1193,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "na.omit" for dropping missing files from a fileset.
+#   @seemethod "stats::na.omit" for dropping missing files from a fileset.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1310,7 +1310,6 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
 ###########################################################################/**
 # @RdocMethod anyNA
-# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
 # @alias is.na.GenericDataFileSet
 #
 # @title "Checks whether any of the pathnames are missing"
@@ -1334,7 +1333,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 # @author
 #
 # \seealso{
-#   @seemethod "na.omit" for dropping missing items.
+#   @seemethod "stats::na.omit" for dropping missing items.
 #   @seeclass
 # }
 #*/###########################################################################
