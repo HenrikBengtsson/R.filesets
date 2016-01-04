@@ -60,6 +60,10 @@ ts <- tags(fullname)
 print(ts)
 stopifnot(all(ts == tags))
 
+ts <- tags(fullname, collapse=TRUE)
+print(ts)
+stopifnot(all(ts == paste(tags, collapse=",")))
+
 ts <- tags(parts)
 print(ts)
 stopifnot(all(ts == tags))
