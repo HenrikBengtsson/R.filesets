@@ -1257,7 +1257,6 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) 
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1282,14 +1281,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) 
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("readChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot read stored checksum. File does not exist: NA");
   }
