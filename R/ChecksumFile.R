@@ -252,9 +252,10 @@ setMethodS3("hasChecksumFile", "default", function(...) {
 })
 
 
-setMethodS3("getChecksumFile", "GenericDataFile", function(this, ...) {
-  pathname <- getPathname(this);
-  getChecksumFile(pathname, ...);
+setMethodS3("getChecksumFile", "GenericDataFile", function(this, ..., force=FALSE) {
+  pathname <- getPathname(this)
+  if (!force) force <- hasBeenModified(this, update=FALSE)
+  getChecksumFile(pathname, ..., force=force);
 })
 
 

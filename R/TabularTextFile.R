@@ -333,7 +333,7 @@ setMethodS3("getDefaultColumnClassPatterns", "TabularTextFile", function(this, .
 #*/###########################################################################
 setMethodS3("getHeader", "TabularTextFile", function(this, ..., header=TRUE, force=FALSE) {
   hdr <- this$.fileHeader;
-  if (force || is.null(hdr) || hasBeenModified(this)) {
+  if (force || is.null(hdr) || hasBeenModified(this, update=FALSE)) {
     hdr <- readRawHeader(this, ...);
     if (header && hasColumnHeader(this)) {
       hdr$columns <- hdr$topRows[[1]];
