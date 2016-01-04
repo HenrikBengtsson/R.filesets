@@ -18,13 +18,15 @@
 }
 
 \usage{
-\method{hasBeenModified}{GenericDataFile}(this, ..., unknown=TRUE)
+\method{hasBeenModified}{GenericDataFile}(this, update=TRUE, unknown=TRUE, ...)
 }
 
 \arguments{
- \item{...}{Not used.}
  \item{unknown}{The \code{\link[base]{logical}} value returned if the timestamp for the
   previous modification, if any, is unknown.}
+ \item{update}{If \code{\link[base:logical]{TRUE}}, the internal check timestamp is updated after
+  calling this function, otherwise not.}
+ \item{...}{Not used.}
 }
 
 \value{

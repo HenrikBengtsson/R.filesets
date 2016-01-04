@@ -792,9 +792,11 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
 #  \item{unknown}{The @logical value returned if the timestamp for the
 #   previous modification, if any, is unknown.}
+#  \item{update}{If @TRUE, the internal check timestamp is updated after
+#   calling this function, otherwise not.}
+#  \item{...}{Not used.}
 # }
 #
 # \value{
@@ -808,7 +810,7 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TRUE) {
+setMethodS3("hasBeenModified", "GenericDataFile", function(this, update=TRUE, unknown=TRUE, ...) {
   lastModifiedOn <- getLastModifiedOn(this);
   prevModifiedOn <- this$.prevModifiedOn;
 
@@ -830,7 +832,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
     attr(res, "prevModifiedOn") <- prevModifiedOn;
   }
 
-  this$.prevModifiedOn <- lastModifiedOn;
+  if (update) this$.prevModifiedOn <- lastModifiedOn;
 
   res;
 }, protected=TRUE)
@@ -1170,7 +1172,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FAL
 
 
   checksum <- this$.checksum;
-  if (force || is.null(checksum) || hasBeenModified(this)) {
+  if (force || is.null(checksum) || hasBeenModified(this, update=FALSE)) {
     if (isFile(this)) {
       dfZ <- NULL
       if (is.na(write)) {
@@ -1194,7 +1196,9 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FAL
     } else {
       checksum <- NA_character_
     }
-    this$.checksum <- checksum;
+
+    ## Update checksum
+    this$.checksum <- checksum
   }
 
   checksum;
