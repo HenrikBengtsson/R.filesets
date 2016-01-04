@@ -8,12 +8,27 @@ message("*** GenericDataFileSet")
 ds <- GenericDataFileSet()
 print(ds)
 
+## Missingness
+print(is.na(ds))
+print(anyNA(ds))
+dsF <- na.omit(ds)
+print(dsF)
+stopifnot(length(dsF) == 0)
+stopifnot(nbrOfFiles(dsF) == length(dsF))
+
 ## Extract non-existing file
 dsT <- extract(ds, "foo", onMissing="NA")
 print(dsT)
 
 dsT <- ds["foo"]
 print(dsT)
+
+## Missingness
+print(is.na(dsT))
+print(anyNA(dsT))
+dsF <- na.omit(dsT)
+print(dsF)
+stopifnot(length(dsF) == 1)
 
 ## New instance of non-existing file
 ## FIXME: We should support this in the future, cf. NULL
@@ -27,6 +42,14 @@ print(dsT)
 files <- list(GenericDataFile())
 ds <- GenericDataFileSet(files)
 print(ds)
+
+## Missingness
+print(is.na(ds))
+print(anyNA(ds))
+dsF <- na.omit(ds)
+print(dsF)
+## FIXME: Issue #19
+##stopifnot(length(dsF) == 0)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -47,6 +70,10 @@ print(getFullName(ds))
 
 cat("Checksum of data set:\n")
 print(getChecksum(ds))
+
+cat("Checksum objects:\n")
+checksums <- getChecksumObjects(ds, verbose=TRUE)
+print(checksums)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,6 +123,10 @@ ds5 <- extract(ds, idxs, onMissing="NA")
 print(ds5)
 print(getFullNames(ds5))
 print(getFiles(ds5))
+
+ds5b <- getFiles(ds, na.omit(idxs))
+print(ds5b)
+stopifnot(equals(ds5b, getFiles(ds)[na.omit(idxs)]))
 
 stopifnot(identical(is.na(idxs), unname(is.na(getPathnames(ds5)))))
 
@@ -164,6 +195,10 @@ print(ds)
 names <- getNames(ds)
 print(names)
 
+## Indices of all files
+cat("Indices:\n")
+idxs <- indexOf(ds)
+print(idxs)
 
 # Exact matching
 by <- "exact";
@@ -216,3 +251,11 @@ for (name in names) {
   cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
 }
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Unknown arguments
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="ignore")
+ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="warning")
+res <- try(ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="error"), silent=TRUE)
+stopifnot(inherits(res, "try-error"))

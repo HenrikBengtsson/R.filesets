@@ -23,6 +23,9 @@ print(is.na(df))
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Comparisons
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+pathT <- file.path(tempdir(), "copy")
+ds <- copyTo(ds, path=pathT, overwrite=TRUE)
+
 df <- ds[[1]]
 res <- equals(df, df)
 print(res)
@@ -41,9 +44,19 @@ print(res)
 stopifnot(!res)
 
 print(df)
-print(getChecksum(df))
+print(getChecksum(df, verbose=TRUE))
+print(readChecksum(df))
 
-message("-------------------------------")
+print(df)
+print(getChecksum(df, force=TRUE, verbose=TRUE))
+
+print(df)
+print(getChecksum(df, write=TRUE, force=TRUE, verbose=TRUE))
+
+print(df)
+print(getChecksum(df, write=FALSE, force=TRUE, verbose=TRUE))
+
+
 pathT <- file.path(tempdir(), "foo")
 dfC <- copyTo(df, path=pathT, overwrite=TRUE)
 print(dfC)
@@ -225,5 +238,10 @@ df <- GenericDataFile(mustExist=FALSE, foobar=42L, .onUnknownArgs="ignore")
 df <- GenericDataFile(mustExist=FALSE, foobar=42L, .onUnknownArgs="warning")
 res <- try(df <- GenericDataFile(mustExist=FALSE, foobar=42L, .onUnknownArgs="error"), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
+
+checksum <- getChecksum(df)
+print(checksum)
+stopifnot(is.na(checksum))
+
 
 message("*** GenericDataFile ... DONE")

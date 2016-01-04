@@ -12,6 +12,10 @@ pathname <- pathnames[1]
 data <- readDataFrame(pathname)
 print(data)
 
+data <- readDataFrame(basename(pathname), path=dirname(pathname))
+print(data)
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Reading gzip'ed file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,4 +38,3 @@ file.remove(pathnameZ)
 pathnames <- rep(pathname, times=3L)
 data <- readDataFrame(pathnames)
 print(data)
-
