@@ -13,3 +13,5 @@ print(ds)
 
 x2 <- loadObject(ds[[1]])
 stopifnot(identical(x2, x))
+
+message("*** RdsFileSet ... DONE")
