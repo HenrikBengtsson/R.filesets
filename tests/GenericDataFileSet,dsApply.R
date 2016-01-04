@@ -69,6 +69,11 @@ if (fullTest && isPackageInstalled("async")) {
 # Alt 5. (via BatchJobs)
 if (fullTest && isPackageInstalled("BatchJobs")) {
   message("**** dsApply(..., .parallel='BatchJobs')")
+
+  ## Override any .BatchJobs.R settings and use a "local" backend
+  library("BatchJobs")
+  setConfig(list(cluster.functions=makeClusterFunctionsLocal()))
+
   res4 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
   print(res4)
   stopifnot(all.equal(res4, res1))
@@ -78,6 +83,11 @@ if (fullTest && isPackageInstalled("BatchJobs")) {
 # Alt 6. (via BiocParallel + BatchJobs)
 if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
   message("**** dsApply(..., .parallel='BiocParallel::BatchJobs')")
+
+  ## Override any .BatchJobs.R settings and use a "local" backend
+  library("BatchJobs")
+  setConfig(list(cluster.functions=makeClusterFunctionsLocal()))
+
   res5 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
   print(res5)
   stopifnot(all.equal(res5, res1))
