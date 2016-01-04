@@ -799,39 +799,6 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod seq
-#
-# @title "Gets an integer vector of file indices"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer @vector in [1,N] where N is the number of files,
-#   or an empty vector if the set is empty.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword internal
-#*/###########################################################################
-setMethodS3("seq", "GenericDataFileSet", function(this, ...) {
-  seq_along(this);
-}, protected=TRUE)
-
-
-###########################################################################/**
 # @RdocMethod as.list
 #
 # @title "Returns the files of the file set"
