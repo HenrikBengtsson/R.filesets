@@ -42,19 +42,21 @@ setMethodS3("tags", "default", function(..., collapse=FALSE) {
 
 
 setMethodS3("dropTags", "default", function(..., drop=NULL, collapse=FALSE) {
-  fullname <- fullname(..., collapse=FALSE);
+  parts <- fullname(..., collapse=FALSE)
 
   # Argument 'drop':
-  drop <- fullname(drop, collapse=FALSE);
+  drop <- fullname(drop, collapse=FALSE)
 
-  fullname <- setdiff(fullname, drop);
+  parts <- c(parts[1], setdiff(parts[-1], drop))
 
-  fullname(fullname, collapse=collapse);
+  fullname(parts, collapse=collapse)
 })
 
 
 ############################################################################
 # HISTORY:
+# 2016-01-02
+# o BUG FIX: dropTags() would drop name if a tag had the same name.
 # 2011-03-09
 # o Added dropTags().
 # o Now all these functions drops empty tags (and names).

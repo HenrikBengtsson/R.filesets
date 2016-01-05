@@ -80,7 +80,6 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \tab \code{hasFile} \tab  -\cr
  \tab \code{indexOf} \tab  -\cr
  \tab \code{is.na} \tab  -\cr
- \tab \code{na.omit} \tab  -\cr
  \tab \code{sortBy} \tab  -\cr
  \tab \code{unique} \tab  -\cr
  \tab \code{validate} \tab  -\cr

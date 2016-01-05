@@ -30,8 +30,23 @@
 # }
 #*/#########################################################################
 setMethodS3("getTags", "Arguments", function(static, ..., na.rm=TRUE, collapse=",") {
+  args <- list(...)
+
+  ## Drop empty elements
+  keep <- (unlist(lapply(args, FUN=length), use.names=FALSE) > 0)
+  args <- args[keep]
+
+  ## Nothing to do?
+  if (length(args) == 0) return(NULL)
+
+  ## Drop missing elements?
+  if (na.rm) {
+    keep <- !unlist(lapply(args, FUN=is.na), use.names=FALSE)
+    args <- args[keep]
+  }
+
   # Generate tags
-  tags <- paste(..., sep=",", collapse=",");
+  tags <- do.call(paste, args=c(args, sep=",", collapse=","))
   tags <- Arguments$getCharacters(tags);
   tags <- strsplit(tags, split=",", fixed=TRUE);
   tags <- unlist(tags);
@@ -46,9 +61,7 @@ setMethodS3("getTags", "Arguments", function(static, ..., na.rm=TRUE, collapse="
   tags <- tags[nchar(tags, type="chars") > 0L];
 
   # Nothing to do?
-  if (length(tags) == 0) {
-    return(NULL);
-  }
+  if (length(tags) == 0) return(NULL);
 
   # Collapse?
   if (!is.null(collapse)) {

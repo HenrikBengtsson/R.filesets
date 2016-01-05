@@ -28,16 +28,17 @@ setConstructorS3("GenericTabularFileSet", function(...) {
 
 
 
-setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., files=NULL, drop=FALSE) {
+setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, files=NULL, ..., drop=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfFiles <- length(this);
 
-  # Argument 'files':
+  # Argument 'files': [DEPRECATED]
   if (is.null(files)) {
     files <- seq_len(nbrOfFiles);
   } else {
+    .Deprecated("Argument 'files' of extractMatrix() for GenericTabularFileSet is deprecated. Use extractMatrix(ds[files], ...) instead.")
     files <- Arguments$getIndices(files, max=nbrOfFiles);
     nbrOfFiles <- length(files);
   }

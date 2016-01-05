@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{writeChecksum}{GenericDataFile}(this, ..., skip=FALSE, verbose=FALSE)
+\method{writeChecksum}{GenericDataFile}(this, ..., skip=FALSE)
 }
 
 \arguments{

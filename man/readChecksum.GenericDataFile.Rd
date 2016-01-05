@@ -18,12 +18,11 @@
 }
 
 \usage{
-\method{readChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+\method{readChecksum}{GenericDataFile}(this, ...)
 }
 
 \arguments{
  \item{...}{Not used.}
- \item{verbose}{...}
 }
 
 \value{

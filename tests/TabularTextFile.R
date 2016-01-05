@@ -12,8 +12,12 @@ db <- TabularTextFile("fileB,other,tags.dat", path=pathA)
 print(db)
 
 # Read all data
-data <- readDataFrame(db)
+data <- readDataFrame(db, verbose=TRUE)
 print(data)
+
+# Read columns
+dataC <- readColumns(db, verbose=TRUE)
+print(dataC)
 
 # Extract a particular column by its name
 dataY <- extractMatrix(db, column="y", colClass="integer")

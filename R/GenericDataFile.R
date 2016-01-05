@@ -46,20 +46,27 @@
 #   An object of this class is typically part of an @see "GenericDataFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore")) {
+setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist=!is.na(filename), ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (is.null(filename)) {
+    ## Developers mode: Test default NA_character_ early on. /HB 2015-12-23
+    filename <- getOption("R.filesets/GenericDataFile/args/filename", NULL)
+    ## FIXME: In a future release, make NULL an invalid value. /HB 2015-12-23
+    ## throw("Argument 'filename' must be a single character string: NULL")
+  } else if (length(filename) != 1L) {
+    throw("Argument 'filename' must be a single character string: ", length(filename))
+  }
+
   if (!is.null(filename)) {
-    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist);
-    if (!is.na(pathname)) {
-      # Assert that it is not pointing to a directory
-      if (isDirectory(pathname)) {
-        throw("The specified pathname is a directory: ", pathname);
-      }
+    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist)
+    # Assert that it is not pointing to a directory
+    if (isDirectory(pathname)) {
+      throw("The specified pathname is a directory: ", pathname)
     }
   } else {
-    pathname <- NULL;
+    pathname <- NULL
   }
 
   # Arguments '...':
@@ -158,15 +165,15 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
   # Default values
   notEqual <- FALSE;
   attr(notEqual, "thisFile") <- getPathname(this);
-  attr(notEqual, "otherFile") <- getPathname(other);
-  msg <- NULL;
-
   if (!inherits(other, "GenericDataFile")) {
     msg <- sprintf("The 'other' is not a GenericDataFile: %s",
                                                  class(other)[1]);
     attr(notEqual, "reason") <- msg;
     return(notEqual);
   }
+
+  attr(notEqual, "otherFile") <- getPathname(other);
+  msg <- NULL;
 
   if (identical(getPathname(this), getPathname(other)))
     return(TRUE);
@@ -239,8 +246,8 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   s <- c(s, sprintf("Full name: %s", getFullName(this)));
 
   # Pathname
-  pathname <- getPathname(this, absolute=FALSE);
-  if (!is.null(pathname) && !is.na(pathname)) {
+  pathname <- getPathname(this, absolute=FALSE, NULLasNA=TRUE)
+  if (!is.na(pathname)) {
     pathnameA <- getPathname(this, absolute=TRUE);
     if (nchar(pathnameA, type="chars") < nchar(pathname, type="chars")) {
       pathname <- pathnameA;
@@ -295,15 +302,21 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...) {
-  pathname <- this$.pathname;
-  if (!is.null(pathname)) {
+  ## Secret argument. /HB 2015-12-23
+  args <- list(...)
+  NULLasNA <- isTRUE(args$NULLasNA)
+
+  pathname <- this$.pathname
+  if (is.null(pathname)) {
+    if (NULLasNA) pathname <- NA_character_
+  } else {
     if (absolute) {
-      pathname <- getAbsolutePath(pathname);
+      pathname <- getAbsolutePath(pathname)
     } else {
-      pathname <- getRelativePath(pathname);
+      pathname <- getRelativePath(pathname)
     }
   }
-  pathname;
+  pathname
 })
 
 
@@ -334,10 +347,8 @@ setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...
 # }
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this, ...);
-  if (is.null(res)) res <- as.character(NA);
-  res <- dirname(res);
-  res;
+  pathname <- getPathname(this, ..., NULLasNA=TRUE)
+  dirname(pathname)
 })
 
 
@@ -376,10 +387,8 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this, ...);
-  if (is.null(res)) res <- as.character(NA);
-  res <- basename(res);
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  basename(pathname)
 })
 
 
@@ -576,15 +585,15 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("isFile", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this);
-  isFile(res);
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  isFile(pathname)
 })
 
 
 setMethodS3("is.na", "GenericDataFile", function(x) {
-  pathname <- getPathname(x);
-  is.na(pathname);
-}, appendVarArgs=FALSE) # is.na()
+  pathname <- getPathname(x, NULLasNA=TRUE)
+  is.na(pathname)
+}, appendVarArgs=FALSE)
 
 
 
@@ -660,12 +669,8 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   # Argument 'what':
   what <- match.arg(what);
 
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    fileSize <- NA_real_;
-  } else {
-    fileSize <- file.info2(pathname)$size;
-  }
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  fileSize <- file.info2(pathname)$size
 
   if (what == "numeric")
     return(fileSize);
@@ -673,18 +678,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   if (is.na(fileSize))
     return(fileSize);
 
-  units <- c("bytes", "kB", "MB", "GB", "TB");
-  scale <- 1;
-  for (kk in seq_along(units)) {
-    unit <- units[kk];
-    if (fileSize < 1000)
-      break;
-    fileSize <- fileSize/1024;
-  }
-  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
-  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
-
-  fileSize;
+  .asIEC(fileSize)
 })
 
 
@@ -715,13 +709,8 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 # }
 #*/###########################################################################
 setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["ctime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$ctime
 }, protected=TRUE)
 
 
@@ -752,13 +741,8 @@ setMethodS3("getCreatedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["mtime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$mtime
 }, protected=TRUE)
 
 
@@ -790,13 +774,8 @@ setMethodS3("getLastModifiedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
-  pathname <- this$.pathname;
-  if (is.null(pathname)) {
-    res <- as.POSIXct(NA);
-  } else {
-    res <- file.info(pathname)[["atime"]];
-  }
-  res;
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  file.info(pathname)$atime
 }, protected=TRUE)
 
 
@@ -813,9 +792,11 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
 #  \item{unknown}{The @logical value returned if the timestamp for the
 #   previous modification, if any, is unknown.}
+#  \item{update}{If @TRUE, the internal check timestamp is updated after
+#   calling this function, otherwise not.}
+#  \item{...}{Not used.}
 # }
 #
 # \value{
@@ -829,7 +810,7 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TRUE) {
+setMethodS3("hasBeenModified", "GenericDataFile", function(this, update=TRUE, unknown=TRUE, ...) {
   lastModifiedOn <- getLastModifiedOn(this);
   prevModifiedOn <- this$.prevModifiedOn;
 
@@ -851,7 +832,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
     attr(res, "prevModifiedOn") <- prevModifiedOn;
   }
 
-  this$.prevModifiedOn <- lastModifiedOn;
+  if (update) this$.prevModifiedOn <- lastModifiedOn;
 
   res;
 }, protected=TRUE)
@@ -988,15 +969,16 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path);
+  pathname <- Arguments$getWritablePathname(filename, path=path)
 
   # Fail-safe copying
-  copyFile(getPathname(this), pathname, ...);
+  pathnameS <- getPathname(this, NULLasNA=TRUE)
+  copyFile(pathnameS, pathname, ...)
 
   # Create object of the same class.
-  res <- newInstance(this, pathname);
+  res <- newInstance(this, pathname)
 
-  res;
+  res
 }, protected=TRUE) # copyTo()
 
 
@@ -1051,7 +1033,8 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!skip)
 
   # Create link
-  createLink(target=getPathname(this), link=pathname, skip=skip, overwrite=overwrite, ...)
+  pathnameS <- getPathname(this, NULLasNA=TRUE)
+  createLink(target=pathnameS, link=pathname, skip=skip, overwrite=overwrite, ...)
 
   # Create object of the same class.
   res <- newInstance(this, pathname)
@@ -1113,13 +1096,12 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
   }
 
   # Nothing to do?
-  if (identical(pathname, getPathname(this)))
+  srcPathname <- getPathname(this, NULLasNA=TRUE)
+  if (identical(pathname, srcPathname))
     return(this);
 
   # Assert that file is not overwritten by mistake.
   pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
-
-  srcPathname <- getPathname(this);
 
   verbose && enter(verbose, "Renaming ", class(this)[1], " pathname");
   verbose && cat(verbose, "Source: ", srcPathname);
@@ -1155,6 +1137,11 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 # @synopsis
 #
 # \arguments{
+#  \item{write}{If @TRUE or @NA and a checksum file does not exists, then
+#    a checksum file is created, iff possible.  If @NA and the file could
+#    not be created, then it falls back to @FALSE, but if @TRUE an error
+#    is thrown.  If @FALSE and no checksum file exists, the checksum is
+#    calculated on the fly.}
 #  \item{force}{If @FALSE, the file exists and has not be modified since,
 #    then the cached checksum is returned.}
 #  \item{verbose}{...}
@@ -1175,7 +1162,7 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, verbose=FALSE) {
+setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FALSE, verbose=FALSE, ...) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -1185,17 +1172,33 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
 
 
   checksum <- this$.checksum;
-  if (force || is.null(checksum) || hasBeenModified(this)) {
+  if (force || is.null(checksum) || hasBeenModified(this, update=FALSE)) {
     if (isFile(this)) {
-      verbose && enter(verbose, "Calculating checksum");
-      pathname <- getPathname(this);
-      checksum <- digest(pathname, file=TRUE);
-      verbose && exit(verbose);
+      dfZ <- NULL
+      if (is.na(write)) {
+        dfZ <- tryCatch({
+          getChecksumFile(this, force=force)
+        }, error=function(ex) { NULL })
+      } else if (write) {
+        dfZ <- getChecksumFile(this, force=force)
+      } else if (hasChecksumFile(this)) {
+        dfZ <- getChecksumFile(this, force=force)
+      }
+
+      if (isFile(dfZ)) {
+        checksum <- readChecksum(dfZ)
+      } else {
+        verbose && enter(verbose, "Calculating checksum");
+        pathname <- getPathname(this);
+        checksum <- digest(pathname, file=TRUE);
+        verbose && exit(verbose);
+      }
     } else {
-      naValue <- as.character(NA);
-      checksum <- naValue;
+      checksum <- NA_character_
     }
-    this$.checksum <- checksum;
+
+    ## Update checksum
+    this$.checksum <- checksum
   }
 
   checksum;
@@ -1234,45 +1237,9 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  if (!isFile(this)) {
-    throw("Cannot write checksum to file. File does not exist: NA");
-  }
-
-
-  verbose && enter(verbose, "Writing checksum");
-
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-
-  verbose && cat(verbose, "Pathname: ", outPathname);
-
-  # Skip existing checksum file?
-  if (skip && isFile(outPathname)) {
-    verbose && cat(verbose, "Found existing checksum file");
-    # Validating
-    verbose && enter(verbose, "Reading existing checksum file");
-    checksum <- readChecksum(this, verbose=less(verbose));
-    verbose && cat(verbose, "Checksum (read): ", checksum);
-    verbose && exit(verbose);
-  } else {
-    verbose && enter(verbose, "Getting checksum");
-    checksum <- getChecksum(this, verbose=less(verbose));
-    verbose && cat(verbose, "Checksum (generated): ", checksum);
-    cat(checksum, file=outPathname);
-    verbose && exit(verbose);
-  }
-
-  verbose && exit(verbose);
-
-  invisible(outPathname);
+setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) {
+  dfZ <- getChecksumFile(this, force=!skip, ...)
+  invisible(getPathname(dfZ))
 })
 
 
@@ -1290,7 +1257,6 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1315,50 +1281,17 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("readChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot read stored checksum. File does not exist: NA");
   }
 
-  verbose && enter(verbose, "Reading checksum");
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-  verbose && cat(verbose, "Pathname: ", outPathname);
-  outPathname <- Arguments$getReadablePathname(outPathname, mustExist=TRUE);
-
-  checksum <- readLines(outPathname, warn=FALSE);
-
-#  verbose && enter(verbose, "Trimming");
-  # Trim all lines
-  checksum <- trim(checksum);
-  # Drop empty lines
-  checksum <- checksum[nchar(checksum) > 0L];
-  # Drop comments
-  checksum <- checksum[regexpr("^#", checksum) == -1L];
-#  verbose && exit(verbose);
-
-  verbose && enter(verbose, "Validating checksum");
-  if (length(checksum) == 0L)
-    throw("File format error. No checksum found: ", outPathname);
-  if (length(checksum) > 1L)
-    throw("File format error. Too many possible checksums: ", outPathname);
-
-  # A checksum should only consist of hexadecimal characters
-  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1L) {
-    throw("File format error. Invalid checksum ('", checksum, "'): ", outPathname);
+  if (!hasChecksumFile(this)) {
+    throw("Cannot read stored checksum. No checksum file available: ", getPathname(this))
   }
-  verbose && exit(verbose);
 
-  verbose && exit(verbose);
-
-  checksum;
+  dfZ <- getChecksumFile(this)
+  readChecksum(dfZ)
 }, protected=TRUE)
 
 
@@ -1395,37 +1328,17 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("compareChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot compare checksum. File does not exist: NA");
+  } else if (!hasChecksumFile(this)) {
+    return(FALSE)
   }
 
-  pathname <- getPathname(this);
-  outPathname <- sprintf("%s.md5", pathname);
-
-  verbose && enter(verbose, "Comparing checksum");
-  verbose && cat(verbose, "Pathname: ", outPathname);
-
-  checksum <- getChecksum(this, verbose=less(verbose));
-  if (isFile(outPathname)) {
-    checksum2 <- readLines(outPathname, warn=FALSE);
-  } else {
-    naValue <- as.character(NA);
-    checksum2 <- naValue;
-  }
-  res <- identical(checksum, checksum2);
-
-  verbose && cat(verbose, res);
-  verbose && exit(verbose);
-
-  res;
+  tryCatch({
+    validateChecksum(this, ...)
+    TRUE
+  }, error=function(ex) FALSE)
 })
 
 
@@ -1442,7 +1355,6 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1460,27 +1372,16 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=FALSE) {
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
+setMethodS3("validateChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot validate checksum. File does not exist: NA");
+  } else if (!hasChecksumFile(this)) {
+    throw("Cannot validate checksum. No checksum file available: ", getPathname(this))
   }
 
-  verbose && enter(verbose, "Validating checksum");
-  pathname <- getPathname(this);
-  res <- compareChecksum(this, ..., verbose=less(verbose));
-  if (!res) {
-    throw("The calculated checksum and the checksum store on file do not match: ", pathname);
-  }
-  verbose && exit(verbose);
-
-  invisible(res);
+  dfZ <- getChecksumFile(this)
+  res <- validate(dfZ)
+  invisible(res)
 })
 
 
@@ -1578,7 +1479,8 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
-  isGzipped(getPathname(this), ...);
+  pathname <- getPathname(this, NULLasNA=TRUE)
+  isGzipped(pathname, ...);
 }, protected=TRUE)
 
 
@@ -1645,6 +1547,10 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2015-12-23
+# o Now is.na() for GenericDataFile returns TRUE also if pathname is NULL.
+# 2015-12-13
+# o Now argument 'filename' must be a single string - not NULL.
 # 2014-08-26
 # o Now gzip()/gunzip() for GenericDataFile returns the output pathname.
 # 2014-02-28

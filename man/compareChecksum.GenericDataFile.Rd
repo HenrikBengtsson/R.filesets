@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{compareChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+\method{compareChecksum}{GenericDataFile}(this, ...)
 }
 
 \arguments{

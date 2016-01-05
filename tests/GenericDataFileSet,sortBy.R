@@ -13,9 +13,8 @@ ds <- GenericDataFileSet$byPath(path)
 print(ds)
 
 bys <- c("lexicographic", "filesize")
-if (require("gtools")) {
-  bys <- c(bys, "mixeddecimal")
-  if (packageVersion("gtools") > "3.5.0") bys <- c(bys, "mixedroman")
+if (require("gtools") && packageVersion("gtools") >= "3.5.0") {
+  bys <- c(bys, "mixeddecimal", "mixedroman")
 }
 for (by in bys) {
   for (decreasing in c(FALSE, TRUE)) {

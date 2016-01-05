@@ -1,6 +1,30 @@
 Package: R.filesets
 ===================
 
+Version: 2.10.0 [2016-01-04]
+o Now file sizes are reported using IEC binary prefixes, i.e.
+  bytes, KiB, MiB, GiB, TiB, ..., YiB.
+o Preparing to make the default pathname for GenericDataFile() to
+  become NA_character_.  It is currently NULL, but the goal is to
+  enforce length(pathname) to be one.
+o Added hasChecksumFile() for GenericDataFile.
+o hasBeenModified() for GenericDataFile gained argument 'update'.
+o Package requires R (>= 3.1.2) released October 2014, because
+  of its dependency on the listenv package.
+o CLEANUP: extractMatrix(ds, files, ...) for GenericTabularFileSet
+  is deprecated. Use extractMatrix(ds[files], ...) instead.
+o CLEANUP: Removed na.omit() for GenericDataFileSet; the default
+  one in the stats package works equally well.
+o ROBUSTNESS: Increased test coverage from 51% to 62%.
+o BUG FIX: Arguments$getTags() failed to drop missing values.
+o BUG FIX: equals(df, other) for GenericDataFile would give an error
+  if 'other' was not a GenericDataFile.
+o BUG FIX: dropTags() would drop name if a tag had the same name.
+o BUG FIX: getOneFile() on a GenericDataFileSet with a single
+  missing file would give an error, now it gives a file with
+  an NA pathname.
+
+
 Version: 2.9.0 [2015-10-20]
 o Add support for dsApply(..., .parallel="future"), which utilizes
   the future package.

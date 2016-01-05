@@ -283,18 +283,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, what=c("numeric"
   if (is.na(fileSize))
     return(fileSize);
 
-  units <- c("bytes", "kB", "MB", "GB", "TB");
-  scale <- 1;
-  for (kk in seq_along(units)) {
-    unit <- units[kk];
-    if (fileSize < 1000)
-      break;
-    fileSize <- fileSize/1024;
-  }
-  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
-  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
-
-  fileSize;
+  .asIEC(fileSize)
 })
 
 
@@ -506,20 +495,6 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 # }
 #*/###########################################################################
 setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "mixeddecimal", "mixedroman", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
-  ## Local functions
-  mixedorder <- function(x, numeric.type="numeric", ...) {
-    if (packageVersion("gtools") >= "3.5.0") {
-      gtools::mixedorder(x, numeric.type=numeric.type, ...)
-    } else {
-      if (numeric.type == "decimal") {
-        gtools::mixedorder(x, ...)
-      } else {
-        throw(sprintf("gtools::mixedorder(..., numeric.type='%s') requires gtools (>= 3.5.0)", numeric.type))
-      }
-    }
-  } # mixedorder()
-
-
   # Argument 'by':
   by <- match.arg(by);
   if (by == "mixedsort") by <- "mixeddecimal"
@@ -537,12 +512,12 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
   } else if (by == "mixeddecimal") {
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
-    order <- mixedorder(fullnames, numeric.type="decimal");
+    order <- gtools::mixedorder(fullnames, numeric.type="decimal");
     if (decreasing) order <- rev(order);
   } else if (by == "mixedroman") {
     fullnames <- getFullNames(this);
     if (!caseSensitive) fullnames <- tolower(fullnames);
-    order <- mixedorder(fullnames, numeric.type="roman", roman.case="both");
+    order <- gtools::mixedorder(fullnames, numeric.type="roman", roman.case="both");
     if (decreasing) order <- rev(order);
   } else if (by == "filesize") {
     sizes <- sapply(this, FUN=getFileSize);
@@ -824,39 +799,6 @@ setMethodS3("getPathnames", "GenericDataFileSet", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod seq
-#
-# @title "Gets an integer vector of file indices"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer @vector in [1,N] where N is the number of files,
-#   or an empty vector if the set is empty.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword internal
-#*/###########################################################################
-setMethodS3("seq", "GenericDataFileSet", function(this, ...) {
-  seq_along(this);
-}, protected=TRUE)
-
-
-###########################################################################/**
 # @RdocMethod as.list
 #
 # @title "Returns the files of the file set"
@@ -973,7 +915,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     if (!is.object(default) && is.na(default)) {
       className <- getFileClass(this);
       clazz <- Class$forName(className, envir=parent.frame());
-      default <- newInstance(clazz);
+      default <- newInstance(clazz, NA_character_);
     } else if (is.numeric(default)) {
       default <- this[[default]];
     }
@@ -1003,7 +945,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     file <- files[[ii]];
     pathname <- getPathname(file);
     # Found?
-    if (!is.na(pathname)) {
+    if (!is.null(pathname) && !is.na(pathname)) {
       return(file);
     }
   } # for (ii ...)
@@ -1218,7 +1160,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "na.omit" for dropping missing files from a fileset.
+#   @see "stats::na.omit" for dropping missing files from a fileset.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1335,9 +1277,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
 ###########################################################################/**
 # @RdocMethod anyNA
-# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
 # @alias is.na.GenericDataFileSet
-# @alias na.omit.GenericDataFileSet
 #
 # @title "Checks whether any of the pathnames are missing"
 #
@@ -1360,7 +1300,7 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 # @author
 #
 # \seealso{
-#   @seemethod "na.omit" for dropping missing items.
+#   @see "stats::na.omit" for dropping missing items.
 #   @seeclass
 # }
 #*/###########################################################################
@@ -1376,11 +1316,6 @@ setMethodS3("is.na", "GenericDataFileSet", function(x) {
   files <- getFiles(x);
   unlist(lapply(files, FUN=is.na));
 }, appendVarArgs=FALSE) # is.na()
-
-setMethodS3("na.omit", "GenericDataFileSet", function(object, ...) {
-  extract(object, files=seq_along(object), onMissing="drop", ...);
-}) # na.omit()
-
 
 
 

@@ -12,6 +12,9 @@
 
 
 % Other missing docs
+\alias{hasChecksumFile}
+\alias{hasChecksumFile.default}
+\alias{hasChecksumFile.GenericDataFile}
 \alias{GenericDataFileList}
 \alias{[.GenericTabularFile}
 \alias{append}
