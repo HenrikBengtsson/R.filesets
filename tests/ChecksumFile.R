@@ -31,5 +31,18 @@ validate(dsCZ, verbose=TRUE)
 
 print(readChecksums(dsCZ))
 
+## Single checksum file
+dfC <- dsC[[1]]
+print(dfC)
+dfCZ <- getChecksumFile(dfC)
+print(dfCZ)
+
+## Calling getChecksum() on an *.md5 file should not
+## create an *.md5.md5 file
+pathnameZZ <- sprintf("%s.md5", getPathname(dfCZ))
+stopifnot(!isFile(pathnameZZ))
+print(getChecksum(dfCZ))
+stopifnot(!isFile(pathnameZZ))
+
 
 message("*** ChecksumFile / ChecksumFileSet ... DONE")

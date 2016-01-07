@@ -10,6 +10,10 @@
 \docType{class}
 \alias{ChecksumFile}
 
+\alias{ChecksumFile.getChecksum}
+\alias{getChecksum.ChecksumFile}
+\alias{getChecksum,ChecksumFile-method}
+
 
 \title{The ChecksumFile class}
 
@@ -49,6 +53,7 @@ ChecksumFile(...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{create} \tab  -\cr
+ \tab \code{getChecksum} \tab  -\cr
  \tab \code{isOld} \tab  -\cr
  \tab \code{\link[R.filesets:readChecksum.ChecksumFile]{readChecksum}} \tab Reads the checksum value.\cr
  \tab \code{\link[R.filesets:validate.ChecksumFile]{validate}} \tab Asserts that the checksum matches the checksum of file.\cr

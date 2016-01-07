@@ -1,5 +1,6 @@
 ###########################################################################/**
 # @RdocClass ChecksumFile
+# @aliasmethod getChecksum
 #
 # @title "The ChecksumFile class"
 #
@@ -60,6 +61,10 @@ setMethodS3("isOld", "ChecksumFile", function(this, ...) {
   isOld;
 })
 
+
+setMethodS3("getChecksum", "ChecksumFile", function(this, write=FALSE, ...) {
+  NextMethod("getChecksum", write=write)
+})
 
 
 ###########################################################################/**

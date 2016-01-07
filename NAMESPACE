@@ -124,6 +124,7 @@ S3method("getTags", "Arguments")
 # ChecksumFile
 S3method("as.character", "ChecksumFile")
 S3method("create", "ChecksumFile")
+S3method("getChecksum", "ChecksumFile")
 S3method("getMainFile", "ChecksumFile")
 S3method("isOld", "ChecksumFile")
 S3method("readChecksum", "ChecksumFile")
