@@ -1604,7 +1604,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- ".";
+    paths <- "."
+  } else {
+    paths <- unique(paths)
   }
 
   # Argument 'firstOnly':
@@ -1626,6 +1628,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   verbose && cat(verbose, "Possible search paths before expansion:");
   verbose && print(verbose, paths);
+  pathsOrg <- paths
 
   # Expand paths by regular expressions, in case they exist
   paths <- lapply(paths, FUN=function(path) {
@@ -1642,7 +1645,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   if (length(paths) == 0L) {
     if (mustExist) {
-      throw("No such root path directories: ", paste(paths, collapse=", "));
+      throw("No such root path directories: ", paste(sQuote(pathsOrg), collapse=", "));
     }
     verbose && exit(verbose);
     return(NULL);
