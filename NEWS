@@ -1,13 +1,15 @@
 Package: R.filesets
 ===================
 
-Version: 2.10.0-9000 [2016-01-19]
+Version: 2.10.0-9000 [2016-04-25]
 o Now getChecksum() for ChecksumFile defaults to not create a
   checksum file (which is the default for other types of file),
   but instead always return the checksum of the file by only
   calculating and in memory.  This prevents for instance the
   equals() test on two different checksum files to generate
   another set of checksum files on themselves.
+o CLEANUP: GenericDataFile and GenericDataFileSet no longer report
+  on memory (RAM) usage of objects.
 o FIX: Now findByName() for GenericDataFileSet reports on the
   non-existing root paths in error messages.
 

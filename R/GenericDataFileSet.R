@@ -167,9 +167,6 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   }
   s <- c(s, sprintf("Total file size: %s", fileSize));
 
-  # RAM
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
-
   # Check fullnames translation
   getFullNames(this, onRemapping="warning")
 
