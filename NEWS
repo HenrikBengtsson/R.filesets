@@ -8,6 +8,8 @@ o Now getChecksum() for ChecksumFile defaults to not create a
   calculating and in memory.  This prevents for instance the
   equals() test on two different checksum files to generate
   another set of checksum files on themselves.
+o Package requires R (>= 3.1.2) and BioC (>= 3.0) both released in
+  October 2014.
 o CLEANUP: GenericDataFile and GenericDataFileSet no longer report
   on memory (RAM) usage of objects.
 o FIX: Now findByName() for GenericDataFileSet reports on the
