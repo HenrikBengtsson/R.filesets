@@ -223,7 +223,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
     verbose && enter(verbose, "Processing using futures");
 
     # Allocate result list
-    futures <- listenv()
+    futures <- list()
 
     for (gg in seq_along(sets)) {
       name <- names(sets)[gg]
@@ -236,7 +236,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       verbose && str(verbose, argsT)
       argsT <- NULL; # Not needed anymore
 
-      futureGG <- future(do.call(FUN, args=argsGG))
+      futureGG <- futureCall(FUN, args=argsGG)
       verbose && str(verbose, futureGG)
 
       # Record
@@ -253,8 +253,11 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
     names(futures) <- names(sets)
 
-    ## Resolve the value of all futures
-    res <- lapply(futures, FUN=value)
+    ## Resolve futures (and collect values as they are resolved)
+    resolve(futures, value=TRUE)
+
+    ## Coerce values to a list
+    res <- values(futures)
 
     ## Not needed anymore
     rm(list="futures")
