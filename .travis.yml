@@ -50,9 +50,9 @@ before_install:
     fi
 
 install:
+ - $RENV install_bioc BiocParallel
  - $RENV install_deps
  - $RENV install_r gtools BatchJobs
- - $RENV install_bioc BiocParallel
 
 script:
   - $RENV run_build
