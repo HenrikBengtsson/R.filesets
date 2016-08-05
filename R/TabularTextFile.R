@@ -581,11 +581,11 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
       colClass <- colClassPatterns[pos];
       names <- names(colClassPatterns);
       if (length(colClassPatterns) > 1) {
-        names <- insert(names[-pos], at=pos, values=rep("*", times=nbrOfColumns));
+        names <- insert(names[-pos], ats=pos, values=rep("*", times=nbrOfColumns));
         idxs <- which(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
 
-        colClassPatterns <- insert(colClassPatterns[-pos], at=pos,
+        colClassPatterns <- insert(colClassPatterns[-pos], ats=pos,
                                    values=rep("*", times=nbrOfColumns));
         names(colClassPatterns) <- names;
         colClassPatterns[idxs] <- colClass;

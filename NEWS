@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 2.10.0-9000 [2016-05-11]
+Version: 2.10.0-9000 [2016-08-05]
 o Now getChecksum() for ChecksumFile defaults to not create a
   checksum file (which is the default for other types of file),
   but instead always return the checksum of the file by only
