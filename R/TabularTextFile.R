@@ -764,7 +764,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   attributes$header <- hdr;
 
   # Get read arguments
-  args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ...,
+  args <- getReadArguments(this, fileHeader=hdr, nrows=nrow, ...,
                                                verbose=less(verbose, 5));
 
   verbose && cat(verbose, "Arguments inferred from file header:");
