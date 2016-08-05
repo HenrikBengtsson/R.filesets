@@ -20,7 +20,7 @@ dataC <- readColumns(db, verbose=TRUE)
 print(dataC)
 
 # Extract a particular column by its name
-dataY <- extractMatrix(db, column="y", colClass="integer")
+dataY <- extractMatrix(db, column="y", colClasses="integer")
 
 # Validate
 stopifnot(identical(dataY[,1], data$y))
