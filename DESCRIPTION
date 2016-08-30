@@ -17,7 +17,7 @@ Suggests:
 SuggestsNote:
   BioC (>= 3.0),
   Recommended: gtools
-Date: 2016-08-05
+Date: 2016-08-29
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
