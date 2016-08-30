@@ -60,7 +60,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   }
 
   if (!is.null(filename)) {
-    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist)
+    pathname <- Arguments$getReadablePathname(filename, path=path, absolute=TRUE, mustExist=mustExist)
     # Assert that it is not pointing to a directory
     if (isDirectory(pathname)) {
       throw("The specified pathname is a directory: ", pathname)
