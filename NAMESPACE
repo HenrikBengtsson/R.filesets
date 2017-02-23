@@ -32,9 +32,7 @@ importFrom("stats", "reorder")
 
 ## Importing functions
 importFrom("digest", "digest")
-importFrom("future", "futureCall")
-importFrom("future", "resolve")
-importFrom("future", "values")
+importFrom("future", "future_lapply")
 importFrom("R.methodsS3", "throw")
 importFrom("R.oo", "getKnownSubclasses")
 importFrom("R.oo", "getStaticInstance")

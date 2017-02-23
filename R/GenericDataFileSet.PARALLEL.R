@@ -222,45 +222,13 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "future") {
     verbose && enter(verbose, "Processing using futures");
 
-    # Allocate result list
-    futures <- list()
-
-    for (gg in seq_along(sets)) {
-      name <- names(sets)[gg]
-      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", gg, name, length(sets)))
-      set <- sets[[gg]]
-      verbose && print(verbose, set)
-      argsGG <- c(list(set), allArgs)
-      verbose && cat(verbose, "Call arguments:")
-      argsT <- argsGG; argsT$verbose <- as.character(argsT$verbose)
-      verbose && str(verbose, argsT)
-      argsT <- NULL; # Not needed anymore
-
-      futureGG <- futureCall(FUN, args=argsGG)
-      verbose && str(verbose, futureGG)
-
-      # Record
-      futures[[gg]] <- futureGG
-
-      # Not needed anymore
-      idxs <- set <- argsGG <- futureGG <- NULL
-
-      verbose && exit(verbose)
-    } # for (gg ...)
-
-    ## No longer needed
-    rm(list=c("FUN", "argsGG"))
-
-    names(futures) <- names(sets)
-
-    ## Resolve futures (and collect values as they are resolved)
-    resolve(futures, value=TRUE)
-
-    ## Coerce values to a list
-    res <- values(futures)
+    call_args <- list(sets, FUN = FUN)
+    call_args <- c(call_args, allArgs)
+    res <- do.call(future_lapply, args = call_args)
 
     ## Not needed anymore
-    rm(list="futures")
+    rm(list = "call_args")
+    
     verbose && exit(verbose)
   } # if (parallel == "future")
 

@@ -1,17 +1,17 @@
 Package: R.filesets
 ===================
 
-Version: 2.10.0-9000 [2016-08-05]
+Version: 2.10.0-9000 [2017-02-22]
 o Now getChecksum() for ChecksumFile defaults to not create a
   checksum file (which is the default for other types of file),
   but instead always return the checksum of the file by only
   calculating and in memory.  This prevents for instance the
   equals() test on two different checksum files to generate
   another set of checksum files on themselves.
-o SPEEDUP: dsApply(..., .parallel="future") collects the value
-  of futures as they are resolved and not in order.
 o Package requires R (>= 3.1.2) and BioC (>= 3.0) both released in
   October 2014.
+o CLEANUP: dsApply(..., .parallel="future") now used future_lapply()
+  of the future package internally.
 o CLEANUP: Package no longer needs to depend on listenv.
 o CLEANUP: GenericDataFile and GenericDataFileSet no longer report
   on memory (RAM) usage of objects.
