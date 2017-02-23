@@ -8,6 +8,11 @@
 #
 # \description{
 #   @get "title".
+#
+#  \emph{
+#    WARNING: \code{dsApply(ds, FUN, ...)} will soon be deprecated.
+#    Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+#  }
 # }
 #
 # @synopsis
@@ -239,6 +244,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "BatchJobs") {
     verbose && enter(verbose, "Processing using BatchJobs");
 
+    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    
     # Attach "suggested" BatchJobs package
     .useBatchJobs();
 
@@ -358,6 +365,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "BiocParallel::BatchJobs") {
     verbose && enter(verbose, "Processing using BiocParallel");
 
+    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    
     # WORKAROUND: Make sure 'methods' package is *attached*, not
     # just loaded. /HB 2013-11-09
     .require <- require   # To please R CMD check
