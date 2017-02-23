@@ -32,22 +32,22 @@ stopifnot(all.equal(res2, res1, check.attributes=FALSE))
 res1 <- res2 ## FIXME: Workaround trick
 
 
-# Alt 3a. (via eager futures)
-message("**** dsApply(..., .parallel='future') with plan(eager)")
-future::plan("eager")
+# Alt 3a. (via sequential futures)
+message("**** dsApply(..., .parallel='future') with plan(sequential)")
+future::plan("sequential")
 res3a <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3a)
 stopifnot(all.equal(res3a, res1, check.attributes=FALSE))
 
-# Alt 3c. (via batchjobs futures)
-message("**** dsApply(..., .parallel='future') with plan(multicore)")
-future::plan("multicore")
+# Alt 3c. (via multiprocess futures)
+message("**** dsApply(..., .parallel='future') with plan(multiprocess)")
+future::plan("multiprocess")
 res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 
 
-# Alt 4. (via multicore futures)
+# Alt 4. (via BatchJobs futures)
 if (fullTest && isPackageInstalled("future.BatchJobs")) {
   message("**** dsApply(..., .parallel='future') with plan(future.BatchJobs::batchjobs_local)")
   ns <- getNamespace("future.BatchJobs")
