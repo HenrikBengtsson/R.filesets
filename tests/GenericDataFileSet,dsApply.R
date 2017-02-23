@@ -22,6 +22,15 @@ message("**** lapply()")
 res1 <- lapply(ds, FUN=getFileSize)
 str(res1)
 
+message("**** future_lapply()")
+strategies <- future:::supportedStrategies()
+strategies <- setdiff(strategies, c("lazy", "eager"))
+for (strategy in strategies) {
+  future::plan(strategy)
+  res2a <- future::future_lapply(ds, FUN=getFileSize)
+  str(res2a)
+  stopifnot(all.equal(res2a, res1, check.attributes=FALSE))
+}
 
 # Alt 2. (via an internal loop)
 message("**** dsApply(..., .parallel='none')")
