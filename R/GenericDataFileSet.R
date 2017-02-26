@@ -274,7 +274,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, what=c("numeric"
   if (is.na(fileSize))
     return(fileSize);
 
-  .asIEC(fileSize)
+  hsize(fileSize, digits = 2L, standard = "IEC")
 })
 
 
