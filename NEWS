@@ -34,6 +34,9 @@ INSTALLATION:
    
 DEPRECATED AND DEFUNCT:
 
+ o Argument 'colClassPatterns' of readDataFrame() for TabularTextFile is
+   now defunct.  Use 'colClasses' instead.
+ 
  o Argument 'files' of extractMatrix() for GenericTabularFileSet is defunct.
  
  o dsApply() with either .parallel = "BiocParallel::BatchJobs"
