@@ -34,6 +34,8 @@ INSTALLATION:
    
 DEPRECATED AND DEFUNCT:
 
+ o Argument 'files' of extractMatrix() for GenericTabularFileSet is defunct.
+ 
  o dsApply() with either .parallel = "BiocParallel::BatchJobs"
    or "BatchJobs" is deprecated.  Instead, use future::future_lapply()
    with whatever choice of future::plan() preferred.
