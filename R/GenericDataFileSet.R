@@ -81,12 +81,6 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
   setTags(this, tags);
 
-  # TO BE REMOVED. /HB 2013-10-15
-  args <- list(...);
-  if (is.element("alias", names(args))) {
-    .Defunct(msg="Argument 'alias' of GenericDataFileSet() is deprecated.  Use fullname translators instead.");
-  }
-
   this;
 })
 
