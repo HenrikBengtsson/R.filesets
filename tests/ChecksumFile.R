@@ -37,11 +37,14 @@ print(dfC)
 dfCZ <- getChecksumFile(dfC)
 print(dfCZ)
 
+pathnameZZ <- sprintf("%s.md5", getPathname(dfCZ))
+print(file.info(pathnameZZ))
+stopifnot(!isFile(pathnameZZ))
+
 ## Calling getChecksum() on an *.md5 file should not
 ## create an *.md5.md5 file
-pathnameZZ <- sprintf("%s.md5", getPathname(dfCZ))
-stopifnot(!isFile(pathnameZZ))
 print(getChecksum(dfCZ))
+print(file.info(pathnameZZ))
 stopifnot(!isFile(pathnameZZ))
 
 
