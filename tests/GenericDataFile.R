@@ -189,6 +189,15 @@ if (.Platform$OS.type == "windows") {
     isWindowsShortcut <- (getPathname(dfL) == getPathname(df))
     if (!isWindowsShortcut) {
       dfLC <- copyTo(dfL, path=file.path(path, "foo"), overwrite=TRUE, validate=FALSE)
+
+      if (getPathname(dfLC) == getPathname(df) ||
+          getChecksum(dfLC) != getChecksum(df)) {
+        print(dfLC)
+        print(getChecksum(dfLC))
+        print(df)
+        print(getChecksum(df))
+      }
+
       # Sanity checks
       stopifnot(getPathname(dfLC) != getPathname(df),
                 getChecksum(dfLC) == getChecksum(df))
