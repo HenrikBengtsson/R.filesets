@@ -10,11 +10,10 @@ SIGNIFICANT CHANGES:
 
 NEW FEATURES:
 
- o Now getChecksum() for ChecksumFile defaults to not creating a
-   checksum file (which is the default for other types of file),
-   but instead always return the checksum of the file by only
-   calculating and in memory.  This prevents for instance the
-   equals() test on two different checksum files to generate
+ o Now getChecksum() for ChecksumFile defaults to not creating a checksum file
+   (which is the default for other types of file), but instead always return
+   the checksum of the file by only calculating and in memory.  This prevents
+   for instance the equals() test on two different checksum files to generate
    another set of checksum files on themselves.
    
  o Now findByName() for GenericDataFileSet reports on the non-existing
@@ -42,8 +41,11 @@ DEPRECATED AND DEFUNCT:
  o dsApply() with either .parallel = "BiocParallel::BatchJobs"
    or "BatchJobs" is deprecated.  Instead, use future::future_lapply()
    with whatever choice of future::plan() preferred.
- 
- 
+
+ o Defunct argument 'aliased' of getDefaultFullName() for GenericDataFile
+   and defunct argument 'alias' of GenericDataFileSet() have been removed.
+
+
 Version: 2.10.0 [2016-01-04]
 
 SIGNIFICANT CHANGES:

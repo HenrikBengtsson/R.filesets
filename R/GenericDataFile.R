@@ -424,12 +424,6 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
-  # TO BE REMOVED. /HB 2013-10-15
-  args <- list(...);
-  if (is.element("aliased", names(args))) {
-    .Defunct(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
-  }
-
   filename <- getFilename(this, ...);
   if (is.null(filename))
     return(as.character(NA));
