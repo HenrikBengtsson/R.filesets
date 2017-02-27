@@ -25,7 +25,7 @@ NEW FEATURES:
 CLEANUP:
 
  o dsApply(..., .parallel="future") now used future_lapply() of the future
-   package internally.
+   package internally.  dsApply() will soon be deprecated (see below).
 
 INSTALLATION:
 
@@ -657,7 +657,7 @@ NEW FEATURES:
  
 Version: 2.0.4 [2013-05-25]
 
-PERFORMANCE:
+CLEANUP:
 
  o Minor speedup by replacing all rm() calls with NULL assignments.
  
@@ -717,10 +717,12 @@ DEPRECATED AND DEFUNCT:
  
 Version: 1.8.2 [2012-12-19]
 
-SOFTWARE QUALITY:
+NEW FEATURES:
 
  o Utilizing new startupMessage() of R.oo.
  
+SOFTWARE QUALITY:
+
  o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an
    exception if user tries to pass an argument 'names'.
 
@@ -783,7 +785,7 @@ NEW FEATURES:
   
 SOFTWARE QUALITY:
 
- o ROBUSTNESS: Now package declares S3 methods in the namespace.
+ o Now package declares S3 methods in the namespace.
 
 INSTALLATION:
 
