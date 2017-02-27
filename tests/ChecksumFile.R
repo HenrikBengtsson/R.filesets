@@ -14,10 +14,6 @@ print(dfZ)
 path <- system.file("exData", "dataSetA,original", package="R.filesets")
 print(path)
 
-pathnames <- dir(path = path)
-print(pathnames)
-stopifnot(!any(grepl("[.]md5$", pathnames)))
-
 ## Setting up a file set
 ds <- GenericDataFileSet$byPath(path)
 print(ds)

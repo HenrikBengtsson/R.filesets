@@ -61,6 +61,11 @@ path <- system.file("exData", "dataSetA,original", package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
 print(ds)
 
+## Create copy (so that we can write checksum files)
+pathT <- tempdir()
+ds <- copyTo(ds, path=pathT, overwrite=TRUE)
+print(ds)
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -71,17 +76,15 @@ cat("Fullname of data set:\n")
 print(getFullName(ds))
 
 cat("Checksum of data set:\n")
-## FIXME: This writes *.md5 files in the source directory
-#print(getChecksum(ds))
+print(getChecksum(ds))
 
 pathnames <- dir(path = path)
 print(pathnames)
 stopifnot(!any(grepl("[.]md5$", pathnames)))
 
 cat("Checksum objects:\n")
-## FIXME: This writes *.md5 files in the source directory
-#checksums <- getChecksumObjects(ds, verbose=TRUE)
-#print(checksums)
+checksums <- getChecksumObjects(ds, verbose=TRUE)
+print(checksums)
 
 pathnames <- dir(path = path)
 print(pathnames)

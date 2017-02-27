@@ -12,6 +12,11 @@ print(path)
 ds <- GenericDataFileSet$byPath(path)
 print(ds)
 
+## Create copy (so that we can write checksum files)
+pathT <- tempdir()
+ds <- copyTo(ds, path=pathT, overwrite=TRUE)
+print(ds)
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Vector operations on data set
