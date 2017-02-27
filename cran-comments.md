@@ -1,36 +1,49 @@
-# CRAN submission R.filesets 2.10.0
-on 2016-01-04
+# CRAN submission R.filesets 2.11.0
+
+on 2017-02-27
+
+I've verified that this submission causes no issues for
+any of the 10 reverse (recursive) package dependencies
+available on CRAN and Bioconductor.
 
 Thanks in advance
 
 
 ## Notes not sent to CRAN
+
 The package has been verified using `R CMD check --as-cran` on:
 
-* Platform x86_64-unknown-linux-gnu (64-bit) [Travis CI]:
-  - R version 3.1.3 (2015-03-09)
-  - R version 3.2.2 (2015-08-14)
-  - R Under development (unstable) (2016-01-04 r69860)
+* Platform x86_64-apple-darwin13.4.0 (64-bit) [Travis CI]:
+  - R 3.2.4 Revised (2016-03-16)
+  - R version 3.3.2 (2016-10-31)
   
+* Platform x86_64-unknown-linux-gnu (64-bit) [Travis CI]:
+  - R version 3.2.5 (2016-04-14)
+  - R version 3.3.2 (2016-10-31)
+  - R Under development (unstable) (2017-02-27 r72261)
+
 * Platform x86_64-pc-linux-gnu (64-bit):
   - R version 3.1.2 (2014-10-31)
-  - R version 3.2.3 Patched (2016-01-01 r69832)
-  - R Under development (unstable) (2016-01-03 r69847)
+  - R version 3.3.2 (2016-10-31)
+  - R version 3.3.2 Patched (2017-02-22 r72246)
+
+* Platform x86_64-pc-linux-gnu (64-bit) [r-hub]:
+  - R version 3.3.2 (2016-10-31)
+  - R Under development (unstable) (2016-10-30 r71610)
+
+* Platform i686-pc-linux-gnu (32-bit):
+  - R version 3.3.2 (2016-10-31)
+
+* Platform i386-w64-mingw32 (32-bit) [Appveyor CI]:
+  - R Under development (unstable) (2017-02-27 r72261)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [Appveyor CI]:
-  - R Under development (unstable) (2016-01-02 r69837)
+  - R version 3.3.2 (2016-10-31)
+  - R Under development (unstable) (2017-02-27 r72261)
+
+* Platform x86_64-w64-mingw32 (64-bit) [r-hub]:
+  - R Under development (unstable) (2017-01-24 r72026)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [win-builder]:
-  - R version 3.2.3 (2015-12-10)
-  - R Under development (unstable) (2016-01-03 r69847)
-
-* Platform x86_64-w64-mingw32/x64 (64-bit):
-  - R version 3.1.3 (2015-03-09)
-  - R version 3.2.3 Patched (2016-01-02 r69837)
-  - R Under development (unstable) (2016-01-03 r69847)
-
-Moreover, the updates cause no issues for any of the following
-6 reverse dependencies on CRAN, which have been tested with
-`R CMD check --as-cran`: ACNE 0.8.1, aroma.affymetrix 2.14.0,
-aroma.cn 1.6.1, aroma.core 2.14.0, calmate 0.12.1 and
-MPAgenomics 1.1.2.
+  - R version 3.3.2 (2016-10-31)
+  - R Under development (unstable) (2017-02-24 r72255)
