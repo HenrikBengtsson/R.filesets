@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** TabularTextFile")
 
@@ -20,7 +20,7 @@ dataC <- readColumns(db, verbose=TRUE)
 print(dataC)
 
 # Extract a particular column by its name
-dataY <- extractMatrix(db, column="y", colClass="integer")
+dataY <- extractMatrix(db, column="y", colClasses="integer")
 
 # Validate
 stopifnot(identical(dataY[,1], data$y))
@@ -95,3 +95,4 @@ data2 <- readDataFrame(df2)
 # Sanity checks
 stopifnot(identical(data2, data1))
 
+source("incl/end.R")

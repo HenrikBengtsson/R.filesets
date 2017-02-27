@@ -537,11 +537,9 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   verbose && cat(verbose, "User arguments:");
   verbose && str(verbose, userArgs);
 
-  # Backward compatibility
-  if (is.element("colClassPatterns", names(userArgs))) {
-    .Deprecated(msg="Argument 'colClassPatterns' has been renamed to 'colClasses'. Please update your code accordingly.");
-    colClasses <- userArgs[["colClassPatterns"]];
-    userArgs[["colClassPatterns"]] <- NULL;
+  # DEFUNCT
+  if ("colClassPatterns" %in% names(userArgs)) {
+    .Defunct(msg = "Argument 'colClassPatterns' has been renamed to 'colClasses'. Please update your code accordingly.")
   }
 
 
@@ -581,11 +579,11 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
       colClass <- colClassPatterns[pos];
       names <- names(colClassPatterns);
       if (length(colClassPatterns) > 1) {
-        names <- insert(names[-pos], at=pos, values=rep("*", times=nbrOfColumns));
+        names <- insert(names[-pos], ats=pos, values=rep("*", times=nbrOfColumns));
         idxs <- which(names == "*");
         names[idxs] <- sprintf("^%s$", columns);
 
-        colClassPatterns <- insert(colClassPatterns[-pos], at=pos,
+        colClassPatterns <- insert(colClassPatterns[-pos], ats=pos,
                                    values=rep("*", times=nbrOfColumns));
         names(colClassPatterns) <- names;
         colClassPatterns[idxs] <- colClass;
@@ -764,7 +762,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
   attributes$header <- hdr;
 
   # Get read arguments
-  args <- getReadArguments(this, fileHeader=hdr, nrow=nrow, ...,
+  args <- getReadArguments(this, fileHeader=hdr, nrows=nrow, ...,
                                                verbose=less(verbose, 5));
 
   verbose && cat(verbose, "Arguments inferred from file header:");

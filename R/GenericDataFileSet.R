@@ -81,12 +81,6 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", depth=NULL
 
   setTags(this, tags);
 
-  # TO BE REMOVED. /HB 2013-10-15
-  args <- list(...);
-  if (is.element("alias", names(args))) {
-    .Defunct(msg="Argument 'alias' of GenericDataFileSet() is deprecated.  Use fullname translators instead.");
-  }
-
   this;
 })
 
@@ -166,9 +160,6 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
     }
   }
   s <- c(s, sprintf("Total file size: %s", fileSize));
-
-  # RAM
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
 
   # Check fullnames translation
   getFullNames(this, onRemapping="warning")
@@ -283,7 +274,7 @@ setMethodS3("getFileSize", "GenericDataFileSet", function(this, what=c("numeric"
   if (is.na(fileSize))
     return(fileSize);
 
-  .asIEC(fileSize)
+  hsize(fileSize, digits = 2L, standard = "IEC")
 })
 
 
@@ -1604,7 +1595,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- ".";
+    paths <- "."
+  } else {
+    paths <- unique(paths)
   }
 
   # Argument 'firstOnly':
@@ -1626,6 +1619,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   verbose && cat(verbose, "Possible search paths before expansion:");
   verbose && print(verbose, paths);
+  pathsOrg <- paths
 
   # Expand paths by regular expressions, in case they exist
   paths <- lapply(paths, FUN=function(path) {
@@ -1642,7 +1636,7 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   if (length(paths) == 0L) {
     if (mustExist) {
-      throw("No such root path directories: ", paste(paths, collapse=", "));
+      throw("No such root path directories: ", paste(sQuote(pathsOrg), collapse=", "));
     }
     verbose && exit(verbose);
     return(NULL);

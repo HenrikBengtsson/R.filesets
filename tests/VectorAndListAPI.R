@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 # Tests adapted from the IRanges package and http://www.bioconductor.org/help/course-materials/2012/SeattleFeb2012/GenomicRanges_slides.pdf
 
@@ -10,6 +10,11 @@ print(path)
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ds <- GenericDataFileSet$byPath(path)
+print(ds)
+
+## Create copy (so that we can write checksum files)
+pathT <- tempdir()
+ds <- copyTo(ds, path=pathT, overwrite=TRUE)
 print(ds)
 
 
@@ -73,3 +78,5 @@ stopifnot(!anyDuplicated(dsT))
 # Comparing: unique()
 dsU <- unique(dsA)
 stopifnot(equals(dsU, dsT))
+
+source("incl/end.R")

@@ -21,6 +21,11 @@
 
 \description{
   Applies a function to each file in the file set.
+
+ \emph{
+   WARNING: \code{dsApply(ds, FUN, ...)} will soon be deprecated.
+   Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+ }
 }
 
 \usage{

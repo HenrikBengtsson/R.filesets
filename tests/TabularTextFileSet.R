@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** TabularTextFileSet")
 
@@ -15,7 +15,7 @@ print(ds)
 # Read column 'y' and a subset of the rows from each of the
 # tab-delimited files and combine into a matrix
 rows <- c(3:5, 8, 2)
-data <- extractMatrix(ds, column="y", colClass="integer", rows=rows, drop=TRUE)
+data <- extractMatrix(ds, column="y", colClasses="integer", rows=rows, drop=TRUE)
 print(data)
 
 
@@ -72,3 +72,5 @@ cat("Default fullnames:\n")
 print(getFullNames(ds, translate=FALSE))
 cat("Translated fullnames:\n")
 print(getFullNames(ds))
+
+source("incl/end.R")

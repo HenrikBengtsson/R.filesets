@@ -28,32 +28,24 @@ setConstructorS3("GenericTabularFileSet", function(...) {
 
 
 
-setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, files=NULL, ..., drop=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfFiles <- length(this);
-
-  # Argument 'files': [DEPRECATED]
-  if (is.null(files)) {
-    files <- seq_len(nbrOfFiles);
-  } else {
-    .Deprecated("Argument 'files' of extractMatrix() for GenericTabularFileSet is deprecated. Use extractMatrix(ds[files], ...) instead.")
-    files <- Arguments$getIndices(files, max=nbrOfFiles);
-    nbrOfFiles <- length(files);
+setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., drop=FALSE) {
+  args <- list(...)
+  
+  if ("files" %in% names(args)) {
+    .Defunct("Argument 'files' of extractMatrix() for GenericTabularFileSet is deprecated. Use extractMatrix(ds[files], ...) instead.")
   }
 
-
+  nbrOfFiles <- length(this)
   data <- NULL;
   for (kk in seq_len(nbrOfFiles)) {
-    file <- files[kk];
-    dataFile <- this[[file]];
-    dataKK <- extractMatrix(dataFile, ...);
+    dataFile <- this[[kk]]
+    argsKK <- c(list(dataFile), args)
+    dataKK <- do.call(extractMatrix, args = argsKK)
 
     if (is.null(data)) {
       naValue <- vector(storage.mode(dataKK), length=1);
       data <- matrix(naValue, nrow=nrow(dataKK), ncol=nbrOfFiles);
-      colnames(data) <- getNames(this)[files];
+      colnames(data) <- getNames(this)
     }
 
     data[,kk] <- dataKK;

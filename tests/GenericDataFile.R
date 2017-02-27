@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** GenericDataFile ...")
 
@@ -127,8 +127,8 @@ stopifnot(fail)
 dfC <- copyTo(df, path=path, overwrite=TRUE)
 print(dfC)
 # Sanity checks
-stopifnot(getChecksum(dfC) == getChecksum(df))
-stopifnot(getPathname(dfC) != getPathname(df))
+stopifnot(getPathname(dfC) != getPathname(df),
+          getChecksum(dfC) == getChecksum(df))
 
 ## renameTo() may fail on some test systems.
 ## See R.utils Issue #42.
@@ -189,9 +189,18 @@ if (.Platform$OS.type == "windows") {
     isWindowsShortcut <- (getPathname(dfL) == getPathname(df))
     if (!isWindowsShortcut) {
       dfLC <- copyTo(dfL, path=file.path(path, "foo"), overwrite=TRUE, validate=FALSE)
+
+      if (getPathname(dfLC) == getPathname(df) ||
+          getChecksum(dfLC) != getChecksum(df)) {
+        print(dfLC)
+        print(getChecksum(dfLC))
+        print(df)
+        print(getChecksum(df))
+      }
+
       # Sanity checks
-      stopifnot(getChecksum(dfLC) == getChecksum(df))
-      stopifnot(getPathname(dfLC) != getPathname(df))
+      stopifnot(getPathname(dfLC) != getPathname(df),
+                getChecksum(dfLC) == getChecksum(df))
       # Cleanup
       file.remove(getPathname(dfLC))
       # Sanity checks
@@ -210,14 +219,14 @@ if (.Platform$OS.type == "windows") {
   print(dfL)
 
   # Sanity checks
-  stopifnot(getChecksum(dfL) == getChecksum(df))
-  stopifnot(getPathname(dfL) != getPathname(df))
+  stopifnot(getPathname(dfL) != getPathname(df),
+            getChecksum(dfL) == getChecksum(df))
 
   # Copy file (via link)
   dfLC <- copyTo(dfL, path=file.path(path, "foo"), overwrite=TRUE)
   # Sanity checks
-  stopifnot(getChecksum(dfLC) == getChecksum(df))
-  stopifnot(getPathname(dfLC) != getPathname(df))
+  stopifnot(getPathname(dfLC) != getPathname(df),
+            getChecksum(dfLC) == getChecksum(df))
   # Cleanup
   file.remove(getPathname(dfLC))
   # Sanity checks
@@ -249,3 +258,5 @@ stopifnot(is.na(checksum))
 
 
 message("*** GenericDataFile ... DONE")
+
+source("incl/end.R")

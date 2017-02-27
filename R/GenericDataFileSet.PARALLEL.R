@@ -8,6 +8,11 @@
 #
 # \description{
 #   @get "title".
+#
+#  \emph{
+#    WARNING: \code{dsApply(ds, FUN, ...)} will soon be deprecated.
+#    Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+#  }
 # }
 #
 # @synopsis
@@ -222,42 +227,13 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "future") {
     verbose && enter(verbose, "Processing using futures");
 
-    # Allocate result list
-    futures <- listenv()
-
-    for (gg in seq_along(sets)) {
-      name <- names(sets)[gg]
-      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", gg, name, length(sets)))
-      set <- sets[[gg]]
-      verbose && print(verbose, set)
-      argsGG <- c(list(set), allArgs)
-      verbose && cat(verbose, "Call arguments:")
-      argsT <- argsGG; argsT$verbose <- as.character(argsT$verbose)
-      verbose && str(verbose, argsT)
-      argsT <- NULL; # Not needed anymore
-
-      futureGG <- future(do.call(FUN, args=argsGG))
-      verbose && str(verbose, futureGG)
-
-      # Record
-      futures[[gg]] <- futureGG
-
-      # Not needed anymore
-      idxs <- set <- argsGG <- futureGG <- NULL
-
-      verbose && exit(verbose)
-    } # for (gg ...)
-
-    ## No longer needed
-    rm(list=c("FUN", "argsGG"))
-
-    names(futures) <- names(sets)
-
-    ## Resolve the value of all futures
-    res <- lapply(futures, FUN=value)
+    call_args <- list(sets, FUN = FUN)
+    call_args <- c(call_args, allArgs)
+    res <- do.call(future_lapply, args = call_args)
 
     ## Not needed anymore
-    rm(list="futures")
+    rm(list = "call_args")
+    
     verbose && exit(verbose)
   } # if (parallel == "future")
 
@@ -268,6 +244,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "BatchJobs") {
     verbose && enter(verbose, "Processing using BatchJobs");
 
+    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    
     # Attach "suggested" BatchJobs package
     .useBatchJobs();
 
@@ -387,6 +365,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   if (parallel == "BiocParallel::BatchJobs") {
     verbose && enter(verbose, "Processing using BiocParallel");
 
+    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    
     # WORKAROUND: Make sure 'methods' package is *attached*, not
     # just loaded. /HB 2013-11-09
     .require <- require   # To please R CMD check

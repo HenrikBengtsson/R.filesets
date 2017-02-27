@@ -60,7 +60,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   }
 
   if (!is.null(filename)) {
-    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist)
+    pathname <- Arguments$getReadablePathname(filename, path=path, absolute=TRUE, mustExist=mustExist)
     # Assert that it is not pointing to a directory
     if (isDirectory(pathname)) {
       throw("The specified pathname is a directory: ", pathname)
@@ -265,8 +265,6 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   }
   s <- c(s, sprintf("File size: %s", fileSize));
 
-  s <- c(s, sprintf("RAM: %.2f MB", objectSize(this)/1024^2));
-
   GenericSummary(s);
 }, protected=TRUE)
 
@@ -426,12 +424,6 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
-  # TO BE REMOVED. /HB 2013-10-15
-  args <- list(...);
-  if (is.element("aliased", names(args))) {
-    .Defunct(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
-  }
-
   filename <- getFilename(this, ...);
   if (is.null(filename))
     return(as.character(NA));
@@ -678,7 +670,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
   if (is.na(fileSize))
     return(fileSize);
 
-  .asIEC(fileSize)
+  hsize(fileSize, digits = 2L, standard = "IEC")
 })
 
 

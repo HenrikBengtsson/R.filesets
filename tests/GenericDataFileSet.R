@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** GenericDataFileSet")
 
@@ -61,6 +61,11 @@ path <- system.file("exData", "dataSetA,original", package="R.filesets")
 ds <- GenericDataFileSet$byPath(path)
 print(ds)
 
+## Create copy (so that we can write checksum files)
+pathT <- tempdir()
+ds <- copyTo(ds, path=pathT, overwrite=TRUE)
+print(ds)
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,9 +78,17 @@ print(getFullName(ds))
 cat("Checksum of data set:\n")
 print(getChecksum(ds))
 
+pathnames <- dir(path = path)
+print(pathnames)
+stopifnot(!any(grepl("[.]md5$", pathnames)))
+
 cat("Checksum objects:\n")
 checksums <- getChecksumObjects(ds, verbose=TRUE)
 print(checksums)
+
+pathnames <- dir(path = path)
+print(pathnames)
+stopifnot(!any(grepl("[.]md5$", pathnames)))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -261,3 +274,5 @@ ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="ignore")
 ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="warning")
 res <- try(ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="error"), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
+
+source("incl/end.R")

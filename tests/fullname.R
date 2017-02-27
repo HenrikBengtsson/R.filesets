@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** fullname and friends")
 
@@ -137,3 +137,4 @@ stopifnot(all.equal(ts, tags))
 
 message("*** fullname and friends ... DONE")
 
+source("incl/end.R")

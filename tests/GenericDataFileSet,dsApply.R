@@ -1,6 +1,4 @@
-library("R.filesets")
-isPackageInstalled <- R.utils::isPackageInstalled
-fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
+source("incl/start.R")
 
 message("*** dsApply() on GenericDataFile")
 
@@ -22,6 +20,15 @@ message("**** lapply()")
 res1 <- lapply(ds, FUN=getFileSize)
 str(res1)
 
+message("**** future_lapply()")
+strategies <- future:::supportedStrategies()
+strategies <- setdiff(strategies, c("lazy", "eager"))
+for (strategy in strategies) {
+  future::plan(strategy)
+  res2a <- future::future_lapply(ds, FUN=getFileSize)
+  str(res2a)
+  stopifnot(all.equal(res2a, res1, check.attributes=FALSE))
+}
 
 # Alt 2. (via an internal loop)
 message("**** dsApply(..., .parallel='none')")
@@ -32,34 +39,27 @@ stopifnot(all.equal(res2, res1, check.attributes=FALSE))
 res1 <- res2 ## FIXME: Workaround trick
 
 
-# Alt 3a. (via eager futures)
-message("**** dsApply(..., .parallel='future') with plan(eager)")
-future::plan("eager")
+# Alt 3a. (via sequential futures)
+message("**** dsApply(..., .parallel='future') with plan(sequential)")
+future::plan("sequential")
 res3a <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3a)
 stopifnot(all.equal(res3a, res1, check.attributes=FALSE))
 
-# Alt 3b. (via lazy futures)
-message("**** dsApply(..., .parallel='future') with plan(lazy)")
-future::plan("lazy")
-res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
-str(res3b)
-stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
-
-# Alt 3c. (via batchjobs futures)
-message("**** dsApply(..., .parallel='future') with plan(multicore)")
-future::plan("multicore")
+# Alt 3c. (via multiprocess futures)
+message("**** dsApply(..., .parallel='future') with plan(multiprocess)")
+future::plan("multiprocess")
 res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
 
 
-# Alt 4. (via multicore futures)
-if (fullTest && isPackageInstalled("async")) {
-  message("**** dsApply(..., .parallel='future') with plan(async::batchjobs, backend='local')")
-  ns <- getNamespace("async")
-  batchjobs <- get("batchjobs", envir=ns)
-  future::plan(batchjobs, backend="local")
+# Alt 4. (via BatchJobs futures)
+if (fullTest && isPackageInstalled("future.BatchJobs")) {
+  message("**** dsApply(..., .parallel='future') with plan(future.BatchJobs::batchjobs_local)")
+  ns <- getNamespace("future.BatchJobs")
+  batchjobs_local <- get("batchjobs_local", envir=ns)
+  future::plan(batchjobs_local)
   res4 <- dsApply(ds, FUN=getFileSize, .parallel="future")
   str(res4)
   stopifnot(all.equal(res4, res1, check.attributes=FALSE))
@@ -92,3 +92,5 @@ if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJ
   print(res5)
   stopifnot(all.equal(res5, res1))
 }
+
+source("incl/end.R")
