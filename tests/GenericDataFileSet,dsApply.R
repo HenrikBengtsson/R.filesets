@@ -1,6 +1,4 @@
-library("R.filesets")
-isPackageInstalled <- R.utils::isPackageInstalled
-fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
+source("incl/start.R")
 
 message("*** dsApply() on GenericDataFile")
 
@@ -94,3 +92,5 @@ if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJ
   print(res5)
   stopifnot(all.equal(res5, res1))
 }
+
+source("incl/end.R")

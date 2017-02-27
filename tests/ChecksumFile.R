@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** ChecksumFile / ChecksumFileSet")
 
@@ -53,3 +53,5 @@ stopifnot(!isFile(pathnameZZ))
 
 
 message("*** ChecksumFile / ChecksumFileSet ... DONE")
+
+source("incl/end.R")

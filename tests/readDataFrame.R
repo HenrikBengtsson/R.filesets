@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** readDataFrame()")
 
@@ -38,3 +38,5 @@ file.remove(pathnameZ)
 pathnames <- rep(pathname, times=3L)
 data <- readDataFrame(pathnames)
 print(data)
+
+source("incl/end.R")

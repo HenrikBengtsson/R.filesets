@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** RdsFileSet")
 
@@ -15,3 +15,5 @@ x2 <- loadObject(ds[[1]])
 stopifnot(identical(x2, x))
 
 message("*** RdsFileSet ... DONE")
+
+source("incl/end.R")

@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** GenericDataFileSet")
 
@@ -271,3 +271,5 @@ ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="ignore")
 ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="warning")
 res <- try(ds <- GenericDataFileSet(foobar=42L, .onUnknownArgs="error"), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
+
+source("incl/end.R")

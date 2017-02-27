@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** GenericDataFile ...")
 
@@ -258,3 +258,5 @@ stopifnot(is.na(checksum))
 
 
 message("*** GenericDataFile ... DONE")
+
+source("incl/end.R")

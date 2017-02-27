@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** Extending TabularTextFile")
 
@@ -42,3 +42,4 @@ if (!is.element("covr", loadedNamespaces())) {
   str(datax)
 }
 
+source("incl/end.R")

@@ -1,4 +1,5 @@
-library("R.filesets")
+source("incl/start.R")
+
 library("R.utils")  # writeDataFrame()
 
 message("*** A huge TabularTextFile")
@@ -28,3 +29,5 @@ str(data2)
 
 # Cleanup
 file.remove(pathname)
+
+source("incl/end.R")

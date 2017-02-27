@@ -1,5 +1,4 @@
-library("R.filesets")
-loadToEnv <- R.utils::loadToEnv
+source("incl/start.R")
 
 message("*** RDataFileSet")
 
@@ -30,3 +29,5 @@ env <- loadToEnv(ds[["x"]])
 stopifnot(identical(env$x, x))
 
 message("*** RDataFileSet ... DONE")
+
+source("incl/end.R")

@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 # Tests adapted from the IRanges package and http://www.bioconductor.org/help/course-materials/2012/SeattleFeb2012/GenomicRanges_slides.pdf
 
@@ -73,3 +73,5 @@ stopifnot(!anyDuplicated(dsT))
 # Comparing: unique()
 dsU <- unique(dsA)
 stopifnot(equals(dsU, dsT))
+
+source("incl/end.R")

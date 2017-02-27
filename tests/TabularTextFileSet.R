@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** TabularTextFileSet")
 
@@ -72,3 +72,5 @@ cat("Default fullnames:\n")
 print(getFullNames(ds, translate=FALSE))
 cat("Translated fullnames:\n")
 print(getFullNames(ds))
+
+source("incl/end.R")

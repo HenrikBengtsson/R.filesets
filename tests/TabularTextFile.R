@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** TabularTextFile")
 
@@ -95,3 +95,4 @@ data2 <- readDataFrame(df2)
 # Sanity checks
 stopifnot(identical(data2, data1))
 
+source("incl/end.R")

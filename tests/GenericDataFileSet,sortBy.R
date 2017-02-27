@@ -1,4 +1,4 @@
-library("R.filesets")
+source("incl/start.R")
 
 message("*** sortBy() on GenericDataFile")
 
@@ -23,3 +23,4 @@ for (by in bys) {
   }
 }
 
+source("incl/end.R")
