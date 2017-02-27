@@ -1,5 +1,5 @@
 Package: R.filesets
-Version: 2.10.0-9000
+Version: 2.11.0
 Depends:
   R (>= 3.1.2),
   R.oo (>= 1.21.0)
