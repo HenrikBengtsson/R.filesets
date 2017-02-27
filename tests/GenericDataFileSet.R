@@ -71,11 +71,21 @@ cat("Fullname of data set:\n")
 print(getFullName(ds))
 
 cat("Checksum of data set:\n")
-print(getChecksum(ds))
+## FIXME: This writes *.md5 files in the source directory
+#print(getChecksum(ds))
+
+pathnames <- dir(path = path)
+print(pathnames)
+stopifnot(!any(grepl("[.]md5$", pathnames)))
 
 cat("Checksum objects:\n")
-checksums <- getChecksumObjects(ds, verbose=TRUE)
-print(checksums)
+## FIXME: This writes *.md5 files in the source directory
+#checksums <- getChecksumObjects(ds, verbose=TRUE)
+#print(checksums)
+
+pathnames <- dir(path = path)
+print(pathnames)
+stopifnot(!any(grepl("[.]md5$", pathnames)))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
