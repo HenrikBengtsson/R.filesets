@@ -23,10 +23,3 @@ stopifnot(identical(res2, res1))
 res2 <- dsApply(ds, FUN=getFileSize, .parallel="none")
 print(res2)
 stopifnot(identical(res2, res1))
-
-# Alt 4. (via BiocParallel + BatchJobs)
-if (isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
-  res3 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
-  print(res3)
-  stopifnot(identical(res3, res1))
-}

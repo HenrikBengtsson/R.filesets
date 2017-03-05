@@ -11,11 +11,8 @@ Imports:
   R.cache (>= 0.12.0),
   stats
 Suggests:
-  BatchJobs (>= 1.6),
-  BiocParallel (>= 1.0.3),
   gtools (>= 3.5.0)
 SuggestsNote:
-  BioC (>= 3.0),
   Recommended: gtools
 Title: Easy Handling of and Access to Files Organized in Structured Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
