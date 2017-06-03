@@ -13,8 +13,9 @@ CLEANUP:
 
 DEPRECATED AND DEFUNCT:
 
- o dsApply() with .parallel = "BiocParallel::BatchJobs" and "BatchJobs"
-   are now defunct.  Instead, use future::future_lapply().
+ o dsApply() with .parallel = "BiocParallel::BatchJobs" and "BatchJobs" are now
+   defunct.  Instead, use future::future_lapply() with one of the many backends
+   that implements the Future API.
  
 
 Version: 2.11.0 [2017-02-27]
