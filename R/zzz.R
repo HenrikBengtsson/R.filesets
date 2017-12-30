@@ -8,10 +8,3 @@
   pkg <- get(pkgname, envir=getNamespace(pkgname));
   startupMessage(pkg);
 }
-
-
-############################################################################
-# HISTORY:
-# 2011-07-24
-# o Added a namespace to the package.
-############################################################################

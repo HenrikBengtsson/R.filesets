@@ -49,9 +49,3 @@ setMethodS3("dropRootPathTags", "default", function(path, depth, ..., verbose=FA
 
   path;
 }, protected=TRUE) # dropRootPathTags()
-
-############################################################################
-# HISTORY:
-# 2011-02-24
-# o Added dropRootPathTags().
-############################################################################  

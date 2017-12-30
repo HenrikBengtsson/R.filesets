@@ -109,11 +109,3 @@ setMethodS3("readTableHeader", "default", function(con, sep=c("\t", ","), quote=
 
   hdr;
 }) # readTableHeader()
-
-
-
-############################################################################
-# HISTORY:
-# 2008-06-14
-# o Created from readRawHeader() of TabularTextFile in aroma.core.
-############################################################################ 

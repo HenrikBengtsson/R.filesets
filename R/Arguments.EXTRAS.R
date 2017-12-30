@@ -70,15 +70,3 @@ setMethodS3("getTags", "Arguments", function(static, ..., na.rm=TRUE, collapse="
 
   tags;
 }, static=TRUE, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2012-10-16
-# o Added Rdoc comments.
-# 2011-02-18
-# o Moved getTags() for Arguments from aroma.core to R.filesets.
-# 2010-01-25
-# o Added static getTags() to Arguments.
-# ...
-############################################################################

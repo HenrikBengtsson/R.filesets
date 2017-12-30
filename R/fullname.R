@@ -51,19 +51,3 @@ setMethodS3("dropTags", "default", function(..., drop=NULL, collapse=FALSE) {
 
   fullname(parts, collapse=collapse)
 })
-
-
-############################################################################
-# HISTORY:
-# 2016-01-02
-# o BUG FIX: dropTags() would drop name if a tag had the same name.
-# 2011-03-09
-# o Added dropTags().
-# o Now all these functions drops empty tags (and names).
-# 2011-03-08
-# o Added fullname(), name(), and tags().  Amazing that I never thought
-#   of having these very basic functions.  They will make some code
-#   and examples much cleaner.  They are also great for illustrating
-#   the definition of fullnames, names and tags.
-# o Created.
-############################################################################

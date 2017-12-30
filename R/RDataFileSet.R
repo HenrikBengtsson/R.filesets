@@ -30,10 +30,3 @@ setConstructorS3("RDataFileSet", function(...) {
 setMethodS3("byPath", "RDataFileSet", function(static, ..., pattern="[.](RData|Rdata|rdata)$") {
   NextMethod("byPath", pattern=pattern)
 })
-
-
-###########################################################################
-# HISTORY:
-# 2015-01-12
-# o Created.
-############################################################################

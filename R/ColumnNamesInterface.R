@@ -335,18 +335,3 @@ setMethodS3("setColumnNames", "ColumnNamesInterface", function(this, ...) {
 
 setMethodS3("updateColumnNames", "ColumnNamesInterface", function(this, ...) {
 }, protected=TRUE)
-
-
-
-
-############################################################################
-# HISTORY:
-# 2013-12-18
-# o Now nbrOfColumns() for ColumnNamesInterface returns NA if column names
-#   cannot be inferred and hence not be counted.
-# 2012-11-07
-# o Now clearListOfColumnNamesTranslators() utilizes
-#   setListOfColumnNamesTranslators().
-# 2012-11-02
-# o Created from FullNameInterface.R
-############################################################################

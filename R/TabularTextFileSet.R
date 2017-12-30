@@ -104,14 +104,3 @@ setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy
 
   data;
 })
-
-
-###########################################################################
-# HISTORY:
-# 2012-11-27
-# o Added verbose output to readDataFrame().
-# 2012-09-27
-# o Added readDataFrame() for TabularTextFileSet.
-# 2008-05-16
-# o Created.
-############################################################################
