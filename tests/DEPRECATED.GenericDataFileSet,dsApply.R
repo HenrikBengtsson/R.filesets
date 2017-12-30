@@ -22,7 +22,6 @@ str(res1)
 
 message("**** future_lapply()")
 strategies <- future:::supportedStrategies()
-strategies <- setdiff(strategies, c("lazy", "eager"))
 for (strategy in strategies) {
   future::plan(strategy)
   res2a <- future::future_lapply(ds, FUN=getFileSize)
@@ -52,16 +51,5 @@ future::plan("multiprocess")
 res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
-
-# Alt 4. (via BatchJobs futures)
-if (fullTest && isPackageInstalled("future.BatchJobs")) {
-  message("**** dsApply(..., .parallel='future') with plan(future.BatchJobs::batchjobs_local)")
-  ns <- getNamespace("future.BatchJobs")
-  batchjobs_local <- get("batchjobs_local", envir=ns)
-  future::plan(batchjobs_local)
-  res4 <- dsApply(ds, FUN=getFileSize, .parallel="future")
-  str(res4)
-  stopifnot(all.equal(res4, res1, check.attributes=FALSE))
-}
 
 source("incl/end.R")

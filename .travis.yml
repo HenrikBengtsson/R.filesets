@@ -12,7 +12,6 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 r_check_args: --as-cran
-bioc_required: true
 
 matrix:
   include:
@@ -27,7 +26,6 @@ matrix:
       env: NB='w/ covr' ## Just a label
     - os: linux
       r: devel
-      env: _R_CHECK_FULL_=true ## Test w/ future.BatchJobs
     - os: osx
       r: oldrel
       latex: false
