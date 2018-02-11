@@ -17,6 +17,8 @@ matrix:
   include:
     - os: linux
       r: oldrel
+      r_github_packages:
+      - HenrikBengtsson/future.apply
     - os: linux
       r: release
       r_github_packages:
