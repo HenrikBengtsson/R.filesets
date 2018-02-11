@@ -15,10 +15,8 @@ r_check_args: --as-cran
 
 matrix:
   include:
-    - os: linux
-      r: oldrel
-      r_github_packages:
-      - HenrikBengtsson/future.apply
+#    - os: linux
+#      r: oldrel
     - os: linux
       r: release
       r_github_packages:
