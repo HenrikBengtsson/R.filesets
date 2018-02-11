@@ -11,7 +11,7 @@
 #
 #  \emph{
 #    WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
-#    Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+#    Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
 #  }
 # }
 #
@@ -47,7 +47,8 @@
 # }}
 #
 # \seealso{
-#  The \pkg{future} package is utilized for parallel/distributed processing.
+#  The \pkg{future} and \pkg{future.apply} packages are utilized for
+#  parallel/distributed processing.
 # }
 #
 # @author "HB"
@@ -210,7 +211,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       verbose && exit(verbose);
     } # for (gg ...)
     
-    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'none') is deprecated. Instead, use lapply(ds, FUN, ...) or future::future_lapply(ds, FUN, ...) with plan(sequential).")
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'none') is deprecated. Instead, use lapply(ds, FUN, ...) or future.apply::future_lapply(ds, FUN, ...) with plan(sequential).")
   } # if (parallel == "none")
 
 
@@ -227,7 +228,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
     ## Not needed anymore
     rm(list = "call_args")
 
-    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'future') is deprecated. Instead, use future::future_lapply(ds, FUN, ...).")
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'future') is deprecated. Instead, use future.apply::future_lapply(ds, FUN, ...).")
     
     verbose && exit(verbose)
   } # if (parallel == "future")
@@ -237,9 +238,9 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   # DEFUNCT
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (parallel == "BatchJobs") {
-    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') is defunct. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') is defunct. Instead, use future.apply::future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
   } else if (parallel == "BiocParallel::BatchJobs") {
-    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') is defunct. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') is defunct. Instead, use future.apply::future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
   }
 
   verbose && exit(verbose);

@@ -1,7 +1,7 @@
 Package: R.filesets
 ===================
 
-Version: 2.11.0-9000 [2017-12-29]
+Version: 2.11.0-9000 [2018-01-11]
 
 SIGNIFICANT CHANGES:
    
@@ -13,11 +13,11 @@ CLEANUP:
 
 DEPRECATED AND DEFUNCT:
 
- o dsApply() is now deprecated.  Instead, use future::future_lapply().
+ o dsApply() is now deprecated.  Instead, use future.apply::future_lapply().
  
- o dsApply() with .parallel = "BiocParallel::BatchJobs" and "BatchJobs" are now
-   defunct.  Instead, use future::future_lapply() with one of the many backends
-   that implements the Future API.
+ o dsApply() with .parallel = "BiocParallel::BatchJobs" and "BatchJobs" are
+   now defunct.  Instead, use future.apply::future_lapply() with one of the
+   many backends that implements the Future API.
  
 
 Version: 2.11.0 [2017-02-27]

@@ -6,6 +6,7 @@ Depends:
 Imports:
   digest (>= 0.6.13),
   future (>= 1.6.2),
+  future.apply (>= 0.1.0),
   R.methodsS3 (>= 1.7.1),
   R.utils (>= 2.6.0),
   R.cache (>= 0.12.0),

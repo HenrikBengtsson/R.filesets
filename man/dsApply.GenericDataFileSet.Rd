@@ -24,7 +24,7 @@
 
  \emph{
    WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
-   Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+   Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
  }
 }
 
@@ -89,7 +89,8 @@ stopifnot(identical(res2, res1))
 }}
 
 \seealso{
- The \pkg{future} package is utilized for parallel/distributed processing.
+ The \pkg{future} and \pkg{future.apply} packages are utilized for
+ parallel/distributed processing.
 }
 
 \author{Henrik Bengtsson}

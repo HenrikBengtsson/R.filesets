@@ -24,7 +24,7 @@ message("**** future_lapply()")
 strategies <- future:::supportedStrategies()
 for (strategy in strategies) {
   future::plan(strategy)
-  res2a <- future::future_lapply(ds, FUN=getFileSize)
+  res2a <- future.apply::future_lapply(ds, FUN=getFileSize)
   str(res2a)
   stopifnot(all.equal(res2a, res1, check.attributes=FALSE))
 }
