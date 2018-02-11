@@ -40,7 +40,7 @@ install:
 build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r gtools
-  - travis-tool.sh install_r digest future listenv R.cache R.methodsS3 R.oo R.utils
+  - travis-tool.sh install_r digest future future.apply listenv R.cache R.methodsS3 R.oo R.utils
 
 test_script:
   - travis-tool.sh run_tests

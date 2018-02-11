@@ -35,7 +35,10 @@ matrix:
 
 r_packages:
   - future.BatchJobs
-  
+
+bioc_packages:
+  - BiocInstaller
+
 notifications:
   email:
     on_success: change
