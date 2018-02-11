@@ -1,10 +1,12 @@
 Package: R.filesets
 ===================
 
-Version: 2.11.0-9000 [2018-01-11]
+Version: 2.11.0-9000 [2018-02-11]
 
 SIGNIFICANT CHANGES:
    
+ o Package requires R (>= 3.2.0) released April 2015.
+
  o Package no longer requires Bioconductor.
 
 CLEANUP:

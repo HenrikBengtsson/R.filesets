@@ -1,7 +1,7 @@
 Package: R.filesets
 Version: 2.11.0-9000
 Depends:
-  R (>= 3.1.2),
+  R (>= 3.2.0),
   R.oo (>= 1.21.0)
 Imports:
   digest (>= 0.6.13),
