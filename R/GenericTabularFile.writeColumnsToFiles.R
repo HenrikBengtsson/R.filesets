@@ -170,24 +170,3 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
 
   invisible(pathnames);
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-12-03
-# o Generalized writeColumnsToFiles() to GenericTabularFile.  Used to
-#   be only for TabularTextFile.
-# 2011-02-18
-# o ROBUSTNESS: Now writeColumnsToFiles() for TabularTextFile writes
-#   files atomically, which should minimize the risk for generating
-#   incomplete files.
-# 2009-04-17
-# o Added Rdoc comments.
-# 2008-05-21
-# o BUG FIX: Argument 'verbose' was never passed to Arguments$getVerbose().
-# 2008-05-05
-# o Now some non-valid filename characters are escaped.
-# o Added internal escapeFilename().
-# 2008-05-01
-# o Created.
-############################################################################

@@ -14,11 +14,3 @@ setConstructorS3("GenericDataFileList", function(dfList=list(), ...) {
 
   extend(dfList, "GenericDataFileList");
 })
-
-
-
-###########################################################################
-# HISTORY:
-# 2009-05-12
-# o Created.
-###########################################################################

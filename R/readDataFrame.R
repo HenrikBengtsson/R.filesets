@@ -72,13 +72,3 @@ setMethodS3("readDataFrame", "default", function(filename, path=NULL, ...) {
 
   readDataFrame(db, ...);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2013-01-17
-# o Now readDataFrame() can read multiple files.
-# 2013-01-16
-# o Created.
-############################################################################

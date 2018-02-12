@@ -85,10 +85,3 @@ setMethodS3("loadToEnv", "RDataFile", function(file, ...) {
   pathname <- getPathname(file)
   loadToEnv(pathname, ...)
 })
-
-
-############################################################################
-# HISTORY:
-# 2015-01-12
-# o Created from RdsFile.R.
-############################################################################

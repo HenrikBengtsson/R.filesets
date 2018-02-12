@@ -10,8 +10,8 @@
 #   @get "title".
 #
 #  \emph{
-#    WARNING: \code{dsApply(ds, FUN, ...)} will soon be deprecated.
-#    Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+#    WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
+#    Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
 #  }
 # }
 #
@@ -47,8 +47,8 @@
 # }}
 #
 # \seealso{
-#   The \pkg{future}, \pkg{BiocParallel} and \pkg{BatchJobs} packages
-#   are utilized for parallel/distributed processing, depending on settings.
+#  The \pkg{future} and \pkg{future.apply} packages are utilized for
+#  parallel/distributed processing.
 # }
 #
 # @author "HB"
@@ -56,14 +56,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
-  # To please R CMD check, because
-  # (i) BatchJobs is just "suggested"
-  getJobNr <- batchMap <- showStatus <- findNotSubmitted <-
-      findNotRunning <- submitJobs <- findNotTerminated <-
-      loadResults <- loadConfig <- NULL;
-  # (ii) BiocParallel is just "suggested"
-  BatchJobsParam <- register <- NULL;
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -218,6 +210,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
       verbose && exit(verbose);
     } # for (gg ...)
+    
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'none') is deprecated. Instead, use lapply(ds, FUN, ...) or future.apply::future_lapply(ds, FUN, ...) with plan(sequential).")
   } # if (parallel == "none")
 
 
@@ -233,183 +227,21 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
     ## Not needed anymore
     rm(list = "call_args")
+
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'future') is deprecated. Instead, use future.apply::future_lapply(ds, FUN, ...).")
     
     verbose && exit(verbose)
   } # if (parallel == "future")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Alt 3: BatchJobs processing
+  # DEFUNCT
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (parallel == "BatchJobs") {
-    verbose && enter(verbose, "Processing using BatchJobs");
-
-    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
-    
-    # Attach "suggested" BatchJobs package
-    .useBatchJobs();
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Setup
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Poll roughly every dW seconds
-    dW <- .control$dW;
-    if (is.null(dW)) dW <- 1.00;
-    dW <- Arguments$getNumeric(dW, range=c(0,Inf));
-
-    # BatchJob registry to be used
-    reg <- .getBatchJobRegistry(ds, args=vargs);
-    verbose && print(verbose, reg);
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # (i) Add jobs, iff missing
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    nbrOfJobs <- getJobNr(reg);
-    if (nbrOfJobs == 0L) {
-      verbose && enter(verbose, "Adding jobs to registry");
-      # Tweak FUN()
-##      FUNx <- function(...) {
-##        # Allow comma-separated registry directory paths
-##        oopts <- options("BatchJobs.check.posix");
-##        on.exit({ options(oopts) }, add=TRUE);
-##        options("BatchJobs.check.posix"=FALSE);
-##        FUN(...);
-##      } # FUNx()
-      ids <- batchMap(reg, fun=FUN, sets, more.args=allArgs);
-      verbose && cat(verbose, "Job IDs added:");
-      verbose && str(verbose, ids);
-      verbose && print(verbose, reg);
-      verbose && exit(verbose);
-    }
-
-    verbose && print(verbose, showStatus(reg));
-#    throw("Jobs have already been added: ", reg$id);
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # (ii) Launch jobs
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Launching jobs");
-    lastTodo <- NULL;
-    todo <- findNotSubmitted(reg);
-    if (length(todo) > 0L) {
-      # (a) Wait and see if jobs are being submitted by other process
-      while(!identical(todo, lastTodo)) {
-         lastTodo <- todo;
-         Sys.sleep(1.0);
-         todo <- findNotRunning(reg);
-      }
-
-      verbose && cat(verbose, "Job IDs to be submitted:");
-      verbose && print(verbose, todo);
-      submitted <- submitJobs(reg, ids=todo);
-      verbose && cat(verbose, "Job IDs actually submitted:");
-      verbose && print(verbose, submitted);
-      verbose && cat(verbose, "Job IDs not submitted:");
-      verbose && print(verbose, setdiff(todo, submitted));
-    } else {
-      verbose && cat(verbose, "No new jobs to be submitted.");
-    }
-
-    verbose && exit(verbose);
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # (iii) Wait for jobs to finish
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Waiting for jobs to finish");
-    t0 <- Sys.time();
-    tCount <- 0L;
-    status <- NULL;
-    while (length(findNotTerminated(reg)) > 0L) {
-      lastStatus <- status;
-      out <- capture.output(status <- showStatus(reg));
-      if (identical(status, lastStatus)) {
-        verbose && writeRaw(verbose, ".");
-        # Time stamp?
-        dt <- difftime(Sys.time(), t0, units="secs");
-        dMins <- as.integer(dt) %/% 10;
-        if (dMins > tCount) {
-          tCount <- dMins;
-          if (dt > 1.5*60) {
-            units(dt) <- "mins";
-          } else if (dt > 1.5*3600) {
-            units(dt) <- "hours";
-          }
-          verbose && writeRaw(verbose, sprintf("[%s]\n", format(dt)));
-        }
-      } else {
-        verbose && writeRaw(verbose, "\n");
-        verbose && print(verbose, status);
-      }
-      Sys.sleep(dW);
-    } # while(...)
-    verbose && exit(verbose);
-
-    verbose && print(verbose, showStatus(reg));
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # (iv) Retrieve results
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Retrieve results");
-    res <- loadResults(reg, simplify=FALSE, missing.ok=TRUE);
-    names(res) <- names(sets);
-    verbose && exit(verbose);
-
-    verbose && exit(verbose);
-  } # if (parallel == "BatchJobs")
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Alt 4: BiocParallel w/ BatchJobs processing
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (parallel == "BiocParallel::BatchJobs") {
-    verbose && enter(verbose, "Processing using BiocParallel");
-
-    .Deprecated(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') has been deprecated. Instead, use future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
-    
-    # WORKAROUND: Make sure 'methods' package is *attached*, not
-    # just loaded. /HB 2013-11-09
-    .require <- require   # To please R CMD check
-    .require("methods") || throw("Package not attached: methods")
-
-    # Attach "suggested" BiocParallel package
-    .useBiocParallel();
-
-    # Attach "suggested" BatchJobs package
-    .useBatchJobs();
-
-    conffile <- c(".BatchJobs.R", "~/.BatchJobs.R")
-    conffile <- normalizePath(conffile, mustWork=FALSE);
-    conffile <- conffile[file_test("-f", conffile)];
-    if (length(conffile) > 0L) {
-      conffile <- conffile[1L];
-      if (isFile(conffile)) loadConfig(conffile);
-    }
-
-    # WORKAROUND: Allow for commas in BatchJobs-related pathnames
-    oopts <- options("BatchJobs.check.posix");
-    on.exit({ options(oopts) }, add=TRUE);
-    options("BatchJobs.check.posix"=FALSE);
-
-    # It's here one can specify PBS options such as number of
-    # nodes, number of cores, walltime etc.
-    bpParam <- BatchJobsParam(resources=NULL);
-    register(bpParam);
-    verbose && cat(verbose, "Using parameters:");
-    verbose && print(verbose, bpParam);
-
-    verbose && enter(verbose, "Calling bplapply()");
-    args <- c(list(sets, FUN=FUN), allArgs, BPPARAM=bpParam);
-    verbose && cat(verbose, "Arguments passed to bplapply():");
-    argsT <- args; argsT$verbose <- as.character(argsT$verbose);
-    verbose && str(verbose, argsT);
-    argsT <- NULL; # Not needed anymore
-    res <- do.call(BiocParallel::bplapply, args);
-    names(res) <- names(sets);
-    verbose && exit(verbose);
-
-    verbose && exit(verbose);
-  } # if (parallel == "BiocParallel")
+    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BatchJobs') is defunct. Instead, use future.apply::future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+  } else if (parallel == "BiocParallel::BatchJobs") {
+    .Defunct(msg = "dsApply(ds, FUN, ..., .parallel = 'BiocParallel::BatchJobs') is defunct. Instead, use future.apply::future_lapply(ds, FUN, ...) after library('future.BatchJobs') with plan(batchjobs_custom).")
+  }
 
   verbose && exit(verbose);
 
@@ -440,165 +272,3 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
 
   dsApply(dsP, IDXS=IDXS, ...)
 }, protected=TRUE) # dsApplyInPairs()
-
-
-
-setMethodS3(".getBatchJobRegistryId", "default", function(class, label=NULL, version=NULL, ..., verbose=FALSE) {
-  # Argument 'class':
-  class <- Arguments$getCharacters(class);
-
-  # Argument 'label':
-  label <- Arguments$getCharacter(label);
-
-  # Argument 'version':
-  version <- Arguments$getCharacter(version);
-
-
-  # Construct key from all object/arguments
-  key <- list(
-    class=class,
-    label=label,
-    version=version,
-    ...
-  );
-  keyId <- R.cache::getChecksum(key, algo="crc32");
-  keyTime <- format(Sys.time(), "%Y%m%d%H%M%S");
-  pid <- Sys.getpid();
-  id <- paste(c(key$class[1L], key$label, keyId, keyTime, pid), collapse="_");
-  id <- Arguments$getCharacter(id, length=c(1L,1L));
-
-  id;
-}, private=TRUE)
-
-
-setMethodS3(".getBatchJobRegistryId", "GenericDataFileSet", function(object, ...) {
-  keys <- lapply(object, FUN=function(file) {
-    list(filename=getFilename(file), fileSize=getFileSize(file));
-  });
-  .getBatchJobRegistryId(class=class(object), fileKeys=keys, ...);
-}, private=TRUE)
-
-
-
-setMethodS3(".getBatchJobRegistry", "default", function(..., skip=TRUE) {
-  .useBatchJobs();
-
-  # To please R CMD check (already loaded above)
-  requireNamespace("BatchJobs");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'skip':
-  skip <- Arguments$getLogical(skip);
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Setup
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Constructor BatchJobs registry ID...
-  id <- .getBatchJobRegistryId(...);
-
-  # ...and registry directory
-  rootPath <- ".batchJobsRegistries";
-  path <- file.path(rootPath, id);
-  path <- Arguments$getWritablePath(path);
-
-  # Allow comma-separated registry directory paths
-  oopts <- options("BatchJobs.check.posix");
-  on.exit({ options(oopts) }, add=TRUE);
-  options("BatchJobs.check.posix"=FALSE);
-
-  # Load BatchJobs registry or create if missing
-  packages <- c("R.filesets");
-  reg <- BatchJobs::makeRegistry(id=id, file.dir=path, skip=skip, packages=packages);
-
-  reg;
-}, private=TRUE) # .getBatchJobRegistry()
-
-
-.useBatchJobs <- function(version="*", ...) {
-  if (identical(version, "*")) {
-    desc <- packageDescription("R.filesets");
-    desc <- desc[c("Depends", "Imports", "Suggests")];
-    desc <- unlist(desc, use.names=FALSE);
-    desc <- strsplit(desc, split=",", fixed=TRUE);
-    desc <- unlist(desc, use.names=FALSE);
-    desc <- gsub("\n", "", desc, fixed=TRUE);
-    pattern <- "[ ]*([^ (]+)[ ]*(()|[(][^]]+[)])";
-    pkgs <- gsub(pattern, "\\1", desc);
-    vers <- gsub(pattern, "\\2", desc);
-    vers <- gsub("[()]", "", vers);
-    names(vers) <- pkgs;
-    dups <- duplicated(pkgs);
-    vers <- vers[!dups];
-    version <- vers["BatchJobs"];
-  }
-  R.utils::use("BatchJobs", version=version, ...);
-} # .useBatchJobs()
-
-
-.useBiocParallel <- function(version="*", ...) {
-  if (identical(version, "*")) {
-    desc <- packageDescription("R.filesets");
-    desc <- desc[c("Depends", "Imports", "Suggests")];
-    desc <- unlist(desc, use.names=FALSE);
-    desc <- strsplit(desc, split=",", fixed=TRUE);
-    desc <- unlist(desc, use.names=FALSE);
-    desc <- gsub("\n", "", desc, fixed=TRUE);
-    pattern <- "[ ]*([^ (]+)[ ]*(()|[(][^]]+[)])";
-    pkgs <- gsub(pattern, "\\1", desc);
-    vers <- gsub(pattern, "\\2", desc);
-    vers <- gsub("[()]", "", vers);
-    names(vers) <- pkgs;
-    dups <- duplicated(pkgs);
-    vers <- vers[!dups];
-    version <- vers["BiocParallel"];
-  }
-  R.utils::use("BiocParallel", version=version, ...);
-} # .useBiocParallel()
-
-
-############################################################################
-# HISTORY:
-# 2015-09-05
-# o Add support for dsApply(..., .parallel="future").
-# 2015-01-05
-# o CLEANUP: Using requireNamespace() instead of require() internally.
-# 2014-08-07
-# o BUG FIX: dsApply() for GenericDataFileSet would coerce argument
-#   'verbose' to logical before applying the function.
-# 2014-04-19
-# o dsApply(..., .parallel="none") would lower the verbose threshold
-#   before applying the function.
-# 2014-03-30
-# o Added dsApplyInPairs().
-# o Now dsApply(..., .parallel="BatchJobs") also returns the results.
-# o Moved to the R.filesets package (from aroma.seq).
-# 2014-01-24
-# o Now argument 'IDXS' can also be an index vector, which is then
-#   treated as as.list(IDXS).
-# 2014-01-04
-# o CONSISTENCY: Now dsApply() returns a named vector with names
-#   corresponding to the names of the processed file items.
-# 2013-11-22
-# o Added argument 'IDXS' to dsApply() allowing to process not only
-#   individuals files but also lists of individuals files.
-# 2013-11-02
-# o Adding support for distributed processing via 'BiocParallel'.
-# 2013-11-01
-# o Made the code more generic.
-# 2013-09-28
-# o ROBUSTNESS: Now .getBatchJobRegistryId() adds process ID ("pid") and
-#   a timestamp to the registry path to make it even more unique.
-# o BUG FIX: dsApply() for GenericDataFileSet when executed via the
-#   'BatchJobs' methods would not allow commas in the work directory
-#   among other directories.
-# 2013-08-31
-# o Now .useBatchJobs() utilizes R.utils::use().
-# o Added dsApply() for GenericDataFileSet.  Added Rdocs.
-# 2013-08-26
-# o Added .getBatchJobRegistry() and .getBatchJobRegistryId().
-# o Added .usePackage() and .useBatchJobs().
-# o Created.
-############################################################################

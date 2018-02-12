@@ -595,38 +595,3 @@ setMethodS3("setName", "FullNameInterface", function(this, name=NULL, ...) {
 
 setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 }, protected=TRUE)
-
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-30
-# o Added resetFullName() for FullNameInterface, which is just an alias.
-# 2012-11-07
-# o Now clearListOfFullNamesTranslators() utilizes
-#   setListOfFullNamesTranslators().
-# 2011-07-15
-# o Added argument 'named' to getTags() for FullNameInterface.
-# 2010-01-31
-# o DOCUMENTATION: Added more Rdoc comments.
-# 2009-10-31
-# o Now getTags(..., na.rm=TRUE) returns NULL in case the file is missing.
-# 2009-10-30
-# o ROBUSTIFICATION: Now translateFullName() of FullNameInterface throws
-#   an exception if some fullnames were translated into NA.
-# 2009-10-23
-# o Added appendFullNameTranslatorBylist() which makes it possible to do
-#   setup a sequence of fullnames translators fnt1, fnt2, fnt3 by calling
-#   setFullNameTranslator(..., list(fnt1, fnt2, fnt3)).
-# 2009-10-22
-# o Added support for having a sequence of fullname translator functions.
-#   These can be added using appendFullNameTranslator().
-# o Added an example() to FullNameInterface.
-# 2009-10-02
-# o Now setFullName(...) applies to any FullNameInterface.
-# o Now setFullNameTranslator(...) applies to any FullNameInterface and
-#   dispatches on the 'translator' argument so that the generic function
-#   setFullNameTranslatorBy<class>() is called.
-# o Created.
-############################################################################

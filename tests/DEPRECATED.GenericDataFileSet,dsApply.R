@@ -22,10 +22,9 @@ str(res1)
 
 message("**** future_lapply()")
 strategies <- future:::supportedStrategies()
-strategies <- setdiff(strategies, c("lazy", "eager"))
 for (strategy in strategies) {
   future::plan(strategy)
-  res2a <- future::future_lapply(ds, FUN=getFileSize)
+  res2a <- future.apply::future_lapply(ds, FUN=getFileSize)
   str(res2a)
   stopifnot(all.equal(res2a, res1, check.attributes=FALSE))
 }
@@ -52,45 +51,5 @@ future::plan("multiprocess")
 res3b <- dsApply(ds, FUN=getFileSize, .parallel="future")
 str(res3b)
 stopifnot(all.equal(res3b, res1, check.attributes=FALSE))
-
-
-# Alt 4. (via BatchJobs futures)
-if (fullTest && isPackageInstalled("future.BatchJobs")) {
-  message("**** dsApply(..., .parallel='future') with plan(future.BatchJobs::batchjobs_local)")
-  ns <- getNamespace("future.BatchJobs")
-  batchjobs_local <- get("batchjobs_local", envir=ns)
-  future::plan(batchjobs_local)
-  res4 <- dsApply(ds, FUN=getFileSize, .parallel="future")
-  str(res4)
-  stopifnot(all.equal(res4, res1, check.attributes=FALSE))
-}
-
-
-# Alt 5. (via BatchJobs)
-if (fullTest && isPackageInstalled("BatchJobs")) {
-  message("**** dsApply(..., .parallel='BatchJobs')")
-
-  ## Override any .BatchJobs.R settings and use a "local" backend
-  library("BatchJobs")
-  setConfig(list(cluster.functions=makeClusterFunctionsLocal()))
-
-  res4 <- dsApply(ds, FUN=getFileSize, .parallel="BatchJobs")
-  print(res4)
-  stopifnot(all.equal(res4, res1))
-}
-
-
-# Alt 6. (via BiocParallel + BatchJobs)
-if (fullTest && isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
-  message("**** dsApply(..., .parallel='BiocParallel::BatchJobs')")
-
-  ## Override any .BatchJobs.R settings and use a "local" backend
-  library("BatchJobs")
-  setConfig(list(cluster.functions=makeClusterFunctionsLocal()))
-
-  res5 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
-  print(res5)
-  stopifnot(all.equal(res5, res1))
-}
 
 source("incl/end.R")

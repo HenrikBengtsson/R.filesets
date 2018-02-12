@@ -77,13 +77,3 @@ setMethodS3("loadRDS", "RdsFile", function(file, ...) {
   pathname <- getPathname(file);
   loadRDS(pathname, ...);
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-11-27
-# o Added a default loadRDS(), which is a name alias for base::readRDS().
-#   Also added loadRDS() for RdsFile.
-# 2013-11-20
-# o Created.
-############################################################################

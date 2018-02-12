@@ -332,14 +332,3 @@ setMethodS3("getChecksumFile", "default", function(pathname, onMissing=c("write"
 
   res;
 }) # getChecksumFile() for default
-
-
-
-############################################################################
-# HISTORY:
-# 2016-01-01
-# o Added hasChecksumFile().
-# 2013-11-19
-# o Added ChecksumFile.
-# o Created.
-############################################################################

@@ -26,20 +26,20 @@ matrix:
       env: NB='w/ covr' ## Just a label
     - os: linux
       r: devel
-      env: _R_CHECK_FULL_=true ## Test w/ future.BatchJobs & BiocParallel
     - os: osx
       r: oldrel
       latex: false
+      r_github_packages:
+      - HenrikBengtsson/future.apply
     - os: osx
       r: release
       latex: false
 
 r_packages:
   - future.BatchJobs
-  
+
 bioc_packages:
   - BiocInstaller
-  - BiocParallel
 
 notifications:
   email:

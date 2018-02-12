@@ -134,21 +134,3 @@ setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface",
 
   invisible(this);
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2011-03-11
-# o Now appendFullNameTranslatorBy<what>() for <character> and <function>
-#   assert that the translator correctly returns exactly one string.
-# 2010-10-17
-# o Now appendFullNameTranslator(..., df) for FullNameInterface takes
-#   either 'pattern' or 'fixed' translations in data.frame.
-# 2010-05-26
-# o Added appendFullNameTranslatorBy...() method for TabularTextFileSet:s.
-# 2010-05-25
-# o Added appendFullNameTranslatorBy...() method for data frames and
-#   TabularTextFile:s.
-# o Moved to its own file.
-############################################################################

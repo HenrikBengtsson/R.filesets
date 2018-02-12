@@ -23,8 +23,8 @@
   Applies a function to each file in the file set.
 
  \emph{
-   WARNING: \code{dsApply(ds, FUN, ...)} will soon be deprecated.
-   Instead, use \code{\link[future]{future_lapply}(ds, FUN, ...)}.
+   WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
+   Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
  }
 }
 
@@ -86,18 +86,11 @@ res2 <- dsApply(ds, FUN=getFileSize, .parallel="none")
 print(res2)
 stopifnot(identical(res2, res1))
 
-# Alt 4. (via BiocParallel + BatchJobs)
-if (isPackageInstalled("BiocParallel") && isPackageInstalled("BatchJobs")) {
-  res3 <- dsApply(ds, FUN=getFileSize, .parallel="BiocParallel::BatchJobs")
-  print(res3)
-  stopifnot(identical(res3, res1))
-}
-
 }}
 
 \seealso{
-  The \pkg{future}, \pkg{BiocParallel} and \pkg{BatchJobs} packages
-  are utilized for parallel/distributed processing, depending on settings.
+ The \pkg{future} and \pkg{future.apply} packages are utilized for
+ parallel/distributed processing.
 }
 
 \author{Henrik Bengtsson}

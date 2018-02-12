@@ -30,11 +30,3 @@ setConstructorS3("RdsFileSet", function(...) {
 setMethodS3("byPath", "RdsFileSet", function(static, ..., pattern="[.]rds$") {
   NextMethod("byPath", pattern=pattern);
 })
-
-
-
-###########################################################################
-# HISTORY:
-# 2013-11-20
-# o Created.
-############################################################################
