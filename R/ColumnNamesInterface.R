@@ -20,7 +20,7 @@
 # @author
 #*/###########################################################################
 setConstructorS3("ColumnNamesInterface", function(...) {
-  extend(Interface(), "ColumnNamesInterface");
+  extend(Interface(), "ColumnNamesInterface")
 })
 
 
@@ -55,9 +55,9 @@ setConstructorS3("ColumnNamesInterface", function(...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("nbrOfColumns", "ColumnNamesInterface", function(this, ...) {
-  columns <- getColumnNames(this);
-  if (is.null(columns)) return(NA_integer_);
-  length(columns);
+  columns <- getColumnNames(this)
+  if (is.null(columns)) return(NA_integer_)
+  length(columns)
 })
 
 
@@ -88,7 +88,7 @@ setMethodS3("nbrOfColumns", "ColumnNamesInterface", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultColumnNames", "ColumnNamesInterface", abstract=TRUE, protected=TRUE);
+setMethodS3("getDefaultColumnNames", "ColumnNamesInterface", abstract=TRUE, protected=TRUE)
 
 
 
@@ -121,14 +121,14 @@ setMethodS3("getDefaultColumnNames", "ColumnNamesInterface", abstract=TRUE, prot
 # }
 #*/###########################################################################
 setMethodS3("getColumnNames", "ColumnNamesInterface", function(this, ..., translate=TRUE) {
-  names <- getDefaultColumnNames(this, ...);
+  names <- getDefaultColumnNames(this, ...)
 
   # Translate?
   if (translate) {
-    names <- translateColumnNames(this, names);
+    names <- translateColumnNames(this, names)
   }
 
-  names;
+  names
 })
 
 
@@ -137,161 +137,161 @@ setMethodS3("getColumnNames", "ColumnNamesInterface", function(this, ..., transl
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("clearListOfColumnNamesTranslators", "ColumnNamesInterface", function(this, ...) {
-  setListOfColumnNamesTranslators(this, list());
+  setListOfColumnNamesTranslators(this, list())
 }, protected=TRUE)
 
 setMethodS3("clearColumnNamesTranslator", "ColumnNamesInterface", function(this, ...) {
-  clearListOfColumnNamesTranslators(this);
+  clearListOfColumnNamesTranslators(this)
 })
 
 
 setMethodS3("getListOfColumnNamesTranslators", "ColumnNamesInterface", function(this, ...) {
-  res <- this$.listOfColumnNamesTranslators;
+  res <- this$.listOfColumnNamesTranslators
   if (is.null(res)) {
-    res <- list();
+    res <- list()
   }
-  res;
+  res
 }, protected=TRUE)
 
 setMethodS3("setListOfColumnNamesTranslators", "ColumnNamesInterface", function(this, fnList, ...) {
   # Argument 'fnList':
   for (kk in seq_along(fnList)) {
-    fcn <- fnList[[kk]];
+    fcn <- fnList[[kk]]
     if (!is.function(fcn)) {
       throw("Element #", kk, " of argument 'fnList' is not a function: ",
-                                                           class(fcn)[1]);
+                                                           class(fcn)[1])
     }
   }
 
-  this$.listOfColumnNamesTranslators <- fnList;
+  this$.listOfColumnNamesTranslators <- fnList
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("getColumnNamesTranslator", "ColumnNamesInterface", function(this, ...) {
-  fnList <- getListOfColumnNamesTranslators(this, ...);
+  fnList <- getListOfColumnNamesTranslators(this, ...)
 
   # No names translator?
   if (length(fnList) == 0) {
-    return(NULL);
+    return(NULL)
   }
 
   # Create names translator function
   res <- function(names, ...) {
     for (kk in seq_along(fnList)) {
-      fcn <- fnList[[kk]];
-      names <- fcn(names, ...);
+      fcn <- fnList[[kk]]
+      names <- fcn(names, ...)
     }
-    names;
+    names
   }
-  res;
+  res
 }, protected=TRUE)
 
 
 
 setMethodS3("translateColumnNames", "ColumnNamesInterface", function(this, names, ...) {
-  nameTranslator <- getColumnNamesTranslator(this);
+  nameTranslator <- getColumnNamesTranslator(this)
 
   if (!is.null(nameTranslator)) {
-    names2 <- nameTranslator(names, file=this);
+    names2 <- nameTranslator(names, file=this)
 
     # Sanity check
     if (any(is.na(names2))) {
       throw("Failed to translate names. Some names were translated to NA:s ",
-            paste(head(names[is.na(names2)]), collapse=", "));
+            paste(head(names[is.na(names2)]), collapse=", "))
     }
     if (length(names2) != length(names)) {
-      throw(sprintf("Failed to translate column names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)));
+      throw(sprintf("Failed to translate column names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)))
     }
-    names <- names2;
+    names <- names2
 
     if (identical(attr(names, "isFinal"), TRUE))
-      return(names);
+      return(names)
   }
 
   # Do nothing
-  names;
+  names
 }, private=TRUE)
 
 
 setMethodS3("appendColumnNamesTranslatorByNULL", "ColumnNamesInterface", function(this, ...) {
   # Nothing to append
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("appendColumnNamesTranslatorBylist", "ColumnNamesInterface", function(this, list, ...) {
   # Arguments 'list':
   if (!inherits(list, "list")) {
-    throw("Argument 'list' is not a list: ", class(list)[1]);
+    throw("Argument 'list' is not a list: ", class(list)[1])
   }
 
   for (kk in seq_along(list)) {
-    by <- list[[kk]];
-    appendColumnNamesTranslator(this, by, ...);
+    by <- list[[kk]]
+    appendColumnNamesTranslator(this, by, ...)
   }
 }, protected=TRUE)
 
 
 setMethodS3("appendColumnNamesTranslatorBycharacter", "ColumnNamesInterface", function(this, names, ...) {
   # Validate argument 'names'
-  names <- Arguments$getCharacters(names);
+  names <- Arguments$getCharacters(names)
 
   # Append a translator function that always returns a constant string
-  appendColumnNamesTranslator(this, function(...) { names });
+  appendColumnNamesTranslator(this, function(...) { names })
 }, protected=TRUE)
 
 
 setMethodS3("appendColumnNamesTranslatorByfunction", "ColumnNamesInterface", function(this, fcn, ..., validate=TRUE) {
   # Arguments 'fcn':
   if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
+    throw("Argument 'fcn' is not a function: ", class(fcn)[1])
   }
 
   # Sanity check
   if (validate) {
-    names <- getDefaultColumnNames(this);
-    namesT <- fcn(names, file=this);
+    names <- getDefaultColumnNames(this)
+    namesT <- fcn(names, file=this)
 
     # More sanity checks
     if (length(namesT) != length(names)) {
-      throw(sprintf("Argument 'fcn' specifies a translator function that return %d string(s) when give %d: %s", length(names), length(namesT), hpaste("'", namesT, "'")));
+      throw(sprintf("Argument 'fcn' specifies a translator function that return %d string(s) when give %d: %s", length(names), length(namesT), hpaste("'", namesT, "'")))
     }
   }
 
-  fnList <- getListOfColumnNamesTranslators(this);
-  fnList <- c(fnList, fcn);
-  setListOfColumnNamesTranslators(this, fnList);
+  fnList <- getListOfColumnNamesTranslators(this)
+  fnList <- c(fnList, fcn)
+  setListOfColumnNamesTranslators(this, fnList)
 }, protected=TRUE)
 
 
 setMethodS3("appendColumnNamesTranslator", "ColumnNamesInterface", function(this, by, ...) {
   # Arguments 'by':
-  classNames <- class(by);
-  methodNames <- sprintf("appendColumnNamesTranslatorBy%s", classNames);
+  classNames <- class(by)
+  methodNames <- sprintf("appendColumnNamesTranslatorBy%s", classNames)
 
-  keep <- sapply(methodNames, FUN=exists, mode="function");
-  methodNames <- methodNames[keep];
+  keep <- sapply(methodNames, FUN=exists, mode="function")
+  methodNames <- methodNames[keep]
 
   if (length(methodNames) == 0) {
-    throw("Failed to set the names translator. Could not find an appendColumnNamesTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "));
+    throw("Failed to set the names translator. Could not find an appendColumnNamesTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "))
   }
 
-  methodName <- methodNames[1];
-  fcn <- get(methodName, mode="function");
-  res <- fcn(this, by, ...);
+  methodName <- methodNames[1]
+  fcn <- get(methodName, mode="function")
+  res <- fcn(this, by, ...)
 
   # Allow the object to update itself according to these new rules.
-  updateColumnNames(this);
+  updateColumnNames(this)
 
-  invisible(res);
+  invisible(res)
 }, protected=TRUE)
 
 
 setMethodS3("setColumnNamesTranslator", "ColumnNamesInterface", function(this, ...) {
-  clearListOfColumnNamesTranslators(this);
-  appendColumnNamesTranslator(this, ...);
+  clearListOfColumnNamesTranslators(this)
+  appendColumnNamesTranslator(this, ...)
 })
 
 
@@ -328,7 +328,7 @@ setMethodS3("setColumnNamesTranslator", "ColumnNamesInterface", function(this, .
 #*/###########################################################################
 setMethodS3("setColumnNames", "ColumnNamesInterface", function(this, ...) {
   # Set a translator function that always returns a constant
-  setColumnNamesTranslator(this, ...);
+  setColumnNamesTranslator(this, ...)
 })
 
 

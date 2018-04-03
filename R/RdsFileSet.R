@@ -23,10 +23,10 @@
 # @author
 #*/###########################################################################
 setConstructorS3("RdsFileSet", function(...) {
-  extend(GenericDataFileSet(...), "RdsFileSet");
+  extend(GenericDataFileSet(...), "RdsFileSet")
 })
 
 
 setMethodS3("byPath", "RdsFileSet", function(static, ..., pattern="[.]rds$") {
-  NextMethod("byPath", pattern=pattern);
+  NextMethod("byPath", pattern=pattern)
 })

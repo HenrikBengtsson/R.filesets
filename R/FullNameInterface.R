@@ -28,7 +28,7 @@
 # @author
 #*/###########################################################################
 setConstructorS3("FullNameInterface", function(...) {
-  extend(Interface(), "FullNameInterface");
+  extend(Interface(), "FullNameInterface")
 })
 
 
@@ -69,7 +69,7 @@ setConstructorS3("FullNameInterface", function(...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=TRUE);
+setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=TRUE)
 
 
 
@@ -103,14 +103,14 @@ setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=
 # }
 #*/###########################################################################
 setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TRUE) {
-  fullname <- getDefaultFullName(this, ...);
+  fullname <- getDefaultFullName(this, ...)
 
   # Translate?
   if (translate) {
-    fullname <- translateFullName(this, fullname);
+    fullname <- translateFullName(this, fullname)
   }
 
-  fullname;
+  fullname
 })
 
 
@@ -149,12 +149,12 @@ setMethodS3("getFullName", "FullNameInterface", function(this, ..., translate=TR
 # }
 #*/###########################################################################
 setMethodS3("getName", "FullNameInterface", function(this, ...) {
-  name <- getFullName(this, ...);
+  name <- getFullName(this, ...)
 
   # Keep anything before the first comma
-  name <- gsub("[,].*$", "", name);
+  name <- gsub("[,].*$", "", name)
 
-  name;
+  name
 })
 
 
@@ -208,74 +208,74 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE, useCustomTags=TRUE) {
-  fullname <- getFullName(this, ...);
+  fullname <- getFullName(this, ...)
 
   # If NA, return NA or NULL?
   if (is.na(fullname)) {
     if (na.rm) {
-      return(NULL);
+      return(NULL)
     } else {
-      naValue <- as.character(NA);
-      return(naValue);
+      naValue <- as.character(NA)
+      return(naValue)
     }
   }
 
   # The name is anything before the first comma
-  name <- gsub("[,].*$", "", fullname);
+  name <- gsub("[,].*$", "", fullname)
 
   # Keep anything after the name (and the separator).
-  tags <- substring(fullname, nchar(name, type="chars") + 2L);
-  tags <- unlist(strsplit(tags, split=","));
+  tags <- substring(fullname, nchar(name, type="chars") + 2L)
+  tags <- unlist(strsplit(tags, split=","))
 
   if (useCustomTags) {
     # Are there custom tags?
-    customTags <- this$.tags;
+    customTags <- this$.tags
     if (length(customTags) > 0) {
       # Replace asterisk custom tags?
-      hasAsteriskTags <- is.element("*", customTags);
+      hasAsteriskTags <- is.element("*", customTags)
       if (hasAsteriskTags) {
-        pos <- which("*" == customTags);
-        customTags <- customTags[-pos];
+        pos <- which("*" == customTags)
+        customTags <- customTags[-pos]
 
-        asteriskTags <- tags;
+        asteriskTags <- tags
         if (length(asteriskTags) > 0) {
           if (length(customTags) == 0) {
-            customTags <- asteriskTags;
+            customTags <- asteriskTags
           } else {
-            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags);
+            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags)
           }
         }
       } # if (hasAsteriskTags)
-      tags <- customTags;
+      tags <- customTags
     } # if (length(customTags) > 0)
   } # if (useCustomTags)
 
   # Keep only those matching a regular expression?
   if (!is.null(pattern)) {
-    tags <- grep(pattern, tags, value=TRUE);
+    tags <- grep(pattern, tags, value=TRUE)
   }
 
   # Extract names, e.g. "foo,n=23" as c("foo", "n"="23")
   if (named && length(tags) > 0) {
-    names <- rep(as.character(NA), times=length(tags));
-    pattern <- "^([^=]*)=(.*)";
-    idxs <- grep(pattern, tags);
-    names[idxs] <- gsub(pattern, "\\1", tags[idxs]);
-    tags[idxs] <- gsub(pattern, "\\2", tags[idxs]);
-    names(tags) <- names;
+    names <- rep(as.character(NA), times=length(tags))
+    pattern <- "^([^=]*)=(.*)"
+    idxs <- grep(pattern, tags)
+    names[idxs] <- gsub(pattern, "\\1", tags[idxs])
+    tags[idxs] <- gsub(pattern, "\\2", tags[idxs])
+    names(tags) <- names
   }
 
   # Collapsed or split?
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   } else {
-    tags <- unlist(strsplit(tags, split=","));
+    tags <- unlist(strsplit(tags, split=","))
   }
 
   if (length(tags) == 0)
-    tags <- NULL;
+    tags <- NULL
 
-  tags;
+  tags
 })
 
 
@@ -313,13 +313,13 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 # }
 #*/###########################################################################
 setMethodS3("hasTags", "FullNameInterface", function(this, tags, ...) {
-  tags <- strsplit(tags, split=",", fixed=TRUE);
-  tags <- unlist(tags, use.names=FALSE);
-  all(is.element(tags, getTags(this, ...)));
+  tags <- strsplit(tags, split=",", fixed=TRUE)
+  tags <- unlist(tags, use.names=FALSE)
+  all(is.element(tags, getTags(this, ...)))
 })
 
 setMethodS3("hasTag", "FullNameInterface", function(this, tag, ...) {
-  hasTags(this, tags=tag, ...);
+  hasTags(this, tags=tag, ...)
 })
 
 
@@ -358,14 +358,14 @@ setMethodS3("hasTag", "FullNameInterface", function(this, tag, ...) {
 setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags, type="chars") > 0L];
+    tags <- Arguments$getCharacters(tags)
+    tags <- trim(unlist(strsplit(tags, split=",")))
+    tags <- tags[nchar(tags, type="chars") > 0L]
   }
 
-  this$.tags <- tags;
+  this$.tags <- tags
 
-  invisible(this);
+  invisible(this)
 })
 
 
@@ -373,103 +373,103 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("clearListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
-  setListOfFullNameTranslators(this, list());
+  setListOfFullNameTranslators(this, list())
 }, protected=TRUE)
 
 setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) {
-  clearListOfFullNameTranslators(this);
+  clearListOfFullNameTranslators(this)
 })
 
 setMethodS3("resetFullName", "FullNameInterface", function(this, ...) {
-  clearFullNameTranslator(this, ...);
+  clearFullNameTranslator(this, ...)
 }, protected=TRUE)
 
 
 setMethodS3("getListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
-  res <- this$.listOfFullNameTranslators;
+  res <- this$.listOfFullNameTranslators
   if (is.null(res)) {
-    res <- list();
+    res <- list()
   }
-  res;
+  res
 }, protected=TRUE)
 
 setMethodS3("setListOfFullNameTranslators", "FullNameInterface", function(this, fnList, ...) {
   # Argument 'fnList':
   for (kk in seq_along(fnList)) {
-    fcn <- fnList[[kk]];
+    fcn <- fnList[[kk]]
     if (!is.function(fcn)) {
       throw("Element #", kk, " of argument 'fnList' is not a function: ",
-                                                           class(fcn)[1]);
+                                                           class(fcn)[1])
     }
   }
 
-  this$.listOfFullNameTranslators <- fnList;
+  this$.listOfFullNameTranslators <- fnList
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("getFullNameTranslator", "FullNameInterface", function(this, ...) {
-  fnList <- getListOfFullNameTranslators(this, ...);
+  fnList <- getListOfFullNameTranslators(this, ...)
 
   # No fullnames translator?
   if (length(fnList) == 0) {
-    return(NULL);
+    return(NULL)
   }
 
   # Create fullnames translator function
   res <- function(names, ...) {
     for (kk in seq_along(fnList)) {
-      fcn <- fnList[[kk]];
-      names <- fcn(names, ...);
+      fcn <- fnList[[kk]]
+      names <- fcn(names, ...)
     }
-    names;
+    names
   }
-  res;
+  res
 }, protected=TRUE)
 
 
 
 setMethodS3("translateFullName", "FullNameInterface", function(this, names, ...) {
-  nameTranslator <- getFullNameTranslator(this);
+  nameTranslator <- getFullNameTranslator(this)
 
   if (!is.null(nameTranslator)) {
-    names2 <- nameTranslator(names, file=this);
+    names2 <- nameTranslator(names, file=this)
 
     # Sanity check
     if (any(is.na(names2))) {
       throw("Failed to translate names. Some names were translated to NA:s ",
-            paste(head(names[is.na(names2)]), collapse=", "));
+            paste(head(names[is.na(names2)]), collapse=", "))
     }
     if (length(names2) != length(names)) {
-      throw(sprintf("Failed to translate full names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)));
+      throw(sprintf("Failed to translate full names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)))
     }
-    names <- names2;
+    names <- names2
 
     if (identical(attr(names, "isFinal"), TRUE))
-      return(names);
+      return(names)
   }
 
   # Do nothing
-  names;
+  names
 }, private=TRUE)
 
 
 setMethodS3("appendFullNameTranslatorByNULL", "FullNameInterface", function(this, ...) {
   # Nothing to append
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("appendFullNameTranslatorBylist", "FullNameInterface", function(this, list, ...) {
   # Arguments 'list':
   if (!inherits(list, "list")) {
-    throw("Argument 'list' is not a list: ", class(list)[1]);
+    throw("Argument 'list' is not a list: ", class(list)[1])
   }
 
   for (kk in seq_along(list)) {
-    by <- list[[kk]];
-    appendFullNameTranslator(this, by, ...);
+    by <- list[[kk]]
+    appendFullNameTranslator(this, by, ...)
   }
 }, protected=TRUE)
 
@@ -477,30 +477,30 @@ setMethodS3("appendFullNameTranslatorBylist", "FullNameInterface", function(this
 
 setMethodS3("appendFullNameTranslator", "FullNameInterface", function(this, by, ...) {
   # Arguments 'by':
-  classNames <- class(by);
-  methodNames <- sprintf("appendFullNameTranslatorBy%s", classNames);
+  classNames <- class(by)
+  methodNames <- sprintf("appendFullNameTranslatorBy%s", classNames)
 
-  keep <- sapply(methodNames, FUN=exists, mode="function");
-  methodNames <- methodNames[keep];
+  keep <- sapply(methodNames, FUN=exists, mode="function")
+  methodNames <- methodNames[keep]
 
   if (length(methodNames) == 0) {
-    throw("Failed to set the fullname translator. Could not find an appendFullNameTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "));
+    throw("Failed to set the fullname translator. Could not find an appendFullNameTranslatorBy<className>() function for this object: ", paste(classNames, collapse=", "))
   }
 
-  methodName <- methodNames[1];
-  fcn <- get(methodName, mode="function");
-  res <- fcn(this, by, ...);
+  methodName <- methodNames[1]
+  fcn <- get(methodName, mode="function")
+  res <- fcn(this, by, ...)
 
   # Allow the object to update itself according to these new rules.
-  updateFullName(this);
+  updateFullName(this)
 
-  invisible(res);
+  invisible(res)
 })
 
 
 setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
-  clearListOfFullNameTranslators(this);
-  appendFullNameTranslator(this, ...);
+  clearListOfFullNameTranslators(this)
+  appendFullNameTranslator(this, ...)
 })
 
 
@@ -538,7 +538,7 @@ setMethodS3("setFullNameTranslator", "FullNameInterface", function(this, ...) {
 #*/###########################################################################
 setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
   # Set a translator function that always returns a constant
-  setFullNameTranslator(this, ...);
+  setFullNameTranslator(this, ...)
 })
 
 
@@ -575,19 +575,19 @@ setMethodS3("setFullName", "FullNameInterface", function(this, ...) {
 setMethodS3("setName", "FullNameInterface", function(this, name=NULL, ...) {
   # Argument 'name':
   if (!is.null(name)) {
-    name <- Arguments$getCharacter(name);
+    name <- Arguments$getCharacter(name)
   }
 
   if (is.null(name)) {
-    clearFullNameTranslator(this);
+    clearFullNameTranslator(this)
   } else {
     # Set a translator function that always returns the same name
     setFullNameTranslator(this, function(fullname, ...) {
-      parts <- strsplit(fullname, split=",", fixed=TRUE)[[1]];
-      parts[1] <- name;
-      fullname <- paste(parts, collapse=",");
-      fullname;
-    });
+      parts <- strsplit(fullname, split=",", fixed=TRUE)[[1]]
+      parts[1] <- name
+      fullname <- paste(parts, collapse=",")
+      fullname
+    })
   }
 })
 

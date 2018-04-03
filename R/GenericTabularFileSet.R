@@ -23,7 +23,7 @@
 # @author
 #*/###########################################################################
 setConstructorS3("GenericTabularFileSet", function(...) {
-  extend(GenericDataFileSet(...), "GenericTabularFileSet");
+  extend(GenericDataFileSet(...), "GenericTabularFileSet")
 })
 
 
@@ -36,27 +36,27 @@ setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., drop=F
   }
 
   nbrOfFiles <- length(this)
-  data <- NULL;
+  data <- NULL
   for (kk in seq_len(nbrOfFiles)) {
     dataFile <- this[[kk]]
     argsKK <- c(list(dataFile), args)
     dataKK <- do.call(extractMatrix, args = argsKK)
 
     if (is.null(data)) {
-      naValue <- vector(storage.mode(dataKK), length=1);
-      data <- matrix(naValue, nrow=nrow(dataKK), ncol=nbrOfFiles);
+      naValue <- vector(storage.mode(dataKK), length=1)
+      data <- matrix(naValue, nrow=nrow(dataKK), ncol=nbrOfFiles)
       colnames(data) <- getNames(this)
     }
 
-    data[,kk] <- dataKK;
+    data[,kk] <- dataKK
     # Not needed anymore
-    dataKK <- NULL;
+    dataKK <- NULL
   }
 
   # Drop singelton dimensions?
   if (drop) {
-    data <- drop(data);
+    data <- drop(data)
   }
 
-  data;
+  data
 })
