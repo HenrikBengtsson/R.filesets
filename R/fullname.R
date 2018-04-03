@@ -1,43 +1,43 @@
 setMethodS3("fullname", "default", function(name, tags=NULL, ..., collapse=TRUE) {
   # Create a clean vector of parts
-  args <- list(name, tags, ...);
-  parts <- unlist(args, use.names=FALSE);
-  parts <- paste(parts, collapse=",");
-  parts <- strsplit(parts, split=",", fixed=TRUE);
-  parts <- unlist(parts, use.names=FALSE);
+  args <- list(name, tags, ...)
+  parts <- unlist(args, use.names=FALSE)
+  parts <- paste(parts, collapse=",")
+  parts <- strsplit(parts, split=",", fixed=TRUE)
+  parts <- unlist(parts, use.names=FALSE)
 
-  parts <- parts[nchar(parts, type="chars") > 0L];
+  parts <- parts[nchar(parts, type="chars") > 0L]
 
   if (collapse) {
-    parts <- paste(parts, collapse=",");
+    parts <- paste(parts, collapse=",")
   }
 
-  parts;
+  parts
 })
 
 
 setMethodS3("name", "default", function(...) {
   # Create a clean vector of parts
-  parts <- fullname(..., collapse=FALSE);
+  parts <- fullname(..., collapse=FALSE)
 
   # Extract the name
-  name <- parts[1];
+  name <- parts[1]
 
-  name;
+  name
 })
 
 
 setMethodS3("tags", "default", function(..., collapse=FALSE) {
   # Create a clean vector of parts
-  parts <- fullname(..., collapse=FALSE);
+  parts <- fullname(..., collapse=FALSE)
 
   # Extract the tags
-  tags <- parts[-1];
+  tags <- parts[-1]
 
   if (collapse) {
-    tags <- paste(tags, collapse=",");
+    tags <- paste(tags, collapse=",")
   }
-  tags;
+  tags
 })
 
 
