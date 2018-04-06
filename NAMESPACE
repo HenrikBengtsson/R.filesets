@@ -346,6 +346,7 @@ S3method("extractMatrix", "GenericTabularFileSet")
 
 # RDataFile
 S3method("loadObject", "RDataFile")
+S3method("loadToEnv", "RDataFile")
 
 # RDataFileSet
 S3method("byPath", "RDataFileSet")
