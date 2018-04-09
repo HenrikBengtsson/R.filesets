@@ -1,18 +1,13 @@
 ###########################################################################/**
 # @set class=GenericDataFileSet
-# @RdocMethod dsApply
-# @aliasmethod dsApplyInPairs
+# @RdocMethod dsApplyInPairs
+# @aliasmethod dsApply
 # @alias dsApplyInPairs
 #
-# @title "Applies a function to each file in the file set"
+# @title "Applies a function to each pair of file in two file sets"
 #
 # \description{
 #   @get "title".
-#
-#  \emph{
-#    WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
-#    Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
-#  }
 # }
 #
 # @synopsis
@@ -46,6 +41,13 @@
 #  @include "../incl/GenericDataFileSet.dsApply.Rex"
 # }}
 #
+# \details{
+#  \emph{
+#    WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
+#    Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
+#  }
+# }
+#
 # \seealso{
 #  The \pkg{future} and \pkg{future.apply} packages are utilized for
 #  parallel/distributed processing.
@@ -55,6 +57,30 @@
 #
 # @keyword internal
 #*/###########################################################################
+setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'ds1' & 'ds2':
+  ds2 <- Arguments$getInstanceOf(ds2, class(ds1)[1L])
+  stopifnot(length(ds2) == length(ds1))
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # dsApply() in pairs
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  dsP <- c(ds1, ds2)
+  idxs <- matrix(seq_along(dsP), nrow=2L, byrow=TRUE)
+  IDXS <- as.list(as.data.frame(idxs))
+  names <- getFullNames(dsP)
+  names(IDXS) <- sapply(IDXS, FUN=function(idxs) {
+    sprintf("Pair (%s,%s)", names[idxs[1]], names[idxs[2]])
+  })
+  idxs <- names <- ds1 <- ds2 <- NULL  # Not needed anymore
+
+  dsApply(dsP, IDXS=IDXS, ...)
+}, protected=TRUE) # dsApplyInPairs()
+
+
 setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE, verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"), .control=list(dW=1.0)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -247,28 +273,3 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
   res
 }, protected=TRUE) # dsApply()
-
-
-
-setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'ds1' & 'ds2':
-  ds2 <- Arguments$getInstanceOf(ds2, class(ds1)[1L])
-  stopifnot(length(ds2) == length(ds1))
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # dsApply() in pairs
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  dsP <- c(ds1, ds2)
-  idxs <- matrix(seq_along(dsP), nrow=2L, byrow=TRUE)
-  IDXS <- as.list(as.data.frame(idxs))
-  names <- getFullNames(dsP)
-  names(IDXS) <- sapply(IDXS, FUN=function(idxs) {
-    sprintf("Pair (%s,%s)", names[idxs[1]], names[idxs[2]])
-  })
-  idxs <- names <- ds1 <- ds2 <- NULL  # Not needed anymore
-
-  dsApply(dsP, IDXS=IDXS, ...)
-}, protected=TRUE) # dsApplyInPairs()
