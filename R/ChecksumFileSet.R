@@ -27,18 +27,18 @@ setConstructorS3("ChecksumFileSet", function(...) {
 
 
 setMethodS3("getChecksumFileSet", "GenericDataFileSet", function(this, ...) {
-  files <- vector("list", length=length(this));
+  files <- vector("list", length=length(this))
   for (ii in seq_along(this)) {
-    file <- this[[ii]];
-    files[[ii]] <- getChecksumFile(file, ...);
+    file <- this[[ii]]
+    files[[ii]] <- getChecksumFile(file, ...)
   } # for (ii ...)
-  ChecksumFileSet(files);
+  ChecksumFileSet(files)
 })
 
 
 setMethodS3("validate", "ChecksumFileSet", function(this, ...) {
-  lapply(this, FUN=validate, ...);
-  invisible(TRUE);
+  lapply(this, FUN=validate, ...)
+  invisible(TRUE)
 })
 
 

@@ -24,7 +24,7 @@
 # @author
 #*/###########################################################################
 setConstructorS3("TabularTextFileSet", function(...) {
-  extend(GenericTabularFileSet(...), "TabularTextFileSet");
+  extend(GenericTabularFileSet(...), "TabularTextFileSet")
 }) 
 
 
@@ -74,33 +74,33 @@ setMethodS3("readDataFrame", "TabularTextFileSet", function(this, ..., combineBy
   # Argument 'combineBy':
   if (!is.null(combineBy)) {
     if (!is.function(combineBy)) {
-      throw("Argument 'combineBy' is not a function: ", mode(combineBy));
+      throw("Argument 'combineBy' is not a function: ", mode(combineBy))
     }
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
  
 
-  verbose && enter(verbose, "Reading data set as data frame");
+  verbose && enter(verbose, "Reading data set as data frame")
 
   # Read
-  verbose && enter(verbose, "Reading all data files");
-  verbose && cat(verbose, "Number of files: ", length(this));
-  data <- lapply(this, readDataFrame, ..., verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading all data files")
+  verbose && cat(verbose, "Number of files: ", length(this))
+  data <- lapply(this, readDataFrame, ..., verbose=less(verbose))
+  verbose && exit(verbose)
 
   if (is.function(combineBy)) {
-    verbose && enter(verbose, "Combining all data");
-    data <- combineBy(data);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Combining all data")
+    data <- combineBy(data)
+    verbose && exit(verbose)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  data;
+  data
 })

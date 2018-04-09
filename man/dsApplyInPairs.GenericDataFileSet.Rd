@@ -7,31 +7,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{dsApply.GenericDataFileSet}
-\alias{dsApply.GenericDataFileSet}
-\alias{GenericDataFileSet.dsApply}
-\alias{dsApply,GenericDataFileSet-method}
-\alias{GenericDataFileSet.dsApplyInPairs}
+\name{dsApplyInPairs.GenericDataFileSet}
 \alias{dsApplyInPairs.GenericDataFileSet}
+\alias{GenericDataFileSet.dsApplyInPairs}
 \alias{dsApplyInPairs,GenericDataFileSet-method}
+\alias{GenericDataFileSet.dsApply}
+\alias{dsApply.GenericDataFileSet}
+\alias{dsApply,GenericDataFileSet-method}
 
 \alias{dsApplyInPairs}
 
-\title{Applies a function to each file in the file set}
+\title{Applies a function to each pair of file in two file sets}
 
 \description{
-  Applies a function to each file in the file set.
-
- \emph{
-   WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
-   Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
- }
+  Applies a function to each pair of file in two file sets.
 }
 
 \usage{
-\method{dsApply}{GenericDataFileSet}(ds, IDXS=NULL, DROP=is.null(IDXS), AS=as.list, FUN, ..., args=list(), skip=FALSE,
-  verbose=FALSE, .parallel=c("none", "future", "BatchJobs", "BiocParallel::BatchJobs"),
-  .control=list(dW = 1))
+\method{dsApplyInPairs}{GenericDataFileSet}(ds1, ds2, ...)
 }
 
 \arguments{
@@ -87,6 +80,13 @@ print(res2)
 stopifnot(identical(res2, res1))
 
 }}
+
+\details{
+ \emph{
+   WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
+   Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
+ }
+}
 
 \seealso{
  The \pkg{future} and \pkg{future.apply} packages are utilized for

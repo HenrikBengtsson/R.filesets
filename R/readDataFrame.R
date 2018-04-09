@@ -50,25 +50,25 @@
 setMethodS3("readDataFrame", "default", function(filename, path=NULL, ...) {
   # Argument 'filename' and 'path':
   if (length(filename) == 0L) {
-    throw("Argument 'filename' must not be empty.");
+    throw("Argument 'filename' must not be empty.")
   }
   if (length(path) > 0L) {
-    path <- rep(path, length.out=length(filename));
+    path <- rep(path, length.out=length(filename))
   }
 
 
   # Setup TabularTextFile or TabularTextFileSet
   if (length(filename) == 1L) {
-    db <- TabularTextFile(filename, path=path, .verify=FALSE);
+    db <- TabularTextFile(filename, path=path, .verify=FALSE)
   } else if (length(filename) > 1L) {
     if (length(path) > 0L) {
-      pathnames <- file.path(path, filename);
+      pathnames <- file.path(path, filename)
     } else {
-      pathnames <- filename;
+      pathnames <- filename
     }
-    dfList <- lapply(pathnames, FUN=TabularTextFile, .verify=FALSE);
-    db <- TabularTextFileSet(dfList);
+    dfList <- lapply(pathnames, FUN=TabularTextFile, .verify=FALSE)
+    db <- TabularTextFileSet(dfList)
   }
 
-  readDataFrame(db, ...);
+  readDataFrame(db, ...)
 })

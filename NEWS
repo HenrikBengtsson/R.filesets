@@ -1,6 +1,13 @@
 Package: R.filesets
 ===================
 
+Version: 2.12.1 [2018-04-08]
+
+BUG FIXES:
+
+ o loadToEnv() for RDataFile was not declared an S3 method.
+ 
+
 Version: 2.12.0 [2018-02-11]
 
 SIGNIFICANT CHANGES:
