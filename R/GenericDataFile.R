@@ -70,20 +70,20 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   }
 
   # Arguments '...':
-  args <- list(...);
+  args <- list(...)
 
   # Ignore any argument called 'recursive'
-  keep <- which(regexpr("^recursive$", names(args)) == -1L);
-  args <- args[keep];
+  keep <- which(regexpr("^recursive$", names(args)) == -1L)
+  args <- args[keep]
 
   if (length(args) > 0L) {
     if (is.element(.onUnknownArgs, c("error", "warning"))) {
-      argsStr <- paste(names(args), collapse=", ");
-      msg <- sprintf("Unknown arguments: %s", argsStr);
+      argsStr <- paste(names(args), collapse=", ")
+      msg <- sprintf("Unknown arguments: %s", argsStr)
       if (.onUnknownArgs == "error") {
-        throw(msg);
+        throw(msg)
       } else if (.onUnknownArgs == "warning") {
-        warning(msg);
+        warning(msg)
       }
     }
   }
@@ -93,21 +93,21 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
     .prevModifiedOn = NULL,
     .pathname = pathname,
     .attributes = list()
-  );
+  )
 
   # Update time stamps
-  hasBeenModified(this);
+  hasBeenModified(this)
 
-  this;
+  this
 }, abstract=TRUE)
 
 
 
 setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
-  object <- NextMethod("clone");
+  object <- NextMethod("clone")
   if (clear)
-    clearCache(object);
-  object;
+    clearCache(object)
+  object
 }, protected=TRUE)
 
 
@@ -163,40 +163,40 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
 #*/###########################################################################
 setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
   # Default values
-  notEqual <- FALSE;
-  attr(notEqual, "thisFile") <- getPathname(this);
+  notEqual <- FALSE
+  attr(notEqual, "thisFile") <- getPathname(this)
   if (!inherits(other, "GenericDataFile")) {
     msg <- sprintf("The 'other' is not a GenericDataFile: %s",
-                                                 class(other)[1]);
-    attr(notEqual, "reason") <- msg;
-    return(notEqual);
+                                                 class(other)[1])
+    attr(notEqual, "reason") <- msg
+    return(notEqual)
   }
 
-  attr(notEqual, "otherFile") <- getPathname(other);
-  msg <- NULL;
+  attr(notEqual, "otherFile") <- getPathname(other)
+  msg <- NULL
 
   if (identical(getPathname(this), getPathname(other)))
-    return(TRUE);
+    return(TRUE)
 
-  value <- getFileSize(this);
-  valueOther <- getFileSize(other);
+  value <- getFileSize(this)
+  valueOther <- getFileSize(other)
   if (!identical(value, valueOther)) {
     msg <- sprintf("The file sizes differ: %.0f != %.0f",
-                                          value, valueOther);
-    attr(notEqual, "reason") <- msg;
-    return(notEqual);
+                                          value, valueOther)
+    attr(notEqual, "reason") <- msg
+    return(notEqual)
   }
 
-  value <- getChecksum(this);
-  valueOther <- getChecksum(other);
+  value <- getChecksum(this)
+  valueOther <- getChecksum(other)
   if (!identical(value, valueOther)) {
     msg <- sprintf("The checksums differ: %s != %s",
-                                          value, valueOther);
-    attr(notEqual, "reason") <- msg;
-    return(notEqual);
+                                          value, valueOther)
+    attr(notEqual, "reason") <- msg
+    return(notEqual)
   }
 
-  TRUE;
+  TRUE
 })
 
 
@@ -231,41 +231,41 @@ setMethodS3("equals", "GenericDataFile", function(this, other, ...) {
 #*/###########################################################################
 setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
+  s <- sprintf("%s:", class(this)[1])
 
   # Name and tags of file set
-  s <- c(s, sprintf("Name: %s", getName(this)));
-  tags <- getTags(this, collapse=",");
+  s <- c(s, sprintf("Name: %s", getName(this)))
+  tags <- getTags(this, collapse=",")
   if (!is.null(tags)) {
-    s <- c(s, sprintf("Tags: %s", tags));
+    s <- c(s, sprintf("Tags: %s", tags))
   }
 
   # Full names of file set
-  s <- c(s, sprintf("Full name: %s", getFullName(this)));
+  s <- c(s, sprintf("Full name: %s", getFullName(this)))
 
   # Pathname
   pathname <- getPathname(this, absolute=FALSE, NULLasNA=TRUE)
   if (!is.na(pathname)) {
-    pathnameA <- getPathname(this, absolute=TRUE);
+    pathnameA <- getPathname(this, absolute=TRUE)
     if (nchar(pathnameA, type="chars") < nchar(pathname, type="chars")) {
-      pathname <- pathnameA;
+      pathname <- pathnameA
     }
   }
-  s <- c(s, paste("Pathname: ", pathname, sep=""));
+  s <- c(s, paste("Pathname: ", pathname, sep=""))
 
   # File size
-  fileSize <- getFileSize(this, "units");
+  fileSize <- getFileSize(this, "units")
   if (!is.na(fileSize)) {
-    fileSizeB <- sprintf("%.0f bytes", getFileSize(this, "numeric"));
+    fileSizeB <- sprintf("%.0f bytes", getFileSize(this, "numeric"))
     if (fileSizeB != fileSize) {
-      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB)
     }
   }
-  s <- c(s, sprintf("File size: %s", fileSize));
+  s <- c(s, sprintf("File size: %s", fileSize))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
@@ -424,13 +424,13 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
-  filename <- getFilename(this, ...);
+  filename <- getFilename(this, ...)
   if (is.null(filename))
-    return(as.character(NA));
-  pattern <- getExtensionPattern(this);
-  fullname <- gsub(pattern, "", filename);
+    return(as.character(NA))
+  pattern <- getExtensionPattern(this)
+  fullname <- gsub(pattern, "", filename)
 
-  fullname;
+  fullname
 }, protected=TRUE)
 
 
@@ -438,36 +438,36 @@ setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=
 
 
 setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
-  getFilenameExtension(...);
+  getFilenameExtension(...)
 }, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., default="\\.([^.]+)$", force=FALSE) {
-  pattern <- this$.extensionPattern;
+  pattern <- this$.extensionPattern
   if (force || is.null(pattern)) {
     # Argument 'default':
     if (!is.null(default)) {
-      default <- Arguments$getRegularExpression(default);
+      default <- Arguments$getRegularExpression(default)
     }
 
     # Default pattern is anything following the last period
-    pattern <- default;
+    pattern <- default
 
 ##   pattern <- toAsciiRegExprPattern(pattern); # Don't handle [.] and ~
-    this$.extensionPattern <- pattern;
+    this$.extensionPattern <- pattern
   }
-  pattern;
+  pattern
 }, static=TRUE, protected=TRUE)
 
 
 setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NULL, ...) {
   # Argument 'pattern':
   if (!is.null(pattern)) {
-    pattern <- Arguments$getRegularExpression(pattern);
+    pattern <- Arguments$getRegularExpression(pattern)
   }
 
-  this$.extensionPattern <- pattern;
-  invisible(this);
+  this$.extensionPattern <- pattern
+  invisible(this)
 }, protected=TRUE)
 
 
@@ -500,10 +500,10 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 # }
 #*/###########################################################################
 setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
-  filename <- getFilename(this, ...);
-  fullname <- getDefaultFullName(this, ...);
+  filename <- getFilename(this, ...)
+  fullname <- getDefaultFullName(this, ...)
   # Drop <fullname> and a possible '.'.
-  substring(filename, first=nchar(fullname, type="chars") + 2L);
+  substring(filename, first=nchar(fullname, type="chars") + 2L)
 })
 
 
@@ -541,10 +541,10 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
-  pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$";
-  filename <- getFilename(this, ...);
-  ext <- gsub(pattern, "\\2", filename);
-  tolower(ext);
+  pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$"
+  filename <- getFilename(this, ...)
+  ext <- gsub(pattern, "\\2", filename)
+  tolower(ext)
 })
 
 
@@ -620,7 +620,7 @@ setMethodS3("is.na", "GenericDataFile", function(x) {
 # @keyword internal
 #*/###########################################################################
 setMethodS3("validate", "GenericDataFile", function(this, ...) {
-  NA;
+  NA
 }, protected=TRUE)
 
 
@@ -659,16 +659,16 @@ setMethodS3("validate", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "units"), sep="", ...) {
   # Argument 'what':
-  what <- match.arg(what);
+  what <- match.arg(what)
 
   pathname <- getPathname(this, NULLasNA=TRUE)
   fileSize <- file.info2(pathname)$size
 
   if (what == "numeric")
-    return(fileSize);
+    return(fileSize)
 
   if (is.na(fileSize))
-    return(fileSize);
+    return(fileSize)
 
   hsize(fileSize, digits = 2L, standard = "IEC")
 })
@@ -803,30 +803,30 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("hasBeenModified", "GenericDataFile", function(this, update=TRUE, unknown=TRUE, ...) {
-  lastModifiedOn <- getLastModifiedOn(this);
-  prevModifiedOn <- this$.prevModifiedOn;
+  lastModifiedOn <- getLastModifiedOn(this)
+  prevModifiedOn <- this$.prevModifiedOn
 
   # Unknown modification timestamp on file?
   if (is.na(lastModifiedOn) || lastModifiedOn == 0L) {
-    res <- unknown;
-    attr(res, "lastModifiedOn") <- lastModifiedOn;
-    attr(res, "prevModifiedOn") <- prevModifiedOn;
-    return(res);
+    res <- unknown
+    attr(res, "lastModifiedOn") <- lastModifiedOn
+    attr(res, "prevModifiedOn") <- prevModifiedOn
+    return(res)
   }
 
   if (is.null(prevModifiedOn)) {
-    res <- unknown;
-    attr(res, "lastModifiedOn") <- lastModifiedOn;
-    attr(res, "prevModifiedOn") <- prevModifiedOn;
+    res <- unknown
+    attr(res, "lastModifiedOn") <- lastModifiedOn
+    attr(res, "prevModifiedOn") <- prevModifiedOn
   } else {
-    res <- (lastModifiedOn > prevModifiedOn);
-    attr(res, "lastModifiedOn") <- lastModifiedOn;
-    attr(res, "prevModifiedOn") <- prevModifiedOn;
+    res <- (lastModifiedOn > prevModifiedOn)
+    attr(res, "lastModifiedOn") <- lastModifiedOn
+    attr(res, "prevModifiedOn") <- prevModifiedOn
   }
 
-  if (update) this$.prevModifiedOn <- lastModifiedOn;
+  if (update) this$.prevModifiedOn <- lastModifiedOn
 
-  res;
+  res
 }, protected=TRUE)
 
 
@@ -870,20 +870,20 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   if (.checkArgs) {
     # Argument 'recursive':
-    recursive <- Arguments$getLogical(recursive);
+    recursive <- Arguments$getLogical(recursive)
 
     # Argument 'filename' and 'path':
-    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE)
   } else {
-    pathname <- filename;
+    pathname <- filename
   }
 
 
@@ -892,28 +892,28 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (recursive) {
     # Get all known subclasses (bottom up)
-    className <- class(static)[1L];
-    clazz <- Class$forName(className, envir=parent.frame());
-    knownSubclasses <- getKnownSubclasses(clazz);
-    knownSubclasses <- rev(knownSubclasses);
+    className <- class(static)[1L]
+    clazz <- Class$forName(className, envir=parent.frame())
+    knownSubclasses <- getKnownSubclasses(clazz)
+    knownSubclasses <- rev(knownSubclasses)
     for (className in knownSubclasses) {
-      clazz <- Class$forName(className);
+      clazz <- Class$forName(className)
 
       # Try reading the file using the static fromFile() method of each class
-      static <- getStaticInstance(clazz);
+      static <- getStaticInstance(clazz)
       tryCatch({
         # Are we calling the same fromFile() instance multiple times here?
         # Slow? /HB 2010-01-30
-        res <- fromFile(static, filename=pathname, .checkArgs=FALSE);
-        return(res);
+        res <- fromFile(static, filename=pathname, .checkArgs=FALSE)
+        return(res)
       }, error = function(ex) {})
     }
   }
 
   # If not "read" above, just create an instance as is.
-  res <- newInstance(static, filename=pathname, ...);
+  res <- newInstance(static, filename=pathname, ...)
 
-  res;
+  res
 }, static=TRUE, protected=TRUE)
 
 
@@ -1073,46 +1073,46 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' and 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path);
+  pathname <- Arguments$getWritablePathname(filename, path=path)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # Assert that the file exists
   if (!isFile(this)) {
-    throw("Cannot rename file. Source file does not exist: NA");
+    throw("Cannot rename file. Source file does not exist: NA")
   }
 
   # Nothing to do?
   srcPathname <- getPathname(this, NULLasNA=TRUE)
   if (identical(pathname, srcPathname))
-    return(this);
+    return(this)
 
   # Assert that file is not overwritten by mistake.
-  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
+  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE)
 
-  verbose && enter(verbose, "Renaming ", class(this)[1], " pathname");
-  verbose && cat(verbose, "Source: ", srcPathname);
-  verbose && cat(verbose, "Destination: ", pathname);
+  verbose && enter(verbose, "Renaming ", class(this)[1], " pathname")
+  verbose && cat(verbose, "Source: ", srcPathname)
+  verbose && cat(verbose, "Destination: ", pathname)
 
-  verbose && enter(verbose, "Renaming file");
+  verbose && enter(verbose, "Renaming file")
   ## FIXME: Should we use R.utils::renameFile() instead? /HB 2014-01-06
-  res <- renameFile(srcPathname, pathname, ...);
+  res <- renameFile(srcPathname, pathname, ...)
   if (!res) {
-    throw("Failed to rename file: ", srcPathname, " -> ", pathname);
+    throw("Failed to rename file: ", srcPathname, " -> ", pathname)
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   # Update GenericDataFile object
-  this$.pathname <- pathname;
+  this$.pathname <- pathname
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
@@ -1156,14 +1156,14 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
 #*/###########################################################################
 setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FALSE, verbose=FALSE, ...) {
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  checksum <- this$.checksum;
+  checksum <- this$.checksum
   if (force || is.null(checksum) || hasBeenModified(this, update=FALSE)) {
     if (isFile(this)) {
       dfZ <- NULL
@@ -1180,10 +1180,10 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FAL
       if (isFile(dfZ)) {
         checksum <- readChecksum(dfZ)
       } else {
-        verbose && enter(verbose, "Calculating checksum");
-        pathname <- getPathname(this);
-        checksum <- digest(pathname, file=TRUE);
-        verbose && exit(verbose);
+        verbose && enter(verbose, "Calculating checksum")
+        pathname <- getPathname(this)
+        checksum <- digest(pathname, file=TRUE)
+        verbose && exit(verbose)
       }
     } else {
       checksum <- NA_character_
@@ -1193,7 +1193,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FAL
     this$.checksum <- checksum
   }
 
-  checksum;
+  checksum
 })
 
 
@@ -1275,7 +1275,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) 
 #*/###########################################################################
 setMethodS3("readChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
-    throw("Cannot read stored checksum. File does not exist: NA");
+    throw("Cannot read stored checksum. File does not exist: NA")
   }
 
   if (!hasChecksumFile(this)) {
@@ -1322,7 +1322,7 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("compareChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
-    throw("Cannot compare checksum. File does not exist: NA");
+    throw("Cannot compare checksum. File does not exist: NA")
   } else if (!hasChecksumFile(this)) {
     return(FALSE)
   }
@@ -1366,7 +1366,7 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("validateChecksum", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
-    throw("Cannot validate checksum. File does not exist: NA");
+    throw("Cannot validate checksum. File does not exist: NA")
   } else if (!hasChecksumFile(this)) {
     throw("Cannot validate checksum. No checksum file available: ", getPathname(this))
   }
@@ -1425,24 +1425,24 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
-    throw("Cannot gzip file. File does not exist: NA");
+    throw("Cannot gzip file. File does not exist: NA")
   }
 
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   if (isGzipped(pathname)) {
-    throw("File is already gzip'ed: ", pathname);
+    throw("File is already gzip'ed: ", pathname)
   }
 
-  outPathname <- gzip(pathname, ...);
+  outPathname <- gzip(pathname, ...)
 
   # Attributes that may be of interest
-  ## temporary <- attr(outPathname, "temporary");
-  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes");
+  ## temporary <- attr(outPathname, "temporary")
+  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes")
 
-  this$.pathname <- outPathname;
+  this$.pathname <- outPathname
 
   # Return the output file
-  invisible(outPathname);
+  invisible(outPathname)
 }, protected=TRUE)
 
 
@@ -1450,29 +1450,29 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
 setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
  # Argument 'this':
   if (!isFile(this)) {
-    throw("Cannot gunzip file. File does not exist: NA");
+    throw("Cannot gunzip file. File does not exist: NA")
   }
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   if (!isGzipped(pathname)) {
-    throw("File is not gzip'ed: ", pathname);
+    throw("File is not gzip'ed: ", pathname)
   }
 
   # Decompress
-  outPathname <- gunzip(pathname, ...);
+  outPathname <- gunzip(pathname, ...)
 
   # Attributes that may be of interest
-  ## temporary <- attr(outPathname, "temporary");
-  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes");
+  ## temporary <- attr(outPathname, "temporary")
+  ## nbrOfBytes <- attr(outPathname, "nbrOfBytes")
 
-  this$.pathname <- outPathname;
+  this$.pathname <- outPathname
 
-  invisible(outPathname);
+  invisible(outPathname)
 }, protected=TRUE)
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
   pathname <- getPathname(this, NULLasNA=TRUE)
-  isGzipped(pathname, ...);
+  isGzipped(pathname, ...)
 }, protected=TRUE)
 
 
@@ -1488,49 +1488,49 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
   isFileCase <- function(pathname, ...) {
     # Non-case sensitive check
     if (!isFile(pathname))
-      return(FALSE);
+      return(FALSE)
 
     # There can still be a case-difference
-    path <- dirname(pathname);
-    filename <- basename(pathname);
-    filenames <- list.files(path=path, all.files=TRUE);
-    res <- grep(filename, filenames, fixed=TRUE);
-    res <- (length(res) >= 1L);
-    res;
+    path <- dirname(pathname)
+    filename <- basename(pathname)
+    filenames <- list.files(path=path, all.files=TRUE)
+    res <- grep(filename, filenames, fixed=TRUE)
+    res <- (length(res) >= 1L)
+    res
   }
 
 
   # Identify the filename extension
-  ext <- gsub("^.*[.]", "", pathname);
+  ext <- gsub("^.*[.]", "", pathname)
 
   # No filename extension?  Do nothing.
   if (identical(ext, pathname))
-    return(pathname);
+    return(pathname)
 
   # Generate the pathname with lower- and upper-case extensions
-  extL <- tolower(ext);
-  pathnameL <- gsub(sprintf("[.]%s$", ext), sprintf(".%s", extL), pathname);
+  extL <- tolower(ext)
+  pathnameL <- gsub(sprintf("[.]%s$", ext), sprintf(".%s", extL), pathname)
 
-  extU <- toupper(ext);
-  pathnameU <- gsub(sprintf("[.]%s$", ext), sprintf(".%s", extU), pathname);
+  extU <- toupper(ext)
+  pathnameU <- gsub(sprintf("[.]%s$", ext), sprintf(".%s", extU), pathname)
 
   # Does a lower-case filename exist? If not, nothing to do.
   if (!isFileCase(pathnameL))
-    return(pathnameU);
+    return(pathnameU)
 
   # Can we rename it?
   if (identical(pathname, pathnameL) && isFileCase(pathnameU)) {
-    throw("Cannot rename pathname to have upper-case filename extension, because such a file already exists: ", pathnameU);
+    throw("Cannot rename pathname to have upper-case filename extension, because such a file already exists: ", pathnameU)
   }
 
   # Try to rename the file
-  res <- file.rename(pathnameL, pathnameU);
+  res <- file.rename(pathnameL, pathnameU)
   if (res) {
-    msg <- paste("Renamed file to have an upper-case filename extension:", pathname);
-    warning(msg);
+    msg <- paste("Renamed file to have an upper-case filename extension:", pathname)
+    warning(msg)
   } else {
-    throw("Failed to rename file such that it gets an upper-case filename extension (try to rename the file manually): ", pathname);
+    throw("Failed to rename file such that it gets an upper-case filename extension (try to rename the file manually): ", pathname)
   }
 
-  pathnameU;
+  pathnameU
 }, static=TRUE, protected=TRUE)

@@ -32,54 +32,54 @@
 # }
 #*/###########################################################################
 setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE) {
-  this <- extend(GenericDataFile(...), c("GenericTabularFile", uses("ColumnNamesInterface")));
+  this <- extend(GenericDataFile(...), c("GenericTabularFile", uses("ColumnNamesInterface")))
 
   if (.verify) {
-    verify(this, ..., verbose=verbose);
+    verify(this, ..., verbose=verbose)
   }
 
-  this;
+  this
 }, abstract=TRUE)
 
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
-  this <- x;
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)));
-  s;
+  this <- x
+  s <- NextMethod("as.character")
+  s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)))
+  s
 }, protected=TRUE)
 
 
 
 setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
   # Nothing to do?
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   if (is.null(pathname) || is.na(pathname))
-    return(invisible(this));
+    return(invisible(this))
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Validating file contents");
+  verbose && enter(verbose, "Validating file contents")
 
   tryCatch({
-    data <- readDataFrame(this, rows=1:10, verbose=verbose);
+    data <- readDataFrame(this, rows=1:10, verbose=verbose)
   }, error = function(ex) {
-    throw("File format error of the tabular file ('", getPathname(this), "'): ", ex$message);
+    throw("File format error of the tabular file ('", getPathname(this), "'): ", ex$message)
   })
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(this);
+  invisible(this)
 }, private=TRUE)
 
 
@@ -115,15 +115,15 @@ setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE);
+setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE)
 
 
 
 setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
-  ncols <- NextMethod("nbrOfColumns");
-  if (!is.na(ncols)) return(ncols);
-  data <- readDataFrame(this, colClasses=NULL, rows=1L);
-  ncol(data);
+  ncols <- NextMethod("nbrOfColumns")
+  if (!is.na(ncols)) return(ncols)
+  data <- readDataFrame(this, colClasses=NULL, rows=1L)
+  ncol(data)
 })
 
 
@@ -158,9 +158,9 @@ setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("dim", "GenericTabularFile", function(x) {
   # To please R CMD check.
-  this <- x;
+  this <- x
 
-  c(nbrOfRows(this), nbrOfColumns(this));
+  c(nbrOfRows(this), nbrOfColumns(this))
 }, appendVarArgs=FALSE)
 
 
@@ -196,7 +196,7 @@ setMethodS3("dim", "GenericTabularFile", function(x) {
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE);
+setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE)
 
 
 
@@ -228,7 +228,7 @@ setMethodS3("readDataFrame", "GenericTabularFile", abstract=TRUE);
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE);
+setMethodS3("readColumns", "GenericTabularFile", abstract=TRUE)
 
 
 
@@ -269,91 +269,91 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1L, dro
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfColumns <- nbrOfColumns(this);
+  nbrOfColumns <- nbrOfColumns(this)
 
   # Argument 'drop':
-  drop <- Arguments$getLogical(drop);
+  drop <- Arguments$getLogical(drop)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Extracting data as a single-column matrix");
+  verbose && enter(verbose, "Extracting data as a single-column matrix")
 
   # Read data as data frame
-  data <- readColumns(this, columns=column, ..., verbose=less(verbose, 5));
+  data <- readColumns(this, columns=column, ..., verbose=less(verbose, 5))
   # Drop dimension
-  data <- data[,1,drop=TRUE];
+  data <- data[,1,drop=TRUE]
 
-  verbose && cat(verbose, "Raw data frame read:");
-  verbose && str(verbose, data);
+  verbose && cat(verbose, "Raw data frame read:")
+  verbose && str(verbose, data)
 
   # Coerce into a matrix?
   if (!drop) {
-    data <- as.matrix(data);
-    colnames(data) <- getName(this);
+    data <- as.matrix(data)
+    colnames(data) <- getName(this)
   } else {
-    verbose && cat(verbose, "Dropping singleton dimensions");
+    verbose && cat(verbose, "Dropping singleton dimensions")
   }
 
-  verbose && cat(verbose, "Result:");
-  verbose && str(verbose, data);
+  verbose && cat(verbose, "Result:")
+  verbose && str(verbose, data)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  data;
+  data
 })
 
 
 setMethodS3("[", "GenericTabularFile", function(this, i=NULL, j=NULL, drop=FALSE) {
   # Argument 'drop':
-  drop <- Arguments$getLogical(drop);
+  drop <- Arguments$getLogical(drop)
 
   # Read data
   if (missing(j) || is.null(j)) {
-    data <- readColumns(this, rows=i);
+    data <- readColumns(this, rows=i)
   } else {
-    data <- readColumns(this, rows=i, columns=j);
+    data <- readColumns(this, rows=i, columns=j)
   }
 
   # Drop dimensions?
   if (drop) {
     if (ncol(data) == 1L) {
-      data <- data[,1L];
+      data <- data[,1L]
     } else if (nrow(data) == 1L) {
-      data <- data[1L,];
+      data <- data[1L,]
     }
   }
 
-  data;
+  data
 }, protected=TRUE)
 
 
 setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
-  stopifnot(length(n) == 1L);
-  nrow <- nrow(x);
+  stopifnot(length(n) == 1L)
+  nrow <- nrow(x)
   if (n < 0L) {
-    n <- max(nrow + n, 0L);
+    n <- max(nrow + n, 0L)
   } else {
-    n <- min(n, nrow);
+    n <- min(n, nrow)
   }
-  rows <- seq_len(n);
-  x[rows,, drop=FALSE];
+  rows <- seq_len(n)
+  x[rows,, drop=FALSE]
 })
 
 
 setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
-  stopifnot(length(n) == 1L);
-  nrow <- nrow(x);
+  stopifnot(length(n) == 1L)
+  nrow <- nrow(x)
   if (n < 0L) {
-    n <- max(nrow + n, 0L);
+    n <- max(nrow + n, 0L)
   } else {
-    n <- min(n, nrow);
+    n <- min(n, nrow)
   }
-  rows <- seq.int(to=nrow, length.out=n);
-  x[rows,, drop=FALSE];
+  rows <- seq.int(to=nrow, length.out=n)
+  x[rows,, drop=FALSE]
 })

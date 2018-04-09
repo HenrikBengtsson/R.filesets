@@ -48,125 +48,125 @@ setMethodS3("writeColumnsToFiles", "GenericTabularFile", function(this, destPath
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   writeHeaderComments0 <- function(con, hdr, commentPrefix="# ", ...) {
-    hdr <- c(list(nbrOfHeaderRows=length(hdr)+1, hdr));
-    hdrStr <- unlist(hdr);
-    hdrStr <- paste(names(hdrStr), hdrStr, sep="\t");
-    hdrStr <- paste(commentPrefix, hdrStr, sep="");
-    writeLines(con=con, hdrStr);
+    hdr <- c(list(nbrOfHeaderRows=length(hdr)+1, hdr))
+    hdrStr <- unlist(hdr)
+    hdrStr <- paste(names(hdrStr), hdrStr, sep="\t")
+    hdrStr <- paste(commentPrefix, hdrStr, sep="")
+    writeLines(con=con, hdrStr)
   }
 
   escapeFilename <- function(filename, ...) {
-    filename <- gsub(":", "%3A", filename);
-    filename <- gsub(";", "%3B", filename);
-    filename;
+    filename <- gsub(":", "%3A", filename)
+    filename <- gsub(";", "%3B", filename)
+    filename
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'destPath':
-  destPath <- Arguments$getWritablePath(destPath);
+  destPath <- Arguments$getWritablePath(destPath)
 
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- unlist(strsplit(tags, split=","));
-    tags <- trim(tags);
-    tags <- tags[nchar(tags, type="chars") > 0L];
+    tags <- Arguments$getCharacters(tags)
+    tags <- unlist(strsplit(tags, split=","))
+    tags <- trim(tags)
+    tags <- tags[nchar(tags, type="chars") > 0L]
   }
 
   # Argument 'filenameFmt':
-  filenameFmt <- Arguments$getCharacter(filenameFmt);
+  filenameFmt <- Arguments$getCharacter(filenameFmt)
 
   # Argument 'columnName':
   if (!is.null(columnName))
-    columnName <- Arguments$getCharacter(columnName);
+    columnName <- Arguments$getCharacter(columnName)
 
   # Argument 'header':
   if (is.null(header)) {
     header <- list(
       sourceFile=getFilename(this)
-    );
+    )
   } else {
-    header <- as.list(header);
+    header <- as.list(header)
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  hdrColumnName <- columnName;
+  hdrColumnName <- columnName
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify column names
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  columnNames <- getColumnNames(this);
-  verbose && printf(verbose, "Column names [%d]:\n", length(columnNames));
-  verbose && print(verbose, columnNames);
+  columnNames <- getColumnNames(this)
+  verbose && printf(verbose, "Column names [%d]:\n", length(columnNames))
+  verbose && print(verbose, columnNames)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract and export each column
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathnames <- c();
+  pathnames <- c()
 
-  colClasses <- "character";
+  colClasses <- "character"
   for (cc in seq_along(columnNames)) {
-    columnName <- columnNames[cc];
+    columnName <- columnNames[cc]
     verbose && enter(verbose, sprintf("Column #%d ('%s') of %d",
-                                       cc, columnName, length(columnNames)));
+                                       cc, columnName, length(columnNames)))
 
-    fullname <- paste(c(columnName, tags), collapse=",");
-    filename <- sprintf(filenameFmt, fullname);
-    filename <- escapeFilename(filename);
-    pathname <- file.path(destPath, filename);
+    fullname <- paste(c(columnName, tags), collapse=",")
+    filename <- sprintf(filenameFmt, fullname)
+    filename <- escapeFilename(filename)
+    pathname <- file.path(destPath, filename)
 
     # Check if file already exists
     if (!isFile(pathname)) {
-      names(colClasses) <- sprintf("^%s$", columnName);
-      values <- readDataFrame(this, colClasses=colClasses);
-      values <- trim(values[[1]]);
-      df <- data.frame(dummy=values, stringsAsFactors=FALSE);
+      names(colClasses) <- sprintf("^%s$", columnName)
+      values <- readDataFrame(this, colClasses=colClasses)
+      values <- trim(values[[1]])
+      df <- data.frame(dummy=values, stringsAsFactors=FALSE)
       if (is.null(hdrColumnName)) {
-        colnames(df) <- columnName;
+        colnames(df) <- columnName
       } else {
-        colnames(df) <- hdrColumnName;
+        colnames(df) <- hdrColumnName
       }
-      verbose && str(verbose, df);
+      verbose && str(verbose, df)
 
       # Write atomically, by first writing to a temporary file
-      pathnameT <- sprintf("%s.tmp", pathname);
-      pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=TRUE);
+      pathnameT <- sprintf("%s.tmp", pathname)
+      pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=TRUE)
 
-      con <- file(pathnameT, open="w");
-      header$createdOn <- format(Sys.time(), "%Y-%m-%d %H:%M:%S");
-      header$column <- cc;
-      header$columnName <- columnName;
-      header$nbrOfDataRows <- nrow(df);
-      writeHeaderComments0(con=con, header);
-      write.table(file=con, df, quote=FALSE, sep="\t", row.names=FALSE);
-      close(con);
+      con <- file(pathnameT, open="w")
+      header$createdOn <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+      header$column <- cc
+      header$columnName <- columnName
+      header$nbrOfDataRows <- nrow(df)
+      writeHeaderComments0(con=con, header)
+      write.table(file=con, df, quote=FALSE, sep="\t", row.names=FALSE)
+      close(con)
 
       # Rename temporary file
-      verbose && enter(verbose, "Renaming temporary file to destination name");
-      res <- file.rename(pathnameT, pathname);
+      verbose && enter(verbose, "Renaming temporary file to destination name")
+      res <- file.rename(pathnameT, pathname)
       if (!res) {
-        throw("Failed to rename temporary file: ", pathnameT, " -> ", pathname);
+        throw("Failed to rename temporary file: ", pathnameT, " -> ", pathname)
       }
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } else {
-      verbose && cat(verbose, "Column already extracted");
+      verbose && cat(verbose, "Column already extracted")
     }
 
-    pathnames <- c(pathnames, pathname);
+    pathnames <- c(pathnames, pathname)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (cc ...)
 
-  invisible(pathnames);
+  invisible(pathnames)
 })
