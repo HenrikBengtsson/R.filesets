@@ -28,12 +28,12 @@
 # }
 #*/###########################################################################
 setConstructorS3("RdsFile", function(...) {
-  extend(GenericDataFile(...), "RdsFile");
+  extend(GenericDataFile(...), "RdsFile")
 })
 
 
 setMethodS3("loadObject", "RdsFile", function(this, ...) {
-  loadRDS(this, ...);
+  loadRDS(this, ...)
 })
 
 
@@ -70,10 +70,10 @@ setMethodS3("loadObject", "RdsFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("loadRDS", "default", function(file, ...) {
-  readRDS(file, ...);
+  readRDS(file, ...)
 })
 
 setMethodS3("loadRDS", "RdsFile", function(file, ...) {
-  pathname <- getPathname(file);
-  loadRDS(pathname, ...);
+  pathname <- getPathname(file)
+  loadRDS(pathname, ...)
 })
