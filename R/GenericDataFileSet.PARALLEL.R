@@ -63,7 +63,7 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'ds1' & 'ds2':
   ds2 <- Arguments$getInstanceOf(ds2, class(ds1)[1L])
-  stopifnot(length(ds2) == length(ds1))
+  stop_if_not(length(ds2) == length(ds1))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # dsApply() in pairs
@@ -119,7 +119,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   }
 
   # Argument 'FUN':
-  stopifnot(is.function(FUN))
+  stop_if_not(is.function(FUN))
   assertNoGlobalVariables(FUN)
 
 

@@ -516,8 +516,8 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
   }
 
   # Sanity check
-  stopifnot(!any(is.na(order)))
-  stopifnot(length(unique(order)) == length(order))
+  stop_if_not(!any(is.na(order)))
+  stop_if_not(length(unique(order)) == length(order))
 
   this$files <- this$files[order]
 
