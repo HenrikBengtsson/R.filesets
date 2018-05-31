@@ -121,7 +121,7 @@ setMethodS3("as.character", "GenericDataFileSetList", function(x, ...) {
 
 
 setMethodS3("clone", "GenericDataFileSetList", function(this, ...) {
-  res <- NextMethod("clone")
+  res <- NextMethod()
   dsList <- getSets(this)
   for (kk in seq_along(dsList)) {
     dsList[[kk]] <- clone(dsList[[kk]])

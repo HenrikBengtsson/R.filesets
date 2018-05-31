@@ -29,7 +29,7 @@ setConstructorS3("ChecksumFile", function(...) {
 
 
 setMethodS3("as.character", "ChecksumFile", function(x, ...) {
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   if (isFile(x)) {
     checksum <- readChecksum(x)
   } else {

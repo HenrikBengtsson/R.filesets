@@ -87,7 +87,7 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
 setMethodS3("as.character", "TabularTextFile", function(x, ...) {
   this <- x
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   colnames <- getColumnNames(this)
   if (length(colnames) > 0L) {
     columns <- paste("'", colnames, "'", sep="")

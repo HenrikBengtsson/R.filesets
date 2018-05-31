@@ -44,7 +44,7 @@ setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
   this <- x
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)))
   s
 }, protected=TRUE)
@@ -120,7 +120,7 @@ setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE)
 
 
 setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
-  ncols <- NextMethod("nbrOfColumns")
+  ncols <- NextMethod()
   if (!is.na(ncols)) return(ncols)
   data <- readDataFrame(this, colClasses=NULL, rows=1L)
   ncol(data)

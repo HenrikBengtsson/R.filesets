@@ -104,7 +104,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
 
 
 setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
-  object <- NextMethod("clone")
+  object <- NextMethod()
   if (clear)
     clearCache(object)
   object

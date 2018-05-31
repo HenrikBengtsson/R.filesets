@@ -176,14 +176,14 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   lapply(files, FUN=clearCache)
 
   # Then for this object
-  NextMethod("clearCache")
+  NextMethod()
 }, protected=TRUE)
 
 
 
 setMethodS3("clone", "GenericDataFileSet", function(this, clear=TRUE, ...) {
   # Clone itself
-  object <- NextMethod("clone")
+  object <- NextMethod()
 
   # Clone each file object
   files <- as.list(object)
@@ -2050,7 +2050,7 @@ setMethodS3("[[", "GenericDataFileSet", function(x, i, ...) {
   if (is.numeric(i) || is.character(i)) {
     getFile(x, i, ...)
   } else {
-    NextMethod("[[")
+    NextMethod()
   }
 }, protected=TRUE)
 
