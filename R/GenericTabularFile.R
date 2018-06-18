@@ -334,7 +334,7 @@ setMethodS3("[", "GenericTabularFile", function(this, i=NULL, j=NULL, drop=FALSE
 
 
 setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
-  stop_if_not(length(n) == 1L)
+  .stop_if_not(length(n) == 1L)
   nrow <- nrow(x)
   if (n < 0L) {
     n <- max(nrow + n, 0L)
@@ -347,7 +347,7 @@ setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
 
 
 setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
-  stop_if_not(length(n) == 1L)
+  .stop_if_not(length(n) == 1L)
   nrow <- nrow(x)
   if (n < 0L) {
     n <- max(nrow + n, 0L)

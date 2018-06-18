@@ -24,28 +24,18 @@
 }
 
 \usage{
-\method{dsApplyInPairs}{GenericDataFileSet}(ds1, ds2, ...)
+\method{dsApplyInPairs}{GenericDataFileSet}(ds1, ds2, FUN, ..., args=list(), skip=FALSE, verbose=FALSE,
+  .parallel=NULL, .control=NULL)
 }
 
 \arguments{
  \item{ds, ds1, ds2}{\code{\link{GenericDataFileSet}}:s.}
- \item{IDXS}{A (named) \code{\link[base]{list}}, where each element contains a \code{\link[base]{vector}} data
-   set indices, or an \code{\link[base]{integer}} \code{\link[base]{vector}} of individual elements.
-   If \code{\link[base]{NULL}}, then ... with names as of the data set.}
- \item{DROP}{If \code{\link[base:logical]{FALSE}}, the first argument passed to \code{FUN} is always a \code{\link[base]{list}} of files.
-   If \code{\link[base:logical]{TRUE}}, an single-index element is passed to \code{FUN} as a file instead of
-   as a \code{\link[base]{list}} containing a single file.}
- \item{AS}{(optional) A \code{\link[base]{function}} coercing the first set/group object passed.}
  \item{FUN}{A \code{\link[base]{function}}.}
  \item{...}{Arguments passed to \code{FUN}.}
- \item{args}{(optional) A \code{\link[base]{list}} of additional arguments
+ \item{args}{(optional) A named \code{\link[base]{list}} of additional arguments
    passed to \code{FUN}.}
  \item{skip}{If \code{\link[base:logical]{TRUE}}, already processed files are skipped.}
  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
- \item{.parallel}{A \code{\link[base]{character}} string specifying what mechanism to use
-   for performing parallel processing, if at all.}
- \item{.control}{(internal) A named \code{\link[base]{list}} structure controlling
-       the processing.}
 }
 
 \value{
@@ -83,8 +73,10 @@ stopifnot(identical(res2, res1))
 
 \details{
  \emph{
-   WARNING: \code{dsApply(ds, FUN, ...)} is deprecated.
-   Instead, use \code{\link[future.apply]{future_lapply}(ds, FUN, ...)}.
+   WARNING: \code{dsApplyInPairs()} is deprecated; use
+   \code{\link[future.apply]{future_mapply}()}.
+   WARNING: \code{dsApply()} is defunct; use
+   \code{\link[future.apply]{future_lapply}()}.
  }
 }
 

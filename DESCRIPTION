@@ -1,17 +1,17 @@
 Package: R.filesets
-Version: 2.12.1-9000
+Version: 2.12.9-9000
 Depends:
   R (>= 3.2.0),
-  R.oo (>= 1.21.0)
+  R.oo (>= 1.22.0)
 Imports:
   digest (>= 0.6.15),
-  future.apply (>= 0.1.0),
+  future.apply (>= 0.2.0-9000),
   R.methodsS3 (>= 1.7.1),
   R.utils (>= 2.6.0),
   R.cache (>= 0.13.0),
   stats
 Suggests:
-  future (>= 1.7.0),
+  future (>= 1.8.1),
   gtools (>= 3.5.0)
 SuggestsNote:
   Recommended: gtools

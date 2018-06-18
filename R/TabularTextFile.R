@@ -279,7 +279,7 @@ setMethodS3("getDefaultColumnClasses", "TabularTextFile", function(this, ...) {
       colClasses <- args$columnClasses
       if (!is.null(colClasses)) {
         # Sanity check
-        stop_if_not(length(colClasses) == ncol)
+        .stop_if_not(length(colClasses) == ncol)
         return(colClasses)
       }
     }
@@ -879,7 +879,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     toPatch <- toPatch[keep]
 
     # Sanity check
-    stop_if_not(length(colClasses) == ncol(data))
+    .stop_if_not(length(colClasses) == ncol(data))
 
     na.strings <- args0$na.strings
 
@@ -911,7 +911,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
       verbose && str(verbose, valuesT)
 
       # Sanity check
-      stop_if_not(length(valuesT) == length(values))
+      .stop_if_not(length(valuesT) == length(values))
 
       close(conT); conT <- NULL
       data[[col]] <- valuesT
@@ -1034,7 +1034,7 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(nco
   }
 
   # Sanity check
-  stop_if_not(ncol(data) == length(columns))
+  .stop_if_not(ncol(data) == length(columns))
 
   verbose && exit(verbose)
 

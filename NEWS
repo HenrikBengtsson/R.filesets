@@ -1,10 +1,16 @@
 Package: R.filesets
 ===================
 
-Version: 2.12.1-9000 [2018-04-09]
+Version: 2.12.9-9000 [2018-06-17]
 
  o ...
  
+DEPRECATED AND DEFUNCT:
+
+ o dsApplyInPairs() is deprecated.  Use future.apply::future_mapply() instead.
+
+ o dsApply() is defunct.  Use future.apply::future_lapply() instead.
+
 
 Version: 2.12.1 [2018-04-08]
 
