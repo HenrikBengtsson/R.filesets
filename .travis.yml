@@ -13,6 +13,11 @@ cache: packages
 warnings_are_errors: false
 r_check_args: --as-cran
 
+## WORKAROUND: devtools thinks BiocInstaller is needed because
+##             there is a 'biocViews' field in the DESCRIPTION file
+bioc_packages:
+  - BiocInstaller
+
 matrix:
   include:
     - os: linux
