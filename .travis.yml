@@ -33,17 +33,9 @@ matrix:
     - os: osx
       r: oldrel
       latex: false
-      r_github_packages:
-      - HenrikBengtsson/future.apply
     - os: osx
       r: release
       latex: false
-
-r_packages:
-  - future.BatchJobs
-
-bioc_packages:
-  - BiocInstaller
 
 notifications:
   email:
