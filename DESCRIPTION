@@ -11,7 +11,6 @@ Imports:
   R.cache (>= 0.13.0),
   stats
 Suggests:
-  future (>= 1.8.1),
   gtools (>= 3.5.0)
 SuggestsNote:
   Recommended: gtools
