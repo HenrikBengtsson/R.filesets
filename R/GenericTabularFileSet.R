@@ -31,10 +31,6 @@ setConstructorS3("GenericTabularFileSet", function(...) {
 setMethodS3("extractMatrix", "GenericTabularFileSet", function(this, ..., drop=FALSE) {
   args <- list(...)
   
-  if ("files" %in% names(args)) {
-    .Defunct("Argument 'files' of extractMatrix() for GenericTabularFileSet is deprecated. Use extractMatrix(ds[files], ...) instead.")
-  }
-
   nbrOfFiles <- length(this)
   data <- NULL
   for (kk in seq_len(nbrOfFiles)) {

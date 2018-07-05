@@ -537,11 +537,6 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   verbose && cat(verbose, "User arguments:")
   verbose && str(verbose, userArgs)
 
-  # DEFUNCT
-  if ("colClassPatterns" %in% names(userArgs)) {
-    .Defunct(msg = "Argument 'colClassPatterns' has been renamed to 'colClasses'. Please update your code accordingly.")
-  }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Infer column classes
