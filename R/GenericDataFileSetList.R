@@ -157,6 +157,7 @@ setMethodS3("setTags", "GenericDataFileSetList", function(this, tags=NULL, ...) 
 
 setMethodS3("getTags", "GenericDataFileSetList", function(this, ...) {
   # AD HOC; custom tags are taken care of in getDefaultFullName().
+  .validate_nextmethod_call()
   NextMethod("getTags", collapse=NULL, useCustomTags=FALSE)
 }, protected=TRUE)
 

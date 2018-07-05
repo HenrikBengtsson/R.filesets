@@ -63,6 +63,7 @@ setMethodS3("isOld", "ChecksumFile", function(this, ...) {
 
 
 setMethodS3("getChecksum", "ChecksumFile", function(this, write=FALSE, ...) {
+  .validate_nextmethod_call()
   NextMethod("getChecksum", write=write)
 })
 
