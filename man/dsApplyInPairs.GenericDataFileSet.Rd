@@ -73,16 +73,11 @@ stopifnot(identical(res2, res1))
 
 \details{
  \emph{
-   WARNING: \code{dsApplyInPairs()} is deprecated; use
-   \code{\link[future.apply]{future_mapply}()}.
-   WARNING: \code{dsApply()} is defunct; use
-   \code{\link[future.apply]{future_lapply}()}.
+   WARNING: \code{dsApplyInPairs()} is deprecated; instead use
+   \code{future.apply::future_mapply()}.
+   WARNING: \code{dsApply()} is defunct; instead use
+   \code{future.apply::future_lapply()}.
  }
-}
-
-\seealso{
- The \pkg{future} and \pkg{future.apply} packages are utilized for
- parallel/distributed processing.
 }
 
 \author{Henrik Bengtsson}

@@ -32,16 +32,11 @@
 #
 # \details{
 #  \emph{
-#    WARNING: \code{dsApplyInPairs()} is deprecated; use
-#    \code{\link[future.apply]{future_mapply}()}.
-#    WARNING: \code{dsApply()} is defunct; use
-#    \code{\link[future.apply]{future_lapply}()}.
+#    WARNING: \code{dsApplyInPairs()} is deprecated; instead use
+#    \code{future.apply::future_mapply()}.
+#    WARNING: \code{dsApply()} is defunct; instead use
+#    \code{future.apply::future_lapply()}.
 #  }
-# }
-#
-# \seealso{
-#  The \pkg{future} and \pkg{future.apply} packages are utilized for
-#  parallel/distributed processing.
 # }
 #
 # @author "HB"
@@ -53,7 +48,13 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, FUN, ...,
   .stop_if_not(length(ds2) == length(ds1))
   skip <- Arguments$getLogical(skip)
   verbose <- Arguments$getVerbose(verbose)
-  
+
+  .Deprecated(msg = "R.filesets::dsApplyInPairs(ds1, ds2, FUN, ...) is deprecated. Instead, use mapply(FUN, ds1, ds2, ...) or future.apply::future_mapply(FUN, ds1, ds2, ...).")
+
+  if (!is.null(.control)) {
+    .Deprecated(msg = "Argument '.control' for R.filesets::dsApplyInPairs(ds1, ds2, FUN, ...) is deprecated and ignored.")
+  }
+
   MoreArgs <- args
   MoreArgs$skip <- skip
   MoreArgs$verbose <- verbose
