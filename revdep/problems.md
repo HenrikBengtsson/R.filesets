@@ -1,17 +1,3 @@
-# ACNE
-
-Version: 0.8.1
-
-## In both
-
-*   checking Rd cross-references ... WARNING
-    ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
-    ```
-
 # aroma.affymetrix
 
 Version: 3.1.1
@@ -27,20 +13,6 @@ Version: 3.1.1
         testScripts   1.3Mb
     ```
 
-# aroma.cn
-
-Version: 1.6.1
-
-## In both
-
-*   checking Rd cross-references ... WARNING
-    ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
-    ```
-
 # aroma.core
 
 Version: 3.1.3
@@ -50,20 +22,6 @@ Version: 3.1.3
 *   checking package dependencies ... NOTE
     ```
     Packages suggested but not available for checking:
-      ‘sfit’ ‘expectile’ ‘HaarSeg’ ‘mpcbs’
-    ```
-
-# calmate
-
-Version: 0.12.1
-
-## In both
-
-*   checking Rd cross-references ... WARNING
-    ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
+      ‘expectile’ ‘HaarSeg’ ‘mpcbs’
     ```
 
