@@ -211,6 +211,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   res <- NULL
   if (parallel == "none") {
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'none') is deprecated. Instead, use lapply(ds, FUN, ...) or future.apply::future_lapply(ds, FUN, ...) with plan(sequential).")
+    
     # Allocate result list
     res <- vector("list", length=length(sets))
     names(res) <- names(sets)
@@ -235,9 +237,7 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
       idxs <- set <- argsGG <- resGG <- NULL
 
       verbose && exit(verbose)
-    } # for (gg ...)
-    
-    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'none') is deprecated. Instead, use lapply(ds, FUN, ...) or future.apply::future_lapply(ds, FUN, ...) with plan(sequential).")
+    } # for (gg ...)    
   } # if (parallel == "none")
 
 
@@ -245,6 +245,8 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
   # Alt 2: Evaluation using futures
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (parallel == "future") {
+    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'future') is deprecated. Instead, use future.apply::future_lapply(ds, FUN, ...).")
+    
     verbose && enter(verbose, "Processing using futures")
 
     call_args <- list(sets, FUN = FUN)
@@ -253,8 +255,6 @@ setMethodS3("dsApply", "GenericDataFileSet", function(ds, IDXS=NULL, DROP=is.nul
 
     ## Not needed anymore
     rm(list = "call_args")
-
-    .Deprecated(msg = "R.filesets::dsApply(ds, FUN, ..., .parallel = 'future') is deprecated. Instead, use future.apply::future_lapply(ds, FUN, ...).")
     
     verbose && exit(verbose)
   } # if (parallel == "future")
