@@ -6,7 +6,7 @@ Depends:
 Imports:
   digest (>= 0.6.15),
   R.methodsS3 (>= 1.7.1),
-  R.utils (>= 2.6.0),
+  R.utils (>= 2.8.0),
   R.cache (>= 0.13.0),
   stats
 Suggests:
