@@ -60,8 +60,7 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, FUN, ...,
   MoreArgs$verbose <- verbose
   
   names <- sprintf("Pair (%s,%s)", getFullNames(ds1), getFullNames(ds2))
-  res <- future_mapply(FUN = FUN, ds1, ds2, ..., MoreArgs = MoreArgs,
-                       SIMPLIFY = FALSE)
+  res <- mapply(FUN = FUN, ds1, ds2, ..., MoreArgs = MoreArgs, SIMPLIFY = FALSE)
   names(res) <- names
   
   res

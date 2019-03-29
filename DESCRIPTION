@@ -5,7 +5,6 @@ Depends:
   R.oo (>= 1.22.0)
 Imports:
   digest (>= 0.6.15),
-  future.apply (>= 1.0.0),
   R.methodsS3 (>= 1.7.1),
   R.utils (>= 2.6.0),
   R.cache (>= 0.13.0),
