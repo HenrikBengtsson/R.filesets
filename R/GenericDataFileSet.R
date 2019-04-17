@@ -966,7 +966,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
 # \arguments{
 #  \item{files}{A single @see "GenericDataFile" or a @list of such to
 #    be appended.}
-#  \item{clone}{If @TRUE, each file is cloned before being appened.}
+#  \item{clone}{If @TRUE, each file is cloned before being appended.}
 #  \item{...}{Additional arguments passed to @see "base::append".}
 #  \item{.fileClass}{A @character string specifying the class that
 #    all files must inherit from.
@@ -1136,7 +1136,7 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #  \item{...}{Not used.}
 #  \item{onMissing}{A @character specifying the action if a requested file
 #    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
-#    a @see "GenericDataFile" refering to an @NA pathname is used in place.
+#    a @see "GenericDataFile" referring to an @NA pathname is used in place.
 #    If \code{"drop"}, the missing file is dropped.
 #    If \code{"dropall"}, an empty data set is return if one or more
 #    missing files are requested.
@@ -1421,7 +1421,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
       files[[kk]] <- df
       if (kk == 1L) {
         # Update the static class instance.  The reason for this is
-        # that if the second file cannot be instanciated with the same
+        # that if the second file cannot be instantiated with the same
         # class as the first one, then the files are incompatible.
         # Note that 'df' might be of a subclass of 'dfStatic'.
         clazz <- Class$forName(class(df)[1L], envir=parent.frame())

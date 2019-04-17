@@ -32,7 +32,7 @@
   \item{na.rm}{If \code{\link[base:logical]{TRUE}}, empty ("missing") tags are dropped.}
   \item{collapse}{A \code{\link[base]{character}} string specifying how the tags should
     be concatenated into a single string.
-    If \code{\link[base]{NULL}}, they are not concattenated.}
+    If \code{\link[base]{NULL}}, they are not concatenated.}
 }
 
 \value{

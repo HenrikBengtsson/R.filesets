@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A TabularTextFile is an object refering to a tabular text file
+#  A TabularTextFile is an object referring to a tabular text file
 #  on a file system containing data in a tabular format.
 #  Methods for reading all or a subset of the tabular data exist.
 # }
@@ -77,7 +77,7 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
   if (.verify) {
     verify(this, ..., verbose=verbose)
-    # Clear temporary settings
+    # Clear temporarily settings
     this$.fileHeader <- NULL
   }
 
@@ -677,7 +677,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #
 # \arguments{
 #   \item{con}{(Internal) If a @connection, then it is used, otherwise
-#   a new file connection is temporarly opened and used.}
+#   a new file connection is temporarily opened and used.}
 #   \item{rows}{(Optional) An @integer @vector specifying which rows to
 #    be read.}
 #   \item{nrow}{(Optional) An @integer specifying how many rows to read.

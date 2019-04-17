@@ -35,7 +35,7 @@ extends \emph{\link[R.filesets]{ColumnNamesInterface}}\cr
 
 
 
- A TabularTextFile is an object refering to a tabular text file
+ A TabularTextFile is an object referring to a tabular text file
  on a file system containing data in a tabular format.
  Methods for reading all or a subset of the tabular data exist.
 }
