@@ -10,22 +10,18 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2019-03-28                   |
+|date     |2019-04-17                   |
 
 # Dependencies
 
-|package      |old    |new         |Δ  |
-|:------------|:------|:-----------|:--|
-|R.filesets   |2.12.1 |2.12.9-9000 |*  |
-|digest       |0.6.18 |0.6.18      |   |
-|future       |1.12.0 |NA          |*  |
-|future.apply |1.2.0  |NA          |*  |
-|globals      |0.12.4 |NA          |*  |
-|listenv      |0.7.0  |NA          |*  |
-|R.cache      |0.13.0 |0.13.0      |   |
-|R.methodsS3  |1.7.1  |1.7.1       |   |
-|R.oo         |1.22.0 |1.22.0      |   |
-|R.utils      |2.8.0  |2.8.0       |   |
+|package     |old         |new         |Δ  |
+|:-----------|:-----------|:-----------|:--|
+|R.filesets  |2.12.9-9000 |2.12.9-9000 |NA |
+|digest      |0.6.18      |0.6.18      |NA |
+|R.cache     |0.13.0      |0.13.0      |NA |
+|R.methodsS3 |1.7.1       |1.7.1       |NA |
+|R.oo        |1.22.0      |1.22.0      |NA |
+|R.utils     |2.8.0       |2.8.0       |NA |
 
 # Revdeps
 
