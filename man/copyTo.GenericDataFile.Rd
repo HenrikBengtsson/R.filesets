@@ -29,7 +29,7 @@
 
 \value{
   Returns a \code{\link{GenericDataFile}} (of the same class as the source file)
-  refering to the new file copy.
+  referring to the new file copy.
 }
 
 \details{

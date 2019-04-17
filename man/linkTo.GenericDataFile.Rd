@@ -36,7 +36,7 @@
 
 \value{
   Returns a \code{\link{GenericDataFile}} (of the same class as the source file)
-  refering to the file via the link.
+  referring to the file via the link.
 }
 
 \section{Required privileges on Windows}{

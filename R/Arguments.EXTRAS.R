@@ -15,7 +15,7 @@
 #   \item{na.rm}{If @TRUE, empty ("missing") tags are dropped.}
 #   \item{collapse}{A @character string specifying how the tags should
 #     be concatenated into a single string.
-#     If @NULL, they are not concattenated.}
+#     If @NULL, they are not concatenated.}
 # }
 #
 # \value{

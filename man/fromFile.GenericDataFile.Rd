@@ -36,7 +36,7 @@
  \item{...}{Not used.}
  \item{recursive}{If TRUE, ...}
  \item{verbose}{...}
- \item{.checkArgs}{(Internal) If FALSE, validation of file existance and
+ \item{.checkArgs}{(Internal) If FALSE, validation of file existence and
   arguments are skipped.}
 }
 

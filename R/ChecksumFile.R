@@ -7,7 +7,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A ChecksumFile is an object refering to a file that contains a checksum
+#  A ChecksumFile is an object referring to a file that contains a checksum
 #  for a corresponding "main" file.
 # }
 #
