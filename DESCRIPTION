@@ -23,5 +23,4 @@ License: LGPL (>= 2.1)
 URL: https://github.com/HenrikBengtsson/R.filesets, http://www.aroma-project.org/
 BugReports: https://github.com/HenrikBengtsson/R.filesets/issues
 LazyLoad: TRUE
-biocViews: Infrastructure, DataImport, DataRepresentation
 RoxygenNote: 6.0.1
