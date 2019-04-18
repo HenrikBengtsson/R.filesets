@@ -25,7 +25,7 @@
 \arguments{
  \item{files}{A single \code{\link{GenericDataFile}} or a \code{\link[base]{list}} of such to
    be appended.}
- \item{clone}{If \code{\link[base:logical]{TRUE}}, each file is cloned before being appened.}
+ \item{clone}{If \code{\link[base:logical]{TRUE}}, each file is cloned before being appended.}
  \item{...}{Additional arguments passed to \code{\link[base]{append}}().}
  \item{.fileClass}{A \code{\link[base]{character}} string specifying the class that
    all files must inherit from.

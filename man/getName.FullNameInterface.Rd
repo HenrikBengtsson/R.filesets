@@ -31,7 +31,7 @@
 }
 
 \details{
- The name is the part of the fullname that preceeds any comma.
+ The name is the part of the fullname that precedes any comma.
  For instance, the name of \code{foo,a.2,b} is \code{foo}.
 }
 

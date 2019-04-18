@@ -6,8 +6,8 @@
 # \description{
 #  @classhierarchy
 #
-#  A GenericDataFile is an object refering to a data file on a file system.
-#  Note that this class is abstract and can not be instanciated, but
+#  A GenericDataFile is an object referring to a data file on a file system.
+#  Note that this class is abstract and can not be instantiated, but
 #  instead you have to use one of the subclasses or the generic
 #  @seemethod "fromFile" method.
 # }
@@ -104,7 +104,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
 
 
 setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
-  object <- NextMethod("clone")
+  object <- NextMethod()
   if (clear)
     clearCache(object)
   object
@@ -850,7 +850,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, update=TRUE, un
 #  \item{...}{Not used.}
 #  \item{recursive}{If TRUE, ...}
 #  \item{verbose}{...}
-#  \item{.checkArgs}{(Internal) If FALSE, validation of file existance and
+#  \item{.checkArgs}{(Internal) If FALSE, validation of file existence and
 #   arguments are skipped.}
 # }
 #
@@ -938,7 +938,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 #
 # \value{
 #   Returns a @see "GenericDataFile" (of the same class as the source file)
-#   refering to the new file copy.
+#   referring to the new file copy.
 # }
 #
 # \details{
@@ -1000,7 +1000,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 #
 # \value{
 #   Returns a @see "GenericDataFile" (of the same class as the source file)
-#   refering to the file via the link.
+#   referring to the file via the link.
 # }
 #
 # \section{Required privileges on Windows}{
@@ -1057,7 +1057,7 @@ setMethodS3("linkTo", "GenericDataFile", function(this, filename=getFilename(thi
 # }
 #
 # \value{
-#   Returns the soure @see "GenericDataFile".
+#   Returns the source @see "GenericDataFile".
 # }
 #
 # @author
@@ -1254,7 +1254,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE) 
 # \value{
 #   Returns a @character string, which can be @NA if file is missing.
 #   An exception is thrown if the file does not exist, and hence not
-#   the checkum file.
+#   the checksum file.
 # }
 #
 # \details{

@@ -28,7 +28,7 @@
 \value{
   Returns a \code{\link[base]{character}} string, which can be \code{\link[base]{NA}} if file is missing.
   An exception is thrown if the file does not exist, and hence not
-  the checkum file.
+  the checksum file.
 }
 
 \details{

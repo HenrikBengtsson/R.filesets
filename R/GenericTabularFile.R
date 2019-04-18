@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A TabularTextFile is an object refering to a tabular text file
+#  A TabularTextFile is an object referring to a tabular text file
 #  on a file system containing data in a tabular format.
 #  Methods for reading all or a subset of the tabular data exist.
 # }
@@ -44,7 +44,7 @@ setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
   this <- x
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)))
   s
 }, protected=TRUE)
@@ -120,7 +120,7 @@ setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE)
 
 
 setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
-  ncols <- NextMethod("nbrOfColumns")
+  ncols <- NextMethod()
   if (!is.na(ncols)) return(ncols)
   data <- readDataFrame(this, colClasses=NULL, rows=1L)
   ncol(data)
@@ -334,7 +334,7 @@ setMethodS3("[", "GenericTabularFile", function(this, i=NULL, j=NULL, drop=FALSE
 
 
 setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
-  stopifnot(length(n) == 1L)
+  .stop_if_not(length(n) == 1L)
   nrow <- nrow(x)
   if (n < 0L) {
     n <- max(nrow + n, 0L)
@@ -347,7 +347,7 @@ setMethodS3("head", "GenericTabularFile", function(x, n=6L, ...) {
 
 
 setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
-  stopifnot(length(n) == 1L)
+  .stop_if_not(length(n) == 1L)
   nrow <- nrow(x)
   if (n < 0L) {
     n <- max(nrow + n, 0L)

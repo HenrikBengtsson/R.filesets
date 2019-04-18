@@ -7,7 +7,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A ChecksumFile is an object refering to a file that contains a checksum
+#  A ChecksumFile is an object referring to a file that contains a checksum
 #  for a corresponding "main" file.
 # }
 #
@@ -29,7 +29,7 @@ setConstructorS3("ChecksumFile", function(...) {
 
 
 setMethodS3("as.character", "ChecksumFile", function(x, ...) {
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   if (isFile(x)) {
     checksum <- readChecksum(x)
   } else {
@@ -63,6 +63,7 @@ setMethodS3("isOld", "ChecksumFile", function(this, ...) {
 
 
 setMethodS3("getChecksum", "ChecksumFile", function(this, write=FALSE, ...) {
+  .validate_nextmethod_call()
   NextMethod("getChecksum", write=write)
 })
 

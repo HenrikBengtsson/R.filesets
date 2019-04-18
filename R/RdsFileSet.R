@@ -28,5 +28,6 @@ setConstructorS3("RdsFileSet", function(...) {
 
 
 setMethodS3("byPath", "RdsFileSet", function(static, ..., pattern="[.]rds$") {
+#  .validate_nextmethod_call()
   NextMethod("byPath", pattern=pattern)
 })

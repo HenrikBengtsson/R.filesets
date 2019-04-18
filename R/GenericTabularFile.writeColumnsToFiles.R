@@ -31,7 +31,7 @@
 #  Each file generated is written atomically by first writing to a temporary
 #  file which is then renamed if successfully written.  This minimizes the
 #  risk for creating incomplete files, which otherwise may occur if for
-#  instance an interrupt occured.
+#  instance an interrupt occurred.
 # }
 #
 # @author

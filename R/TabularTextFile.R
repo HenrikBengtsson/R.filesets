@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A TabularTextFile is an object refering to a tabular text file
+#  A TabularTextFile is an object referring to a tabular text file
 #  on a file system containing data in a tabular format.
 #  Methods for reading all or a subset of the tabular data exist.
 # }
@@ -77,7 +77,7 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
   if (.verify) {
     verify(this, ..., verbose=verbose)
-    # Clear temporary settings
+    # Clear temporarily settings
     this$.fileHeader <- NULL
   }
 
@@ -87,7 +87,7 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
 
 setMethodS3("as.character", "TabularTextFile", function(x, ...) {
   this <- x
-  s <- NextMethod("as.character")
+  s <- NextMethod()
   colnames <- getColumnNames(this)
   if (length(colnames) > 0L) {
     columns <- paste("'", colnames, "'", sep="")
@@ -279,7 +279,7 @@ setMethodS3("getDefaultColumnClasses", "TabularTextFile", function(this, ...) {
       colClasses <- args$columnClasses
       if (!is.null(colClasses)) {
         # Sanity check
-        stopifnot(length(colClasses) == ncol)
+        .stop_if_not(length(colClasses) == ncol)
         return(colClasses)
       }
     }
@@ -537,11 +537,6 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   verbose && cat(verbose, "User arguments:")
   verbose && str(verbose, userArgs)
 
-  # DEFUNCT
-  if ("colClassPatterns" %in% names(userArgs)) {
-    .Defunct(msg = "Argument 'colClassPatterns' has been renamed to 'colClasses'. Please update your code accordingly.")
-  }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Infer column classes
@@ -682,7 +677,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
 #
 # \arguments{
 #   \item{con}{(Internal) If a @connection, then it is used, otherwise
-#   a new file connection is temporarly opened and used.}
+#   a new file connection is temporarily opened and used.}
 #   \item{rows}{(Optional) An @integer @vector specifying which rows to
 #    be read.}
 #   \item{nrow}{(Optional) An @integer specifying how many rows to read.
@@ -879,7 +874,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
     toPatch <- toPatch[keep]
 
     # Sanity check
-    stopifnot(length(colClasses) == ncol(data))
+    .stop_if_not(length(colClasses) == ncol(data))
 
     na.strings <- args0$na.strings
 
@@ -911,7 +906,7 @@ setMethodS3("readDataFrame", "TabularTextFile", function(this, con=NULL, rows=NU
       verbose && str(verbose, valuesT)
 
       # Sanity check
-      stopifnot(length(valuesT) == length(values))
+      .stop_if_not(length(valuesT) == length(values))
 
       close(conT); conT <- NULL
       data[[col]] <- valuesT
@@ -1034,7 +1029,7 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(nco
   }
 
   # Sanity check
-  stopifnot(ncol(data) == length(columns))
+  .stop_if_not(ncol(data) == length(columns))
 
   verbose && exit(verbose)
 

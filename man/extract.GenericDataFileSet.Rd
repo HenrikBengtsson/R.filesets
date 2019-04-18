@@ -33,7 +33,7 @@
  \item{...}{Not used.}
  \item{onMissing}{A \code{\link[base]{character}} specifying the action if a requested file
    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
-   a \code{\link{GenericDataFile}} refering to an \code{\link[base]{NA}} pathname is used in place.
+   a \code{\link{GenericDataFile}} referring to an \code{\link[base]{NA}} pathname is used in place.
    If \code{"drop"}, the missing file is dropped.
    If \code{"dropall"}, an empty data set is return if one or more
    missing files are requested.

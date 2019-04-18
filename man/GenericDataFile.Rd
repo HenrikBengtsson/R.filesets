@@ -31,8 +31,8 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
- A GenericDataFile is an object refering to a data file on a file system.
- Note that this class is abstract and can not be instanciated, but
+ A GenericDataFile is an object referring to a data file on a file system.
+ Note that this class is abstract and can not be instantiated, but
  instead you have to use one of the subclasses or the generic
  \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
 }

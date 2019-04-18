@@ -31,7 +31,7 @@
 }
 
 \value{
-  Returns the soure \code{\link{GenericDataFile}}.
+  Returns the source \code{\link{GenericDataFile}}.
 }
 
 \author{Henrik Bengtsson}
