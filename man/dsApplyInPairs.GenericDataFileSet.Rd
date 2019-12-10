@@ -11,10 +11,6 @@
 \alias{dsApplyInPairs.GenericDataFileSet}
 \alias{GenericDataFileSet.dsApplyInPairs}
 \alias{dsApplyInPairs,GenericDataFileSet-method}
-\alias{GenericDataFileSet.dsApply}
-\alias{dsApply.GenericDataFileSet}
-\alias{dsApply,GenericDataFileSet-method}
-
 \alias{dsApplyInPairs}
 
 \title{Applies a function to each pair of file in two file sets}
@@ -43,7 +39,6 @@
 }
 
 \examples{\dontrun{
- isPackageInstalled <- R.utils::isPackageInstalled
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
@@ -55,19 +50,8 @@ ds <- GenericDataFileSet$byPath(path)
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Get the size of each file
 # - - - - - - - - - - - - - - - - - - - - - - - -
-# Alt 1.
-res1 <- lapply(ds, FUN=getFileSize)
-print(res1)
-
-# Alt 2. (according to current settings; see package startup message)
-res2 <- dsApply(ds, FUN=getFileSize)
-print(res2)
-stopifnot(identical(res2, res1))
-
-# Alt 3. (via an internal loop)
-res2 <- dsApply(ds, FUN=getFileSize, .parallel="none")
-print(res2)
-stopifnot(identical(res2, res1))
+sizes <- lapply(ds, FUN=getFileSize)
+str(sizes)
 
 }}
 
@@ -75,8 +59,6 @@ stopifnot(identical(res2, res1))
  \emph{
    WARNING: \code{dsApplyInPairs()} is deprecated; instead use
    \code{future.apply::future_mapply()}.
-   WARNING: \code{dsApply()} is defunct; instead use
-   \code{future.apply::future_lapply()}.
  }
 }
 

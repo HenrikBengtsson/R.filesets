@@ -1,10 +1,13 @@
 Package: R.filesets
 ===================
 
-Version: 2.13.0-9000 [2019-04-17]
+Version: 2.13.0-9000 [2019-12-10]
 
- * ...
- 
+DEPRECATED AND DEFUNCT:
+
+ * Removed dsApply(), which has been defunct since version 2.13.0 (April 2020).
+   Use future.apply::future_lapply() instead.
+
 
 Version: 2.13.0 [2019-04-17]
 
