@@ -4,10 +4,10 @@ Depends:
   R (>= 3.2.0),
   R.oo (>= 1.23.0)
 Imports:
-  digest (>= 0.6.15),
-  R.methodsS3 (>= 1.7.1),
-  R.utils (>= 2.8.0),
-  R.cache (>= 0.13.0),
+  digest,
+  R.methodsS3,
+  R.utils,
+  R.cache,
   stats
 Suggests:
   gtools (>= 3.5.0)
