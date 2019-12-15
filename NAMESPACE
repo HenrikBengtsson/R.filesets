@@ -300,7 +300,6 @@ S3method("update2", "GenericDataFileSet")
 S3method("updateFullName", "GenericDataFileSet")
 S3method("updateFullNames", "GenericDataFileSet")
 S3method("validate", "GenericDataFileSet")
-S3method("dsApply", "GenericDataFileSet")
 S3method("dsApplyInPairs", "GenericDataFileSet")
 
 # GenericDataFileSetList
