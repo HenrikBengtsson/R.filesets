@@ -1144,7 +1144,7 @@ setMethodS3("nbrOfLines", "TabularTextFile", function(this, fast=FALSE, ...) {
     }
 
     if (fast) {
-      n <- as.integer(NA)
+      n <- NA_integer_
     } else {
       n <- countLines(pathname, ...)
       attr(n, "mtime") <- mtime

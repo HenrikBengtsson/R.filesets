@@ -426,7 +426,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...)
   if (is.null(filename))
-    return(as.character(NA))
+    return(NA_character_)
   pattern <- getExtensionPattern(this)
   fullname <- gsub(pattern, "", filename)
 
