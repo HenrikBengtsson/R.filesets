@@ -7,7 +7,6 @@ BUG FIXES:
 
  * Re-export S3 generic extract() from the R.rsp package.
  
- 
 DEPRECATED AND DEFUNCT:
 
  * Removed dsApply(), which has been defunct since version 2.13.0 (April 2019).
