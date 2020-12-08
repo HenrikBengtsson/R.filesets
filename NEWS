@@ -552,7 +552,7 @@ NEW FEATURES:
 
  * Added "[["(x, i) for GenericDataFileSet, which gets a  GenericDataFile by
    index 'i' in [1,length(x)].  When 'i' is non-numeric, the next "[["(x, i)
-   method in the class hiearchy is used, e.g. the one for Object:s.
+   method in the class hierarchy is used, e.g. the one for Object:s.
    
  * Added gzip()/gunzip() for GenericDataFileSet.
  
