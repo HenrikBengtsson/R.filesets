@@ -33,7 +33,7 @@ importFrom("stats", "reorder")
 
 ## Importing functions
 importFrom("digest", "digest")
-importFrom("R.methodsS3", "throw")
+importFrom("R.oo", "throw")
 importFrom("R.oo", "getKnownSubclasses")
 importFrom("R.oo", "getStaticInstance")
 importFrom("R.oo", "newInstance")
@@ -46,6 +46,7 @@ importFrom("R.utils", "createLink")
 importFrom("R.utils", "countLines")
 importFrom("R.utils", "enter")
 importFrom("R.utils", "exit")
+importFrom("R.utils", "extract")
 importFrom("R.utils", "file.info2")
 importFrom("R.utils", "getAbsolutePath")
 importFrom("R.utils", "getParent")
@@ -102,6 +103,7 @@ export("isGzipped") # Re-export from 'R.utils'
 export("gzip") # Re-export from 'R.utils'
 export("gunzip") # Re-export from 'R.utils'
 export("loadObject") # Re-export from 'R.utils'
+export("extract") # Re-export from 'R.utils'
 
 # Only needed when/if R.oo is not attached, which will
 # happen when it is moved from Depends to Imports.
@@ -300,7 +302,6 @@ S3method("update2", "GenericDataFileSet")
 S3method("updateFullName", "GenericDataFileSet")
 S3method("updateFullNames", "GenericDataFileSet")
 S3method("validate", "GenericDataFileSet")
-S3method("dsApply", "GenericDataFileSet")
 S3method("dsApplyInPairs", "GenericDataFileSet")
 
 # GenericDataFileSetList

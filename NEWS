@@ -1,6 +1,18 @@
 Package: R.filesets
 ===================
 
+Version: 2.14.0 [2020-12-07]
+
+BUG FIXES:
+
+ * Re-export S3 generic extract() from the R.rsp package.
+ 
+DEPRECATED AND DEFUNCT:
+
+ * Removed dsApply(), which has been defunct since version 2.13.0 (April 2019).
+   Use future.apply::future_lapply() instead.
+
+
 Version: 2.13.0 [2019-04-17]
 
 DEPRECATED AND DEFUNCT:
@@ -540,7 +552,7 @@ NEW FEATURES:
 
  * Added "[["(x, i) for GenericDataFileSet, which gets a  GenericDataFile by
    index 'i' in [1,length(x)].  When 'i' is non-numeric, the next "[["(x, i)
-   method in the class hiearchy is used, e.g. the one for Object:s.
+   method in the class hierarchy is used, e.g. the one for Object:s.
    
  * Added gzip()/gunzip() for GenericDataFileSet.
  

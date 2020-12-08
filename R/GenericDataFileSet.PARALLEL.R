@@ -1,7 +1,6 @@
 ###########################################################################/**
 # @set class=GenericDataFileSet
 # @RdocMethod dsApplyInPairs
-# @aliasmethod dsApply
 # @alias dsApplyInPairs
 #
 # @title "Applies a function to each pair of file in two file sets"
@@ -34,8 +33,6 @@
 #  \emph{
 #    WARNING: \code{dsApplyInPairs()} is deprecated; instead use
 #    \code{future.apply::future_mapply()}.
-#    WARNING: \code{dsApply()} is defunct; instead use
-#    \code{future.apply::future_lapply()}.
 #  }
 # }
 #
@@ -64,9 +61,4 @@ setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, FUN, ...,
   names(res) <- names
   
   res
-}, protected = TRUE)
-
-
-setMethodS3("dsApply", "GenericDataFileSet", function(ds, ...) {
-  .Defunct(msg = "R.filesets::dsApply(ds, FUN, ...) is defunct. Use lapply(ds, FUN, ...) or future.apply::future_lapply(ds, FUN, ...) instead.")
 }, protected = TRUE)

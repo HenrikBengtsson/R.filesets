@@ -215,7 +215,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
     if (na.rm) {
       return(NULL)
     } else {
-      naValue <- as.character(NA)
+      naValue <- NA_character_
       return(naValue)
     }
   }
@@ -257,7 +257,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
 
   # Extract names, e.g. "foo,n=23" as c("foo", "n"="23")
   if (named && length(tags) > 0) {
-    names <- rep(as.character(NA), times=length(tags))
+    names <- rep(NA_character_, times=length(tags))
     pattern <- "^([^=]*)=(.*)"
     idxs <- grep(pattern, tags)
     names[idxs] <- gsub(pattern, "\\1", tags[idxs])
