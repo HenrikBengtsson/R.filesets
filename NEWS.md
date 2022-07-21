@@ -1,5 +1,12 @@
 # Version (development version)
 
+## Bug Fixes
+
+ * `readRawHeader()` for `TabularTextFile` would produce an obscure
+   "Error in if (!isEmpty) { : argument is of length zero" if the file
+   is empty.  Now it detects when the file is empty and gives a more
+   informative error message.
+
 ## Deprecated and Defunct
 
  * `dsApplyInPairs()` is defunct.  Use
