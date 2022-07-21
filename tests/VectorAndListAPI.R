@@ -1,6 +1,6 @@
 source("incl/start.R")
 
-# Tests adapted from the IRanges package and http://www.bioconductor.org/help/course-materials/2012/SeattleFeb2012/GenomicRanges_slides.pdf
+# Tests adapted from the IRanges package and https://www.bioconductor.org/help/course-materials/2012/SeattleFeb2012/GenomicRanges_slides.pdf
 
 # Example files
 path <- system.file("exData", "dataSetA,original", package="R.filesets")

@@ -411,8 +411,9 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
   ch <- if (is.null(ch)) "#" else ch
   pattern <- sprintf("^%s", ch)
   ready <- FALSE
-  while (!ready) {
+  repeat {
     line <- readLines(con, n=1L)
+    if (length(line) == 0) break
     isEmpty <- (regexpr("^$", line) != -1L)
     if (!isEmpty) {
       if (!is.null(skipUntil)) {
@@ -428,7 +429,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
         break
       }
     }
-  } # while(!ready)
+  } # repeat
 
   verbose && cat(verbose, "Header comments:", level=-20)
   verbose && str(verbose, comments, level=-20)

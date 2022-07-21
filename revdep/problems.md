@@ -2,11 +2,11 @@
 
 <details>
 
-* Version: 3.2.0
+* Version: 3.2.1
 * GitHub: https://github.com/HenrikBengtsson/aroma.affymetrix
 * Source code: https://github.com/cran/aroma.affymetrix
-* Date/Publication: 2019-06-23 06:00:14 UTC
-* Number of recursive dependencies: 72
+* Date/Publication: 2022-07-18 10:50:02 UTC
+* Number of recursive dependencies: 73
 
 Run `revdep_details(, "aroma.affymetrix")` for more info
 
@@ -27,11 +27,11 @@ Run `revdep_details(, "aroma.affymetrix")` for more info
 
 <details>
 
-* Version: 3.2.1
+* Version: 3.2.2
 * GitHub: https://github.com/HenrikBengtsson/aroma.core
 * Source code: https://github.com/cran/aroma.core
-* Date/Publication: 2020-02-04 15:20:21 UTC
-* Number of recursive dependencies: 47
+* Date/Publication: 2021-01-05 05:10:12 UTC
+* Number of recursive dependencies: 48
 
 Run `revdep_details(, "aroma.core")` for more info
 
@@ -42,6 +42,27 @@ Run `revdep_details(, "aroma.core")` for more info
 *   checking package dependencies ... NOTE
     ```
     Packages suggested but not available for checking:
-      'expectile', 'HaarSeg', 'mpcbs'
+      'sfit', 'expectile', 'HaarSeg', 'mpcbs'
+    ```
+
+# MPAgenomics
+
+<details>
+
+* Version: 1.2.3
+* GitHub: NA
+* Source code: https://github.com/cran/MPAgenomics
+* Date/Publication: 2021-03-30 15:50:07 UTC
+* Number of recursive dependencies: 53
+
+Run `revdep_details(, "MPAgenomics")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘CGHcall’
     ```
 
