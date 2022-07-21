@@ -1,7 +1,10 @@
 # Version (development version)
 
- * ...
- 
+## Deprecated and Defunct
+
+ * `dsApplyInPairs()` is defunct.  Use
+   `future.apply::future_mapply()` instead.
+
 
 # Version 2.14.0 [2020-12-07]
 

@@ -22,7 +22,7 @@
 # }
 #
 # \value{
-#   Returns a named @list where the names are those of argument \code{IDXS}.
+#   Returns a @list.
 # }
 #
 # \examples{\dontrun{
@@ -31,7 +31,7 @@
 #
 # \details{
 #  \emph{
-#    WARNING: \code{dsApplyInPairs()} is deprecated; instead use
+#    WARNING: \code{dsApplyInPairs()} is defunct; instead use
 #    \code{future.apply::future_mapply()}.
 #  }
 # }
@@ -41,24 +41,5 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("dsApplyInPairs", "GenericDataFileSet", function(ds1, ds2, FUN, ..., args = list(), skip = FALSE, verbose = FALSE, .parallel = NULL, .control = NULL) {
-  ds2 <- Arguments$getInstanceOf(ds2, class(ds1)[1L])
-  .stop_if_not(length(ds2) == length(ds1))
-  skip <- Arguments$getLogical(skip)
-  verbose <- Arguments$getVerbose(verbose)
-
-  .Deprecated(msg = "R.filesets::dsApplyInPairs(ds1, ds2, FUN, ...) is deprecated. Instead, use mapply(FUN, ds1, ds2, ...) or future.apply::future_mapply(FUN, ds1, ds2, ...).")
-
-  if (!is.null(.control)) {
-    .Deprecated(msg = "Argument '.control' for R.filesets::dsApplyInPairs(ds1, ds2, FUN, ...) is deprecated and ignored.")
-  }
-
-  MoreArgs <- args
-  MoreArgs$skip <- skip
-  MoreArgs$verbose <- verbose
-  
-  names <- sprintf("Pair (%s,%s)", getFullNames(ds1), getFullNames(ds2))
-  res <- mapply(FUN = FUN, ds1, ds2, ..., MoreArgs = MoreArgs, SIMPLIFY = FALSE)
-  names(res) <- names
-  
-  res
+  .Defunct(msg = "R.filesets::dsApplyInPairs(ds1, ds2, FUN, ...) is defuct. Instead, use mapply(FUN, ds1, ds2, ..., SIMPLIFY = FALSE) or future.apply::future_mapply(FUN, ds1, ds2, ..., SIMPLIFY = FALSE).")
 }, protected = TRUE)

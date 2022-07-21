@@ -35,7 +35,7 @@
 }
 
 \value{
-  Returns a named \code{\link[base]{list}} where the names are those of argument \code{IDXS}.
+  Returns a \code{\link[base]{list}}.
 }
 
 \examples{\dontrun{
@@ -57,7 +57,7 @@ str(sizes)
 
 \details{
  \emph{
-   WARNING: \code{dsApplyInPairs()} is deprecated; instead use
+   WARNING: \code{dsApplyInPairs()} is defunct; instead use
    \code{future.apply::future_mapply()}.
  }
 }
