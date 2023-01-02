@@ -1,6 +1,6 @@
 source("incl/start.R")
 
-message("*** TabularTextFileSet")
+message("*** TabularTextFileSet ...")
 
 # Setup a file set consisting of all *.dat tab-delimited files
 # in a particular directory
@@ -60,8 +60,29 @@ print(data)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ADVANCED: Translation of fullnames
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-fnts <- TabularTextFileSet$byPath(getPath(ds), pattern=",fullnames[.]txt$")
+message("- Translation of fullnames")
+
+## Extra sanity checks to troubleshoot stall on CRAN MS Windows servers
+path <- getPath(ds)
+cat(sprintf("Data set path: %s\n", sQuote(path)))
+stopifnot(length(path) > 0)
+pattern <- ",fullnames[.]txt$"
+cat(sprintf("Pattern: %s\n", sQuote(path)))
+files <- dir(pattern = pattern, path = path, full.names = TRUE, all.files = TRUE)
+cat(sprintf("Data set files [n = %d]:\n", length(files)))
+print(files)
+stopifnot(length(files) > 0)
+
+fnts <- TabularTextFileSet$byPath(path, pattern = pattern)
+print(fnts)
+str(as.list(fnts))
+
+cat("Data set before applying fullname translator:\n")
+print(ds)
 appendFullNamesTranslator(ds, as.list(fnts))
+
+cat("Data set after applying fullname translator:\n")
+print(ds)
 
 cat("Default fullnames:\n")
 print(head(getFullNames(ds, translate=FALSE)))
@@ -72,5 +93,7 @@ cat("Default fullnames:\n")
 print(getFullNames(ds, translate=FALSE))
 cat("Translated fullnames:\n")
 print(getFullNames(ds))
+
+message("*** TabularTextFileSet ... DONE")
 
 source("incl/end.R")
