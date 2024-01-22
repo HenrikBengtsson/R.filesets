@@ -139,10 +139,6 @@ setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
 #
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
 # \value{
 #   Returns an @integer @vector of length two.
 # }

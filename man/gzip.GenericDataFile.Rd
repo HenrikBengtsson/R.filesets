@@ -40,7 +40,6 @@
 \arguments{
  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip",
    respectively.}
- \item{verbose}{...}
 }
 
 \value{

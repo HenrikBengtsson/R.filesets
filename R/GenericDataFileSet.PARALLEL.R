@@ -12,7 +12,7 @@
 # @synopsis
 #
 # \arguments{
-#  \item{ds, ds1, ds2}{@see "GenericDataFileSet":s.}
+#  \item{ds1, ds2}{@see "GenericDataFileSet":s.}
 #  \item{FUN}{A @function.}
 #  \item{...}{Arguments passed to \code{FUN}.}
 #  \item{args}{(optional) A named @list of additional arguments
