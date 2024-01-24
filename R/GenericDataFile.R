@@ -30,7 +30,7 @@
 #
 # \section{Filename convention}{
 #   The filename of an \code{GenericDataFile} is structured as follows:
-#   \itemize{
+#   \describe{
 #    \item{filename}{: \code{"sample001,a,b,c.CEL"}
 #       (this follows the \R convention, but not the Unix convention)}
 #    \item{fullname}{: \code{"sample001,a,b,c"}}
@@ -845,8 +845,6 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, update=TRUE, un
 # \arguments{
 #  \item{filename, path}{The filename and the path to the file.  The file
 #    must exist, otherwise an exception is thrown.}
-#  \item{unknown}{The @logical value returned if the timestamp for the
-#   previous modification, if any, is unknown.}
 #  \item{...}{Not used.}
 #  \item{recursive}{If TRUE, ...}
 #  \item{verbose}{...}
@@ -1211,7 +1209,6 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, write=NA, force=FAL
 # \arguments{
 #  \item{skip}{If @TRUE, an already written checksum file is skipped.}
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -1299,8 +1296,7 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
-#  \item{verbose}{...}
+#  \item{...}{Additional arguments passed to @seemethod "validateChecksum".}
 # }
 #
 # \value{
@@ -1406,7 +1402,6 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ...) {
 # \arguments{
 #  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip",
 #    respectively.}
-#  \item{verbose}{...}
 # }
 #
 # \value{

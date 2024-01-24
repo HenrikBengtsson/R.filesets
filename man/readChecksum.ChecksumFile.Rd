@@ -23,7 +23,6 @@
 
 \arguments{
  \item{...}{Not used.}
- \item{verbose}{...}
 }
 
 \value{

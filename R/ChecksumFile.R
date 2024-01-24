@@ -81,7 +81,6 @@ setMethodS3("getChecksum", "ChecksumFile", function(this, write=FALSE, ...) {
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{verbose}{...}
 # }
 #
 # \value{

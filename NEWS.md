@@ -1,3 +1,10 @@
+# Version 2.15.1 [2024-01-24]
+
+## Docuemntation
+
+ * Fix minor issues in a few help pages.
+ 
+
 # Version 2.15.0 [2022-07-21]
 
 ## Bug Fixes

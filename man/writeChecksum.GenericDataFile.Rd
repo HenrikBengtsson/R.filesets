@@ -24,7 +24,6 @@
 \arguments{
  \item{skip}{If \code{\link[base:logical]{TRUE}}, an already written checksum file is skipped.}
  \item{...}{Not used.}
- \item{verbose}{...}
 }
 
 \value{

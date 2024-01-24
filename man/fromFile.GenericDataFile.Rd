@@ -31,8 +31,6 @@
 \arguments{
  \item{filename, path}{The filename and the path to the file.  The file
    must exist, otherwise an exception is thrown.}
- \item{unknown}{The \code{\link[base]{logical}} value returned if the timestamp for the
-  previous modification, if any, is unknown.}
  \item{...}{Not used.}
  \item{recursive}{If TRUE, ...}
  \item{verbose}{...}

@@ -21,10 +21,6 @@
 \method{dim}{GenericTabularFile}(x)
 }
 
-\arguments{
-  \item{...}{Not used.}
-}
-
 \value{
   Returns an \code{\link[base]{integer}} \code{\link[base]{vector}} of length two.
 }

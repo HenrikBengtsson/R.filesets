@@ -22,8 +22,7 @@
 }
 
 \arguments{
- \item{...}{Not used.}
- \item{verbose}{...}
+ \item{...}{Additional arguments passed to \code{\link[R.filesets:validateChecksum.GenericDataFile]{*validateChecksum}()}.}
 }
 
 \value{

@@ -25,7 +25,7 @@
 }
 
 \arguments{
- \item{ds, ds1, ds2}{\code{\link{GenericDataFileSet}}:s.}
+ \item{ds1, ds2}{\code{\link{GenericDataFileSet}}:s.}
  \item{FUN}{A \code{\link[base]{function}}.}
  \item{...}{Arguments passed to \code{FUN}.}
  \item{args}{(optional) A named \code{\link[base]{list}} of additional arguments
